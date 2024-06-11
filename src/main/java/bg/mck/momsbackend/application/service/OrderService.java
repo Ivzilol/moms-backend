@@ -1,6 +1,7 @@
 package bg.mck.momsbackend.application.service;
 
 import bg.mck.momsbackend.application.dto.OrderDTO;
+import bg.mck.momsbackend.application.entity.Order;
 import bg.mck.momsbackend.application.mapper.OrderMapper;
 import bg.mck.momsbackend.application.repository.OrderRepository;
 import org.springframework.stereotype.Service;
