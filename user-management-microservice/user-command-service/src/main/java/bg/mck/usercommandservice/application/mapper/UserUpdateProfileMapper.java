@@ -1,12 +1,13 @@
 package bg.mck.usercommandservice.application.mapper;
 
 import bg.mck.usercommandservice.application.dto.UserCommandDTO;
+import bg.mck.usercommandservice.application.dto.UserUpdateProfileDTO;
 import bg.mck.usercommandservice.application.entity.UserEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface UserCommandMapper {
+public interface UserUpdateProfileMapper {
 
-    UserEntity toEntity(UserCommandDTO userCommandDTO);
-    UserCommandDTO toDTO(UserEntity userEntity);
+    UserEntity toEntity(UserUpdateProfileDTO userUpdateProfileDTO);
+    UserUpdateProfileDTO toDTO(UserEntity userEntity);
 }
