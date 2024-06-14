@@ -1,10 +1,51 @@
 package bg.mck.usercommandservice.application.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import bg.mck.usercommandservice.application.dto.ErrorsRegistrationDTO;
+import bg.mck.usercommandservice.application.dto.UserRegisterDTO;
+import bg.mck.usercommandservice.application.service.UserCommandService;
+import jakarta.validation.Valid;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
 public class UserCommandController {
+
+    private final UserCommandService userCommandService;
+
+    public UserCommandController(UserCommandService userCommandService) {
+        this.userCommandService = userCommandService;
+    }
+
+    @PostMapping()
+    public ResponseEntity<?> registerUser(@RequestBody @Valid UserRegisterDTO userRegisterDTO,
+                                          BindingResult result) {
+        ResponseEntity<ErrorsRegistrationDTO> errorsRegistrationDTO =
+                errorRegistration(userRegisterDTO, result);
+        if (errorsRegistrationDTO != null) return errorsRegistrationDTO;
+        this.userCommandService.registerUser(userRegisterDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    private ResponseEntity<ErrorsRegistrationDTO> errorRegistration(UserRegisterDTO userRegistrationDTO, BindingResult result) {
+        ErrorsRegistrationDTO errorsRegistrationDTO = new ErrorsRegistrationDTO();
+        if (result.hasErrors()) {
+            List<String> errors = result.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            this.userCommandService.setErrors(errors, errorsRegistrationDTO);
+            return ResponseEntity.ok().body(errorsRegistrationDTO);
+        }
+        if (!userRegistrationDTO.getPassword().equals(userRegistrationDTO.getConfirmPassword())) {
+            errorsRegistrationDTO.setConfirmPasswordError("Passwords must match");
+            return ResponseEntity.ok().body(errorsRegistrationDTO);
+        }
+        return null;
+    }
 }
