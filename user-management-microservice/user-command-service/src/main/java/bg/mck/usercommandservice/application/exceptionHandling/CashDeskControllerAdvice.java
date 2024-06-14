@@ -2,6 +2,7 @@ package bg.mck.usercommandservice.application.exceptionHandling;
 
 
 import bg.mck.usercommandservice.application.exceptions.InvalidPasswordException;
+import bg.mck.usercommandservice.application.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -38,6 +39,11 @@ public class CashDeskControllerAdvice {
     @ExceptionHandler(InvalidPasswordException.class)
     public ResponseEntity<String> handleInvalidPasswordException(InvalidPasswordException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 
