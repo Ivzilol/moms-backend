@@ -11,7 +11,7 @@ public class RouteValidator {
 
     public static final List<String> openApiEndPoints = List.of(
             "/user/login",
-            "/auth/validate",
+            "/auth/generate-token",
             "http://localhost:8761"
     );
 

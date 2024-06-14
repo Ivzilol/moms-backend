@@ -1,11 +1,11 @@
 package bg.mck.gatewayservice.filter;
 
 import bg.mck.gatewayservice.validators.RouteValidator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,18 +33,31 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 }
 
                 String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-                if (token == null || !token.startsWith("Bearer ") || token.trim().isBlank()) {
+                    if (token == null || !token.startsWith("Bearer ") || token.trim().isBlank()) {
                     exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                     return exchange.getResponse().setComplete();
                 }
 
+                HttpHeaders headers = new HttpHeaders();
+                headers.add(HttpHeaders.AUTHORIZATION, token);
+
+                HttpEntity<String> entity = new HttpEntity<>(headers);
                 RestTemplate restTemplate = new RestTemplate();
-                String response = restTemplate.getForObject("http://authentication-service/auth/validate/" + token.substring(7), String.class);
-                if (!response.equals("Token is valid")) {
+
+                ResponseEntity<String> response = restTemplate.exchange("http://authentication-service/auth/validate",
+                        HttpMethod.GET, entity, String.class);
+
+                if (!response.getBody().equals("Token is valid")) {
                     exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                     return exchange.getResponse().setComplete();
                 }
                 return chain.filter(exchange);
+            }
+
+            String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+            if (token == null || !token.startsWith("Bearer ") || token.trim().isBlank()) {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
             }
 
             return chain.filter(exchange);
