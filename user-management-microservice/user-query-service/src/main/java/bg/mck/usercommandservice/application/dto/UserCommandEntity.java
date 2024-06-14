@@ -1,12 +1,8 @@
-package bg.mck.userqueryservice.application.entity;
-
-
-import org.springframework.data.mongodb.core.mapping.Document;
+package bg.mck.usercommandservice.application.dto;
 
 import java.util.Set;
 
-@Document(collection = "queryEntity")
-public class UserQueryEntity {
+public class UserCommandEntity {
 
     private Long id;
 
@@ -22,10 +18,7 @@ public class UserQueryEntity {
 
     private boolean isActive;
 
-    private Set<String> roles;
-
-    public UserQueryEntity() {
-    }
+    private Set<Authority> authorities;
 
     public Long getId() {
         return id;
@@ -83,11 +76,11 @@ public class UserQueryEntity {
         isActive = active;
     }
 
-    public Set<String> getRoles() {
-        return roles;
+    public Set<Authority> getAuthorities() {
+        return authorities;
     }
 
-    public void setRoles(Set<String> roles) {
-        this.roles = roles;
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 }
