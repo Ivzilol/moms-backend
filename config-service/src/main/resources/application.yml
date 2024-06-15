@@ -11,3 +11,6 @@ spring:
           uri: https://github.com/Borovaneca/config-server.git
           clone-on-start: true
 
+eureka:
+  instance:
+    hostname: localhost
