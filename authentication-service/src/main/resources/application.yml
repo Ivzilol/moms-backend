@@ -22,8 +22,7 @@ spring:
         fetch-registry: false
         server:
           wait-time-in-ms-when-sync-empty: 0
-      instance:
-        hostname: localhost
+
 
 jwt:
   secret: 171e5aaea357e45c60c669e04143cd580cb8e6dfda7c9f5394d3bb850ba3214d
@@ -33,3 +32,5 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
