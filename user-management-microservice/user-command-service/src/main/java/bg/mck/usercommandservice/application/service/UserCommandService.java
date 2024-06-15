@@ -77,6 +77,8 @@ public class UserCommandService {
                     errorsRegistrationDTO.setEmailError("Email should be valid");
                 case "Email already exist":
                     errorsRegistrationDTO.setEmailError("Email already exist");
+                case "The password must contain a minimum of 6 characters":
+                    errorsRegistrationDTO.setPasswordError("The password must contain a minimum of 6 characters");
             }
         }
     }
