@@ -20,6 +20,11 @@
 <!--        <spring-cloud.version>2022.0.0</spring-cloud.version>-->
     </properties>
 
+    <modules>
+        <module>user-command-service</module>
+        <module>user-query-service</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>org.mindrot</groupId>
@@ -34,7 +39,7 @@
 
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
+<!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
 <!--        </dependency>-->
 
         <dependency>
@@ -60,10 +65,7 @@
     </dependencyManagement>
 
 
-    <modules>
-        <module>user-command-service</module>
-        <module>user-query-service</module>
-    </modules>
+
 
 
 

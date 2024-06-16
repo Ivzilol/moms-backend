@@ -1,17 +1,17 @@
 package bg.mck.usercommandservice.application.events;
 
 
-import bg.mck.usercommandservice.application.enums.EvenType;
+import bg.mck.usercommandservice.application.enums.EventType;
 
 
-public class UserProfileUpdatedEvent extends BaseEvent{
+public class UserProfileUpdatedEvent extends BaseEvent {
 
     private String firstName;
     private String lastName;
     private String phoneNumber;
 
-    public UserProfileUpdatedEvent(EvenType evenType) {
-        super(evenType);
+    public UserProfileUpdatedEvent(EventType eventType) {
+        super(eventType);
     }
 
 

@@ -1,6 +1,6 @@
 package bg.mck.usercommandservice.application.enums;
 
-public enum EvenType {
+public enum EventType {
 
     UserRegistered, UserProfileUpdated, UserPasswordUpdated, UserDeleted
 }

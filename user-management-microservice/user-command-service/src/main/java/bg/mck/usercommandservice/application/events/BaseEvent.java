@@ -1,23 +1,23 @@
 package bg.mck.usercommandservice.application.events;
 
-import bg.mck.usercommandservice.application.enums.EvenType;
+import bg.mck.usercommandservice.application.enums.EventType;
 
 import java.time.LocalDateTime;
 
 public class BaseEvent {
 
-    private EvenType eventType;
+    private EventType eventType;
     private LocalDateTime localDateTime = LocalDateTime.now();
 
-    public BaseEvent(EvenType eventType) {
+    public BaseEvent(EventType eventType) {
         this.eventType = eventType;
     }
 
-    public EvenType getEventType() {
+    public EventType getEventType() {
         return eventType;
     }
 
-    public BaseEvent setEventType(EvenType eventType) {
+    public BaseEvent setEventType(EventType eventType) {
         this.eventType = eventType;
         return this;
     }

@@ -4,7 +4,7 @@ import bg.mck.usercommandservice.application.client.UserQueryServiceClient;
 import bg.mck.usercommandservice.application.dto.UserCredentialsDTO;
 import bg.mck.usercommandservice.application.dto.UserUpdateProfileDTO;
 import bg.mck.usercommandservice.application.entity.UserEntity;
-import bg.mck.usercommandservice.application.enums.EvenType;
+import bg.mck.usercommandservice.application.enums.EventType;
 import bg.mck.usercommandservice.application.events.UserProfileUpdatedEvent;
 import bg.mck.usercommandservice.application.exceptions.InvalidPasswordException;
 import bg.mck.usercommandservice.application.exceptions.UserNotFoundException;
@@ -47,7 +47,7 @@ public class UserProfileManagementService {
         userEntity.setPhoneNumber(dto.getPhoneNumber());
         userRepository.save(userEntity);
 
-        UserProfileUpdatedEvent event = new UserProfileUpdatedEvent(EvenType.UserProfileUpdated)
+        UserProfileUpdatedEvent event = new UserProfileUpdatedEvent(EventType.UserProfileUpdated)
                 .setFirstName(dto.getFirstName())
                 .setLastName(dto.getLastName())
                 .setPhoneNumber(dto.getPhoneNumber());
