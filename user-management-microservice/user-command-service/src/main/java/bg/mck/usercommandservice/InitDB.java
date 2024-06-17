@@ -3,10 +3,10 @@ package bg.mck.usercommandservice;
 
 import bg.mck.usercommandservice.application.entity.Authority;
 import bg.mck.usercommandservice.application.entity.UserEntity;
+import bg.mck.usercommandservice.application.enums.AuthorityEnum;
 import bg.mck.usercommandservice.application.repository.AuthorityRepository;
 import bg.mck.usercommandservice.application.repository.UserRepository;
 import org.apache.sshd.common.config.keys.loader.openssh.kdf.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class InitDB implements CommandLineRunner {
     public void run(String... args) {
         if (userRepository.findAll().isEmpty()) {
             Authority roleAdmin = new Authority();
-            roleAdmin.setAuthority("ROLE_ADMIN");
+            roleAdmin.setAuthority(AuthorityEnum.admin);
 
             authorityRepository.save(roleAdmin);
 

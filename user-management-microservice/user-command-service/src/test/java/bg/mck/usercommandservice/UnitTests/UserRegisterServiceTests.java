@@ -1,8 +1,8 @@
 package bg.mck.usercommandservice.UnitTests;
 
-import bg.mck.usercommandservice.application.entity.UserCommandEntity;
-import bg.mck.usercommandservice.application.repository.UserCommandRepository;
-import bg.mck.usercommandservice.application.service.UserCommandService;
+import bg.mck.usercommandservice.application.entity.UserEntity;
+import bg.mck.usercommandservice.application.repository.UserRepository;
+import bg.mck.usercommandservice.application.service.UserRegisterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-public class UserCommandServiceTests {
+public class UserRegisterServiceTests {
 
     @Mock
-    private UserCommandRepository userCommandRepository;
+    private UserRepository userCommandRepository;
 
     @InjectMocks
-    private UserCommandService userCommandService;
+    private UserRegisterService userRegisterService;
 
     @BeforeEach
     public void setUp() {
@@ -30,13 +30,13 @@ public class UserCommandServiceTests {
     @Test
     public void findUserByEmail_NullOrEmptyValue_ShouldReturnNull() {
 
-        String result = userCommandService.findUserByEmail(null);
+        String result = userRegisterService.findUserByEmail(null);
         assertNull(result);
 
-        result = userCommandService.findUserByEmail("");
+        result = userRegisterService.findUserByEmail("");
         assertNull(result);
 
-        result = userCommandService.findUserByEmail("   ");
+        result = userRegisterService.findUserByEmail("   ");
         assertNull(result);
     }
 
@@ -44,18 +44,18 @@ public class UserCommandServiceTests {
     public void findUserByEmail_UserNotFound_ShouldReturnNull() {
         when(userCommandRepository.findByEmail(anyString())).thenReturn(null);
 
-        String result = userCommandService.findUserByEmail("pesho@gmail.com");
+        String result = userRegisterService.findUserByEmail("pesho@gmail.com");
         assertNull(result);
     }
 
     @Test
     public void findUserByEmail_UserFound_ShouldReturnEmail() {
-        UserCommandEntity user = new UserCommandEntity();
+        UserEntity user = new UserEntity();
         user.setEmail("ivo@gmail.com");
 
         when(userCommandRepository.findByEmail("ivo@gmail.com")).thenReturn(user);
 
-        String result = userCommandService.findUserByEmail("ivo@gmail.com");
+        String result = userRegisterService.findUserByEmail("ivo@gmail.com");
         assertEquals("ivo@gmail.com", result);
     }
 }

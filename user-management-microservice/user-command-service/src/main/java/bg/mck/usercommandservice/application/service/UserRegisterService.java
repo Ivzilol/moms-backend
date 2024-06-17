@@ -1,56 +1,68 @@
 package bg.mck.usercommandservice.application.service;
 
 import bg.mck.usercommandservice.application.dto.ErrorsRegistrationDTO;
-import bg.mck.usercommandservice.application.dto.UserEvent;
+import bg.mck.usercommandservice.application.enums.EventType;
+import bg.mck.usercommandservice.application.events.RegisteredUserEvent;
 import bg.mck.usercommandservice.application.dto.UserRegisterDTO;
 import bg.mck.usercommandservice.application.entity.Authority;
-import bg.mck.usercommandservice.application.entity.UserCommandEntity;
-import bg.mck.usercommandservice.application.repository.AuthorityCommandRepository;
-import bg.mck.usercommandservice.application.repository.UserCommandRepository;
-import bg.mck.usercommandservice.application.util.PasswordUtil;
-import org.springframework.kafka.core.KafkaTemplate;
+import bg.mck.usercommandservice.application.entity.UserEntity;
+import bg.mck.usercommandservice.application.enums.AuthorityEnum;
+import bg.mck.usercommandservice.application.repository.AuthorityRepository;
+import bg.mck.usercommandservice.application.repository.UserRepository;
+import bg.mck.usercommandservice.application.utils.EventCreationHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static bg.mck.usercommandservice.application.util.PasswordUtil.hashPassword;
 
 @Service
-public class UserCommandService {
-
-    private final UserCommandRepository userCommandRepository;
-
-    private final AuthorityCommandRepository authorityCommandRepository;
-
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+public class UserRegisterService {
 
 
-    public UserCommandService(UserCommandRepository userCommandRepository, AuthorityCommandRepository authorityCommandRepository, PasswordUtil passwordUtil, KafkaTemplate<String, Object> kafkaTemplate) {
-        this.userCommandRepository = userCommandRepository;
-        this.authorityCommandRepository = authorityCommandRepository;
-        this.kafkaTemplate = kafkaTemplate;
+    private final AuthorityRepository authorityRepository;
+    private final UserRepository userRepository;
+    private final KafkaPublisherService kafkaService;
+
+    public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, KafkaPublisherService kafkaService) {
+        this.authorityRepository = authorityRepository;
+        this.userRepository = userRepository;
+        this.kafkaService = kafkaService;
     }
+
 
     public void registerUser(UserRegisterDTO userRegisterDTO) {
-        UserCommandEntity user = new UserCommandEntity();
+        UserEntity user = new UserEntity();
         mapUser(user, userRegisterDTO);
-        this.userCommandRepository.save(user);
-        UserCommandEntity savedUser = this.userCommandRepository.findByEmail(userRegisterDTO.getEmail());
-        UserEvent userEvent = new UserEvent("userRegisterEvent", savedUser);
-        kafkaTemplate
-                .send("userManagementTopic", userEvent);
+        this.userRepository.save(user);
+        UserEntity savedUser = this.userRepository.findByEmail(userRegisterDTO.getEmail());
+
+        RegisteredUserEvent event = new RegisteredUserEvent(
+                EventType.UserRegistered,
+                savedUser.getId(),
+                savedUser.getEmail(),
+                savedUser.getPassword(),
+                savedUser.getFirstName(),
+                savedUser.getLastName(),
+                savedUser.getPhoneNumber(),
+                savedUser.isActive(),
+                savedUser.getAuthorities().stream().map(r -> r.getAuthority().name()).collect(Collectors.toSet())
+        );
+
+        kafkaService.publishUserEvent(EventCreationHelper.toUserEvent(event));
     }
 
-    private void mapUser(UserCommandEntity user, UserRegisterDTO userRegisterDTO) {
+    private void mapUser(UserEntity user, UserRegisterDTO userRegisterDTO) {
         user.setEmail(userRegisterDTO.getEmail());
         user.setPassword(hashPassword(userRegisterDTO.getPassword()));
         user.setFirstName(userRegisterDTO.getFirstName());
         user.setLastName(userRegisterDTO.getLastName());
         user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
         Authority authority = new Authority();
-        authority.setAuthority(userRegisterDTO.getRole());
-        this.authorityCommandRepository.save(authority);
+        authority.setAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole()));
+        this.authorityRepository.save(authority);
         if (user.getAuthorities() == null) {
             user.setAuthorities(new HashSet<>());
         }
@@ -87,7 +99,7 @@ public class UserCommandService {
         if (value == null || value.trim().isEmpty()) {
             return null;
         }
-        UserCommandEntity user = userCommandRepository.findByEmail(value);
+        UserEntity user = userRepository.findByEmail(value);
         if (user == null) {
             return null;
         } else {

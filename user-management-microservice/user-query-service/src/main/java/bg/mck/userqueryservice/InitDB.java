@@ -30,7 +30,7 @@ public class InitDB implements CommandLineRunner {
             userEntity.setLastName("Doe");
             userEntity.setPhoneNumber("+1234567890");
             userEntity.setActive(true);
-            userEntity.setRoles(Set.of("ROLE_ADMIN"));
+            userEntity.setRoles(Set.of("admin"));
 
             userRepository.save(userEntity);
         }

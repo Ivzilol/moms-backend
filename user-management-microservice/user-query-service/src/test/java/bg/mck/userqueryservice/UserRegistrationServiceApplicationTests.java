@@ -1,10 +1,10 @@
-package bg.mck.usercommandservice;
+package bg.mck.userqueryservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UserCommandServiceApplicationTests {
+class UserRegistrationServiceApplicationTests {
 
     @Test
     void contextLoads() {
