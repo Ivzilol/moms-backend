@@ -16,7 +16,10 @@
     <properties>
         <java.version>22</java.version>
     </properties>
+    <dependencies>
 
+
+    </dependencies>
 
 
 </project>

@@ -4,14 +4,20 @@ package bg.mck.usercommandservice.application.events;
 import bg.mck.usercommandservice.application.enums.EventType;
 
 
-public class UserProfileUpdatedEvent extends BaseEvent {
+public class ProfileUpdatedEvent extends BaseEvent {
 
     private String firstName;
     private String lastName;
     private String phoneNumber;
 
-    public UserProfileUpdatedEvent(EventType eventType) {
-        super(eventType);
+    public ProfileUpdatedEvent() {
+    }
+
+    public ProfileUpdatedEvent(EventType eventType, Long userId, String firstName, String lastName, String phoneNumber) {
+        super(eventType, userId);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
     }
 
 
@@ -19,7 +25,7 @@ public class UserProfileUpdatedEvent extends BaseEvent {
         return firstName;
     }
 
-    public UserProfileUpdatedEvent setFirstName(String firstName) {
+    public ProfileUpdatedEvent setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -28,7 +34,7 @@ public class UserProfileUpdatedEvent extends BaseEvent {
         return lastName;
     }
 
-    public UserProfileUpdatedEvent setLastName(String lastName) {
+    public ProfileUpdatedEvent setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -37,8 +43,9 @@ public class UserProfileUpdatedEvent extends BaseEvent {
         return phoneNumber;
     }
 
-    public UserProfileUpdatedEvent setPhoneNumber(String phoneNumber) {
+    public ProfileUpdatedEvent setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
+
 }

@@ -1,9 +1,8 @@
 package bg.mck.usercommandservice.application.controller;
 
-import bg.mck.usercommandservice.application.dto.UserUpdateProfileDTO;
+import bg.mck.usercommandservice.application.dto.UserDetailsDTO;
 import bg.mck.usercommandservice.application.service.UserProfileManagementService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +18,8 @@ public class UserProfileManagementController {
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserUpdateProfileDTO userUpdateProfileDTO) {
-        userProfileManagementService.updateUserProfile(id, userUpdateProfileDTO);
+    public ResponseEntity<Void> updateUserProfile(@PathVariable Long id, @Valid @RequestBody UserDetailsDTO userDetailsDTO) {
+        userProfileManagementService.updateUserProfile(id, userDetailsDTO);
         return ResponseEntity.ok().build();
     }
 }

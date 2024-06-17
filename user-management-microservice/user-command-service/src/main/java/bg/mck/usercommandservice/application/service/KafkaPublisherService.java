@@ -1,28 +1,40 @@
 package bg.mck.usercommandservice.application.service;
 
 import bg.mck.usercommandservice.application.events.BaseEvent;
-import org.apache.kafka.clients.admin.NewTopic;
+import bg.mck.usercommandservice.application.events.UserEvent;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class KafkaPublisherService {
 
-    private final KafkaTemplate<String, BaseEvent> kafkaTemplate;
-    private final NewTopic userTopic;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final String topicName;
+    private final ObjectMapper objectMapper;
 
-    public KafkaPublisherService(KafkaTemplate<String, BaseEvent> kafkaTemplate, NewTopic userTopic) {
+    public KafkaPublisherService(KafkaTemplate<String, String> kafkaTemplate, @Value("${KAFKA.USER.TOPIC.NAME}") String topicName, ObjectMapper objectMapper){
         this.kafkaTemplate = kafkaTemplate;
-        this.userTopic = userTopic;
+        this.topicName = topicName;
+        this.objectMapper = objectMapper;
     }
 
-    public void publishToTopic(String topic, BaseEvent event) {
-        kafkaTemplate.send(topic, event);
+    public <T extends BaseEvent> void publishUserEventToTopic(String topic, UserEvent<T> event) {
+        try {
+            kafkaTemplate.send(topic, objectMapper.writeValueAsString(event));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void publish(BaseEvent event) {
-        kafkaTemplate.send(userTopic.name(), event);
+    public <T extends BaseEvent> void publishUserEvent(UserEvent<T> event) {
+        try {
+            kafkaTemplate.send(topicName, event.getEventType().name(), objectMapper.writeValueAsString(event));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 
 }

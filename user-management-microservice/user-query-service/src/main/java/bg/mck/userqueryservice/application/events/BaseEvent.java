@@ -1,6 +1,10 @@
-package bg.mck.usercommandservice.application.events;
+package bg.mck.userqueryservice.application.events;
 
-import bg.mck.usercommandservice.application.enums.EventType;
+
+
+import bg.mck.userqueryservice.application.enums.EventType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import java.time.LocalDateTime;
@@ -15,11 +19,13 @@ public abstract class BaseEvent {
     public BaseEvent() {
     }
 
-    public BaseEvent(EventType eventType, Long userId) {
+    public BaseEvent(EventType eventType, Long userId, LocalDateTime localDateTime ) {
         this.eventType = eventType;
         this.userId = userId;
-        this.localDateTime = LocalDateTime.now();
+        this.localDateTime = localDateTime;
     }
+
+
 
     public EventType getEventType() {
         return eventType;

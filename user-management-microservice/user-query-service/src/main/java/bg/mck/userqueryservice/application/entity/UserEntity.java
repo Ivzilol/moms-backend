@@ -1,51 +1,37 @@
-package bg.mck.usercommandservice.application.entity;
+package bg.mck.userqueryservice.application.entity;
 
-import jakarta.persistence.*;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Set;
 
-
-@Entity
-@Table(name = "users")
+@Document(collection = "queryEntity")
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
     private boolean isActive;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_authorities",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id"))
-    private Set<Authority> authorities;
+    private Set<String> roles;
 
-    public UserEntity() {
-    }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public UserEntity setId(Long id) {
+    public UserEntity setId(String id) {
         this.id = id;
         return this;
     }
@@ -104,13 +90,12 @@ public class UserEntity {
         return this;
     }
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
+    public Set<String> getRoles() {
+        return roles;
     }
 
-    public UserEntity setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
+    public UserEntity setRoles(Set<String> roles) {
+        this.roles = roles;
         return this;
     }
 }
-

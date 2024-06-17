@@ -1,20 +1,12 @@
-package bg.mck.usercommandservice.application.dto;
+package bg.mck.userqueryservice.application.dto;
 
 
-import jakarta.validation.constraints.NotEmpty;
+public class UserDetailsDTO {
 
-public class UserUpdateProfileDTO {
 
-    @NotEmpty(message = "Password cannot be empty")
     private String password;
-
-    @NotEmpty(message = "First Name cannot be empty")
     private String firstName;
-
-    @NotEmpty(message = "Last Name cannot be empty")
     private String lastName;
-
-    @NotEmpty(message = "Phone Number cannot be empty")
     private String phoneNumber;
 
 
@@ -22,34 +14,35 @@ public class UserUpdateProfileDTO {
         return password;
     }
 
-    public void setPassword(String password) {
+    public UserDetailsDTO setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public UserDetailsDTO setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public UserDetailsDTO setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public UserDetailsDTO setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
-
-
-
 }

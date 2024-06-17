@@ -13,14 +13,7 @@ public class UserCredentialsDTO {
     @NotBlank(message = "Email must not be blank")
     private String email;
 
-    public @NotBlank(message = "Password must not be blank") String getHashedPassword() {
-        return hashedPassword;
-    }
 
-    public UserCredentialsDTO setHashedPassword(@NotBlank(message = "Password must not be blank") String hashedPassword) {
-        this.hashedPassword = hashedPassword;
-        return this;
-    }
 
     public @Email(message = "Invalid email format") @NotBlank(message = "Email must not be blank") String getEmail() {
         return email;
@@ -28,6 +21,15 @@ public class UserCredentialsDTO {
 
     public UserCredentialsDTO setEmail(@Email(message = "Invalid email format") @NotBlank(message = "Email must not be blank") String email) {
         this.email = email;
+        return this;
+    }
+
+    public @NotBlank(message = "Password must not be blank") String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public UserCredentialsDTO setHashedPassword(@NotBlank(message = "Password must not be blank") String hashedPassword) {
+        this.hashedPassword = hashedPassword;
         return this;
     }
 }
