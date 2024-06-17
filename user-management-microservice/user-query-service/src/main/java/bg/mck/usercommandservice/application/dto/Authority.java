@@ -1,17 +1,10 @@
-package bg.mck.usercommandservice.application.entity;
+package bg.mck.usercommandservice.application.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "authority")
 public class Authority {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String authority;
-
 
     public Authority() {
     }
@@ -31,5 +24,4 @@ public class Authority {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
-
 }
