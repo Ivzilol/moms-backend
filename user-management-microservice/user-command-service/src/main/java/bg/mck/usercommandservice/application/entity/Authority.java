@@ -1,6 +1,9 @@
 package bg.mck.usercommandservice.application.entity;
 
+import bg.mck.usercommandservice.application.enums.AuthorityEnum;
 import jakarta.persistence.*;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "authority")
@@ -10,10 +13,15 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String authority;
+    private AuthorityEnum authority;
 
 
     public Authority() {
+    }
+
+    public Authority(Authority other) {
+        this.id = other.id;
+        this.authority = other.authority;
     }
 
     public Long getId() {
@@ -24,12 +32,32 @@ public class Authority {
         this.id = id;
     }
 
-    public String getAuthority() {
+    public AuthorityEnum getAuthority() {
         return authority;
     }
 
-    public void setAuthority(String authority) {
+    public void setAuthority(AuthorityEnum authority) {
         this.authority = authority;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Authority authority1 = (Authority) o;
+        return Objects.equals(id, authority1.id) && authority == authority1.authority;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, authority);
+    }
+
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "id=" + id +
+                ", authority=" + authority +
+                '}';
+    }
 }

@@ -3,7 +3,7 @@ package bg.mck.usercommandservice.application.controller;
 
 import bg.mck.usercommandservice.application.dto.ErrorsRegistrationDTO;
 import bg.mck.usercommandservice.application.dto.UserRegisterDTO;
-import bg.mck.usercommandservice.application.service.UserCommandService;
+import bg.mck.usercommandservice.application.service.UserRegisterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
-public class UserCommandController {
+public class UserRegisterController {
 
-    private final UserCommandService userCommandService;
+    private final UserRegisterService userRegisterService;
 
-    public UserCommandController(UserCommandService userCommandService) {
-        this.userCommandService = userCommandService;
+    public UserRegisterController(UserRegisterService userRegisterService) {
+        this.userRegisterService = userRegisterService;
     }
 
     @Operation(summary = "Register")
@@ -45,7 +45,7 @@ public class UserCommandController {
         if (errorsRegistrationDTO != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorsRegistrationDTO.getBody());
         }
-        this.userCommandService.registerUser(userRegisterDTO);
+        this.userRegisterService.registerUser(userRegisterDTO);
         return ResponseEntity.ok().build();
     }
 
@@ -55,7 +55,7 @@ public class UserCommandController {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            this.userCommandService.setErrors(errors, errorsRegistrationDTO);
+            this.userRegisterService.setErrors(errors, errorsRegistrationDTO);
             return ResponseEntity.ok().body(errorsRegistrationDTO);
         }
         if (!userRegistrationDTO.getPassword().equals(userRegistrationDTO.getConfirmPassword())) {
