@@ -6,6 +6,8 @@ spring:
       name: gateway-service
   main:
     web-application-type: reactive
+  config:
+    import: optional:configserver:http://localhost:8888/,optional:file:./application-env.properties
 
   cloud:
     gateway:
@@ -14,11 +16,12 @@ spring:
       - id: authentication-service
         uri: lb://authentication-service
         predicates:
-          - Path=/auth/**
+          - Path=/${APPLICATION_VERSION}/auth/**
 
-jwt:
-  secret: ${JWT_SECRET_KEY}
-  expiration: ${JWT_EXPIRATION_TIME}
+      - id: user-query-service
+        uri: lb://user-query-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/users/**
 
 eureka:
   instance:

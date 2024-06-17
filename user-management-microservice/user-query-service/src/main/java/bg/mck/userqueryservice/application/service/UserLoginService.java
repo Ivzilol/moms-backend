@@ -8,10 +8,12 @@ import bg.mck.userqueryservice.application.mapper.UserQueryMapper;
 import bg.mck.userqueryservice.application.repository.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import static bg.mck.userqueryservice.application.constants.ApplicationConstants.APPLICATION_VERSION;
+
 
 @Service
 public class UserLoginService {
@@ -19,11 +21,13 @@ public class UserLoginService {
 
     private final UserRepository userRepository;
     private final UserQueryMapper userQueryMapper;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    public UserLoginService(UserRepository userRepository, UserQueryMapper userQueryMapper) {
+    public UserLoginService(UserRepository userRepository, UserQueryMapper userQueryMapper, RestTemplate restTemplate) {
         this.userRepository = userRepository;
         this.userQueryMapper = userQueryMapper;
+        this.restTemplate = restTemplate;
     }
 
     public UserLoginResponseDTO login(UserLoginDTO userDto) {
@@ -49,10 +53,9 @@ public class UserLoginService {
 
 
     public String generateToken(UserLoginResponseDTO loggedUser) {
-        RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(
-                "http://127.0.0.1:8081/auth/generate-token",
+                "http://authentication-service/"+ APPLICATION_VERSION +"/auth/generate-token",
                 loggedUser,
                 String.class
         );

@@ -3,7 +3,6 @@ package bg.mck.userqueryservice.application.controller;
 import bg.mck.userqueryservice.application.dto.UserLoginDTO;
 import bg.mck.userqueryservice.application.dto.UserLoginResponseDTO;
 import bg.mck.userqueryservice.application.service.UserLoginService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ public class UserLoginRestController {
     }
 
 
-    @PostMapping("/users/login")
+    @PostMapping("/${APPLICATION_VERSION}/users/login")
     public ResponseEntity<UserLoginResponseDTO> login(@RequestBody UserLoginDTO userLoginDTO,
                                                       HttpServletResponse response) {
 

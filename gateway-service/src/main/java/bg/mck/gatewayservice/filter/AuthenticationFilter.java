@@ -9,6 +9,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import static bg.mck.gatewayservice.validators.RouteValidator.APPLICATION_VERSION;
+
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
@@ -44,7 +46,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 HttpEntity<String> entity = new HttpEntity<>(headers);
                 RestTemplate restTemplate = new RestTemplate();
 
-                ResponseEntity<String> response = restTemplate.exchange("http://authentication-service/auth/validate",
+                ResponseEntity<String> response = restTemplate.exchange("http://authentication-service/"+ APPLICATION_VERSION +"/auth/validate",
                         HttpMethod.GET, entity, String.class);
 
                 if (!response.getBody().equals("Token is valid")) {

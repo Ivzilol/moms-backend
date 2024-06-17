@@ -3,16 +3,14 @@ package bg.mck.authenticationservice.controllers;
 import bg.mck.authenticationservice.model.User;
 import bg.mck.authenticationservice.services.JwtUtil;
 import io.jsonwebtoken.MalformedJwtException;
-import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/${APPLICATION_VERSION}")
 public class AuthenticationRestController {
 
     private final JwtUtil jwtUtil;
