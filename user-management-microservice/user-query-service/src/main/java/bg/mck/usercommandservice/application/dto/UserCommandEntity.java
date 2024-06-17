@@ -1,44 +1,24 @@
-package bg.mck.usercommandservice.application.entity;
-
-import jakarta.persistence.*;
+package bg.mck.usercommandservice.application.dto;
 
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
 public class UserCommandEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
     private boolean isActive;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_authorities",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
-
-    public UserCommandEntity() {
-    }
 
     public Long getId() {
         return id;
