@@ -61,9 +61,15 @@ public class UserRegisterService {
         user.setFirstName(userRegisterDTO.getFirstName());
         user.setLastName(userRegisterDTO.getLastName());
         user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
+        user.setActive(true);
         Authority authority = new Authority();
-        authority.setAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole()));
-        this.authorityRepository.save(authority);
+        if (userRepository.count() == 0) {
+            authority.setAuthority(AuthorityEnum.superAdmin);
+            this.authorityRepository.save(authority);
+        } else {
+            authority.setAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole()));
+            this.authorityRepository.save(authority);
+        }
         if (user.getAuthorities() == null) {
             user.setAuthorities(new HashSet<>());
         }
