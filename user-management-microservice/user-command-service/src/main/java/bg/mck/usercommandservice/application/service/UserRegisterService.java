@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static bg.mck.usercommandservice.application.exceptions.ErrorUserRegistrationExceptions.*;
 import static bg.mck.usercommandservice.application.util.PasswordUtil.hashPassword;
 
 @Service
@@ -73,24 +74,24 @@ public class UserRegisterService {
     public void setErrors(List<String> errors, ErrorsRegistrationDTO errorsRegistrationDTO) {
         for (String error : errors) {
             switch (error) {
-                case "Email cannot be empty":
-                    errorsRegistrationDTO.setEmailError("Email cannot be empty");
-                case "Password cannot be empty":
-                    errorsRegistrationDTO.setPasswordError("Password cannot be empty");
-                case "Confirm password cannot be empty":
-                    errorsRegistrationDTO.setConfirmPasswordError("Confirm password cannot be empty");
-                case "First Name cannot be empty":
-                    errorsRegistrationDTO.setFirstNameError("First Name cannot be empty");
-                case "Last Name cannot be empty":
-                    errorsRegistrationDTO.setLastNameError("Last Name cannot be empty");
-                case "Phone Number cannot be empty":
-                    errorsRegistrationDTO.setPhoneNumberError("Phone Number cannot be empty");
-                case "Email should be valid":
-                    errorsRegistrationDTO.setEmailError("Email should be valid");
-                case "Email already exist":
-                    errorsRegistrationDTO.setEmailError("Email already exist");
-                case "The password must contain a minimum of 6 characters":
-                    errorsRegistrationDTO.setPasswordError("The password must contain a minimum of 6 characters");
+                case EMPTY_EMAIL:
+                    errorsRegistrationDTO.setEmailError(EMPTY_EMAIL);
+                case EMPTY_PASSWORD:
+                    errorsRegistrationDTO.setPasswordError(EMPTY_PASSWORD);
+                case EMPTY_CONFIRM_PASSWORD:
+                    errorsRegistrationDTO.setConfirmPasswordError(EMPTY_CONFIRM_PASSWORD);
+                case EMPTY_FIRST_NAME:
+                    errorsRegistrationDTO.setFirstNameError(EMPTY_FIRST_NAME);
+                case EMPTY_LAST_NAME:
+                    errorsRegistrationDTO.setLastNameError(EMPTY_LAST_NAME);
+                case EMPTY_PHONE_NUMBER:
+                    errorsRegistrationDTO.setPhoneNumberError(EMPTY_PHONE_NUMBER);
+                case INVALID_EMAIL:
+                    errorsRegistrationDTO.setEmailError(INVALID_EMAIL);
+                case EXITING_EMAIL:
+                    errorsRegistrationDTO.setEmailError(EXITING_EMAIL);
+                case SHORT_PASSWORD:
+                    errorsRegistrationDTO.setPasswordError(SHORT_PASSWORD);
             }
         }
     }
