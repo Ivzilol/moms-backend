@@ -17,7 +17,6 @@ public class UserRegistrationService {
         this.userRepository = userRepository;
     }
 
-    @KafkaListener(topics = "userManagementTopic", groupId = "user-query-service")
     public void processUserRegister(RegisteredUserEvent userEvent) {
             UserEntity user = new UserEntity();
             user.setId(String.valueOf(userEvent.getUserId()));
