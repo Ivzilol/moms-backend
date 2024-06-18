@@ -2,6 +2,7 @@ package bg.mck.userqueryservice.application.service;
 
 
 import bg.mck.userqueryservice.application.enums.EventType;
+import bg.mck.userqueryservice.application.events.BaseEvent;
 import bg.mck.userqueryservice.application.events.ProfileUpdatedEvent;
 import bg.mck.userqueryservice.application.events.RegisteredUserEvent;
 import bg.mck.userqueryservice.application.events.UserEvent;
@@ -34,7 +35,7 @@ public class KafkaListenerService {
 
     @KafkaListener(topics = "${KAFKA.USER.TOPIC.NAME}", groupId = "user-query-service")
     public void processUserEvent(@Header(KafkaHeaders.RECEIVED_KEY) String eventType, @Payload String data) throws JsonProcessingException {
-        UserEvent<?> newEvent;
+        UserEvent<? extends BaseEvent> newEvent;
         if (eventType.equals(EventType.UserProfileUpdated.name())) {
             UserEvent<ProfileUpdatedEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {});
             profileManagementService.updateUserProfile(userEvent.getEvent());
