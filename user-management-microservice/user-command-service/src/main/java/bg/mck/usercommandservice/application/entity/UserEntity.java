@@ -2,7 +2,6 @@ package bg.mck.usercommandservice.application.entity;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,7 +29,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "boolean default true")
     private boolean isActive;
 
     @ManyToMany(fetch = FetchType.EAGER)
