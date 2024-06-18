@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static bg.mck.usercommandservice.application.exceptions.ErrorUserRegistrationExceptions.PASSWORDS_NOT_MATCH;
+
 @RestController
 @RequestMapping("/users")
 public class UserRegisterController {
@@ -59,7 +61,7 @@ public class UserRegisterController {
             return ResponseEntity.ok().body(errorsRegistrationDTO);
         }
         if (!userRegistrationDTO.getPassword().equals(userRegistrationDTO.getConfirmPassword())) {
-            errorsRegistrationDTO.setConfirmPasswordError("Passwords must match");
+            errorsRegistrationDTO.setConfirmPasswordError(PASSWORDS_NOT_MATCH);
             return ResponseEntity.ok().body(errorsRegistrationDTO);
         }
         return null;
