@@ -100,10 +100,6 @@ public class UserEntity {
         return isActive;
     }
 
-    public UserEntity setActive(boolean active) {
-        isActive = active;
-        return this;
-    }
 
     public Set<String> getRoles() {
         return roles;

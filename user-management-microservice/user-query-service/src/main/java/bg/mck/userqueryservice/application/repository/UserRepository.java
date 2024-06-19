@@ -2,8 +2,10 @@ package bg.mck.userqueryservice.application.repository;
 
 import bg.mck.userqueryservice.application.entity.UserEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends MongoRepository<UserEntity, String> {
+@Repository
+public interface UserRepository extends MongoRepository<UserEntity, Long> {
 
-
+    UserEntity findByEmail(String Email);
 }
