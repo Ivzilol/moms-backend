@@ -4,7 +4,7 @@ import bg.mck.userqueryservice.application.dto.UserLoginDTO;
 import bg.mck.userqueryservice.application.dto.UserLoginResponseDTO;
 import bg.mck.userqueryservice.application.entity.UserEntity;
 import bg.mck.userqueryservice.application.exceptions.InvalidEmailOrPasswordException;
-import bg.mck.userqueryservice.application.mapper.UserQueryMapper;
+import bg.mck.userqueryservice.application.mapper.UserMapper;
 import bg.mck.userqueryservice.application.repository.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,13 @@ public class UserLoginService {
 
 
     private final UserRepository userRepository;
-    private final UserQueryMapper userQueryMapper;
+    private final UserMapper userMapper;
     private final RestTemplate restTemplate;
 
     @Autowired
-    public UserLoginService(UserRepository userRepository, UserQueryMapper userQueryMapper, RestTemplate restTemplate) {
+    public UserLoginService(UserRepository userRepository, UserMapper userMapper, RestTemplate restTemplate) {
         this.userRepository = userRepository;
-        this.userQueryMapper = userQueryMapper;
+        this.userMapper = userMapper;
         this.restTemplate = restTemplate;
     }
 
@@ -37,7 +37,7 @@ public class UserLoginService {
 
         UserEntity user = userRepository.findByEmail(userDto.getEmail());
         if (isPasswordCorrect(user, userDto.getPassword())) {
-            return userQueryMapper.toUserResponseDTO(user);
+            return userMapper.toUserResponseDTO(user);
         } else {
             throw new InvalidEmailOrPasswordException("Invalid email or password");
         }
