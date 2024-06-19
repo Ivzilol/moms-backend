@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+      name: gateway-service
+  main:
+    web-application-type: reactive
+  config:
+    import: optional:configserver:http://localhost:8888/,optional:file:./application-env.properties
+
+  cloud:
+    gateway:
+      routes:
+        # TODO - Adding all service (register, login etc)..
+      - id: authentication-service
+        uri: lb://authentication-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/authentication/**
+
+      - id: user-query-service
+        uri: lb://user-query-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/users/**
+
+        filters:
+          - name: AuthorizationFilter
+          - name: AuthenticationFilter
+eureka:
+  instance:
+    hostname: localhost
