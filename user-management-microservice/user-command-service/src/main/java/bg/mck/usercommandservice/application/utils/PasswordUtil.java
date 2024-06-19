@@ -1,4 +1,4 @@
-package bg.mck.usercommandservice.application.util;
+package bg.mck.usercommandservice.application.utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;

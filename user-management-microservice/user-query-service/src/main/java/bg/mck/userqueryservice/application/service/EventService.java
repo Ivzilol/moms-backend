@@ -1,7 +1,6 @@
 package bg.mck.userqueryservice.application.service;
 
 import bg.mck.userqueryservice.application.entity.UserEntity;
-import bg.mck.userqueryservice.application.enums.EventType;
 import bg.mck.userqueryservice.application.events.BaseEvent;
 import bg.mck.userqueryservice.application.events.ProfileUpdatedEvent;
 import bg.mck.userqueryservice.application.events.RegisteredUserEvent;

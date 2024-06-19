@@ -2,6 +2,7 @@ package bg.mck.userqueryservice.application.mapper;
 
 import bg.mck.userqueryservice.application.dto.UserCredentialsDTO;
 import bg.mck.userqueryservice.application.dto.UserDetailsDTO;
+import bg.mck.userqueryservice.application.dto.UserLoginResponseDTO;
 import bg.mck.userqueryservice.application.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,4 +16,5 @@ public interface UserMapper {
     @Mapping(source = "password", target = "hashedPassword")
     UserCredentialsDTO toUserCredentialsDTO(UserEntity userEntity);
 
+    UserLoginResponseDTO toUserResponseDTO(UserEntity userEntity);
 }

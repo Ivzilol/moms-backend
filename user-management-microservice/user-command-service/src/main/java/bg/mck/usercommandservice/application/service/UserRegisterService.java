@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static bg.mck.usercommandservice.application.exceptions.ErrorUserRegistrationExceptions.*;
-import static bg.mck.usercommandservice.application.util.PasswordUtil.hashPassword;
+import static bg.mck.usercommandservice.application.utils.PasswordUtil.hashPassword;
 
 @Service
 public class UserRegisterService {
