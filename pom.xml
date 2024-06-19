@@ -22,7 +22,7 @@
 		<module>authorization-service</module>
 		<module>authentication-service</module>
 
-	</modules>
+    </modules>
 	<properties>
 		<java.version>22</java.version>
 	</properties>

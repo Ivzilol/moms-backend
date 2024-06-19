@@ -1,4 +1,4 @@
-package bg.mck.gatewayservice.filter;
+package bg.mck.gatewayservice.filters;
 
 import bg.mck.gatewayservice.validators.RouteValidator;
 
@@ -14,11 +14,14 @@ import static bg.mck.gatewayservice.validators.RouteValidator.APPLICATION_VERSIO
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
-    @Autowired
-    private RouteValidator routeValidator;
+    private final RouteValidator routeValidator;
+    private final RestTemplate restTemplate;
 
-    public AuthenticationFilter() {
+    @Autowired
+    public AuthenticationFilter(RouteValidator routeValidator, RestTemplate restTemplate) {
         super(Config.class);
+        this.routeValidator = routeValidator;
+        this.restTemplate = restTemplate;
     }
 
     public static class Config {
@@ -44,9 +47,8 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 headers.add(HttpHeaders.AUTHORIZATION, token);
 
                 HttpEntity<String> entity = new HttpEntity<>(headers);
-                RestTemplate restTemplate = new RestTemplate();
 
-                ResponseEntity<String> response = restTemplate.exchange("http://authentication-service/"+ APPLICATION_VERSION +"/auth/validate",
+                ResponseEntity<String> response = restTemplate.exchange("http://authentication-service/"+ APPLICATION_VERSION +"/authentication/validate",
                         HttpMethod.GET, entity, String.class);
 
                 if (!response.getBody().equals("Token is valid")) {

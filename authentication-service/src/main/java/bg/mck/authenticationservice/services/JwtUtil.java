@@ -66,4 +66,8 @@ public class JwtUtil {
     public boolean isExpired(String token) {
         return getExpirationDate(token).before(new Date());
     }
+
+    public String getRoles(String token) {
+        return getClaims(token).get("roles", String.class);
+    }
 }

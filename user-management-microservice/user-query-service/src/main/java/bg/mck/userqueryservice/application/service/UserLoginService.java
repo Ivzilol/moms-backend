@@ -55,7 +55,7 @@ public class UserLoginService {
     public String generateToken(UserLoginResponseDTO loggedUser) {
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(
-                "http://authentication-service/"+ APPLICATION_VERSION +"/auth/generate-token",
+                "http://authentication-service/"+ APPLICATION_VERSION +"/authentication/generate-token",
                 loggedUser,
                 String.class
         );

@@ -16,13 +16,16 @@ spring:
       - id: authentication-service
         uri: lb://authentication-service
         predicates:
-          - Path=/${APPLICATION_VERSION}/auth/**
+          - Path=/${APPLICATION_VERSION}/authentication/**
 
       - id: user-query-service
         uri: lb://user-query-service
         predicates:
           - Path=/${APPLICATION_VERSION}/users/**
 
+        filters:
+          - name: AuthorizationFilter
+          - name: AuthenticationFilter
 eureka:
   instance:
     hostname: localhost
