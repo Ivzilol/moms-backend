@@ -5,7 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "USER-QUERY-SERVICE", url = "http://localhost:8086")
+//url = "http://localhost:8086"
+@FeignClient(name = "USER-QUERY-SERVICE")
 public interface UserQueryServiceClient {
 
     @GetMapping("/auth/credentials/{id}")
