@@ -1,5 +1,6 @@
 package bg.mck.usercommandservice.application.service;
 
+import bg.mck.usercommandservice.application.client.UserQueryServiceClient;
 import bg.mck.usercommandservice.application.dto.ErrorsRegistrationDTO;
 import bg.mck.usercommandservice.application.enums.EventType;
 import bg.mck.usercommandservice.application.events.RegisteredUserEvent;
@@ -7,9 +8,12 @@ import bg.mck.usercommandservice.application.dto.UserRegisterDTO;
 import bg.mck.usercommandservice.application.entity.Authority;
 import bg.mck.usercommandservice.application.entity.UserEntity;
 import bg.mck.usercommandservice.application.enums.AuthorityEnum;
+import bg.mck.usercommandservice.application.events.UserEvent;
 import bg.mck.usercommandservice.application.repository.AuthorityRepository;
 import bg.mck.usercommandservice.application.repository.UserRepository;
 import bg.mck.usercommandservice.application.utils.EventCreationHelper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -25,12 +29,14 @@ public class UserRegisterService {
 
     private final AuthorityRepository authorityRepository;
     private final UserRepository userRepository;
-    private final KafkaPublisherService kafkaService;
+    private final UserQueryServiceClient userQueryClient;
+    private final ObjectMapper objectMapper;
 
-    public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, KafkaPublisherService kafkaService) {
+    public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, UserQueryServiceClient queryServiceClient, ObjectMapper objectMapper) {
         this.authorityRepository = authorityRepository;
         this.userRepository = userRepository;
-        this.kafkaService = kafkaService;
+        this.userQueryClient = queryServiceClient;
+        this.objectMapper = objectMapper;
     }
 
 
@@ -52,7 +58,12 @@ public class UserRegisterService {
                 savedUser.getAuthorities().stream().map(r -> r.getAuthority().name()).collect(Collectors.toSet())
         );
 
-        kafkaService.publishUserEvent(EventCreationHelper.toUserEvent(event));
+        UserEvent<RegisteredUserEvent> userEvent = EventCreationHelper.toUserEvent(event);
+        try {
+            userQueryClient.sendEvent(objectMapper.writeValueAsString(userEvent), event.getEventType().name());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void mapUser(UserEntity user, UserRegisterDTO userRegisterDTO) {
