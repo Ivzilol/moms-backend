@@ -6,12 +6,15 @@ import bg.mck.usercommandservice.application.dto.UserDetailsDTO;
 import bg.mck.usercommandservice.application.entity.UserEntity;
 import bg.mck.usercommandservice.application.enums.EventType;
 import bg.mck.usercommandservice.application.events.ProfileUpdatedEvent;
+import bg.mck.usercommandservice.application.events.UserEvent;
 import bg.mck.usercommandservice.application.exceptions.InvalidPasswordException;
 import bg.mck.usercommandservice.application.exceptions.UserNotFoundException;
 import bg.mck.usercommandservice.application.repository.UserRepository;
 
 
 import bg.mck.usercommandservice.application.utils.EventCreationHelper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +24,12 @@ public class UserProfileManagementService {
 
     private final UserRepository userRepository;
     private final UserQueryServiceClient userQueryClient;
-    private final KafkaPublisherService kafkaService;
+    private final ObjectMapper objectMapper;
 
-    public UserProfileManagementService(UserRepository userRepository, UserQueryServiceClient userQueryClient, KafkaPublisherService kafkaService) {
+    public UserProfileManagementService(UserRepository userRepository, UserQueryServiceClient userQueryClient, ObjectMapper objectMapper) {
         this.userRepository = userRepository;
         this.userQueryClient = userQueryClient;
-        this.kafkaService = kafkaService;
+        this.objectMapper = objectMapper;
     }
 
     public void updateUserProfile(Long id, UserDetailsDTO dto) {
@@ -54,8 +57,13 @@ public class UserProfileManagementService {
                 dto.getPhoneNumber()
         );
 
+        UserEvent<ProfileUpdatedEvent> userEvent = EventCreationHelper.toUserEvent(event);
+        try {
+            userQueryClient.sendEvent(objectMapper.writeValueAsString(userEvent), event.getEventType().name());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
-        kafkaService.publishUserEvent(EventCreationHelper.toUserEvent(event));
     }
 
 
