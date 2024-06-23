@@ -2,10 +2,7 @@ package bg.mck.userqueryservice.application.service;
 
 import bg.mck.userqueryservice.application.entity.UserEntity;
 import bg.mck.userqueryservice.application.enums.EventType;
-import bg.mck.userqueryservice.application.events.BaseEvent;
-import bg.mck.userqueryservice.application.events.ProfileUpdatedEvent;
-import bg.mck.userqueryservice.application.events.RegisteredUserEvent;
-import bg.mck.userqueryservice.application.events.UserEvent;
+import bg.mck.userqueryservice.application.events.*;
 import bg.mck.userqueryservice.application.repository.EventRepository;
 import bg.mck.userqueryservice.application.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -59,7 +56,7 @@ public class EventService {
 
             saveEvent(userEvent);
             reconstructUserEntity(userEvent.getEvent().getUserId());
-        }else if (eventType.equals(EventType.UserRegistered.name())) {
+        } else if (eventType.equals(EventType.UserRegistered.name())) {
 
             UserEvent<RegisteredUserEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
             });
@@ -67,13 +64,17 @@ public class EventService {
             UserEvent<RegisteredUserEvent> savedEvent = saveEvent(userEvent);
             userRegistrationService.processUserRegister(savedEvent.getEvent());
 
+        } else if (eventType.equals(EventType.UserPasswordUpdated.name())) {
+            UserEvent<PasswordUpdateEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
+            });
+            saveEvent(userEvent);
+            reconstructUserEntity(userEvent.getEvent().getUserId());
         } else {
             throw new IllegalArgumentException("Unknown event type: " + eventType);
         }
-
     }
 
-    private  <T extends BaseEvent> UserEvent<T> saveEvent(UserEvent<T> userEvent) {
+    private <T extends BaseEvent> UserEvent<T> saveEvent(UserEvent<T> userEvent) {
         return eventRepository.save(userEvent);
     }
 
@@ -96,7 +97,4 @@ public class EventService {
             userEntity.setRoles(registerEvent.getRoles());
         }
     }
-
-
-
 }
