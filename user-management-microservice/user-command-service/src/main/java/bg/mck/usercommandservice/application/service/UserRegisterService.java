@@ -75,7 +75,7 @@ public class UserRegisterService {
         user.setActive(true);
         Authority authority = new Authority();
         if (userRepository.count() == 0) {
-            authority.setAuthority(AuthorityEnum.superAdmin);
+            authority.setAuthority(AuthorityEnum.SUPERADMIN);
             this.authorityRepository.save(authority);
         } else {
             authority.setAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole()));

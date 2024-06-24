@@ -21,7 +21,12 @@ spring:
       - id: user-query-service
         uri: lb://user-query-service
         predicates:
-          - Path=/${APPLICATION_VERSION}/users/**
+          - Path=/${APPLICATION_VERSION}/user/query/**
+
+      - id: user-command-service
+        uri: lb://user-command-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/user/command/**
 
         filters:
           - name: AuthorizationFilter
