@@ -39,7 +39,7 @@ public class UserPasswordControllerIT {
         userRegisterDTO.setFirstName("Pesho");
         userRegisterDTO.setLastName("Georgiev");
         userRegisterDTO.setPhoneNumber("0888776655");
-        userRegisterDTO.setRole("user");
+        userRegisterDTO.setRole("USER");
 
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl)

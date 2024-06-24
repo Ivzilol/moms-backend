@@ -41,7 +41,7 @@ public class UserControllerTest {
         userRegisterDTO.setFirstName("Gosho");
         userRegisterDTO.setLastName("Georgiev");
         userRegisterDTO.setPhoneNumber("0888776655");
-        userRegisterDTO.setRole("user");
+        userRegisterDTO.setRole("USER");
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -58,7 +58,7 @@ public class UserControllerTest {
         userRegisterDTO.setFirstName("Gosho");
         userRegisterDTO.setLastName("Georgiev");
         userRegisterDTO.setPhoneNumber("0888776655");
-        userRegisterDTO.setRole("user");
+        userRegisterDTO.setRole("USER");
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +75,7 @@ public class UserControllerTest {
         userRegisterDTO.setFirstName("Gosho");
         userRegisterDTO.setLastName("Georgiev");
         userRegisterDTO.setPhoneNumber("0888776655");
-        userRegisterDTO.setRole("user");
+        userRegisterDTO.setRole("USER");
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -95,7 +95,7 @@ public class UserControllerTest {
         userRegisterDTO.setFirstName("Gosho");
         userRegisterDTO.setLastName("Georgiev");
         userRegisterDTO.setPhoneNumber("0888776655");
-        userRegisterDTO.setRole("user");
+        userRegisterDTO.setRole("USER");
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -115,7 +115,7 @@ public class UserControllerTest {
         userRegisterDTO.setFirstName("");
         userRegisterDTO.setLastName("Georgiev");
         userRegisterDTO.setPhoneNumber("0888776655");
-        userRegisterDTO.setRole("user");
+        userRegisterDTO.setRole("USER");
 
         mockMvc.perform(MockMvcRequestBuilders.post(baseUrl)
                         .contentType(MediaType.APPLICATION_JSON)

@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/user/users")
+@RequestMapping("/${APPLICATION_VERSION}/user/command/change-password")
 public class UserPasswordController {
 
     private final UserChangePasswordService userChangePasswordService;
@@ -27,7 +27,7 @@ public class UserPasswordController {
                             content = {@Content(mediaType = "application/json")})
             }
     )
-    @PatchMapping("/change-password/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id, @Valid @RequestBody UserChangePasswordDTO userChangePasswordDTO) {
         userChangePasswordService.changePassword(id, userChangePasswordDTO);
         return ResponseEntity.ok().build();

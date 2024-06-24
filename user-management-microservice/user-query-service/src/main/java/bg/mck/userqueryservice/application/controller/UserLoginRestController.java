@@ -3,6 +3,10 @@ package bg.mck.userqueryservice.application.controller;
 import bg.mck.userqueryservice.application.dto.UserLoginDTO;
 import bg.mck.userqueryservice.application.dto.UserLoginResponseDTO;
 import bg.mck.userqueryservice.application.service.UserLoginService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +25,14 @@ public class UserLoginRestController {
     }
 
 
-    @PostMapping("/${APPLICATION_VERSION}/users/login")
+    @Operation(summary = "User login")
+    @ApiResponses(
+            value = {@ApiResponse(responseCode = "200", description = "Successfully log in."),
+                    @ApiResponse(responseCode = "400", description = "Incorrect credentials.",
+                            content = {@Content(mediaType = "application/json")})
+            }
+    )
+    @PostMapping("/${APPLICATION_VERSION}/user/query/login")
     public ResponseEntity<UserLoginResponseDTO> login(@RequestBody UserLoginDTO userLoginDTO,
                                                       HttpServletResponse response) {
 

@@ -41,7 +41,7 @@ public class UserProfileManagementService {
         boolean isPasswordCorrect = BCrypt.checkpw(dto.getPassword(), actualUserCredentials.getHashedPassword());
 
         if (!isPasswordCorrect) {
-            throw new InvalidPasswordException("Invalid password for user with email: " + actualUserCredentials.getEmail());
+            throw new InvalidPasswordException("Invalid password for USER with email: " + actualUserCredentials.getEmail());
         }
 
         userEntity.setFirstName(dto.getFirstName());
