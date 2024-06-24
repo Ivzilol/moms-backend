@@ -8,9 +8,12 @@ spring:
     import: optional:configserver:http://localhost:8888/,optional:file:./application-env.properties
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/mck-orders?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
+    url: "jdbc:mysql://127.0.0.1:3307/mck-orders?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
+    username: root
+    password: root_password
+  sql:
+    init:
+      mode: never
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,6 +21,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
   data:
     redis:
       host: localhost
