@@ -14,6 +14,7 @@ import bg.mck.usercommandservice.application.repository.UserRepository;
 import bg.mck.usercommandservice.application.utils.EventCreationHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -31,6 +32,9 @@ public class UserRegisterService {
     private final UserRepository userRepository;
     private final UserQueryServiceClient userQueryClient;
     private final ObjectMapper objectMapper;
+
+    @Value("${SUPERADMIN_PASSWORD}")
+    private String superAdminPassword;
 
     public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, UserQueryServiceClient queryServiceClient, ObjectMapper objectMapper) {
         this.authorityRepository = authorityRepository;
@@ -74,7 +78,7 @@ public class UserRegisterService {
         user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
         user.setActive(true);
         Authority authority = new Authority();
-        if (userRepository.count() == 0) {
+        if (userRegisterDTO.getPassword().equals(superAdminPassword)) {
             authority.setAuthority(AuthorityEnum.SUPERADMIN);
             this.authorityRepository.save(authority);
         } else {
