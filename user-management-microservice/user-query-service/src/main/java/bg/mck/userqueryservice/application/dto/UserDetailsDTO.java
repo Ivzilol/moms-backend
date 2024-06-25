@@ -1,6 +1,8 @@
 package bg.mck.userqueryservice.application.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Set;
 
 public class UserDetailsDTO {
@@ -10,6 +12,7 @@ public class UserDetailsDTO {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    @JsonProperty("isActive")
     private boolean isActive;
     private Set<String> roles;
 

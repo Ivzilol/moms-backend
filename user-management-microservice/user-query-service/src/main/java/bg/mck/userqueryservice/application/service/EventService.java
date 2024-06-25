@@ -35,6 +35,10 @@ public class EventService {
         List<UserEvent<? extends BaseEvent>> events = eventRepository.
                 findByEventUserIdOrderByEventLocalDateTimeAsc(userId);
 
+        if (events.isEmpty()) {
+            return null;
+        }
+
         UserEntity userEntity = new UserEntity();
         userEntity.setId(String.valueOf(userId));
 
@@ -78,6 +82,7 @@ public class EventService {
         return eventRepository.save(userEvent);
     }
 
+
     private void applyEvent(UserEvent<? extends BaseEvent> userEvent, UserEntity userEntity) {
         BaseEvent event = userEvent.getEvent();
 
@@ -95,6 +100,8 @@ public class EventService {
             userEntity.setPhoneNumber(registerEvent.getPhoneNumber());
             userEntity.setActive(registerEvent.isActive());
             userEntity.setRoles(registerEvent.getRoles());
+        } else if (event instanceof PasswordUpdateEvent passwordEvent) {
+            userEntity.setPassword(passwordEvent.getNewPassword());
         }
     }
 }

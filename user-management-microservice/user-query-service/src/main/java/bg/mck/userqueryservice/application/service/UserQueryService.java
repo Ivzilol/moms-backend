@@ -35,9 +35,8 @@ public class UserQueryService {
             return cachedUser;
         }
 
-        UserEntity reconstructedUser = eventService.reconstructUserEntity(id);
-        redisService.cacheObject(reconstructedUser);
 
-        return reconstructedUser;
+        return eventService.reconstructUserEntity(id);
     }
 }
+
