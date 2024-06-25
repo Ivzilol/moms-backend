@@ -8,25 +8,30 @@ import jakarta.persistence.*;
 @Table(name = "fastener")
 public class FastenerEntity extends BaseEntity {
 
+    @Column(columnDefinition="TEXT")
     private String description;
     private Double diameter;
     private Double length;
     private String model;
     private String clazz;
+
     private Double quantity;
-    private String Note;
+    @Column(columnDefinition="TEXT")
+    private String note;
+    private String specificationFileUrl;
 
     public FastenerEntity() {
     }
 
-    public FastenerEntity(String description, Double diameter, Double length, String model, String clazz, Double quantity, String note, _MaterialEntity material) {
+    public FastenerEntity(String description, Double diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
         this.description = description;
         this.diameter = diameter;
         this.length = length;
         this.model = model;
         this.clazz = clazz;
         this.quantity = quantity;
-        Note = note;
+        this.note = note;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getDescription() {
@@ -84,13 +89,20 @@ public class FastenerEntity extends BaseEntity {
     }
 
     public String getNote() {
-        return Note;
+        return note;
     }
 
     public FastenerEntity setNote(String note) {
-        Note = note;
+        this.note = note;
         return this;
     }
 
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
 
+    public FastenerEntity setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
+        return this;
+    }
 }

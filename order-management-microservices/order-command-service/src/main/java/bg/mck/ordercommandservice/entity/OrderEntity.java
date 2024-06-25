@@ -17,6 +17,8 @@ public class OrderEntity extends BaseEntity {
     private String orderNumber;
     private String orderDescription;
     private LocalDateTime orderDate;
+    private LocalDateTime deliveryDate;
+
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;

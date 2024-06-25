@@ -1,17 +1,24 @@
 package bg.mck.ordercommandservice.entity.material;
 
 import bg.mck.ordercommandservice.entity.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 //Ламарина
 @Entity
 @Table(name = "galvanised_sheets")
 public class GalvanisedSheetEntity  extends BaseEntity {
 
+    private String marking; //Означение
+    private String number;
+    private Integer count;
+    private Double length;
+    private Double width;
+    private Double area;
+
     private Double quantity;
+    @Column(columnDefinition="TEXT")
+    private String note;
+    private String specificationFileUrl;
 
     public GalvanisedSheetEntity() {
     }

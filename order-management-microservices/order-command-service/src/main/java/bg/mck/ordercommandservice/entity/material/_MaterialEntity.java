@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.entity.material;
 
 import bg.mck.ordercommandservice.entity.BaseEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
+import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -9,6 +10,9 @@ import java.util.Set;
 @Entity
 @Table(name = "materials")
 public class _MaterialEntity extends BaseEntity {
+
+    private MaterialType materialType;
+
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<FastenerEntity> fasteners;
@@ -16,15 +20,24 @@ public class _MaterialEntity extends BaseEntity {
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<GalvanisedSheetEntity> galvanisedSheets;
-
-    //    private Set<InsulationEntity> insulation;
-//    private Set<MetalEntity> metals;
-//    private Set<PanelsEntity> panels;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
+    private Set<InsulationEntity> insulation;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
+    private Set<MetalEntity> metals;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
+    private Set<PanelsEntity> panels;
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<RebarEntity> rebars;
-//    private Set<SetEntity> sets;
-//    private Set<UnspecifiedEntity> unspecified;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
+    private Set<SetEntity> sets;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
+    private Set<UnspecifiedEntity> unspecified;
 
     public _MaterialEntity() {
     }

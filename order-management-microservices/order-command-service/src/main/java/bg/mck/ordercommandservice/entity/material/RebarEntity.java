@@ -1,6 +1,7 @@
 package bg.mck.ordercommandservice.entity.material;
 
 import bg.mck.ordercommandservice.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -8,21 +9,19 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "rebars")
 public class RebarEntity extends BaseEntity {
+
+    private Integer positionNumber;
+    private String type;
+    private String steel;
+    private Double diameter;
+    private Double length;
+    private Double weight;
+
     private Double quantity;
+    @Column(columnDefinition="TEXT")
+    private String note;
+    private String specificationFileUrl;
 
     public RebarEntity() {
-    }
-
-    public RebarEntity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public RebarEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
     }
 }
