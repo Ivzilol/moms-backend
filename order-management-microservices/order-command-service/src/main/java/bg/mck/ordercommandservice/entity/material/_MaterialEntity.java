@@ -10,17 +10,19 @@ import java.util.Set;
 @Table(name = "materials")
 public class _MaterialEntity extends BaseEntity {
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "material_id")
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<FastenerEntity> fasteners;
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "material_id")
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<GalvanisedSheetEntity> galvanisedSheets;
 
-//    private Set<InsulationEntity> insulation;
+    //    private Set<InsulationEntity> insulation;
 //    private Set<MetalEntity> metals;
 //    private Set<PanelsEntity> panels;
-//    private Set<RebarEntity> rebars;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
+    private Set<RebarEntity> rebars;
 //    private Set<SetEntity> sets;
 //    private Set<UnspecifiedEntity> unspecified;
 

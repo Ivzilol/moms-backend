@@ -16,8 +16,6 @@ public class FastenerEntity extends BaseEntity {
     private Double quantity;
     private String Note;
 
-
-
     public FastenerEntity() {
     }
 
@@ -29,7 +27,6 @@ public class FastenerEntity extends BaseEntity {
         this.clazz = clazz;
         this.quantity = quantity;
         Note = note;
-
     }
 
     public String getDescription() {
