@@ -44,7 +44,7 @@ public class DBInitTestData implements CommandLineRunner {
 
         // ПОТРЕБИТЕЛ
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
-        userDetailsDTO.setUsername("test@gmail.com");
+        userDetailsDTO.setEmail("test@gmail.com");
 
 
         // МАТЕРИАЛИ
@@ -79,7 +79,7 @@ public class DBInitTestData implements CommandLineRunner {
 
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setOrderNumber("123")
-                .setUsername(userDetailsDTO.getUsername())
+                .setUsername(userDetailsDTO.getEmail())
                 .setOrderDate(LocalDateTime.now())
 
                 .setMaterials(materialEntity)
