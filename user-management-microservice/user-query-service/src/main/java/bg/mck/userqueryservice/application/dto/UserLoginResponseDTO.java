@@ -6,12 +6,12 @@ public class UserLoginResponseDTO {
 
     private String id;
     private String email;
-    private Set<String> authorities;
+    private Set<String> roles;
 
     public UserLoginResponseDTO(String id, String email, Set<String> authorities) {
         this.id = id;
         this.email = email;
-        this.authorities = authorities;
+        this.roles = authorities;
     }
 
     public String getId() {
@@ -33,12 +33,12 @@ public class UserLoginResponseDTO {
     }
 
 
-    public Set<String> getAuthorities() {
-        return authorities;
+    public Set<String> getRoles() {
+        return roles;
     }
 
-    public UserLoginResponseDTO setAuthorities(Set<String> authorities) {
-        this.authorities = authorities;
+    public UserLoginResponseDTO setRoles(Set<String> roles) {
+        this.roles = roles;
         return this;
     }
 }
