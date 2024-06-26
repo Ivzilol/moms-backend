@@ -4,7 +4,7 @@ package bg.mck.ordercommandservice.dto.Material;
 public class GalvanisedSheetDTO {
     private String marking; //Означение
     private String number;
-    private Integer count;
+    private String type;
     private Double length;
     private Double width;
     private Double area;
@@ -16,10 +16,10 @@ public class GalvanisedSheetDTO {
     public GalvanisedSheetDTO() {
     }
 
-    public GalvanisedSheetDTO(String marking, String number, Integer count, Double length, Double width, Double area, Double quantity, String note, String specificationFileUrl) {
+    public GalvanisedSheetDTO(String marking, String number, String type, Double length, Double width, Double area, Double quantity, String note, String specificationFileUrl) {
         this.marking = marking;
         this.number = number;
-        this.count = count;
+        this.type = type;
         this.length = length;
         this.width = width;
         this.area = area;
@@ -46,12 +46,12 @@ public class GalvanisedSheetDTO {
         return this;
     }
 
-    public Integer getCount() {
-        return count;
+    public String getType() {
+        return type;
     }
 
-    public GalvanisedSheetDTO setCount(Integer count) {
-        this.count = count;
+    public GalvanisedSheetDTO setType(String type) {
+        this.type = type;
         return this;
     }
 

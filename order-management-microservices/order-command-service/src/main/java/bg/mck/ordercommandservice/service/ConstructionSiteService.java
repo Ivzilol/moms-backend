@@ -4,7 +4,7 @@ import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
 import bg.mck.ordercommandservice.repository.ConstructionSiteRepository;
-import exception.ConstructionSiteNotFoundException;
+import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

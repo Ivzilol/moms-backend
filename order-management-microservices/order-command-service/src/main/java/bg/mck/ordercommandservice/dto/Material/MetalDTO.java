@@ -2,7 +2,7 @@ package bg.mck.ordercommandservice.dto.Material;
 
 public class MetalDTO {
 
-    private String generaDescription;
+    private String generalDescription;
     private String length;
     private String weight;
     private String typeOfMetal;
@@ -18,7 +18,7 @@ public class MetalDTO {
     }
 
     public MetalDTO(String generaDescription, String length, String weight, String typeOfMetal, String materialStandard, String standardForTolerances, String originCertificate, Double quantity, String note, String specificationFileUrl) {
-        this.generaDescription = generaDescription;
+        this.generalDescription = generaDescription;
         this.length = length;
         this.weight = weight;
         this.typeOfMetal = typeOfMetal;
@@ -30,12 +30,12 @@ public class MetalDTO {
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public String getGeneraDescription() {
-        return generaDescription;
+    public String getGeneralDescription() {
+        return generalDescription;
     }
 
-    public MetalDTO setGeneraDescription(String generaDescription) {
-        this.generaDescription = generaDescription;
+    public MetalDTO setGeneralDescription(String generalDescription) {
+        this.generalDescription = generalDescription;
         return this;
     }
 

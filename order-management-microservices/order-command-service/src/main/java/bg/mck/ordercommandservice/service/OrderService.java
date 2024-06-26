@@ -4,7 +4,7 @@ import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
 import bg.mck.ordercommandservice.repository.OrderRepository;
-import exception.OrderNotFoundException;
+import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 
 public class FastenerDTO {
     private String description;
-    private Double diameter;
+    private String diameter;
     private Double length;
     private String model;
     private String clazz;
@@ -13,7 +13,7 @@ public class FastenerDTO {
     private String note;
     private String specificationFileUrl;
 
-    public FastenerDTO(String description, Double diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
+    public FastenerDTO(String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
         this.description = description;
         this.diameter = diameter;
         this.length = length;
@@ -33,11 +33,11 @@ public class FastenerDTO {
         return this;
     }
 
-    public Double getDiameter() {
+    public String getDiameter() {
         return diameter;
     }
 
-    public FastenerDTO setDiameter(Double diameter) {
+    public FastenerDTO setDiameter(String diameter) {
         this.diameter = diameter;
         return this;
     }

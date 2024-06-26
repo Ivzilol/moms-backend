@@ -10,7 +10,7 @@ public class FastenerEntity extends BaseEntity {
 
     @Column(columnDefinition="TEXT")
     private String description;
-    private Double diameter;
+    private String diameter;
     private Double length;
     private String model;
     private String clazz;
@@ -23,7 +23,7 @@ public class FastenerEntity extends BaseEntity {
     public FastenerEntity() {
     }
 
-    public FastenerEntity(String description, Double diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
+    public FastenerEntity(String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
         this.description = description;
         this.diameter = diameter;
         this.length = length;
@@ -43,11 +43,11 @@ public class FastenerEntity extends BaseEntity {
         return this;
     }
 
-    public Double getDiameter() {
+    public String getDiameter() {
         return diameter;
     }
 
-    public FastenerEntity setDiameter(Double diameter) {
+    public FastenerEntity setDiameter(String diameter) {
         this.diameter = diameter;
         return this;
     }
