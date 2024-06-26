@@ -2,14 +2,18 @@ package bg.mck.ordercommandservice.dto;
 
 public class UserDetailsDTO {
     private Long id;
-    private String username;
+    private String email;
+    private String firstName;
+    private String lastName;
 
     public UserDetailsDTO() {
     }
 
-    public UserDetailsDTO(Long id, String username) {
+    public UserDetailsDTO(Long id, String email, String firstName, String lastName) {
         this.id = id;
-        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -21,12 +25,30 @@ public class UserDetailsDTO {
         return this;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public UserDetailsDTO setUsername(String username) {
-        this.username = username;
+    public UserDetailsDTO setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public UserDetailsDTO setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public UserDetailsDTO setLastName(String lastName) {
+        this.lastName = lastName;
         return this;
     }
 }

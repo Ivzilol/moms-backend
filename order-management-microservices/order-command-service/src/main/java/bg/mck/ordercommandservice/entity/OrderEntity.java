@@ -17,6 +17,8 @@ public class OrderEntity extends BaseEntity {
     private String orderNumber;
     private String orderDescription;
     private LocalDateTime orderDate;
+    private LocalDateTime deliveryDate;
+
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -35,11 +37,12 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String username, String orderNumber, String orderDescription, LocalDateTime orderDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, _MaterialEntity materials, ServiceEntity services, TransportEntity transports) {
+    public OrderEntity(String username, String orderNumber, String orderDescription, LocalDateTime orderDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, _MaterialEntity materials, ServiceEntity services, TransportEntity transports, LocalDateTime deliveryDate) {
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
         this.orderStatus = orderStatus;
         this.constructionSite = constructionSite;
         this.materials = materials;
@@ -125,6 +128,15 @@ public class OrderEntity extends BaseEntity {
 
     public OrderEntity setTransports(TransportEntity transports) {
         this.transports = transports;
+        return this;
+    }
+
+    public LocalDateTime getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public OrderEntity setDeliveryDate(LocalDateTime deliveryDate) {
+        this.deliveryDate = deliveryDate;
         return this;
     }
 }

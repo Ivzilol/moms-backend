@@ -1,27 +1,18 @@
-package bg.mck.ordercommandservice.entity.material;
+package bg.mck.ordercommandservice.dto.Material;
 
-import bg.mck.ordercommandservice.entity.BaseEntity;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
-//други
-@Entity
-@Table(name = "unspecified")
-public class UnspecifiedEntity  extends BaseEntity {
-
-    @Column(columnDefinition="TEXT")
+public class SetDTO {
     private String description;
 
     private Double quantity;
-    @Column(columnDefinition="TEXT")
     private String note;
     private String specificationFileUrl;
 
-    public UnspecifiedEntity() {
+    public SetDTO() {
     }
 
-    public UnspecifiedEntity(String description, Double quantity, String note, String specificationFileUrl) {
+    public SetDTO(String description, Double quantity, String note, String specificationFileUrl) {
         this.description = description;
         this.quantity = quantity;
         this.note = note;
@@ -32,7 +23,7 @@ public class UnspecifiedEntity  extends BaseEntity {
         return description;
     }
 
-    public UnspecifiedEntity setDescription(String description) {
+    public SetDTO setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -41,7 +32,7 @@ public class UnspecifiedEntity  extends BaseEntity {
         return quantity;
     }
 
-    public UnspecifiedEntity setQuantity(Double quantity) {
+    public SetDTO setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -50,7 +41,7 @@ public class UnspecifiedEntity  extends BaseEntity {
         return note;
     }
 
-    public UnspecifiedEntity setNote(String note) {
+    public SetDTO setNote(String note) {
         this.note = note;
         return this;
     }
@@ -59,7 +50,7 @@ public class UnspecifiedEntity  extends BaseEntity {
         return specificationFileUrl;
     }
 
-    public UnspecifiedEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public SetDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }

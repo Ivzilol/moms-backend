@@ -1,15 +1,6 @@
-package bg.mck.ordercommandservice.entity.material;
+package bg.mck.ordercommandservice.dto.Material;
 
-import bg.mck.ordercommandservice.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
-//армировка
-@Entity
-@Table(name = "rebars")
-public class RebarEntity extends BaseEntity {
-
+public class RebarDTO {
     private Integer positionNumber;
     private String type;
     private String steel;
@@ -18,14 +9,13 @@ public class RebarEntity extends BaseEntity {
     private Double weight;
 
     private Double quantity;
-    @Column(columnDefinition="TEXT")
     private String note;
     private String specificationFileUrl;
 
-    public RebarEntity() {
+    public RebarDTO() {
     }
 
-    public RebarEntity(Integer positionNumber, String type, String steel, Double diameter, Double length, Double weight, Double quantity, String note, String specificationFileUrl) {
+    public RebarDTO(Integer positionNumber, String type, String steel, Double diameter, Double length, Double weight, Double quantity, String note, String specificationFileUrl) {
         this.positionNumber = positionNumber;
         this.type = type;
         this.steel = steel;
@@ -41,7 +31,7 @@ public class RebarEntity extends BaseEntity {
         return positionNumber;
     }
 
-    public RebarEntity setPositionNumber(Integer positionNumber) {
+    public RebarDTO setPositionNumber(Integer positionNumber) {
         this.positionNumber = positionNumber;
         return this;
     }
@@ -50,7 +40,7 @@ public class RebarEntity extends BaseEntity {
         return type;
     }
 
-    public RebarEntity setType(String type) {
+    public RebarDTO setType(String type) {
         this.type = type;
         return this;
     }
@@ -59,7 +49,7 @@ public class RebarEntity extends BaseEntity {
         return steel;
     }
 
-    public RebarEntity setSteel(String steel) {
+    public RebarDTO setSteel(String steel) {
         this.steel = steel;
         return this;
     }
@@ -68,7 +58,7 @@ public class RebarEntity extends BaseEntity {
         return diameter;
     }
 
-    public RebarEntity setDiameter(Double diameter) {
+    public RebarDTO setDiameter(Double diameter) {
         this.diameter = diameter;
         return this;
     }
@@ -77,7 +67,7 @@ public class RebarEntity extends BaseEntity {
         return length;
     }
 
-    public RebarEntity setLength(Double length) {
+    public RebarDTO setLength(Double length) {
         this.length = length;
         return this;
     }
@@ -86,7 +76,7 @@ public class RebarEntity extends BaseEntity {
         return weight;
     }
 
-    public RebarEntity setWeight(Double weight) {
+    public RebarDTO setWeight(Double weight) {
         this.weight = weight;
         return this;
     }
@@ -95,7 +85,7 @@ public class RebarEntity extends BaseEntity {
         return quantity;
     }
 
-    public RebarEntity setQuantity(Double quantity) {
+    public RebarDTO setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -104,7 +94,7 @@ public class RebarEntity extends BaseEntity {
         return note;
     }
 
-    public RebarEntity setNote(String note) {
+    public RebarDTO setNote(String note) {
         this.note = note;
         return this;
     }
@@ -113,7 +103,7 @@ public class RebarEntity extends BaseEntity {
         return specificationFileUrl;
     }
 
-    public RebarEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public RebarDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }

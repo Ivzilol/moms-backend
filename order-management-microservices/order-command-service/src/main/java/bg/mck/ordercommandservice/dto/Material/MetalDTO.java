@@ -1,14 +1,6 @@
-package bg.mck.ordercommandservice.entity.material;
+package bg.mck.ordercommandservice.dto.Material;
 
-import bg.mck.ordercommandservice.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
-//метали
-@Entity
-@Table(name = "metals")
-public class MetalEntity  extends BaseEntity {
+public class MetalDTO {
 
     private String generalDescription;
     private String length;
@@ -19,15 +11,14 @@ public class MetalEntity  extends BaseEntity {
     private String originCertificate;
 
     private Double quantity;
-    @Column(columnDefinition="TEXT")
     private String note;
     private String specificationFileUrl;
 
-    public MetalEntity() {
+    public MetalDTO() {
     }
 
-    public MetalEntity(String generalDescription, String length, String weight, String typeOfMetal, String materialStandard, String standardForTolerances, String originCertificate, Double quantity, String note, String specificationFileUrl) {
-        this.generalDescription = generalDescription;
+    public MetalDTO(String generaDescription, String length, String weight, String typeOfMetal, String materialStandard, String standardForTolerances, String originCertificate, Double quantity, String note, String specificationFileUrl) {
+        this.generalDescription = generaDescription;
         this.length = length;
         this.weight = weight;
         this.typeOfMetal = typeOfMetal;
@@ -43,7 +34,7 @@ public class MetalEntity  extends BaseEntity {
         return generalDescription;
     }
 
-    public MetalEntity setGeneralDescription(String generalDescription) {
+    public MetalDTO setGeneralDescription(String generalDescription) {
         this.generalDescription = generalDescription;
         return this;
     }
@@ -52,7 +43,7 @@ public class MetalEntity  extends BaseEntity {
         return length;
     }
 
-    public MetalEntity setLength(String length) {
+    public MetalDTO setLength(String length) {
         this.length = length;
         return this;
     }
@@ -61,7 +52,7 @@ public class MetalEntity  extends BaseEntity {
         return weight;
     }
 
-    public MetalEntity setWeight(String weight) {
+    public MetalDTO setWeight(String weight) {
         this.weight = weight;
         return this;
     }
@@ -70,7 +61,7 @@ public class MetalEntity  extends BaseEntity {
         return typeOfMetal;
     }
 
-    public MetalEntity setTypeOfMetal(String typeOfMetal) {
+    public MetalDTO setTypeOfMetal(String typeOfMetal) {
         this.typeOfMetal = typeOfMetal;
         return this;
     }
@@ -79,7 +70,7 @@ public class MetalEntity  extends BaseEntity {
         return materialStandard;
     }
 
-    public MetalEntity setMaterialStandard(String materialStandard) {
+    public MetalDTO setMaterialStandard(String materialStandard) {
         this.materialStandard = materialStandard;
         return this;
     }
@@ -88,7 +79,7 @@ public class MetalEntity  extends BaseEntity {
         return standardForTolerances;
     }
 
-    public MetalEntity setStandardForTolerances(String standardForTolerances) {
+    public MetalDTO setStandardForTolerances(String standardForTolerances) {
         this.standardForTolerances = standardForTolerances;
         return this;
     }
@@ -97,7 +88,7 @@ public class MetalEntity  extends BaseEntity {
         return originCertificate;
     }
 
-    public MetalEntity setOriginCertificate(String originCertificate) {
+    public MetalDTO setOriginCertificate(String originCertificate) {
         this.originCertificate = originCertificate;
         return this;
     }
@@ -106,7 +97,7 @@ public class MetalEntity  extends BaseEntity {
         return quantity;
     }
 
-    public MetalEntity setQuantity(Double quantity) {
+    public MetalDTO setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -115,7 +106,7 @@ public class MetalEntity  extends BaseEntity {
         return note;
     }
 
-    public MetalEntity setNote(String note) {
+    public MetalDTO setNote(String note) {
         this.note = note;
         return this;
     }
@@ -124,7 +115,7 @@ public class MetalEntity  extends BaseEntity {
         return specificationFileUrl;
     }
 
-    public MetalEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public MetalDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }

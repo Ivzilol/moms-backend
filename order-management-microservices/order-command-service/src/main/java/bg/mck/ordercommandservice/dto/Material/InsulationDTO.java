@@ -1,15 +1,7 @@
-package bg.mck.ordercommandservice.entity.material;
+package bg.mck.ordercommandservice.dto.Material;
 
-import bg.mck.ordercommandservice.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 
-//изолация
-@Entity
-@Table(name = "insulation")
-public class InsulationEntity  extends BaseEntity {
-
+public class InsulationDTO {
     private String type;
     private String color;
     private String length;
@@ -19,14 +11,13 @@ public class InsulationEntity  extends BaseEntity {
     private Double density;
 
     private Double quantity;
-    @Column(columnDefinition="TEXT")
     private String note;
     private String specificationFileUrl;
 
-    public InsulationEntity() {
+    public InsulationDTO() {
     }
 
-    public InsulationEntity(String type, String color, String length, String width, Double thickness, Double thermalPerformance, Double density, Double quantity, String note, String specificationFileUrl) {
+    public InsulationDTO(String type, String color, String length, String width, Double thickness, Double thermalPerformance, Double density, Double quantity, String note, String specificationFileUrl) {
         this.type = type;
         this.color = color;
         this.length = length;
@@ -43,7 +34,7 @@ public class InsulationEntity  extends BaseEntity {
         return type;
     }
 
-    public InsulationEntity setType(String type) {
+    public InsulationDTO setType(String type) {
         this.type = type;
         return this;
     }
@@ -52,7 +43,7 @@ public class InsulationEntity  extends BaseEntity {
         return color;
     }
 
-    public InsulationEntity setColor(String color) {
+    public InsulationDTO setColor(String color) {
         this.color = color;
         return this;
     }
@@ -61,7 +52,7 @@ public class InsulationEntity  extends BaseEntity {
         return length;
     }
 
-    public InsulationEntity setLength(String length) {
+    public InsulationDTO setLength(String length) {
         this.length = length;
         return this;
     }
@@ -70,7 +61,7 @@ public class InsulationEntity  extends BaseEntity {
         return width;
     }
 
-    public InsulationEntity setWidth(String width) {
+    public InsulationDTO setWidth(String width) {
         this.width = width;
         return this;
     }
@@ -79,7 +70,7 @@ public class InsulationEntity  extends BaseEntity {
         return thickness;
     }
 
-    public InsulationEntity setThickness(Double thickness) {
+    public InsulationDTO setThickness(Double thickness) {
         this.thickness = thickness;
         return this;
     }
@@ -88,7 +79,7 @@ public class InsulationEntity  extends BaseEntity {
         return thermalPerformance;
     }
 
-    public InsulationEntity setThermalPerformance(Double thermalPerformance) {
+    public InsulationDTO setThermalPerformance(Double thermalPerformance) {
         this.thermalPerformance = thermalPerformance;
         return this;
     }
@@ -97,7 +88,7 @@ public class InsulationEntity  extends BaseEntity {
         return density;
     }
 
-    public InsulationEntity setDensity(Double density) {
+    public InsulationDTO setDensity(Double density) {
         this.density = density;
         return this;
     }
@@ -106,7 +97,7 @@ public class InsulationEntity  extends BaseEntity {
         return quantity;
     }
 
-    public InsulationEntity setQuantity(Double quantity) {
+    public InsulationDTO setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -115,7 +106,7 @@ public class InsulationEntity  extends BaseEntity {
         return note;
     }
 
-    public InsulationEntity setNote(String note) {
+    public InsulationDTO setNote(String note) {
         this.note = note;
         return this;
     }
@@ -124,7 +115,7 @@ public class InsulationEntity  extends BaseEntity {
         return specificationFileUrl;
     }
 
-    public InsulationEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public InsulationDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }

@@ -1,13 +1,7 @@
-package bg.mck.ordercommandservice.entity.material;
+package bg.mck.ordercommandservice.dto.Material;
 
-import bg.mck.ordercommandservice.entity.BaseEntity;
-import jakarta.persistence.*;
 
-//Ламарина
-@Entity
-@Table(name = "galvanised_sheets")
-public class GalvanisedSheetEntity  extends BaseEntity {
-
+public class GalvanisedSheetDTO {
     private String marking; //Означение
     private String number;
     private String type;
@@ -16,14 +10,13 @@ public class GalvanisedSheetEntity  extends BaseEntity {
     private Double area;
 
     private Double quantity;
-    @Column(columnDefinition="TEXT")
     private String note;
     private String specificationFileUrl;
 
-    public GalvanisedSheetEntity() {
+    public GalvanisedSheetDTO() {
     }
 
-    public GalvanisedSheetEntity(String marking, String number, String type, Double length, Double width, Double area, Double quantity, String note, String specificationFileUrl) {
+    public GalvanisedSheetDTO(String marking, String number, String type, Double length, Double width, Double area, Double quantity, String note, String specificationFileUrl) {
         this.marking = marking;
         this.number = number;
         this.type = type;
@@ -39,7 +32,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return marking;
     }
 
-    public GalvanisedSheetEntity setMarking(String marking) {
+    public GalvanisedSheetDTO setMarking(String marking) {
         this.marking = marking;
         return this;
     }
@@ -48,7 +41,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return number;
     }
 
-    public GalvanisedSheetEntity setNumber(String number) {
+    public GalvanisedSheetDTO setNumber(String number) {
         this.number = number;
         return this;
     }
@@ -57,7 +50,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return type;
     }
 
-    public GalvanisedSheetEntity setType(String type) {
+    public GalvanisedSheetDTO setType(String type) {
         this.type = type;
         return this;
     }
@@ -66,7 +59,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return length;
     }
 
-    public GalvanisedSheetEntity setLength(Double length) {
+    public GalvanisedSheetDTO setLength(Double length) {
         this.length = length;
         return this;
     }
@@ -75,7 +68,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return width;
     }
 
-    public GalvanisedSheetEntity setWidth(Double width) {
+    public GalvanisedSheetDTO setWidth(Double width) {
         this.width = width;
         return this;
     }
@@ -84,7 +77,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return area;
     }
 
-    public GalvanisedSheetEntity setArea(Double area) {
+    public GalvanisedSheetDTO setArea(Double area) {
         this.area = area;
         return this;
     }
@@ -93,7 +86,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return quantity;
     }
 
-    public GalvanisedSheetEntity setQuantity(Double quantity) {
+    public GalvanisedSheetDTO setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -102,7 +95,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return note;
     }
 
-    public GalvanisedSheetEntity setNote(String note) {
+    public GalvanisedSheetDTO setNote(String note) {
         this.note = note;
         return this;
     }
@@ -111,7 +104,7 @@ public class GalvanisedSheetEntity  extends BaseEntity {
         return specificationFileUrl;
     }
 
-    public GalvanisedSheetEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public GalvanisedSheetDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }

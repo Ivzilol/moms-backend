@@ -1,14 +1,8 @@
-package bg.mck.ordercommandservice.entity.material;
+package bg.mck.ordercommandservice.dto.Material;
 
-import bg.mck.ordercommandservice.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 
-//крепежи
-@Entity
-@Table(name = "fastener")
-public class FastenerEntity extends BaseEntity {
-
-    @Column(columnDefinition="TEXT")
+public class FastenerDTO {
     private String description;
     private String diameter;
     private Double length;
@@ -16,14 +10,10 @@ public class FastenerEntity extends BaseEntity {
     private String clazz;
 
     private Double quantity;
-    @Column(columnDefinition="TEXT")
     private String note;
     private String specificationFileUrl;
 
-    public FastenerEntity() {
-    }
-
-    public FastenerEntity(String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
+    public FastenerDTO(String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
         this.description = description;
         this.diameter = diameter;
         this.length = length;
@@ -38,7 +28,7 @@ public class FastenerEntity extends BaseEntity {
         return description;
     }
 
-    public FastenerEntity setDescription(String description) {
+    public FastenerDTO setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -47,7 +37,7 @@ public class FastenerEntity extends BaseEntity {
         return diameter;
     }
 
-    public FastenerEntity setDiameter(String diameter) {
+    public FastenerDTO setDiameter(String diameter) {
         this.diameter = diameter;
         return this;
     }
@@ -56,7 +46,7 @@ public class FastenerEntity extends BaseEntity {
         return length;
     }
 
-    public FastenerEntity setLength(Double length) {
+    public FastenerDTO setLength(Double length) {
         this.length = length;
         return this;
     }
@@ -65,7 +55,7 @@ public class FastenerEntity extends BaseEntity {
         return model;
     }
 
-    public FastenerEntity setModel(String model) {
+    public FastenerDTO setModel(String model) {
         this.model = model;
         return this;
     }
@@ -74,7 +64,7 @@ public class FastenerEntity extends BaseEntity {
         return clazz;
     }
 
-    public FastenerEntity setClazz(String clazz) {
+    public FastenerDTO setClazz(String clazz) {
         this.clazz = clazz;
         return this;
     }
@@ -83,7 +73,7 @@ public class FastenerEntity extends BaseEntity {
         return quantity;
     }
 
-    public FastenerEntity setQuantity(Double quantity) {
+    public FastenerDTO setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -92,7 +82,7 @@ public class FastenerEntity extends BaseEntity {
         return note;
     }
 
-    public FastenerEntity setNote(String note) {
+    public FastenerDTO setNote(String note) {
         this.note = note;
         return this;
     }
@@ -101,7 +91,7 @@ public class FastenerEntity extends BaseEntity {
         return specificationFileUrl;
     }
 
-    public FastenerEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public FastenerDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }
