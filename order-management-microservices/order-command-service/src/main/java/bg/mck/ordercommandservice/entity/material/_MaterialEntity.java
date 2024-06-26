@@ -12,29 +12,29 @@ public class _MaterialEntity extends BaseEntity {
 
     private MaterialType materialType;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<FastenerEntity> fasteners;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<GalvanisedSheetEntity> galvanisedSheets;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<InsulationEntity> insulation;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<MetalEntity> metals;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<PanelEntity> panels;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<RebarEntity> rebars;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<SetEntity> sets;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<UnspecifiedEntity> unspecified;
 

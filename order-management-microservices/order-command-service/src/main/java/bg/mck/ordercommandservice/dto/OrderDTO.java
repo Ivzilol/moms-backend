@@ -10,14 +10,14 @@ public class OrderDTO {
     private LocalDateTime deliveryDate;
     private String orderStatus;
     private ConstructionSiteDTO constructionSite;
-    private Long materialsId;
+    private MaterialDTO material;
     private ServiceDTO service;
     private TransportDTO transport;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String username, String orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, String orderStatus, ConstructionSiteDTO constructionSite, Long materialsId, ServiceDTO service, TransportDTO transport) {
+    public OrderDTO(String username, String orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, String orderStatus, ConstructionSiteDTO constructionSite, MaterialDTO material, ServiceDTO service, TransportDTO transport) {
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
@@ -25,7 +25,7 @@ public class OrderDTO {
         this.deliveryDate = deliveryDate;
         this.orderStatus = orderStatus;
         this.constructionSite = constructionSite;
-        this.materialsId = materialsId;
+        this.material = material;
         this.service = service;
         this.transport = transport;
     }
@@ -93,12 +93,12 @@ public class OrderDTO {
         return this;
     }
 
-    public Long getMaterialsId() {
-        return materialsId;
+    public MaterialDTO getMaterial() {
+        return material;
     }
 
-    public OrderDTO setMaterialsId(Long materialsId) {
-        this.materialsId = materialsId;
+    public OrderDTO setMaterial(MaterialDTO material) {
+        this.material = material;
         return this;
     }
 

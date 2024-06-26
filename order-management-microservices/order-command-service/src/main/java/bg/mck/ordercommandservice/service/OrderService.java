@@ -36,9 +36,13 @@ public class OrderService {
             Long servicesId = orderById.get().getServices().getId();
             Long transportsId = orderById.get().getTransports().getId();
 
+
+
+
+
             OrderDTO orderDTO = orderMapper.toOrderDTO(orderById.get());
             orderDTO.setConstructionSite(constructionSiteService.getConstructionSite(constructionSiteId));
-//            orderDTO.setMaterials(materialService.getMaterial(materialsId));
+            orderDTO.setMaterial(materialService.getMaterialById(materialsId));
             orderDTO.setService(serviceService.getServiceById(servicesId));
             orderDTO.setTransport(transportService.getTransportById(transportsId));
             return orderDTO;
