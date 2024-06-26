@@ -6,8 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class InventoryService {
+public class InventoryCommandService {
     public static void main(String[] args) {
-        SpringApplication.run(InventoryService.class, args);
+        SpringApplication.run(InventoryCommandService.class, args);
     }
 }

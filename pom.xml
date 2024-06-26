@@ -22,7 +22,7 @@
 		<module>gateway-service</module>
 		<module>authorization-service</module>
 		<module>authentication-service</module>
-		<module>inventory-service</module>
+		<module>inventory-command-service</module>
 
     </modules>
 	<properties>
