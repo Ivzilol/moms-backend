@@ -1,6 +1,7 @@
 package bg.mck.controller;
 
 import bg.mck.dto.CreateMaterialDTO;
+import bg.mck.service.InventoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,9 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/${APPLICATION_VERSION}/inventory")
 public class InventoryController {
 
+    private final InventoryService inventoryService;
+
+    public InventoryController(InventoryService inventoryService) {
+        this.inventoryService = inventoryService;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createMaterial(@RequestBody CreateMaterialDTO createMaterialDTO) {
-        return null;
+        this.inventoryService.createMaterial(createMaterialDTO);
+        return ResponseEntity.ok().build();
     }
 }

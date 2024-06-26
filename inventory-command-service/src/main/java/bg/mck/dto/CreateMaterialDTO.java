@@ -1,9 +1,11 @@
 package bg.mck.dto;
 
 
+import bg.mck.enums.MaterialType;
+
 public class CreateMaterialDTO {
 
-    private String category;
+    private MaterialType materialType;
     private String description;
     private String diameter;
     private Double length;
@@ -27,12 +29,12 @@ public class CreateMaterialDTO {
     private String steel;
     private Double weight;
 
-    public String getCategory() {
-        return category;
+    public MaterialType getMaterialType() {
+        return materialType;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setMaterialType(MaterialType materialType) {
+        this.materialType = materialType;
     }
 
     public String getDescription() {
