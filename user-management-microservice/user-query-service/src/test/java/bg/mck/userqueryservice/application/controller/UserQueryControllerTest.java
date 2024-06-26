@@ -5,6 +5,7 @@ import bg.mck.userqueryservice.application.entity.UserEntity;
 import bg.mck.userqueryservice.application.enums.EventType;
 import bg.mck.userqueryservice.application.events.RegisteredUserEvent;
 import bg.mck.userqueryservice.application.events.UserEvent;
+import bg.mck.userqueryservice.application.exceptions.UserNotFoundException;
 import bg.mck.userqueryservice.application.repository.EventRepository;
 import bg.mck.userqueryservice.application.repository.UserRepository;
 import bg.mck.userqueryservice.application.service.RedisService;
@@ -27,6 +28,7 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -58,7 +60,7 @@ class UserQueryControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+//        MockitoAnnotations.openMocks(this);
 
         when(redisService.getCachedObject(anyLong())).thenReturn(null);
         doNothing().when(redisService).cacheObject(ArgumentMatchers.any(UserEntity.class));
@@ -85,7 +87,8 @@ class UserQueryControllerTest {
     @Test
     public void testGetUserCredentialsById_NotFoundWhenInvalidUserId() throws Exception {
         mockMvc.perform(get("/users/credentials/" + user.getId() + 1))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertInstanceOf(UserNotFoundException.class, result.getResolvedException()));
     }
 
     @Test
@@ -106,7 +109,8 @@ class UserQueryControllerTest {
     @Test
     public void testGetUserDetailsById_NotFoundWhenInvalidUserId() throws Exception {
         mockMvc.perform(get("/" + ApplicationConstants.APPLICATION_VERSION + "/user/users/" + user.getId() + 1))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertInstanceOf(UserNotFoundException.class, result.getResolvedException()));;
     }
 
 

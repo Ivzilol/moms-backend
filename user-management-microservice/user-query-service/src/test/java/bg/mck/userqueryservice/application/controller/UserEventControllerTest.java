@@ -3,6 +3,8 @@ package bg.mck.userqueryservice.application.controller;
 import bg.mck.userqueryservice.application.entity.UserEntity;
 import bg.mck.userqueryservice.application.enums.EventType;
 import bg.mck.userqueryservice.application.events.*;
+import bg.mck.userqueryservice.application.exceptions.InvalidEventTypeException;
+import bg.mck.userqueryservice.application.exceptions.UserNotFoundException;
 import bg.mck.userqueryservice.application.repository.EventRepository;
 import bg.mck.userqueryservice.application.repository.UserRepository;
 import bg.mck.userqueryservice.application.service.EventService;
@@ -66,7 +68,7 @@ public class UserEventControllerTest {
 
     @BeforeEach
     public void setUp(TestInfo testInfo) {
-        MockitoAnnotations.openMocks(this);
+//        MockitoAnnotations.openMocks(this);
 
         when(redisService.getCachedObject(anyLong())).thenReturn(null);
         doNothing().when(redisService).cacheObject(any(UserEntity.class));
@@ -192,6 +194,55 @@ public class UserEventControllerTest {
 
         UserEvent<? extends BaseEvent> savedEvent = eventRepository.findById(userEvent.getId()).get();
         assertEquals(passwordUpdateEvent, savedEvent.getEvent());
+    }
+
+    @Test
+    public void testProcessUserEvent_ShouldThrowWhenInvalidUserId() throws Exception {
+        Long invalidUserId = 20L;
+        PasswordUpdateEvent passwordUpdateEvent = new PasswordUpdateEvent();
+        passwordUpdateEvent.setUserId(invalidUserId);
+        passwordUpdateEvent.setNewPassword(BCrypt.hashpw("newpassword", BCrypt.gensalt()));
+        passwordUpdateEvent.setLocalDateTime(LocalDateTime.now());
+
+
+        UserEvent<PasswordUpdateEvent> userEvent = new UserEvent<>();
+        userEvent.setEvent(passwordUpdateEvent);
+        userEvent.setEventType(EventType.UserPasswordUpdated);
+        userEvent.setId("4");
+
+        String data = objectMapper.writeValueAsString(userEvent);
+
+        mockMvc.perform(post("/users/event")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Event-Type", EventType.UserPasswordUpdated.name())
+                        .content(data))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertInstanceOf(UserNotFoundException.class, result.getResolvedException()));
+
+    }
+
+    @Test
+    public void testProcessUserEvent_ShouldThrowWhenInvalidEventType() throws Exception {
+        PasswordUpdateEvent passwordUpdateEvent = new PasswordUpdateEvent();
+        passwordUpdateEvent.setUserId(1L);
+        passwordUpdateEvent.setNewPassword(BCrypt.hashpw("newpassword", BCrypt.gensalt()));
+        passwordUpdateEvent.setLocalDateTime(LocalDateTime.now());
+
+
+        UserEvent<PasswordUpdateEvent> userEvent = new UserEvent<>();
+        userEvent.setEvent(passwordUpdateEvent);
+        userEvent.setEventType(EventType.UserPasswordUpdated);
+        userEvent.setId("4");
+
+        String data = objectMapper.writeValueAsString(userEvent);
+
+        mockMvc.perform(post("/users/event")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Event-Type", "invalid-event-type")
+                        .content(data))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertInstanceOf(InvalidEventTypeException.class, result.getResolvedException()));
+
     }
 
     private void registerUserEvent() {
