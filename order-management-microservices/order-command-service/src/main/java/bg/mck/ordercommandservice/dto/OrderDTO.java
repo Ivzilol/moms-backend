@@ -9,25 +9,25 @@ public class OrderDTO {
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
     private String orderStatus;
-    private Long constructionSiteId;
+    private ConstructionSiteDTO constructionSite;
     private Long materialsId;
-    private Long servicesId;
-    private Long transportsId;
+    private ServiceDTO service;
+    private TransportDTO transport;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String username, String orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, String orderStatus, Long constructionSiteId, Long materialsId, Long servicesId, Long transportsId) {
+    public OrderDTO(String username, String orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, String orderStatus, ConstructionSiteDTO constructionSite, Long materialsId, ServiceDTO service, TransportDTO transport) {
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.orderStatus = orderStatus;
-        this.constructionSiteId = constructionSiteId;
+        this.constructionSite = constructionSite;
         this.materialsId = materialsId;
-        this.servicesId = servicesId;
-        this.transportsId = transportsId;
+        this.service = service;
+        this.transport = transport;
     }
 
     public String getUsername() {
@@ -84,12 +84,12 @@ public class OrderDTO {
         return this;
     }
 
-    public Long getConstructionSiteId() {
-        return constructionSiteId;
+    public ConstructionSiteDTO getConstructionSite() {
+        return constructionSite;
     }
 
-    public OrderDTO setConstructionSiteId(Long constructionSiteId) {
-        this.constructionSiteId = constructionSiteId;
+    public OrderDTO setConstructionSite(ConstructionSiteDTO constructionSite) {
+        this.constructionSite = constructionSite;
         return this;
     }
 
@@ -102,21 +102,21 @@ public class OrderDTO {
         return this;
     }
 
-    public Long getServicesId() {
-        return servicesId;
+    public ServiceDTO getService() {
+        return service;
     }
 
-    public OrderDTO setServicesId(Long servicesId) {
-        this.servicesId = servicesId;
+    public OrderDTO setService(ServiceDTO service) {
+        this.service = service;
         return this;
     }
 
-    public Long getTransportsId() {
-        return transportsId;
+    public TransportDTO getTransport() {
+        return transport;
     }
 
-    public OrderDTO setTransportsId(Long transportsId) {
-        this.transportsId = transportsId;
+    public OrderDTO setTransport(TransportDTO transport) {
+        this.transport = transport;
         return this;
     }
 }

@@ -8,16 +8,16 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "transports")
-public class TransportEntity  extends BaseEntity {
+public class TransportEntity extends BaseEntity {
     private String description;
-    private double km;
+    private double distance;
 
     public TransportEntity() {
     }
 
-    public TransportEntity(String description, double km) {
+    public TransportEntity(String description, double distance) {
         this.description = description;
-        this.km = km;
+        this.distance = distance;
     }
 
     public String getDescription() {
@@ -29,12 +29,12 @@ public class TransportEntity  extends BaseEntity {
         return this;
     }
 
-    public double getKm() {
-        return km;
+    public double getDistance() {
+        return distance;
     }
 
-    public TransportEntity setKm(double km) {
-        this.km = km;
+    public TransportEntity setDistance(double km) {
+        this.distance = km;
         return this;
     }
 }

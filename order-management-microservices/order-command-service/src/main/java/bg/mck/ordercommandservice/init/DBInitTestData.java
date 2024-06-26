@@ -69,7 +69,7 @@ public class DBInitTestData implements CommandLineRunner {
         //ТРАНСПОРТ
         TransportEntity transportEntity = new TransportEntity();
         transportEntity.setDescription("Камион за превоз на материали")
-                .setKm(10.0);
+                .setDistance(10.0);
 
         // УСЛУГИ
         ServiceEntity serviceEntity = new ServiceEntity();
