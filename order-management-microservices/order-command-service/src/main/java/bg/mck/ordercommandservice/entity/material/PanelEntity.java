@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 //панели
 @Entity
 @Table(name = "panels")
-public class PanelsEntity  extends BaseEntity {
+public class PanelEntity extends BaseEntity {
 
     private String type;
     private String color;

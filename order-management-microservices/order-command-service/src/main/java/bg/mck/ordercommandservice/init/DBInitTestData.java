@@ -38,8 +38,8 @@ public class DBInitTestData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // НОМЕР НА ОБЕКТ
         ConstructionSiteEntity constructionSiteEntity = new ConstructionSiteEntity();
-        constructionSiteEntity.setConstructionNumber("18.21.1")
-                .setName("СГРАДА В");
+        constructionSiteEntity.setConstructionNumber("18.23.1")
+                .setName("Жилищна сграда В");
         constructionSiteRepository.save(constructionSiteEntity);
 
         // ПОТРЕБИТЕЛ
@@ -80,15 +80,17 @@ public class DBInitTestData implements CommandLineRunner {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setOrderNumber("123")
                 .setUsername(userDetailsDTO.getEmail())
+
                 .setOrderDate(LocalDateTime.now())
+                .setDeliveryDate(LocalDateTime.now().plusDays(10))
 
                 .setMaterials(materialEntity)
                 .setServices(serviceEntity)
                 .setTransports(transportEntity)
 
                 .setConstructionSite(constructionSiteEntity)
-                .setOrderDescription("АРМИРОВКА ВЕРТИКАЛИ СТЕНИ ОТ КОТА -11.10 ДО КОТА -7.10 - СГРАДА В (Ст. 8b - Ст. 20b; Ст. 22b; Ст. 23b")
-                .setOrderStatus(OrderStatus.CREATED);
+                .setOrderDescription("Първа поръчка за строителство на сграда В")
+                .setOrderStatus(OrderStatus.DELIVERY_IN_PROGRESS);
         orderRepository.save(orderEntity);
 
 

@@ -1,7 +1,6 @@
 package bg.mck.ordercommandservice.entity.material;
 
 import bg.mck.ordercommandservice.entity.BaseEntity;
-import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import jakarta.persistence.*;
 
@@ -28,7 +27,7 @@ public class _MaterialEntity extends BaseEntity {
     private Set<MetalEntity> metals;
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
-    private Set<PanelsEntity> panels;
+    private Set<PanelEntity> panels;
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Set<RebarEntity> rebars;
