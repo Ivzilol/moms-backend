@@ -1,5 +1,6 @@
 package bg.mck.service;
 
+import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.FastenerEntity;
@@ -10,6 +11,9 @@ import bg.mck.events.MaterialEvent;
 import bg.mck.events.RegisterMaterialEvent;
 import bg.mck.repository.CategoryRepository;
 import bg.mck.repository.FastenerRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,9 +25,18 @@ public class InventoryService {
 
     private final FastenerRepository fastenerRepository;
 
-    public InventoryService(CategoryRepository categoryRepository, FastenerRepository fastenerRepository) {
+
+
+
+    private final ObjectMapper objectMapper;
+
+    public InventoryService(CategoryRepository categoryRepository,
+                            FastenerRepository fastenerRepository,
+
+                            ObjectMapper objectMapper) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
+        this.objectMapper = objectMapper;
     }
 
     public void initCategory() {
@@ -77,6 +90,11 @@ public class InventoryService {
             MaterialEvent<RegisterMaterialEvent> materialEvent =
                     EventCreationHelper.toMaterialEvent(registerMaterialEvent);
 
+            try {
+                InventoryQueryServiceClient.sendEvent(objectMapper.writeValueAsString(materialEvent), registerMaterialEvent.getName());
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
