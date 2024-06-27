@@ -52,6 +52,7 @@ public class InventoryService {
         if (createMaterialDTO.getMaterialType().equals(MaterialType.FASTENERS)) {
             FastenerEntity fastenerEntity = mapFastenerEntity(createMaterialDTO);
             this.fastenerRepository.save(fastenerEntity);
+
         }
     }
 

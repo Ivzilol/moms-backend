@@ -23,6 +23,7 @@
 		<module>authorization-service</module>
 		<module>authentication-service</module>
 		<module>inventory-command-service</module>
+		<module>inventory-query-service</module>
 
     </modules>
 	<properties>
