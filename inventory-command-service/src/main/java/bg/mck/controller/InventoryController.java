@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/inventory")
+@RequestMapping("/${APPLICATION_VERSION}/inventory/command")
 public class InventoryController {
 
     private final InventoryService inventoryService;
