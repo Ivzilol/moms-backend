@@ -3,11 +3,14 @@ package bg.mck.service;
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.FastenerEntity;
+import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
+import bg.mck.events.RegisterMaterialEvent;
 import bg.mck.repository.CategoryRepository;
 import bg.mck.repository.FastenerRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -52,6 +55,10 @@ public class InventoryService {
         if (createMaterialDTO.getMaterialType().equals(MaterialType.FASTENERS)) {
             FastenerEntity fastenerEntity = mapFastenerEntity(createMaterialDTO);
             this.fastenerRepository.save(fastenerEntity);
+            FastenerEntity createdFastener = this.fastenerRepository
+                    .findByName(createMaterialDTO.getName());
+            String materialType = String.valueOf(this.categoryRepository.findByMaterialType(MaterialType.FASTENERS));
+
 
         }
     }
@@ -59,6 +66,7 @@ public class InventoryService {
     private FastenerEntity mapFastenerEntity(CreateMaterialDTO createMaterialDTO) {
         return Optional.of(new FastenerEntity())
                 .map(fastenerEntity -> {
+                    fastenerEntity.setName(createMaterialDTO.getName());
                     fastenerEntity.setDescription(createMaterialDTO.getDescription());
                     fastenerEntity.setDiameter(createMaterialDTO.getDiameter());
                     fastenerEntity.setLength(createMaterialDTO.getLength());

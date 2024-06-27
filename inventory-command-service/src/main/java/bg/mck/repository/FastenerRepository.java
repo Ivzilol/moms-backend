@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FastenerRepository extends JpaRepository<FastenerEntity, Long> {
 
+    FastenerEntity findByName(String name);
 }

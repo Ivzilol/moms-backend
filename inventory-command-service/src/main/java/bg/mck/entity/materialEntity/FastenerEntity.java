@@ -12,6 +12,8 @@ public class FastenerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String name;
     @Column(columnDefinition="TEXT")
     private String description;
     private String diameter;
@@ -29,8 +31,9 @@ public class FastenerEntity {
     public FastenerEntity() {
     }
 
-    public FastenerEntity(Long id, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
+    public FastenerEntity(Long id, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
+        this.name = name;
         this.description = description;
         this.diameter = diameter;
         this.length = length;
@@ -39,6 +42,7 @@ public class FastenerEntity {
         this.quantity = quantity;
         this.note = note;
         this.specificationFileUrl = specificationFileUrl;
+        this.category = category;
     }
 
     public Long getId() {
@@ -47,6 +51,14 @@ public class FastenerEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

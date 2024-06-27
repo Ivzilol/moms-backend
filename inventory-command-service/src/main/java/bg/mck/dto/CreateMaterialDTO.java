@@ -6,6 +6,8 @@ import bg.mck.enums.MaterialType;
 public class CreateMaterialDTO {
 
     private MaterialType materialType;
+
+    private String name;
     private String description;
     private String diameter;
     private Double length;
@@ -43,6 +45,14 @@ public class CreateMaterialDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDiameter() {
