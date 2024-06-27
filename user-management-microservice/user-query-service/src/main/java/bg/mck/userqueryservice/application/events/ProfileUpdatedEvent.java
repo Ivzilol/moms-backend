@@ -4,6 +4,7 @@ package bg.mck.userqueryservice.application.events;
 import bg.mck.userqueryservice.application.enums.EventType;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ProfileUpdatedEvent extends BaseEvent {
 
@@ -49,4 +50,16 @@ public class ProfileUpdatedEvent extends BaseEvent {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProfileUpdatedEvent that = (ProfileUpdatedEvent) o;
+        return Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, phoneNumber);
+    }
 }

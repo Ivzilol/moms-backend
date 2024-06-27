@@ -4,6 +4,7 @@ package bg.mck.userqueryservice.application.events;
 import bg.mck.userqueryservice.application.enums.EventType;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 public class RegisteredUserEvent extends BaseEvent{
@@ -94,4 +95,19 @@ public class RegisteredUserEvent extends BaseEvent{
         this.roles = roles;
         return this;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegisteredUserEvent that = (RegisteredUserEvent) o;
+        return isActive == that.isActive && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(roles, that.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, password, firstName, lastName, phoneNumber, isActive, roles);
+    }
+
+
 }
