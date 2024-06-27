@@ -1,6 +1,7 @@
 package bg.mck.userqueryservice.application.entity;
 
 
+import bg.mck.userqueryservice.application.events.RegisteredUserEvent;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -40,6 +41,17 @@ public class UserEntity {
         this.phoneNumber = other.phoneNumber;
         this.isActive = other.isActive;
         this.roles = new HashSet<>(other.roles);
+    }
+
+    private UserEntity(Builder builder) {
+        this.id = builder.id;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.phoneNumber = builder.phoneNumber;
+        this.isActive = builder.isActive;
+        this.roles = builder.roles;
     }
 
     public String getId() {
@@ -144,6 +156,61 @@ public class UserEntity {
                 ", isActive=" + isActive +
                 ", roles=" + roles +
                 '}';
+    }
+
+    public static class Builder {
+        private String id;
+        private String email;
+        private String password;
+        private String firstName;
+        private String lastName;
+        private String phoneNumber;
+        private boolean isActive;
+        private Set<String> roles;
+
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder setLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder setActive(boolean isActive) {
+            this.isActive = isActive;
+            return this;
+        }
+
+        public Builder setRoles(Set<String> roles) {
+            this.roles = roles;
+            return this;
+        }
+
+        public UserEntity build() {
+            return new UserEntity(this);
+        }
     }
 
 }

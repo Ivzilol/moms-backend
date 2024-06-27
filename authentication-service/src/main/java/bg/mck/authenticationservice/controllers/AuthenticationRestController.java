@@ -28,8 +28,8 @@ public class AuthenticationRestController {
     @PostMapping("/generate-token")
     public ResponseEntity<String> generateToken(@RequestBody User user) {
 
-        String generatedToken = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getAuthorities());
-        logger.error("User {} has been successfully authenticated", user.getEmail());
+        String generatedToken = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRoles());
+        logger.info("User {} has been successfully authenticated", user.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED).body(generatedToken);
     }
 

@@ -3,7 +3,6 @@ package bg.mck.userqueryservice.application.service;
 import bg.mck.userqueryservice.application.entity.UserEntity;
 import bg.mck.userqueryservice.application.events.RegisteredUserEvent;
 import bg.mck.userqueryservice.application.repository.UserRepository;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 

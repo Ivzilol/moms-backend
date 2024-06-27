@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/user/users")
+@RequestMapping("/${APPLICATION_VERSION}/user/command/profile")
 public class UserProfileManagementController {
 
     private final UserProfileManagementService userProfileManagementService;
@@ -22,5 +22,4 @@ public class UserProfileManagementController {
         userProfileManagementService.updateUserProfile(id, userDetailsDTO);
         return ResponseEntity.ok().build();
     }
-
 }

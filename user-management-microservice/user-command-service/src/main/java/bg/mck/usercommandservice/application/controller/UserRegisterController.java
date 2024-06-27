@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static bg.mck.usercommandservice.application.exceptions.ErrorUserRegistrationExceptions.PASSWORDS_NOT_MATCH;
 
 @RestController
-@RequestMapping("/users")
+    @RequestMapping("/${APPLICATION_VERSION}/user/command/register")
 public class UserRegisterController {
 
     private final UserRegisterService userRegisterService;
