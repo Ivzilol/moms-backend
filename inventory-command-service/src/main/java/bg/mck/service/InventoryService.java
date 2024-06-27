@@ -5,12 +5,13 @@ import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.FastenerEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
+import bg.mck.events.EventCreationHelper;
+import bg.mck.events.MaterialEvent;
 import bg.mck.events.RegisterMaterialEvent;
 import bg.mck.repository.CategoryRepository;
 import bg.mck.repository.FastenerRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -59,8 +60,25 @@ public class InventoryService {
                     .findByName(createMaterialDTO.getName());
             String materialType = String.valueOf(this.categoryRepository.findByMaterialType(MaterialType.FASTENERS));
 
+            RegisterMaterialEvent registerMaterialEvent = new RegisterMaterialEvent(
+                    createdFastener.getId(),
+                    EventType.MaterialRegister,
+                    materialType,
+                    createdFastener.getName(),
+                    createdFastener.getDescription(),
+                    createdFastener.getDiameter(),
+                    createdFastener.getLength(),
+                    createdFastener.getModel(),
+                    createdFastener.getClazz(),
+                    createdFastener.getQuantity(),
+                    createdFastener.getNote(),
+                    createdFastener.getSpecificationFileUrl()
+            );
+            MaterialEvent<RegisterMaterialEvent> materialEvent =
+                    EventCreationHelper.toMaterialEvent(registerMaterialEvent);
 
         }
+
     }
 
     private FastenerEntity mapFastenerEntity(CreateMaterialDTO createMaterialDTO) {

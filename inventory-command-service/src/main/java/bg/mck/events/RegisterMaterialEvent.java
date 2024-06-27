@@ -2,11 +2,11 @@ package bg.mck.events;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.enums.EventType;
-import jakarta.persistence.Column;
+import bg.mck.enums.MaterialType;
 
 import java.time.LocalDateTime;
 
-public class RegisterMaterialEvent extends BaseEvent {
+public class RegisterMaterialEvent extends BaseEvent{
 
     private String category;
     private String name;
@@ -24,8 +24,9 @@ public class RegisterMaterialEvent extends BaseEvent {
 
     }
 
-    public RegisterMaterialEvent(Long materialId, EventType eventType, LocalDateTime localDateTime, String category, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
-        super(materialId, eventType, localDateTime);
+
+    public RegisterMaterialEvent(Long materialId, EventType eventType, String category, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
+        super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.description = description;
@@ -38,7 +39,8 @@ public class RegisterMaterialEvent extends BaseEvent {
         this.specificationFileUrl = specificationFileUrl;
     }
 
-
+    public RegisterMaterialEvent(MaterialType materialType, Long id, CategoryEntity category, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
+    }
 
     public String getCategory() {
         return category;

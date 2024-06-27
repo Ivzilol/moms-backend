@@ -15,7 +15,7 @@ public abstract class BaseEvent {
     public BaseEvent() {
     }
 
-    public BaseEvent(Long materialId, EventType eventType, LocalDateTime localDateTime) {
+    public BaseEvent(Long materialId, EventType eventType) {
         this.materialId = materialId;
         this.eventType = eventType;
         this.localDateTime = LocalDateTime.now();
