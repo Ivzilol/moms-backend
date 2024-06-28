@@ -22,9 +22,26 @@ public class ConstructionSiteService {
     public ConstructionSiteDTO getConstructionSite(Long id) {
         Optional<ConstructionSiteEntity> constructionSiteById = constructionSiteRepository.findById(id);
         if (constructionSiteById.isPresent()) {
-            ConstructionSiteDTO constructionSiteDTO = constructionSiteMapper.toDTO(constructionSiteById.get());
-            return constructionSiteDTO;
+            return constructionSiteMapper.toDTO(constructionSiteById.get());
         }
         throw new ConstructionSiteNotFoundException("Construction site with id " + id + " not found");
     }
+    public ConstructionSiteEntity getConstructionSiteById(Long id) {
+        Optional<ConstructionSiteEntity> constructionSiteById = constructionSiteRepository.findById(id);
+        if (constructionSiteById.isPresent()) {
+            return constructionSiteById.get();
+        }
+        throw new ConstructionSiteNotFoundException("Construction site with id " + id + " not found");
+    }
+
+    public ConstructionSiteEntity getConstructionSiteByNumberAndName(ConstructionSiteDTO constructionSite) {
+        String constructionNumber = constructionSite.getConstructionNumber();
+        String name = constructionSite.getName();
+        Optional<ConstructionSiteEntity> constructionSiteByNumberAndName = constructionSiteRepository.findByConstructionNumberAndName(constructionNumber, name);
+        if (constructionSiteByNumberAndName.isPresent()) {
+            return constructionSiteByNumberAndName.get();
+        }
+        throw new ConstructionSiteNotFoundException("Construction site with number " + constructionNumber + " and name " + name + " not found");
+    }
 }
+

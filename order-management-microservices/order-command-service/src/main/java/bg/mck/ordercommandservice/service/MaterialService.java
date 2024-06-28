@@ -25,4 +25,8 @@ public class MaterialService {
         }
         return null;
     }
+
+    public _MaterialEntity saveMaterial(MaterialDTO material) {
+        return null;
+    }
 }
