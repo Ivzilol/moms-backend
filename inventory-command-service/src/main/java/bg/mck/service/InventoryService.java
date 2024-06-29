@@ -11,8 +11,6 @@ import bg.mck.events.MaterialEvent;
 import bg.mck.events.RegisterMaterialEvent;
 import bg.mck.repository.CategoryRepository;
 import bg.mck.repository.FastenerRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
