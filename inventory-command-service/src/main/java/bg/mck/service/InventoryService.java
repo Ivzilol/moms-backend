@@ -27,15 +27,12 @@ public class InventoryService {
 
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
 
-    private final ObjectMapper objectMapper;
-
     public InventoryService(CategoryRepository categoryRepository,
                             FastenerRepository fastenerRepository,
-                            InventoryQueryServiceClient inventoryQueryServiceClient, ObjectMapper objectMapper) {
+                            InventoryQueryServiceClient inventoryQueryServiceClient) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
-        this.objectMapper = objectMapper;
     }
 
     public void initCategory() {
@@ -89,8 +86,7 @@ public class InventoryService {
             MaterialEvent<RegisterMaterialEvent> materialEvent =
                     EventCreationHelper.toMaterialEvent(registerMaterialEvent);
 
-            inventoryQueryServiceClient.sendEvent(materialEvent, "MaterialRegister");
-            System.out.println();
+            inventoryQueryServiceClient.sendEvent(materialEvent, String.valueOf(EventType.MaterialRegister));
         }
 
     }
