@@ -2,5 +2,8 @@ package bg.mck.enums;
 
 public enum EventType {
 
-    MaterialRegister, EditMaterial, DeleteMaterial
+    MaterialRegister, EditMaterial, DeleteMaterial;
+
+    EventType() {
+    }
 }

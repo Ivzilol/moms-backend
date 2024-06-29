@@ -89,11 +89,8 @@ public class InventoryService {
             MaterialEvent<RegisterMaterialEvent> materialEvent =
                     EventCreationHelper.toMaterialEvent(registerMaterialEvent);
 
-            try {
-                inventoryQueryServiceClient.sendEvent(objectMapper.writeValueAsString(materialEvent), "MaterialRegister");
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+            inventoryQueryServiceClient.sendEvent(materialEvent, "MaterialRegister");
+            System.out.println();
         }
 
     }
