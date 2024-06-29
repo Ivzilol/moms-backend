@@ -6,13 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "http://localhost:9004")
+@FeignClient(url = "http://localhost:9004", name = "inventory-query-service")
 public interface InventoryQueryServiceClient {
 
 
     @PostMapping("/inventory/event")
-    static <T extends BaseEvent> void sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType) {
-        System.out.println();
-    }
+    <T extends BaseEvent> void sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType);
 
 }

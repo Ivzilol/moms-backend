@@ -13,7 +13,6 @@ import bg.mck.repository.CategoryRepository;
 import bg.mck.repository.FastenerRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,16 +25,16 @@ public class InventoryService {
     private final FastenerRepository fastenerRepository;
 
 
-
+    private final InventoryQueryServiceClient inventoryQueryServiceClient;
 
     private final ObjectMapper objectMapper;
 
     public InventoryService(CategoryRepository categoryRepository,
                             FastenerRepository fastenerRepository,
-
-                            ObjectMapper objectMapper) {
+                            InventoryQueryServiceClient inventoryQueryServiceClient, ObjectMapper objectMapper) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
+        this.inventoryQueryServiceClient = inventoryQueryServiceClient;
         this.objectMapper = objectMapper;
     }
 
@@ -91,7 +90,7 @@ public class InventoryService {
                     EventCreationHelper.toMaterialEvent(registerMaterialEvent);
 
             try {
-                InventoryQueryServiceClient.sendEvent(objectMapper.writeValueAsString(materialEvent), registerMaterialEvent.getName());
+                inventoryQueryServiceClient.sendEvent(objectMapper.writeValueAsString(materialEvent), "MaterialRegister");
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
