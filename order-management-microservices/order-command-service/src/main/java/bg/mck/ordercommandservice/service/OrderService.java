@@ -6,6 +6,8 @@ import bg.mck.ordercommandservice.dto.UserDetailsDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.entity.material._MaterialEntity;
+import bg.mck.ordercommandservice.entity.service.ServiceEntity;
+import bg.mck.ordercommandservice.entity.transport.TransportEntity;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
 import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
@@ -54,11 +56,9 @@ public class OrderService {
 
     public Object createOrder(OrderDTO order, UserDetailsDTO currentUser) {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
-        ConstructionSiteEntity constructionSite = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
-        _MaterialEntity material = materialService.saveMaterial(order.getMaterial());
 
-        System.out.println(constructionSite);
-        orderRepository.save(orderEntity);
-        return null;
+        constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
+
+        return orderRepository.save(orderEntity);
     }
 }

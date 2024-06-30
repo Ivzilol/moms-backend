@@ -25,4 +25,8 @@ public class TransportService {
         }
         throw new RuntimeException("Transport with id " + transportsId + " not found");
     }
+
+    public TransportEntity saveTransport(TransportDTO transport) {
+        return transportRepository.save(transportMapper.toTransportEntity(transport));
+    }
 }

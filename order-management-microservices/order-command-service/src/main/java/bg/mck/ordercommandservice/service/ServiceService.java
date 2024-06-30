@@ -27,4 +27,8 @@ public class ServiceService {
         }
         throw new ServiceNotFoundException("Service with id " + servicesId + " not found");
     }
+
+    public ServiceEntity saveService(ServiceDTO service) {
+        return serviceRepository.save(serviceMapper.toServiceEntity(service));
+    }
 }

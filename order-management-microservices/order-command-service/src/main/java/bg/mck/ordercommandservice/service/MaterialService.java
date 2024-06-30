@@ -27,6 +27,7 @@ public class MaterialService {
     }
 
     public _MaterialEntity saveMaterial(MaterialDTO material) {
-        return null;
+        _MaterialEntity materialEntity = materialMapper.toMaterialEntity(material);
+        return materialRepository.save(materialEntity);
     }
 }
