@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-//други
 @Entity
 @Table(name = "unspecified")
 public class UnspecifiedEntity  extends BaseEntity {

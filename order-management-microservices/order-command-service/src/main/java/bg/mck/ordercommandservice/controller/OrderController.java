@@ -27,6 +27,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrder(id));
     }
 
+    @Operation(summary = "Create order")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order created successfully"),
+                    @ApiResponse(responseCode = "400", description = "Incorrect data",
+                            content = {@Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorsOrderCreationDTO.class))})
+            }
+    )
     @PostMapping("/create-order")
     public ResponseEntity<Object> createOrder(@RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 

@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-//армировка
 @Entity
 @Table(name = "rebars")
 public class RebarEntity extends BaseEntity {

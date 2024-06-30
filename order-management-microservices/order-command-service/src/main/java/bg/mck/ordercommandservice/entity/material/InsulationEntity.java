@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-//изолация
 @Entity
 @Table(name = "insulation")
 public class InsulationEntity  extends BaseEntity {

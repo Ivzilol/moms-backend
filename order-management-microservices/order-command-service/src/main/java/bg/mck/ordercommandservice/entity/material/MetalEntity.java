@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-//метали
 @Entity
 @Table(name = "metals")
 public class MetalEntity  extends BaseEntity {

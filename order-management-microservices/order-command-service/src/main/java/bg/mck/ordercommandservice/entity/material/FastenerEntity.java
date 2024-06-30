@@ -3,7 +3,6 @@ package bg.mck.ordercommandservice.entity.material;
 import bg.mck.ordercommandservice.entity.BaseEntity;
 import jakarta.persistence.*;
 
-//крепежи
 @Entity
 @Table(name = "fastener")
 public class FastenerEntity extends BaseEntity {

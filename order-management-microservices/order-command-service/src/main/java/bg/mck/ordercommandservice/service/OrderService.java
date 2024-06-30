@@ -1,23 +1,26 @@
 package bg.mck.ordercommandservice.service;
 
-import bg.mck.ordercommandservice.dto.MaterialDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.dto.UserDetailsDTO;
-import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
-import bg.mck.ordercommandservice.entity.material._MaterialEntity;
-import bg.mck.ordercommandservice.entity.service.ServiceEntity;
-import bg.mck.ordercommandservice.entity.transport.TransportEntity;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
 import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
 
+
 @Service
 public class OrderService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
+
     private final OrderRepository orderRepository;
     private final ConstructionSiteService constructionSiteService;
     private final MaterialService materialService;
@@ -58,7 +61,13 @@ public class OrderService {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
 
         constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
+        materialService.saveMaterial(order.getMaterial());
+        serviceService.saveService(order.getService());
+        transportService.saveTransport(order.getTransport());
 
-        return orderRepository.save(orderEntity);
+        orderRepository.save(orderEntity);
+        LOGGER.info("Order with id {} created successfully", orderEntity.getId());
+        return null;
+
     }
 }

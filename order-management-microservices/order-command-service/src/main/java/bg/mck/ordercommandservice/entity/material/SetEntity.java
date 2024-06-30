@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-//Окомплектовки/обшивки??
 @Entity
 @Table(name = "sets")
 public class SetEntity  extends BaseEntity {
