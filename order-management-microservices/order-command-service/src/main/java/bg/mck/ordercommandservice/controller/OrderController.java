@@ -8,18 +8,24 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/${APPLICATION_VERSION}/user/order/command")
 public class OrderController {
 
+    @Value("${APPLICATION_VERSION}")
+    private String APPLICATION_VERSION;
     private final OrderService orderService;
+    private final RestTemplate restTemplate;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, RestTemplate restTemplate) {
         this.orderService = orderService;
+        this.restTemplate = restTemplate;
     }
 
     @GetMapping("/get-order/{id}")
@@ -37,10 +43,10 @@ public class OrderController {
     @PostMapping("/create-order")
     public ResponseEntity<Object> createOrder(@RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
-//        UserDetailsDTO userDetailsDTO = orderService.getUserDetails(token); request to get the data from the token
-        UserDetailsDTO tempmockUserDetailsDTO = new UserDetailsDTO(9L, "9test@gmail.com", "Gosho", "Goshev",
-                "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Ijl0ZXN0QGdtYWlsLmNvbSIsInJvbGVzIjoidXNlciIsImV4cGlyYXRpb24iOiIyNTkyMDAwMDAwIiwiaWQiOiI5Iiwic3ViIjoiOXRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzE5MzgxMzEwLCJleHAiOjE3MjE5NzMzMTB9.FR0w7SgMeWmkHBjvbmp_4SrrG3EZN6HbvNEYMTy-X7Q");
-        return ResponseEntity.ok(orderService.createOrder(order, tempmockUserDetailsDTO));
+//        String email = restTemplate.getForObject("http://authentication-service/"+ APPLICATION_VERSION +"/authentication/get-email/" + token
+//                , String.class);
+        String email = "test@abv.bg";
+        return ResponseEntity.ok(orderService.createOrder(order, email));
     }
 
 }

@@ -1,7 +1,6 @@
 package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.OrderDTO;
-import bg.mck.ordercommandservice.dto.UserDetailsDTO;
 import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
 import bg.mck.ordercommandservice.repository.OrderRepository;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -57,8 +55,13 @@ public class OrderService {
         throw new OrderNotFoundException("Order with id " + id + " not found");
     }
 
-    public Object createOrder(OrderDTO order, UserDetailsDTO currentUser) {
+    public Object createOrder(OrderDTO order, String email) {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
+
+        Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
+
+        orderEntity.setUsername(email);
+        orderEntity.setOrderNumber(lastOrderNumber.orElse(0) + 1);
 
         constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         materialService.saveMaterial(order.getMaterial());

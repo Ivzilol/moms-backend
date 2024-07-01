@@ -7,18 +7,16 @@ import bg.mck.ordercommandservice.entity.transport.TransportEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
     private String username;
-    private String orderNumber;
+    private Integer orderNumber;
     private String orderDescription;
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
-
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
@@ -37,7 +35,7 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String username, String orderNumber, String orderDescription, LocalDateTime orderDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, _MaterialEntity materials, ServiceEntity services, TransportEntity transports, LocalDateTime deliveryDate) {
+    public OrderEntity(String username, Integer orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, _MaterialEntity materials, ServiceEntity services, TransportEntity transports) {
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
@@ -59,11 +57,11 @@ public class OrderEntity extends BaseEntity {
         return this;
     }
 
-    public String getOrderNumber() {
+    public Integer getOrderNumber() {
         return orderNumber;
     }
 
-    public OrderEntity setOrderNumber(String orderNumber) {
+    public OrderEntity setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
         return this;
     }
@@ -83,6 +81,15 @@ public class OrderEntity extends BaseEntity {
 
     public OrderEntity setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
+        return this;
+    }
+
+    public LocalDateTime getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public OrderEntity setDeliveryDate(LocalDateTime deliveryDate) {
+        this.deliveryDate = deliveryDate;
         return this;
     }
 
@@ -128,15 +135,6 @@ public class OrderEntity extends BaseEntity {
 
     public OrderEntity setTransports(TransportEntity transports) {
         this.transports = transports;
-        return this;
-    }
-
-    public LocalDateTime getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public OrderEntity setDeliveryDate(LocalDateTime deliveryDate) {
-        this.deliveryDate = deliveryDate;
         return this;
     }
 }

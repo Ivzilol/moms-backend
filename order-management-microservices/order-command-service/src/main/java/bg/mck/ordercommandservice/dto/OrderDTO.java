@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class OrderDTO {
     private String username;
-    private String orderNumber;
+    private Integer orderNumber;
     private String orderDescription;
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
@@ -17,7 +17,7 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(String username, String orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, String orderStatus, ConstructionSiteDTO constructionSite, MaterialDTO material, ServiceDTO service, TransportDTO transport) {
+    public OrderDTO(String username, Integer orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, String orderStatus, ConstructionSiteDTO constructionSite, MaterialDTO material, ServiceDTO service, TransportDTO transport) {
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
@@ -39,11 +39,11 @@ public class OrderDTO {
         return this;
     }
 
-    public String getOrderNumber() {
+    public Integer getOrderNumber() {
         return orderNumber;
     }
 
-    public OrderDTO setOrderNumber(String orderNumber) {
+    public OrderDTO setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
         return this;
     }
