@@ -24,6 +24,7 @@
 		<module>authentication-service</module>
 		<module>inventory-command-service</module>
 		<module>inventory-query-service</module>
+		<module>order-management-microservices</module>
 
     </modules>
 	<properties>

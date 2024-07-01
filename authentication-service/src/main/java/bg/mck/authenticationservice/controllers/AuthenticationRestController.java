@@ -53,4 +53,9 @@ public class AuthenticationRestController {
     public ResponseEntity<String> getRoles(@PathVariable String token) {
         return ResponseEntity.status(HttpStatus.OK).body(jwtUtil.getRoles(token));
     }
+
+    @GetMapping("/getemail/{token}")
+    public ResponseEntity<?> getEmail(@PathVariable String token) {
+        return ResponseEntity.status(HttpStatus.OK).body(jwtUtil.getEmail(token));
+    }
 }
