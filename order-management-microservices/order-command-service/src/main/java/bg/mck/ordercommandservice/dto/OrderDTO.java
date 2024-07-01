@@ -1,18 +1,30 @@
 package bg.mck.ordercommandservice.dto;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
 public class OrderDTO {
-    @Size(min = 10, message = "Order description asdasd10 characters long")
+    @Size(min = 10, message = "Order description must be at least 10 characters long.")
     private String orderDescription;
+    @NotNull(message = "Order date must not be empty.")
+    @FutureOrPresent(message = "Order date must be in the present or future.")
     private LocalDateTime orderDate;
+    @NotNull(message = "Delivery date must not be empty.")
+    @Future(message = "Delivery date must be in the future.")
     private LocalDateTime deliveryDate;
+    @NotNull(message = "Construction site must not be empty.")
+    @Valid
     private ConstructionSiteDTO constructionSite;
-    private @Valid MaterialDTO material;
+    @Valid
+    private MaterialDTO material;
+    @Valid
     private ServiceDTO service;
+    @Valid
     private TransportDTO transport;
 
     public OrderDTO() {

@@ -1,8 +1,7 @@
 package bg.mck.ordercommandservice.controller;
 
-import bg.mck.ordercommandservice.dto.ErrorsOrderCreationDTO;
+import bg.mck.ordercommandservice.dto.errorDTO.OrderCreationErrorsDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
-import bg.mck.ordercommandservice.dto.UserDetailsDTO;
 import bg.mck.ordercommandservice.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,15 +39,12 @@ public class OrderController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order created successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorsOrderCreationDTO.class))})
+                            schema = @Schema(implementation = OrderCreationErrorsDTO.class))})
     }
     )
     @PostMapping("/create-order")
-    public ResponseEntity<Object> createOrder(@RequestBody @Valid OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+    public ResponseEntity<Object> createOrder(@Valid @RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                               BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new ErrorsOrderCreationDTO());
-        }
 
         token = token.substring(7);
 //        String email = restTemplate
@@ -56,5 +52,4 @@ public class OrderController {
         String email = "test@abv.bg";
         return ResponseEntity.ok(orderService.createOrder(order, email));
     }
-
 }

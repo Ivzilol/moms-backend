@@ -2,9 +2,11 @@ package bg.mck.ordercommandservice.dto.Material;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class FastenerDTO {
+    @NotNull
     private String description;
     private String diameter;
     private Double length;
@@ -12,6 +14,7 @@ public class FastenerDTO {
     private String clazz;
     @DecimalMin(value = "0.00")
     private Double quantity;
+    @Size(min = 5, message = "Note must be at least 5 characters long.")
     private String note;
     private String specificationFileUrl;
 

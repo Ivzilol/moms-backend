@@ -1,8 +1,12 @@
 package bg.mck.ordercommandservice.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class ConstructionSiteDTO {
     private Long id;
+    @NotNull(message = "Construction site name must not be empty.")
     private String name;
+    @NotNull(message = "Construction site number must not be empty.")
     private String constructionNumber;
 
     public ConstructionSiteDTO() {

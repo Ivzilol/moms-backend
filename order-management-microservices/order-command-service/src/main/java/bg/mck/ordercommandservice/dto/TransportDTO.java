@@ -1,8 +1,14 @@
 package bg.mck.ordercommandservice.dto;
 
+import jakarta.validation.constraints.Size;
+
 public class TransportDTO {
+
     private Long id;
+
+    @Size(min = 5, max = 255, message = "Description must be between 1 and 255 characters.")
     private String description;
+
     private Double distance;
 
     public TransportDTO() {
