@@ -16,7 +16,6 @@
 	<name>moms-backend</name>
 	<description>moms-backend</description>
 	<modules>
-		<module>user-management-microservice</module>
 		<module>discovery-service</module>
 		<module>config-service</module>
 		<module>gateway-service</module>
@@ -25,7 +24,8 @@
 		<module>inventory-command-service</module>
 		<module>inventory-query-service</module>
 		<module>order-management-microservices</module>
-
+		<module>user-command-service</module>
+		<module>user-query-service</module>
     </modules>
 	<properties>
 		<java.version>22</java.version>
