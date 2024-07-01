@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.dto;
 
 import bg.mck.ordercommandservice.dto.Material.*;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
+import jakarta.validation.Valid;
 
 import java.util.Set;
 
@@ -9,7 +10,7 @@ public class MaterialDTO {
 
     private MaterialType materialType;
 
-    private Set<FastenerDTO> fasteners;
+    private Set<@Valid FastenerDTO> fasteners;
     private Set<GalvanisedSheetDTO> galvanisedSheets;
     private Set<InsulationDTO> insulation;
     private Set<MetalDTO> metals;

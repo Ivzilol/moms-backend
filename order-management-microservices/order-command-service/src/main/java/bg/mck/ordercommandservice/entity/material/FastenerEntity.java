@@ -20,7 +20,6 @@ public class FastenerEntity extends BaseEntity {
 
     private String clazz;
 
-    @DecimalMin("0.00")
     private Double quantity;
 
     @Column(columnDefinition = "TEXT")

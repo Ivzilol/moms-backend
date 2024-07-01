@@ -1,51 +1,31 @@
 package bg.mck.ordercommandservice.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 public class OrderDTO {
-    private String username;
-    private Integer orderNumber;
+    @Size(min = 10, message = "Order description asdasd10 characters long")
     private String orderDescription;
     private LocalDateTime orderDate;
     private LocalDateTime deliveryDate;
-    private String orderStatus;
     private ConstructionSiteDTO constructionSite;
-    private MaterialDTO material;
+    private @Valid MaterialDTO material;
     private ServiceDTO service;
     private TransportDTO transport;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String username, Integer orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, String orderStatus, ConstructionSiteDTO constructionSite, MaterialDTO material, ServiceDTO service, TransportDTO transport) {
-        this.username = username;
-        this.orderNumber = orderNumber;
+    public OrderDTO(String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, ConstructionSiteDTO constructionSite, MaterialDTO material, ServiceDTO service, TransportDTO transport) {
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
-        this.orderStatus = orderStatus;
         this.constructionSite = constructionSite;
         this.material = material;
         this.service = service;
         this.transport = transport;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public OrderDTO setUsername(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public Integer getOrderNumber() {
-        return orderNumber;
-    }
-
-    public OrderDTO setOrderNumber(Integer orderNumber) {
-        this.orderNumber = orderNumber;
-        return this;
     }
 
     public String getOrderDescription() {
@@ -72,15 +52,6 @@ public class OrderDTO {
 
     public OrderDTO setDeliveryDate(LocalDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
-        return this;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public OrderDTO setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
         return this;
     }
 

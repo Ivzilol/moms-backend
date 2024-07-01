@@ -1,43 +1,75 @@
 package bg.mck.ordercommandservice.dto;
 
 public class CreateOrderDTO {
-    private String constructionSiteNumber;
-    private String constructionSiteName;
-    private Integer OrderNumber;
+    private final Long orderId;
+    private final Integer orderNumber;
+    private final String constructionSiteNumber;
+    private final String constructionSiteName;
 
-    public CreateOrderDTO() {
+    private CreateOrderDTO(Builder builder) {
+        this.orderId = builder.orderId;
+        this.orderNumber = builder.orderNumber;
+        this.constructionSiteNumber = builder.constructionSiteNumber;
+        this.constructionSiteName = builder.constructionSiteName;
     }
 
-    public CreateOrderDTO(String constructionSiteNumber, String constructionSiteName, Integer orderNumber) {
-        this.constructionSiteNumber = constructionSiteNumber;
-        this.constructionSiteName = constructionSiteName;
-        OrderNumber = orderNumber;
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
     }
 
     public String getConstructionSiteNumber() {
         return constructionSiteNumber;
     }
 
-    public CreateOrderDTO setConstructionSiteNumber(String constructionSiteNumber) {
-        this.constructionSiteNumber = constructionSiteNumber;
-        return this;
-    }
-
     public String getConstructionSiteName() {
         return constructionSiteName;
     }
 
-    public CreateOrderDTO setConstructionSiteName(String constructionSiteName) {
-        this.constructionSiteName = constructionSiteName;
-        return this;
+    public static class Builder {
+        private Long orderId;
+        private Integer orderNumber;
+        private String constructionSiteNumber;
+        private String constructionSiteName;
+
+        public Builder() {
+        }
+
+        public Builder orderId(Long orderId) {
+            this.orderId = orderId;
+            return this;
+        }
+
+        public Builder orderNumber(Integer orderNumber) {
+            this.orderNumber = orderNumber;
+            return this;
+        }
+
+        public Builder constructionSiteNumber(String constructionSiteNumber) {
+            this.constructionSiteNumber = constructionSiteNumber;
+            return this;
+        }
+
+        public Builder constructionSiteName(String constructionSiteName) {
+            this.constructionSiteName = constructionSiteName;
+            return this;
+        }
+
+        public CreateOrderDTO build() {
+            return new CreateOrderDTO(this);
+        }
     }
 
-    public Integer getOrderNumber() {
-        return OrderNumber;
-    }
-
-    public CreateOrderDTO setOrderNumber(Integer orderNumber) {
-        OrderNumber = orderNumber;
-        return this;
+    @Override
+    public String toString() {
+        return "CreateOrderDTO{" +
+                "orderId=" + orderId +
+                ", orderNumber=" + orderNumber +
+                ", constructionSiteNumber='" + constructionSiteNumber + '\'' +
+                ", constructionSiteName='" + constructionSiteName + '\'' +
+                '}';
     }
 }

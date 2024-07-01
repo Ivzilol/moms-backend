@@ -2,7 +2,9 @@ package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
+import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
+import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
 import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
@@ -60,13 +62,14 @@ public class OrderService {
     @Transactional
     public Object createOrder(OrderDTO order, String email) {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
-
+        ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
 
-        orderEntity.setUsername(email);
-        orderEntity.setOrderNumber(lastOrderNumber.orElse(0) + 1);
+        orderEntity.setUsername(email)
+                .setOrderNumber(lastOrderNumber.orElse(0) + 1)
+                .setOrderStatus(OrderStatus.CREATED)
+                .setConstructionSite(constructionSiteByNumberAndName);
 
-        constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         materialService.saveMaterial(order.getMaterial());
         serviceService.saveService(order.getService());
         transportService.saveTransport(order.getTransport());
@@ -74,10 +77,11 @@ public class OrderService {
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());
 
-        CreateOrderDTO createOrderDTO = new CreateOrderDTO();
-        createOrderDTO.setConstructionSiteName(order.getConstructionSite().getName());
-        createOrderDTO.setConstructionSiteNumber(order.getConstructionSite().getConstructionNumber());
-        createOrderDTO.setOrderNumber(orderEntity.getOrderNumber());
-        return createOrderDTO;
+        return new CreateOrderDTO.Builder()
+                .orderId(orderEntity.getId())
+                .orderNumber(orderEntity.getOrderNumber())
+                .constructionSiteName(orderEntity.getConstructionSite().getName())
+                .constructionSiteNumber(orderEntity.getConstructionSite().getConstructionNumber())
+                .build();
     }
 }

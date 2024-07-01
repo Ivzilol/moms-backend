@@ -26,6 +26,7 @@ public class ConstructionSiteService {
         }
         throw new ConstructionSiteNotFoundException("Construction site with id " + id + " not found");
     }
+
     public ConstructionSiteEntity getConstructionSiteById(Long id) {
         Optional<ConstructionSiteEntity> constructionSiteById = constructionSiteRepository.findById(id);
         if (constructionSiteById.isPresent()) {

@@ -9,9 +9,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -42,7 +44,11 @@ public class OrderController {
     }
     )
     @PostMapping("/create-order")
-    public ResponseEntity<Object> createOrder(@RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<Object> createOrder(@RequestBody @Valid OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+                                              BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new ErrorsOrderCreationDTO());
+        }
 
         token = token.substring(7);
 //        String email = restTemplate

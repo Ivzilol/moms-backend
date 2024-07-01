@@ -1,6 +1,8 @@
 package bg.mck.ordercommandservice.dto.Material;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Size;
 
 public class FastenerDTO {
     private String description;
@@ -8,7 +10,7 @@ public class FastenerDTO {
     private Double length;
     private String model;
     private String clazz;
-
+    @DecimalMin(value = "0.00")
     private Double quantity;
     private String note;
     private String specificationFileUrl;
