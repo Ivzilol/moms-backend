@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.service;
 
+import bg.mck.ordercommandservice.dto.CreateOrderDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
@@ -10,6 +11,7 @@ import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -55,6 +57,7 @@ public class OrderService {
         throw new OrderNotFoundException("Order with id " + id + " not found");
     }
 
+    @Transactional
     public Object createOrder(OrderDTO order, String email) {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
 
@@ -70,7 +73,11 @@ public class OrderService {
 
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());
-        return null;
 
+        CreateOrderDTO createOrderDTO = new CreateOrderDTO();
+        createOrderDTO.setConstructionSiteName(order.getConstructionSite().getName());
+        createOrderDTO.setConstructionSiteNumber(order.getConstructionSite().getConstructionNumber());
+        createOrderDTO.setOrderNumber(orderEntity.getOrderNumber());
+        return createOrderDTO;
     }
 }

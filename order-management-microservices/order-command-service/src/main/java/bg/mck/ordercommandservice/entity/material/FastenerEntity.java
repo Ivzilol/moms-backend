@@ -2,21 +2,30 @@ package bg.mck.ordercommandservice.entity.material;
 
 import bg.mck.ordercommandservice.entity.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "fastener")
 public class FastenerEntity extends BaseEntity {
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
+
     private String diameter;
+
+    @DecimalMin("0.00")
     private Double length;
+
     private String model;
+
     private String clazz;
 
+    @DecimalMin("0.00")
     private Double quantity;
-    @Column(columnDefinition="TEXT")
+
+    @Column(columnDefinition = "TEXT")
     private String note;
+
     private String specificationFileUrl;
 
     public FastenerEntity() {

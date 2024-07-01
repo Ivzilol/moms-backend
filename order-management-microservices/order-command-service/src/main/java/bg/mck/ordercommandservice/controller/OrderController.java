@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.controller;
 
+import bg.mck.ordercommandservice.dto.ErrorsOrderCreationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.dto.UserDetailsDTO;
 import bg.mck.ordercommandservice.service.OrderService;
@@ -35,16 +36,17 @@ public class OrderController {
 
     @Operation(summary = "Create order")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order created successfully"),
-                    @ApiResponse(responseCode = "400", description = "Incorrect data",
-                            content = {@Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ErrorsOrderCreationDTO.class))})
-            }
+            @ApiResponse(responseCode = "400", description = "Incorrect data",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorsOrderCreationDTO.class))})
+    }
     )
     @PostMapping("/create-order")
     public ResponseEntity<Object> createOrder(@RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
-//        String email = restTemplate.getForObject("http://authentication-service/"+ APPLICATION_VERSION +"/authentication/get-email/" + token
-//                , String.class);
+        token = token.substring(7);
+//        String email = restTemplate
+//                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
         String email = "test@abv.bg";
         return ResponseEntity.ok(orderService.createOrder(order, email));
     }

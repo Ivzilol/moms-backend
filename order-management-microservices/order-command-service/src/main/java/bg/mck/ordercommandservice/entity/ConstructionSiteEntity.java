@@ -1,11 +1,7 @@
 package bg.mck.ordercommandservice.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.util.Set;
 
 @Entity
 @Table(name = "construction_sites")
@@ -17,9 +13,9 @@ public class ConstructionSiteEntity extends BaseEntity {
     public ConstructionSiteEntity() {
     }
 
-    public ConstructionSiteEntity(String constructionNumber, String name) {
-        this.constructionNumber = constructionNumber;
-        this.name = name;
+    private ConstructionSiteEntity(Builder builder) {
+        this.constructionNumber = builder.constructionNumber;
+        this.name = builder.name;
     }
 
     public String getConstructionNumber() {
@@ -39,4 +35,31 @@ public class ConstructionSiteEntity extends BaseEntity {
         this.name = name;
         return this;
     }
+
+    public static class Builder {
+        private String constructionNumber;
+        private String name;
+
+        public Builder() {
+        }
+
+        public Builder constructionNumber(String constructionNumber) {
+            this.constructionNumber = constructionNumber;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ConstructionSiteEntity build() {
+            return new ConstructionSiteEntity(this);
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
 }
+
