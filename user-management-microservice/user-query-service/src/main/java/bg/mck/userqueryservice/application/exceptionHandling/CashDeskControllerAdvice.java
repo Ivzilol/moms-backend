@@ -1,8 +1,12 @@
 package bg.mck.userqueryservice.application.exceptionHandling;
 
 
+import bg.mck.userqueryservice.application.exceptions.InvalidEventTypeException;
 import bg.mck.userqueryservice.application.exceptions.UserNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,6 +20,11 @@ import java.util.Map;
 @ControllerAdvice
 public class CashDeskControllerAdvice {
 
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGlobalException(Exception e, HttpServletResponse response) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -39,6 +48,11 @@ public class CashDeskControllerAdvice {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidEventTypeException.class)
+    public ResponseEntity<String> handleInvalidEventTypeException(InvalidEventTypeException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 

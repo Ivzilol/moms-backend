@@ -4,7 +4,7 @@ import bg.mck.usercommandservice.application.enums.EventType;
 
 import java.util.Set;
 
-public class RegisteredUserEvent extends BaseEvent{
+public class    RegisteredUserEvent extends BaseEvent{
 
     private String email;
     private String password;

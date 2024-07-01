@@ -4,6 +4,8 @@ import bg.mck.userqueryservice.application.entity.UserEntity;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class RedisService {
 
@@ -21,6 +23,13 @@ public class RedisService {
 
     public void cacheObject(UserEntity userEntity) {
         redisTemplate.opsForValue().set(CACHE_KEY + userEntity.getId(), userEntity);
+    }
+
+    public void clearCache() {
+        Set<String> keys = redisTemplate.keys(CACHE_KEY + "*");
+        if (keys != null && !keys.isEmpty()) {
+            redisTemplate.delete(keys);
+        }
     }
 
 }

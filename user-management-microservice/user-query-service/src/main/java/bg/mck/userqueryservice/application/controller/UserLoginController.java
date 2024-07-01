@@ -2,6 +2,7 @@ package bg.mck.userqueryservice.application.controller;
 
 import bg.mck.userqueryservice.application.dto.UserLoginDTO;
 import bg.mck.userqueryservice.application.dto.UserLoginResponseDTO;
+import bg.mck.userqueryservice.application.exceptions.InvalidEmailOrPasswordException;
 import bg.mck.userqueryservice.application.service.UserLoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,18 +10,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserLoginRestController {
+public class UserLoginController {
 
     private final UserLoginService userLoginService;
 
     @Autowired
-    public UserLoginRestController(UserLoginService userLoginService) {
+    public UserLoginController(UserLoginService userLoginService) {
         this.userLoginService = userLoginService;
     }
 
@@ -41,5 +44,10 @@ public class UserLoginRestController {
         String token = userLoginService.generateToken(loggedUser);
         response.setHeader("Authorization", "Bearer " + token);
         return ResponseEntity.ok(loggedUser);
+    }
+
+    @ExceptionHandler(InvalidEmailOrPasswordException.class)
+    public ResponseEntity<String> handleInvalidEmailOrPasswordException(InvalidEmailOrPasswordException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
 }
