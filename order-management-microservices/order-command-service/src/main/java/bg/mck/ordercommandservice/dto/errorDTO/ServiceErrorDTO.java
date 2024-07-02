@@ -2,12 +2,12 @@ package bg.mck.ordercommandservice.dto.errorDTO;
 
 public class ServiceErrorDTO {
     private String descriptionError;
-    private Double priceError;
+    private String priceError;
 
     public ServiceErrorDTO() {
     }
 
-    public ServiceErrorDTO(String descriptionError, Double priceError) {
+    public ServiceErrorDTO(String descriptionError, String priceError) {
         this.descriptionError = descriptionError;
         this.priceError = priceError;
     }
@@ -21,11 +21,11 @@ public class ServiceErrorDTO {
         return this;
     }
 
-    public Double getPriceError() {
+    public String getPriceError() {
         return priceError;
     }
 
-    public ServiceErrorDTO setPriceError(Double priceError) {
+    public ServiceErrorDTO setPriceError(String priceError) {
         this.priceError = priceError;
         return this;
     }

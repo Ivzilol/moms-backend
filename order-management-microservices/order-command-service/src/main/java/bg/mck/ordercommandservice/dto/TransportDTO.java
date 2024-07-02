@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.dto;
 
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public class TransportDTO {
@@ -8,7 +9,7 @@ public class TransportDTO {
 
     @Size(min = 5, max = 255, message = "Description must be between 1 and 255 characters.")
     private String description;
-
+    @Positive(message = "Distance must be a positive number.")
     private Double distance;
 
     public TransportDTO() {

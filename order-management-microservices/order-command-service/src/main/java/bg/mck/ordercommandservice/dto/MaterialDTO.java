@@ -11,13 +11,13 @@ public class MaterialDTO {
     private MaterialType materialType;
 
     private Set<@Valid FastenerDTO> fasteners;
-    private Set<GalvanisedSheetDTO> galvanisedSheets;
-    private Set<InsulationDTO> insulation;
-    private Set<MetalDTO> metals;
-    private Set<PanelDTO> panels;
-    private Set<RebarDTO> rebars;
-    private Set<SetDTO> sets;
-    private Set<UnspecifiedDTO> unspecified;
+    private Set<@Valid GalvanisedSheetDTO> galvanisedSheets;
+    private Set<@Valid InsulationDTO> insulation;
+    private Set<@Valid MetalDTO> metals;
+    private Set<@Valid PanelDTO> panels;
+    private Set<@Valid RebarDTO> rebars;
+    private Set<@Valid SetDTO> sets;
+    private Set<@Valid UnspecifiedDTO> unspecified;
 
     public MaterialDTO() {
     }

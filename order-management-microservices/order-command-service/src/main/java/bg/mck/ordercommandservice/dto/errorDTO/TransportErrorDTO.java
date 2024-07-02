@@ -2,12 +2,12 @@ package bg.mck.ordercommandservice.dto.errorDTO;
 
 public class TransportErrorDTO {
     private String descriptionError;
-    private Double distanceError;
+    private String distanceError;
 
     public TransportErrorDTO() {
     }
 
-    public TransportErrorDTO(String descriptionError, Double distanceError) {
+    public TransportErrorDTO(String descriptionError, String distanceError) {
         this.descriptionError = descriptionError;
         this.distanceError = distanceError;
     }
@@ -21,11 +21,11 @@ public class TransportErrorDTO {
         return this;
     }
 
-    public Double getDistanceError() {
+    public String getDistanceError() {
         return distanceError;
     }
 
-    public TransportErrorDTO setDistanceError(Double distanceError) {
+    public TransportErrorDTO setDistanceError(String distanceError) {
         this.distanceError = distanceError;
         return this;
     }

@@ -1,8 +1,13 @@
 package bg.mck.ordercommandservice.dto;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Size;
+
 public class ServiceDTO {
     private Long id;
+    @Size(min = 5, max = 255, message = "Description must be between 5 and 255 characters.")
     private String description;
+    @DecimalMin(value = "0.00", message = "Price must be a positive number.")
     private Double price;
 
     public ServiceDTO() {
