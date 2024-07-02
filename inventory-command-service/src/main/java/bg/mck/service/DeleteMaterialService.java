@@ -67,7 +67,7 @@ public class DeleteMaterialService {
 
         MaterialEvent<MaterialDeletedEvent> materialEvent = EventCreationHelper.toMaterialEvent(event);
 
-        inventoryQueryClient.sendEvent(materialEvent, event.getEventType().name());
+        inventoryQueryClient.sendEvent(materialEvent, materialEvent.getEventType().name());
     }
 
     private <T> void deleteMaterialById(JpaRepository<T, Long> repository, Long id) {
