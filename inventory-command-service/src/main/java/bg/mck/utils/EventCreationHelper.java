@@ -1,4 +1,7 @@
-package bg.mck.events;
+package bg.mck.utils;
+
+import bg.mck.events.BaseEvent;
+import bg.mck.events.MaterialEvent;
 
 public class EventCreationHelper {
 

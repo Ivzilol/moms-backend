@@ -3,7 +3,10 @@ package bg.mck.usercommandservice.application.exceptionHandling;
 
 import bg.mck.usercommandservice.application.exceptions.InvalidPasswordException;
 import bg.mck.usercommandservice.application.exceptions.UserNotFoundException;
+import feign.FeignException;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,7 +18,13 @@ import java.util.Map;
 
 
 @ControllerAdvice
-public class CashDeskControllerAdvice {
+public class UserManagementControllerAdvice {
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGlobalException(Exception e, HttpServletResponse response) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
+    }
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -46,7 +55,14 @@ public class CashDeskControllerAdvice {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<String> handleFeignException(FeignException e) {
+        HttpStatus status = HttpStatus.resolve(e.status());
+        if (status == null) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>("Feign client error: " + e.getMessage(), status);
+    }
 
 
 }

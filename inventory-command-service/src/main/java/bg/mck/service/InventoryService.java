@@ -6,7 +6,7 @@ import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.FastenerEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.EventCreationHelper;
+import bg.mck.utils.EventCreationHelper;
 import bg.mck.events.MaterialEvent;
 import bg.mck.events.RegisterMaterialEvent;
 import bg.mck.repository.CategoryRepository;
@@ -69,7 +69,7 @@ public class InventoryService {
 
             RegisterMaterialEvent registerMaterialEvent = new RegisterMaterialEvent(
                     createdFastener.getId(),
-                    EventType.MaterialRegister,
+                    EventType.ItemRegistered,
                     materialType,
                     createdFastener.getName(),
                     createdFastener.getDescription(),
@@ -84,7 +84,7 @@ public class InventoryService {
             MaterialEvent<RegisterMaterialEvent> materialEvent =
                     EventCreationHelper.toMaterialEvent(registerMaterialEvent);
 
-            inventoryQueryServiceClient.sendEvent(materialEvent, String.valueOf(EventType.MaterialRegister));
+            inventoryQueryServiceClient.sendEvent(materialEvent, String.valueOf(EventType.ItemRegistered));
         }
 
     }

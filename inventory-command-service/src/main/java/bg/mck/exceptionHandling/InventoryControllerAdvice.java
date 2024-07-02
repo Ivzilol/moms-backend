@@ -1,8 +1,9 @@
-package bg.mck.userqueryservice.application.exceptionHandling;
+package bg.mck.exceptionHandling;
 
 
-import bg.mck.userqueryservice.application.exceptions.InvalidEventTypeException;
-import bg.mck.userqueryservice.application.exceptions.UserNotFoundException;
+import bg.mck.exceptions.InvalidCategoryException;
+import bg.mck.exceptions.InventoryItemNotFoundException;
+import feign.FeignException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -17,8 +18,7 @@ import java.util.Map;
 
 
 @ControllerAdvice
-public class CashDeskControllerAdvice {
-
+public class InventoryControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalException(Exception e, HttpServletResponse response) {
@@ -44,14 +44,23 @@ public class CashDeskControllerAdvice {
     }
 
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<String> handleFeignException(FeignException e) {
+        HttpStatus status = HttpStatus.resolve(e.status());
+        if (status == null) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>("Feign client error: " + e.getMessage(), status);
+    }
+
+    @ExceptionHandler(InvalidCategoryException.class)
+    public ResponseEntity<String> handleInvalidCategoryException(InvalidCategoryException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(InvalidEventTypeException.class)
-    public ResponseEntity<String> handleInvalidEventTypeException(InvalidEventTypeException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(InventoryItemNotFoundException.class)
+    public ResponseEntity<String> handleInventoryItemNotFoundException(InventoryItemNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 
