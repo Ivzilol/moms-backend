@@ -1,25 +1,20 @@
-package bg.mck.ordercommandservice.dto.Material;
+package bg.mck.ordercommandservice.dto.errorDTO;
 
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
-
-public class RebarDTO {
-    private Integer positionNumber;
+public class RebarErrorDTO {
+    private String positionNumber;
     private String type;
     private String steel;
-    private Double diameter;
-    private Double length;
-    private Double weight;
-    @Positive
-    private Double quantity;
-    @Size(min = 5, max = 255, message = "Note must be between 5 and 255 characters")
+    private String diameter;
+    private String length;
+    private String weight;
+    private String quantity;
     private String note;
     private String specificationFileUrl;
 
-    public RebarDTO() {
+    public RebarErrorDTO() {
     }
 
-    public RebarDTO(Integer positionNumber, String type, String steel, Double diameter, Double length, Double weight, Double quantity, String note, String specificationFileUrl) {
+    public RebarErrorDTO(String positionNumber, String type, String steel, String diameter, String length, String weight, String quantity, String note, String specificationFileUrl) {
         this.positionNumber = positionNumber;
         this.type = type;
         this.steel = steel;
@@ -31,11 +26,11 @@ public class RebarDTO {
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public Integer getPositionNumber() {
+    public String getPositionNumber() {
         return positionNumber;
     }
 
-    public RebarDTO setPositionNumber(Integer positionNumber) {
+    public RebarErrorDTO setPositionNumber(String positionNumber) {
         this.positionNumber = positionNumber;
         return this;
     }
@@ -44,7 +39,7 @@ public class RebarDTO {
         return type;
     }
 
-    public RebarDTO setType(String type) {
+    public RebarErrorDTO setType(String type) {
         this.type = type;
         return this;
     }
@@ -53,43 +48,43 @@ public class RebarDTO {
         return steel;
     }
 
-    public RebarDTO setSteel(String steel) {
+    public RebarErrorDTO setSteel(String steel) {
         this.steel = steel;
         return this;
     }
 
-    public Double getDiameter() {
+    public String getDiameter() {
         return diameter;
     }
 
-    public RebarDTO setDiameter(Double diameter) {
+    public RebarErrorDTO setDiameter(String diameter) {
         this.diameter = diameter;
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public RebarDTO setLength(Double length) {
+    public RebarErrorDTO setLength(String length) {
         this.length = length;
         return this;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public RebarDTO setWeight(Double weight) {
+    public RebarErrorDTO setWeight(String weight) {
         this.weight = weight;
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public RebarDTO setQuantity(Double quantity) {
+    public RebarErrorDTO setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -98,7 +93,7 @@ public class RebarDTO {
         return note;
     }
 
-    public RebarDTO setNote(String note) {
+    public RebarErrorDTO setNote(String note) {
         this.note = note;
         return this;
     }
@@ -107,7 +102,7 @@ public class RebarDTO {
         return specificationFileUrl;
     }
 
-    public RebarDTO setSpecificationFileUrl(String specificationFileUrl) {
+    public RebarErrorDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }

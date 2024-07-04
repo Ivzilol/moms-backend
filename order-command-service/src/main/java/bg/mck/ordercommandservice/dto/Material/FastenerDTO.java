@@ -13,10 +13,14 @@ public class FastenerDTO {
     private String model;
     private String clazz;
     @DecimalMin(value = "0.00")
+    @NotNull
     private Double quantity;
     @Size(min = 5, message = "Note must be at least 5 characters long.")
     private String note;
     private String specificationFileUrl;
+
+    public FastenerDTO() {
+    }
 
     public FastenerDTO(String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
         this.description = description;

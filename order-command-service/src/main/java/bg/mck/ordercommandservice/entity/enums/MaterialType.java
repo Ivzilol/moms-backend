@@ -1,14 +1,14 @@
 package bg.mck.ordercommandservice.entity.enums;
 
 public enum MaterialType {
-    FASTENERS("крепежи"),
-    GALVANIZED_SHEET("ламарина"),
-    INSULATION("изолация"),
-    METAL("метали"),
-    PANELS("панели"),
-    REBAR("армировка"),
-    SET("oкомплектовка"),
-    UNSPECIFIED("други");
+    FASTENERS("fastener"),
+    GALVANIZED_SHEET("galvanisedSheet"),
+    INSULATION("insulation"),
+    METAL("metal"),
+    PANELS("panel"),
+    REBAR("rebar"),
+    SET("set"),
+    UNSPECIFIED("unspecified"),;
 
     private final String description;
 
