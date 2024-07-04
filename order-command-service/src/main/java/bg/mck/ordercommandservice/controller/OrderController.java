@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.controller;
 
+import bg.mck.ordercommandservice.dto.CreateOrderDTO;
 import bg.mck.ordercommandservice.dto.errorDTO.OrderCreationErrorsDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.service.OrderService;
@@ -12,7 +13,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,13 +43,15 @@ public class OrderController {
     }
     )
     @PostMapping("/create-order")
-    public ResponseEntity<Object> createOrder(@Valid @RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
-                                              BindingResult bindingResult) {
+    public ResponseEntity<CreateOrderDTO> createOrder(@Valid @RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
         token = token.substring(7);
 //        String email = restTemplate
 //                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
-        String email = "test@abv.bg";
+
+        String email = restTemplate
+                .getForObject("http://localhost:8081/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
+
         return ResponseEntity.ok(orderService.createOrder(order, email));
     }
 

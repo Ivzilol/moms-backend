@@ -63,7 +63,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Object createOrder(OrderDTO order, String email) {
+    public CreateOrderDTO createOrder(OrderDTO order, String email) {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
