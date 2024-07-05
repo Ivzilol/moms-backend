@@ -2,13 +2,13 @@
 //
 //import bg.mck.ordercommandservice.dto.UserDetailsDTO;
 //import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
-//import bg.mck.ordercommandservice.entity.material.GalvanisedSheetEntity;
+//import bg.mck.ordercommandservice.entity.GalvanisedSheetEntity;
 //import bg.mck.ordercommandservice.entity.material._MaterialEntity;
 //import bg.mck.ordercommandservice.entity.OrderEntity;
 //import bg.mck.ordercommandservice.entity.enums.OrderStatus;
-//import bg.mck.ordercommandservice.entity.material.FastenerEntity;
-//import bg.mck.ordercommandservice.entity.service.ServiceEntity;
-//import bg.mck.ordercommandservice.entity.transport.TransportEntity;
+//import bg.mck.ordercommandservice.entity.FastenerEntity;
+//import bg.mck.ordercommandservice.entity.ServiceEntity;
+//import bg.mck.ordercommandservice.entity.TransportEntity;
 //import bg.mck.ordercommandservice.repository.ConstructionSiteRepository;
 //import bg.mck.ordercommandservice.repository.FastenerRepository;
 //import bg.mck.ordercommandservice.repository.MaterialRepository;

@@ -2,7 +2,6 @@ package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
-import bg.mck.ordercommandservice.dto.errorDTO.OrderCreationErrorsDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
@@ -15,9 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -28,15 +25,13 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ConstructionSiteService constructionSiteService;
-    private final MaterialService materialService;
     private final ServiceService serviceService;
     private final TransportService transportService;
     private final OrderMapper orderMapper;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, MaterialService materialService, ServiceService serviceService, TransportService transportService, OrderMapper orderMapper) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, ServiceService serviceService, TransportService transportService, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
-        this.materialService = materialService;
         this.serviceService = serviceService;
         this.transportService = transportService;
         this.orderMapper = orderMapper;
@@ -47,16 +42,12 @@ public class OrderService {
         Optional<OrderEntity> orderById = orderRepository.findById(id);
         if (orderById.isPresent()) {
             Long constructionSiteId = orderById.get().getConstructionSite().getId();
-            Long materialsId = orderById.get().getMaterials().getId();
-            Long servicesId = orderById.get().getServices().getId();
-            Long transportsId = orderById.get().getTransports().getId();
+
 
 
             OrderDTO orderDTO = orderMapper.toOrderDTO(orderById.get());
             orderDTO.setConstructionSite(constructionSiteService.getConstructionSite(constructionSiteId));
-            orderDTO.setMaterial(materialService.getMaterialById(materialsId));
-            orderDTO.setService(serviceService.getServiceById(servicesId));
-            orderDTO.setTransport(transportService.getTransportById(transportsId));
+
             return orderDTO;
         }
         throw new OrderNotFoundException("Order with id " + id + " not found");
@@ -73,7 +64,6 @@ public class OrderService {
                 .setOrderStatus(OrderStatus.CREATED)
                 .setConstructionSite(constructionSiteByNumberAndName);
 
-        materialService.saveMaterial(order.getMaterial());
         serviceService.saveService(order.getService());
         transportService.saveTransport(order.getTransport());
 

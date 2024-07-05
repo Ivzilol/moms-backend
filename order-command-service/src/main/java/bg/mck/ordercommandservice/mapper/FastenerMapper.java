@@ -2,7 +2,7 @@ package bg.mck.ordercommandservice.mapper;
 
 
 import bg.mck.ordercommandservice.dto.Material.FastenerDTO;
-import bg.mck.ordercommandservice.entity.material.FastenerEntity;
+import bg.mck.ordercommandservice.entity.FastenerEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

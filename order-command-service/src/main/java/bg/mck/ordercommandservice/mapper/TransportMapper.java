@@ -1,7 +1,7 @@
 package bg.mck.ordercommandservice.mapper;
 
 import bg.mck.ordercommandservice.dto.TransportDTO;
-import bg.mck.ordercommandservice.entity.transport.TransportEntity;
+import bg.mck.ordercommandservice.entity.TransportEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

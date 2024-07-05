@@ -1,9 +1,9 @@
 package bg.mck.ordercommandservice.entity.enums;
 
 public enum LengthUnits {
-    MM("мм"),
-    CM("см"),
-    M("м");
+    MM("mm"),
+    CM("cm"),
+    M("m");
 
     private final String value;
 

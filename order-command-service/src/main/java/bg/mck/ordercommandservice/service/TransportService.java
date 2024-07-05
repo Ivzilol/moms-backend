@@ -1,7 +1,7 @@
 package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.TransportDTO;
-import bg.mck.ordercommandservice.entity.transport.TransportEntity;
+import bg.mck.ordercommandservice.entity.TransportEntity;
 import bg.mck.ordercommandservice.mapper.TransportMapper;
 import bg.mck.ordercommandservice.repository.TransportRepository;
 import org.springframework.stereotype.Service;

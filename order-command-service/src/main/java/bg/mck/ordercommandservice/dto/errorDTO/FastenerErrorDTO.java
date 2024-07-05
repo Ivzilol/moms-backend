@@ -1,13 +1,10 @@
 package bg.mck.ordercommandservice.dto.errorDTO;
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Size;
-
 public class FastenerErrorDTO {
     private String descriptionError;
     private String diameterError;
     private String lengthError;
-    private String modelError;
+    private String standardError;
     private String clazzError;
     private String quantityError;
     private String noteError;
@@ -20,7 +17,7 @@ public class FastenerErrorDTO {
         this.descriptionError = descriptionError;
         this.diameterError = diameterError;
         this.lengthError = lengthError;
-        this.modelError = modelError;
+        this.standardError = modelError;
         this.clazzError = clazzError;
         this.quantityError = quantityError;
         this.noteError = noteError;
@@ -54,12 +51,12 @@ public class FastenerErrorDTO {
         return this;
     }
 
-    public String getModelError() {
-        return modelError;
+    public String getStandardError() {
+        return standardError;
     }
 
-    public FastenerErrorDTO setModelError(String modelError) {
-        this.modelError = modelError;
+    public FastenerErrorDTO setStandardError(String standardError) {
+        this.standardError = standardError;
         return this;
     }
 

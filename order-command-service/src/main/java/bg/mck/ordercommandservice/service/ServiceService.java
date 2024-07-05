@@ -1,7 +1,7 @@
 package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.ServiceDTO;
-import bg.mck.ordercommandservice.entity.service.ServiceEntity;
+import bg.mck.ordercommandservice.entity.ServiceEntity;
 import bg.mck.ordercommandservice.mapper.ServiceMapper;
 import bg.mck.ordercommandservice.repository.ServiceRepository;
 import bg.mck.ordercommandservice.exception.ServiceNotFoundException;

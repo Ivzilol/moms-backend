@@ -1,7 +1,7 @@
 package bg.mck.ordercommandservice.mapper;
 
 import bg.mck.ordercommandservice.dto.Material.UnspecifiedDTO;
-import bg.mck.ordercommandservice.entity.material.UnspecifiedEntity;
+import bg.mck.ordercommandservice.entity.UnspecifiedEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

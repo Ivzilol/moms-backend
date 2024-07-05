@@ -1,7 +1,7 @@
 package bg.mck.ordercommandservice.mapper;
 
 import bg.mck.ordercommandservice.dto.Material.InsulationDTO;
-import bg.mck.ordercommandservice.entity.material.InsulationEntity;
+import bg.mck.ordercommandservice.entity.InsulationEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -1,21 +1,30 @@
 package bg.mck.ordercommandservice.entity;
 
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
-import bg.mck.ordercommandservice.entity.material._MaterialEntity;
-import bg.mck.ordercommandservice.entity.service.ServiceEntity;
-import bg.mck.ordercommandservice.entity.transport.TransportEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
+    @NotNull
     private String username;
+
     private Integer orderNumber;
+
+    @Column(columnDefinition = "TEXT")
     private String orderDescription;
+
+    @FutureOrPresent
     private LocalDateTime orderDate;
+
+    @Future
     private LocalDateTime deliveryDate;
 
     @Enumerated(EnumType.STRING)
@@ -24,18 +33,42 @@ public class OrderEntity extends BaseEntity {
     @ManyToOne
     private ConstructionSiteEntity constructionSite;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private _MaterialEntity materials;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private ServiceEntity services;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private TransportEntity transports;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
+    private Set<FastenerEntity> fasteners;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
+    private Set<GalvanisedSheetEntity> galvanisedSheets;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
+    private Set<InsulationEntity> insulation;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
+    private Set<MetalEntity> metals;
+    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Set<PanelEntity> panels;
+    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Set<RebarEntity> rebars;
+    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Set<SetEntity> sets;
+    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Set<UnspecifiedEntity> unspecified;
+    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Set<ServiceEntity> services;
+    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private Set<TransportEntity> transports;
 
 
     public OrderEntity() {
     }
 
-    public OrderEntity(String username, Integer orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, _MaterialEntity materials, ServiceEntity services, TransportEntity transports) {
+    public OrderEntity(String username, Integer orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
@@ -43,7 +76,14 @@ public class OrderEntity extends BaseEntity {
         this.deliveryDate = deliveryDate;
         this.orderStatus = orderStatus;
         this.constructionSite = constructionSite;
-        this.materials = materials;
+        this.fasteners = fasteners;
+        this.galvanisedSheets = galvanisedSheets;
+        this.insulation = insulation;
+        this.metals = metals;
+        this.panels = panels;
+        this.rebars = rebars;
+        this.sets = sets;
+        this.unspecified = unspecified;
         this.services = services;
         this.transports = transports;
     }
@@ -111,29 +151,92 @@ public class OrderEntity extends BaseEntity {
         return this;
     }
 
-    public _MaterialEntity getMaterials() {
-        return materials;
+    public Set<FastenerEntity> getFasteners() {
+        return fasteners;
     }
 
-    public OrderEntity setMaterials(_MaterialEntity materials) {
-        this.materials = materials;
+    public OrderEntity setFasteners(Set<FastenerEntity> fasteners) {
+        this.fasteners = fasteners;
         return this;
     }
 
-    public ServiceEntity getServices() {
+    public Set<GalvanisedSheetEntity> getGalvanisedSheets() {
+        return galvanisedSheets;
+    }
+
+    public OrderEntity setGalvanisedSheets(Set<GalvanisedSheetEntity> galvanisedSheets) {
+        this.galvanisedSheets = galvanisedSheets;
+        return this;
+    }
+
+    public Set<InsulationEntity> getInsulation() {
+        return insulation;
+    }
+
+    public OrderEntity setInsulation(Set<InsulationEntity> insulation) {
+        this.insulation = insulation;
+        return this;
+    }
+
+    public Set<MetalEntity> getMetals() {
+        return metals;
+    }
+
+    public OrderEntity setMetals(Set<MetalEntity> metals) {
+        this.metals = metals;
+        return this;
+    }
+
+    public Set<PanelEntity> getPanels() {
+        return panels;
+    }
+
+    public OrderEntity setPanels(Set<PanelEntity> panels) {
+        this.panels = panels;
+        return this;
+    }
+
+    public Set<RebarEntity> getRebars() {
+        return rebars;
+    }
+
+    public OrderEntity setRebars(Set<RebarEntity> rebars) {
+        this.rebars = rebars;
+        return this;
+    }
+
+    public Set<SetEntity> getSets() {
+        return sets;
+    }
+
+    public OrderEntity setSets(Set<SetEntity> sets) {
+        this.sets = sets;
+        return this;
+    }
+
+    public Set<UnspecifiedEntity> getUnspecified() {
+        return unspecified;
+    }
+
+    public OrderEntity setUnspecified(Set<UnspecifiedEntity> unspecified) {
+        this.unspecified = unspecified;
+        return this;
+    }
+
+    public Set<ServiceEntity> getServices() {
         return services;
     }
 
-    public OrderEntity setServices(ServiceEntity services) {
+    public OrderEntity setServices(Set<ServiceEntity> services) {
         this.services = services;
         return this;
     }
 
-    public TransportEntity getTransports() {
+    public Set<TransportEntity> getTransports() {
         return transports;
     }
 
-    public OrderEntity setTransports(TransportEntity transports) {
+    public OrderEntity setTransports(Set<TransportEntity> transports) {
         this.transports = transports;
         return this;
     }

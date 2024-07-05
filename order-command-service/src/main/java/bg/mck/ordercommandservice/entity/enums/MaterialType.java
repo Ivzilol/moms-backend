@@ -8,7 +8,9 @@ public enum MaterialType {
     PANELS("panel"),
     REBAR("rebar"),
     SET("set"),
-    UNSPECIFIED("unspecified"),;
+    UNSPECIFIED("unspecified"),
+    SERVICE("service"),
+    TRANSPORT("transport");
 
     private final String description;
 

@@ -1,7 +1,7 @@
 package bg.mck.ordercommandservice.mapper;
 
 import bg.mck.ordercommandservice.dto.Material.GalvanisedSheetDTO;
-import bg.mck.ordercommandservice.entity.material.GalvanisedSheetEntity;
+import bg.mck.ordercommandservice.entity.GalvanisedSheetEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

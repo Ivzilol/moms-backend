@@ -1,7 +1,7 @@
 package bg.mck.ordercommandservice.mapper;
 
 import bg.mck.ordercommandservice.dto.Material.RebarDTO;
-import bg.mck.ordercommandservice.entity.material.RebarEntity;
+import bg.mck.ordercommandservice.entity.RebarEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
