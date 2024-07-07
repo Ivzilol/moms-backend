@@ -53,12 +53,12 @@ public class InitSuperAdmin implements CommandLineRunner {
             user.setFirstName("Admin");
             user.setLastName("Adminov");
             user.setPhoneNumber("0888776655");
-            Authority authority = new Authority();
-            authority.setAuthority(AuthorityEnum.SUPERADMIN);
-            this.authorityRepository.save(authority);
             if (user.getAuthorities() == null) {
                 user.setAuthorities(new HashSet<>());
             }
+            Authority authority = new Authority();
+            authority.setAuthority(AuthorityEnum.SUPERADMIN);
+            this.authorityRepository.save(authority);
             user.getAuthorities().add(authority);
             this.userRepository.save(user);
 
