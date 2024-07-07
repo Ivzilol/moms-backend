@@ -33,8 +33,6 @@ public class UserRegisterService {
     private final UserQueryServiceClient userQueryClient;
     private final ObjectMapper objectMapper;
 
-    @Value("${SUPERADMIN_PASSWORD}")
-    private String superAdminPassword;
 
     public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, UserQueryServiceClient queryServiceClient, ObjectMapper objectMapper) {
         this.authorityRepository = authorityRepository;
@@ -78,13 +76,8 @@ public class UserRegisterService {
         user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
         user.setActive(true);
         Authority authority = new Authority();
-        if (userRegisterDTO.getPassword().equals(superAdminPassword)) {
-            authority.setAuthority(AuthorityEnum.SUPERADMIN);
-            this.authorityRepository.save(authority);
-        } else {
-            authority.setAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole()));
-            this.authorityRepository.save(authority);
-        }
+        authority.setAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole()));
+        this.authorityRepository.save(authority);
         if (user.getAuthorities() == null) {
             user.setAuthorities(new HashSet<>());
         }
