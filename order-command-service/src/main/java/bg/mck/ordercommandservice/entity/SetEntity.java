@@ -13,7 +13,7 @@ public class SetEntity extends BaseMaterialEntity {
     @Column(name = "galvanised_sheet_thickness_in_mm")
     private Double galvanisedSheetThickness;
 
-    private String Color;
+    private String color;
 
     @DecimalMin(value = "0.0", message = "MaxLength must be positive")
     @Column(name = "max_length_in_centimeters")
@@ -32,11 +32,11 @@ public class SetEntity extends BaseMaterialEntity {
     }
 
     public String getColor() {
-        return Color;
+        return color;
     }
 
     public SetEntity setColor(String color) {
-        Color = color;
+        this.color = color;
         return this;
     }
 

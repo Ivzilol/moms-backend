@@ -43,10 +43,10 @@ public class OrderService {
         if (orderById.isPresent()) {
             Long constructionSiteId = orderById.get().getConstructionSite().getId();
 
-
-
+            OrderEntity orderEntity = orderById.get();
             OrderDTO orderDTO = orderMapper.toOrderDTO(orderById.get());
             orderDTO.setConstructionSite(constructionSiteService.getConstructionSite(constructionSiteId));
+
 
             return orderDTO;
         }
@@ -63,9 +63,6 @@ public class OrderService {
                 .setOrderNumber(lastOrderNumber.orElse(0) + 1)
                 .setOrderStatus(OrderStatus.CREATED)
                 .setConstructionSite(constructionSiteByNumberAndName);
-
-        serviceService.saveService(order.getService());
-        transportService.saveTransport(order.getTransport());
 
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());

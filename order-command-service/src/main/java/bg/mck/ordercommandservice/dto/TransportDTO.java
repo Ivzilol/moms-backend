@@ -1,50 +1,58 @@
 package bg.mck.ordercommandservice.dto;
 
+import bg.mck.ordercommandservice.dto.Material.BaseDTO;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-public class TransportDTO {
+public class TransportDTO extends BaseDTO {
 
-    private Long id;
 
-    @Size(min = 5, max = 255, message = "Description must be between 1 and 255 characters.")
-    private String description;
-    @Positive(message = "Distance must be a positive number.")
-    private Double distance;
+    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
+    @Column(name = "max_length_in_centimeters")
+    private Double maxLength;
+
+    @DecimalMin(value = "0.0", message = "weight must be positive")
+    @Column(name = "weight_in_kg")
+    private Double weight;
+
+    private String Truck;
 
     public TransportDTO() {
     }
 
-    public TransportDTO(Long id, String description, Double distance) {
-        this.id = id;
-        this.description = description;
-        this.distance = distance;
+    public TransportDTO(Long id, Double quantity, String description, String specificationFileUrl, Double maxLength, Double weight, String truck) {
+        super(id, quantity, description, specificationFileUrl);
+        this.maxLength = maxLength;
+        this.weight = weight;
+        Truck = truck;
     }
 
-    public Long getId() {
-        return id;
+    public Double getMaxLength() {
+        return maxLength;
     }
 
-    public TransportDTO setId(Long id) {
-        this.id = id;
+    public TransportDTO setMaxLength(Double maxLength) {
+        this.maxLength = maxLength;
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public Double getWeight() {
+        return weight;
     }
 
-    public TransportDTO setDescription(String description) {
-        this.description = description;
+    public TransportDTO setWeight(Double weight) {
+        this.weight = weight;
         return this;
     }
 
-    public Double getDistance() {
-        return distance;
+    public String getTruck() {
+        return Truck;
     }
 
-    public TransportDTO setDistance(Double distance) {
-        this.distance = distance;
+    public TransportDTO setTruck(String truck) {
+        Truck = truck;
         return this;
     }
 }

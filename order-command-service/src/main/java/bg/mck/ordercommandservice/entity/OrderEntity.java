@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.entity;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
@@ -28,40 +29,43 @@ public class OrderEntity extends BaseEntity {
     private LocalDateTime deliveryDate;
 
     @Enumerated(EnumType.STRING)
+    private MaterialType materialType;
+
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @ManyToOne
     private ConstructionSiteEntity constructionSite;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Set<FastenerEntity> fasteners;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Set<GalvanisedSheetEntity> galvanisedSheets;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Set<InsulationEntity> insulation;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private Set<MetalEntity> metals;
     @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<PanelEntity> panels;
     @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<RebarEntity> rebars;
     @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<SetEntity> sets;
     @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<UnspecifiedEntity> unspecified;
     @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<ServiceEntity> services;
     @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<TransportEntity> transports;
 
 
@@ -238,6 +242,15 @@ public class OrderEntity extends BaseEntity {
 
     public OrderEntity setTransports(Set<TransportEntity> transports) {
         this.transports = transports;
+        return this;
+    }
+
+    public MaterialType getMaterialType() {
+        return materialType;
+    }
+
+    public OrderEntity setMaterialType(MaterialType materialType) {
+        this.materialType = materialType;
         return this;
     }
 }

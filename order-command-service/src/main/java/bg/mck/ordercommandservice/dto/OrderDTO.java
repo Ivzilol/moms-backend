@@ -1,8 +1,9 @@
 package bg.mck.ordercommandservice.dto;
 
 import bg.mck.ordercommandservice.dto.Material.*;
-import bg.mck.ordercommandservice.dto.errorDTO.FastenerErrorDTO;
+
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
+import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -13,11 +14,15 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public class OrderDTO {
+
+
     @Size(min = 10, message = "Order description must be at least 10 characters long.")
     private String orderDescription;
+
     @NotNull(message = "Order date must not be empty.")
     @FutureOrPresent(message = "Order date must be in the present or future.")
     private LocalDateTime orderDate;
+
     @NotNull(message = "Delivery date must not be empty.")
     @Future(message = "Delivery date must be in the future.")
     private LocalDateTime deliveryDate;
@@ -26,30 +31,30 @@ public class OrderDTO {
     @Valid
     private ConstructionSiteDTO constructionSite;
 
+    private OrderStatus orderStatus;
+
     private MaterialType materialType;
 
-    private Set<FastenerErrorDTO> fasteners;
-    private Set<GalvanisedSheetDTO> galvanisedSheets;
-    private Set<InsulationDTO> insulation;
-    private Set<MetalDTO> metals;
-    private Set<PanelDTO> panels;
-    private Set<RebarDTO> rebars;
-    private Set<SetDTO> sets;
-    private Set<UnspecifiedDTO> unspecified;
-
-    @Valid
-    private ServiceDTO service;
-    @Valid
-    private TransportDTO transport;
+    private Set<@Valid FastenerDTO> fasteners;
+    private Set<@Valid GalvanisedSheetDTO> galvanisedSheets;
+    private Set<@Valid InsulationDTO> insulation;
+    private Set<@Valid MetalDTO> metals;
+    private Set<@Valid PanelDTO> panels;
+    private Set<@Valid RebarDTO> rebars;
+    private Set<@Valid SetDTO> sets;
+    private Set<@Valid UnspecifiedDTO> unspecified;
+    private Set<@Valid ServiceDTO> services;
+    private Set<@Valid TransportDTO> transports;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, ConstructionSiteDTO constructionSite, MaterialType materialType, Set<FastenerErrorDTO> fasteners, Set<GalvanisedSheetDTO> galvanisedSheets, Set<InsulationDTO> insulation, Set<MetalDTO> metals, Set<PanelDTO> panels, Set<RebarDTO> rebars, Set<SetDTO> sets, Set<UnspecifiedDTO> unspecified, ServiceDTO service, TransportDTO transport) {
+    public OrderDTO(String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<@Valid FastenerDTO> fasteners, Set<@Valid GalvanisedSheetDTO> galvanisedSheets, Set<@Valid InsulationDTO> insulation, Set<@Valid MetalDTO> metals, Set<@Valid PanelDTO> panels, Set<@Valid RebarDTO> rebars, Set<@Valid SetDTO> sets, Set<@Valid UnspecifiedDTO> unspecified, Set<@Valid ServiceDTO> services, Set<@Valid TransportDTO> transports) {
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.constructionSite = constructionSite;
+        this.orderStatus = orderStatus;
         this.materialType = materialType;
         this.fasteners = fasteners;
         this.galvanisedSheets = galvanisedSheets;
@@ -59,43 +64,52 @@ public class OrderDTO {
         this.rebars = rebars;
         this.sets = sets;
         this.unspecified = unspecified;
-        this.service = service;
-        this.transport = transport;
+        this.services = services;
+        this.transports = transports;
     }
 
-    public @Size(min = 10, message = "Order description must be at least 10 characters long.") String getOrderDescription() {
+    public String getOrderDescription() {
         return orderDescription;
     }
 
-    public OrderDTO setOrderDescription(@Size(min = 10, message = "Order description must be at least 10 characters long.") String orderDescription) {
+    public OrderDTO setOrderDescription(String orderDescription) {
         this.orderDescription = orderDescription;
         return this;
     }
 
-    public @NotNull(message = "Order date must not be empty.") @FutureOrPresent(message = "Order date must be in the present or future.") LocalDateTime getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public OrderDTO setOrderDate(@NotNull(message = "Order date must not be empty.") @FutureOrPresent(message = "Order date must be in the present or future.") LocalDateTime orderDate) {
+    public OrderDTO setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
         return this;
     }
 
-    public @NotNull(message = "Delivery date must not be empty.") @Future(message = "Delivery date must be in the future.") LocalDateTime getDeliveryDate() {
+    public LocalDateTime getDeliveryDate() {
         return deliveryDate;
     }
 
-    public OrderDTO setDeliveryDate(@NotNull(message = "Delivery date must not be empty.") @Future(message = "Delivery date must be in the future.") LocalDateTime deliveryDate) {
+    public OrderDTO setDeliveryDate(LocalDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
         return this;
     }
 
-    public @NotNull(message = "Construction site must not be empty.") @Valid ConstructionSiteDTO getConstructionSite() {
+    public ConstructionSiteDTO getConstructionSite() {
         return constructionSite;
     }
 
-    public OrderDTO setConstructionSite(@NotNull(message = "Construction site must not be empty.") @Valid ConstructionSiteDTO constructionSite) {
+    public OrderDTO setConstructionSite(ConstructionSiteDTO constructionSite) {
         this.constructionSite = constructionSite;
+        return this;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public OrderDTO setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
         return this;
     }
 
@@ -108,93 +122,93 @@ public class OrderDTO {
         return this;
     }
 
-    public Set<FastenerErrorDTO> getFasteners() {
+    public Set<@Valid FastenerDTO> getFasteners() {
         return fasteners;
     }
 
-    public OrderDTO setFasteners(Set<FastenerErrorDTO> fasteners) {
+    public OrderDTO setFasteners(Set<@Valid FastenerDTO> fasteners) {
         this.fasteners = fasteners;
         return this;
     }
 
-    public Set<GalvanisedSheetDTO> getGalvanisedSheets() {
+    public Set<@Valid GalvanisedSheetDTO> getGalvanisedSheets() {
         return galvanisedSheets;
     }
 
-    public OrderDTO setGalvanisedSheets(Set<GalvanisedSheetDTO> galvanisedSheets) {
+    public OrderDTO setGalvanisedSheets(Set<@Valid GalvanisedSheetDTO> galvanisedSheets) {
         this.galvanisedSheets = galvanisedSheets;
         return this;
     }
 
-    public Set<InsulationDTO> getInsulation() {
+    public Set<@Valid InsulationDTO> getInsulation() {
         return insulation;
     }
 
-    public OrderDTO setInsulation(Set<InsulationDTO> insulation) {
+    public OrderDTO setInsulation(Set<@Valid InsulationDTO> insulation) {
         this.insulation = insulation;
         return this;
     }
 
-    public Set<MetalDTO> getMetals() {
+    public Set<@Valid MetalDTO> getMetals() {
         return metals;
     }
 
-    public OrderDTO setMetals(Set<MetalDTO> metals) {
+    public OrderDTO setMetals(Set<@Valid MetalDTO> metals) {
         this.metals = metals;
         return this;
     }
 
-    public Set<PanelDTO> getPanels() {
+    public Set<@Valid PanelDTO> getPanels() {
         return panels;
     }
 
-    public OrderDTO setPanels(Set<PanelDTO> panels) {
+    public OrderDTO setPanels(Set<@Valid PanelDTO> panels) {
         this.panels = panels;
         return this;
     }
 
-    public Set<RebarDTO> getRebars() {
+    public Set<@Valid RebarDTO> getRebars() {
         return rebars;
     }
 
-    public OrderDTO setRebars(Set<RebarDTO> rebars) {
+    public OrderDTO setRebars(Set<@Valid RebarDTO> rebars) {
         this.rebars = rebars;
         return this;
     }
 
-    public Set<SetDTO> getSets() {
+    public Set<@Valid SetDTO> getSets() {
         return sets;
     }
 
-    public OrderDTO setSets(Set<SetDTO> sets) {
+    public OrderDTO setSets(Set<@Valid SetDTO> sets) {
         this.sets = sets;
         return this;
     }
 
-    public Set<UnspecifiedDTO> getUnspecified() {
+    public Set<@Valid UnspecifiedDTO> getUnspecified() {
         return unspecified;
     }
 
-    public OrderDTO setUnspecified(Set<UnspecifiedDTO> unspecified) {
+    public OrderDTO setUnspecified(Set<@Valid UnspecifiedDTO> unspecified) {
         this.unspecified = unspecified;
         return this;
     }
 
-    public @Valid ServiceDTO getService() {
-        return service;
+    public Set<@Valid ServiceDTO> getServices() {
+        return services;
     }
 
-    public OrderDTO setService(@Valid ServiceDTO service) {
-        this.service = service;
+    public OrderDTO setServices(Set<@Valid ServiceDTO> services) {
+        this.services = services;
         return this;
     }
 
-    public @Valid TransportDTO getTransport() {
-        return transport;
+    public Set<@Valid TransportDTO> getTransports() {
+        return transports;
     }
 
-    public OrderDTO setTransport(@Valid TransportDTO transport) {
-        this.transport = transport;
+    public OrderDTO setTransports(Set<@Valid TransportDTO> transports) {
+        this.transports = transports;
         return this;
     }
 }

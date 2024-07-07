@@ -1,30 +1,35 @@
 package bg.mck.ordercommandservice.dto.Material;
 
-public class PanelDTO {
+import jakarta.validation.constraints.DecimalMin;
+
+public class PanelDTO extends BaseDTO{
+
     private String type;
     private String color;
-    private Double length;
-    private Double width;
-    private Double totalThickness;
-    private Double sheetThickness;
 
-    private Double quantity;
-    private String note;
-    private String specificationFileUrl;
+    @DecimalMin(value = "0.0", message = "Length must be positive")
+    private Double length;
+    @DecimalMin(value = "0.0", message = "Width must be positive")
+    private Double width;
+    @DecimalMin(value = "0.0", message = "Thickness must be positive")
+    private Double totalThickness;
+    @DecimalMin(value = "0.0", message = "FrontSheetThickness must be positive")
+    private Double FrontSheetThickness;
+    @DecimalMin(value = "0.0", message = "BackSheetThickness must be positive")
+    private Double BackSheetThickness;
+
 
     public PanelDTO() {
     }
 
-    public PanelDTO(String type, String color, Double length, Double width, Double totalThickness, Double sheetThickness, Double quantity, String note, String specificationFileUrl) {
+    public PanelDTO(String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness) {
         this.type = type;
         this.color = color;
         this.length = length;
         this.width = width;
         this.totalThickness = totalThickness;
-        this.sheetThickness = sheetThickness;
-        this.quantity = quantity;
-        this.note = note;
-        this.specificationFileUrl = specificationFileUrl;
+        FrontSheetThickness = frontSheetThickness;
+        BackSheetThickness = backSheetThickness;
     }
 
     public String getType() {
@@ -72,39 +77,21 @@ public class PanelDTO {
         return this;
     }
 
-    public Double getSheetThickness() {
-        return sheetThickness;
+    public Double getFrontSheetThickness() {
+        return FrontSheetThickness;
     }
 
-    public PanelDTO setSheetThickness(Double sheetThickness) {
-        this.sheetThickness = sheetThickness;
+    public PanelDTO setFrontSheetThickness(Double frontSheetThickness) {
+        FrontSheetThickness = frontSheetThickness;
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
+    public Double getBackSheetThickness() {
+        return BackSheetThickness;
     }
 
-    public PanelDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public PanelDTO setNote(String note) {
-        this.note = note;
-        return this;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public PanelDTO setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
+    public PanelDTO setBackSheetThickness(Double backSheetThickness) {
+        BackSheetThickness = backSheetThickness;
         return this;
     }
 }

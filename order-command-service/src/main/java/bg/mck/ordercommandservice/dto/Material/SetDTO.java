@@ -1,57 +1,53 @@
 package bg.mck.ordercommandservice.dto.Material;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.DecimalMin;
 
-public class SetDTO {
-    private String description;
+public class SetDTO extends BaseDTO{
 
-    private Double quantity;
-    private String note;
-    private String specificationFileUrl;
+    @DecimalMin(value = "0.0", message = "GalvanisedSheetThickness must be positive")
+    @Column(name = "galvanised_sheet_thickness_in_mm")
+    private Double galvanisedSheetThickness;
+
+    private String color;
+
+    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
+    @Column(name = "max_length_in_centimeters")
+    private String maxLength;
 
     public SetDTO() {
     }
 
-    public SetDTO(String description, Double quantity, String note, String specificationFileUrl) {
-        this.description = description;
-        this.quantity = quantity;
-        this.note = note;
-        this.specificationFileUrl = specificationFileUrl;
+    public SetDTO(Double galvanisedSheetThickness, String color, String maxLength) {
+        this.galvanisedSheetThickness = galvanisedSheetThickness;
+        this.color = color;
+        this.maxLength = maxLength;
     }
 
-    public String getDescription() {
-        return description;
+    public Double getGalvanisedSheetThickness() {
+        return galvanisedSheetThickness;
     }
 
-    public SetDTO setDescription(String description) {
-        this.description = description;
+    public SetDTO setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+        this.galvanisedSheetThickness = galvanisedSheetThickness;
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
+    public String getColor() {
+        return color;
     }
 
-    public SetDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
+    public SetDTO setColor(String color) {
+        this.color = color;
         return this;
     }
 
-    public String getNote() {
-        return note;
+    public String getMaxLength() {
+        return maxLength;
     }
 
-    public SetDTO setNote(String note) {
-        this.note = note;
-        return this;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public SetDTO setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
+    public SetDTO setMaxLength(String maxLength) {
+        this.maxLength = maxLength;
         return this;
     }
 }
