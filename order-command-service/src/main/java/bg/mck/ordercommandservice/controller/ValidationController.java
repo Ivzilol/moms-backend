@@ -1,6 +1,8 @@
 package bg.mck.ordercommandservice.controller;
 
 import bg.mck.ordercommandservice.dto.Material.*;
+import bg.mck.ordercommandservice.dto.ServiceDTO;
+import bg.mck.ordercommandservice.dto.TransportDTO;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.exception.ErrorMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +26,9 @@ public class ValidationController {
             MaterialType.PANELS.getDescription(), PanelDTO.class,
             MaterialType.REBAR.getDescription(), RebarDTO.class,
             MaterialType.SET.getDescription(), SetDTO.class,
-            MaterialType.UNSPECIFIED.getDescription(), RebarDTO.class
+            MaterialType.UNSPECIFIED.getDescription(), RebarDTO.class,
+            MaterialType.TRANSPORT.getDescription(), TransportDTO.class,
+            MaterialType.SERVICE.getDescription(), ServiceDTO.class
     );
 
     private final ObjectMapper objectMapper;
