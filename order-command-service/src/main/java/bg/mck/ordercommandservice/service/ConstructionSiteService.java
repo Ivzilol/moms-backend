@@ -1,17 +1,12 @@
 package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
-import bg.mck.ordercommandservice.dto.errorDTO.OrderCreationErrorsDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
 import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
 import bg.mck.ordercommandservice.repository.ConstructionSiteRepository;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

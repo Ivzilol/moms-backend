@@ -1,11 +1,8 @@
 package bg.mck.ordercommandservice.controller;
 
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
-import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
 import bg.mck.ordercommandservice.service.ConstructionSiteService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -33,7 +30,7 @@ public class ConstructionSiteController {
     }
     )
     @PostMapping("/create-construction-site")
-    public ResponseEntity<ConstructionSiteDTO> createConstructionSite(@RequestBody @Valid ConstructionSiteDTO constructionSiteDTO) {
+    public ResponseEntity<?> createConstructionSite(@RequestBody @Valid ConstructionSiteDTO constructionSiteDTO) {
         return ResponseEntity.ok(constructionSiteService.createConstructionSite(constructionSiteDTO));
     }
 }
