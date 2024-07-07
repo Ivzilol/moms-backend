@@ -27,7 +27,7 @@ public class UserQueryController {
             @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/users/credentials/{id}")
+    @GetMapping("/${APPLICATION_VERSION}/user/user/query/credentials/{id}")
     public ResponseEntity<UserCredentialsDTO> getUserCredentialsById(@PathVariable Long id) {
         UserCredentialsDTO userDto = userQueryService.getUserCredentialsById(id);
         if (userDto == null) {
@@ -43,7 +43,7 @@ public class UserQueryController {
             @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/${APPLICATION_VERSION}/user/users/{id}")
+    @GetMapping("/${APPLICATION_VERSION}/user/user/query/user/{id}")
     public ResponseEntity<UserDetailsDTO> getUserDetailsById(@PathVariable Long id) {
         UserDetailsDTO userDto = userQueryService.getUserDetailsById(id);
         if (userDto == null) {

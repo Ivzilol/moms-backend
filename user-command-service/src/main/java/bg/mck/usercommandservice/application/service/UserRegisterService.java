@@ -2,19 +2,18 @@ package bg.mck.usercommandservice.application.service;
 
 import bg.mck.usercommandservice.application.client.UserQueryServiceClient;
 import bg.mck.usercommandservice.application.dto.ErrorsRegistrationDTO;
-import bg.mck.usercommandservice.application.enums.EventType;
-import bg.mck.usercommandservice.application.events.RegisteredUserEvent;
 import bg.mck.usercommandservice.application.dto.UserRegisterDTO;
 import bg.mck.usercommandservice.application.entity.Authority;
 import bg.mck.usercommandservice.application.entity.UserEntity;
 import bg.mck.usercommandservice.application.enums.AuthorityEnum;
+import bg.mck.usercommandservice.application.enums.EventType;
+import bg.mck.usercommandservice.application.events.RegisteredUserEvent;
 import bg.mck.usercommandservice.application.events.UserEvent;
 import bg.mck.usercommandservice.application.repository.AuthorityRepository;
 import bg.mck.usercommandservice.application.repository.UserRepository;
 import bg.mck.usercommandservice.application.utils.EventCreationHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -33,8 +32,6 @@ public class UserRegisterService {
     private final UserQueryServiceClient userQueryClient;
     private final ObjectMapper objectMapper;
 
-    @Value("${SUPERADMIN_PASSWORD}")
-    private String superAdminPassword;
 
     public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, UserQueryServiceClient queryServiceClient, ObjectMapper objectMapper) {
         this.authorityRepository = authorityRepository;
@@ -77,18 +74,21 @@ public class UserRegisterService {
         user.setLastName(userRegisterDTO.getLastName());
         user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
         user.setActive(true);
-        Authority authority = new Authority();
-        if (userRegisterDTO.getPassword().equals(superAdminPassword)) {
-            authority.setAuthority(AuthorityEnum.SUPERADMIN);
-            this.authorityRepository.save(authority);
-        } else {
-            authority.setAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole()));
-            this.authorityRepository.save(authority);
-        }
+        Authority authority = new Authority(authorityRepository.getAuthorityByAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole())));
         if (user.getAuthorities() == null) {
             user.setAuthorities(new HashSet<>());
         }
-        user.getAuthorities().add(authority);
+
+        if (authority.getAuthority().equals(AuthorityEnum.SUPERADMIN)) {
+            user.getAuthorities().addAll(authorityRepository.findAll());
+
+        } else if (authority.getAuthority().equals(AuthorityEnum.ADMIN)) {
+            user.getAuthorities().addAll(List.of(authorityRepository.getAuthorityByAuthority(AuthorityEnum.ADMIN),
+                    authorityRepository.getAuthorityByAuthority(AuthorityEnum.USER)));
+
+        } else {
+            user.getAuthorities().add(authority);
+        }
     }
 
 
