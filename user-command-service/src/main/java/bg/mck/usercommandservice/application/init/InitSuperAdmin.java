@@ -60,6 +60,14 @@ public class InitSuperAdmin implements CommandLineRunner {
             authority.setAuthority(AuthorityEnum.SUPERADMIN);
             this.authorityRepository.save(authority);
             user.getAuthorities().add(authority);
+            Authority authorityAdmin = new Authority();
+            authorityAdmin.setAuthority(AuthorityEnum.ADMIN);
+            this.authorityRepository.save(authorityAdmin);
+            user.getAuthorities().add(authorityAdmin);
+            Authority authorityUser = new Authority();
+            authorityUser.setAuthority(AuthorityEnum.USER);
+            this.authorityRepository.save(authorityUser);
+            user.getAuthorities().add(authorityUser);
             this.userRepository.save(user);
 
             UserEntity savedUser = this.userRepository.findByEmail("super-admin@email.bg");
