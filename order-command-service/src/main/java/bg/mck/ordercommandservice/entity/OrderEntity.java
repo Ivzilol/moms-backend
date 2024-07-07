@@ -4,10 +4,11 @@ import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
@@ -22,15 +23,18 @@ public class OrderEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String orderDescription;
 
-    @FutureOrPresent
-    private LocalDateTime orderDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private ZonedDateTime orderDate;
 
-    @Future
-    private LocalDateTime deliveryDate;
+    @NotNull(message = "Delivery date must not be empty.")
+    @Future(message = "Delivery date must be in the future.")
+    private ZonedDateTime deliveryDate;
 
+    @NotNull(message = "Material type must not be empty.")
     @Enumerated(EnumType.STRING)
     private MaterialType materialType;
 
+    @NotNull(message = "Order status must not be empty.")
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
@@ -72,7 +76,7 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String username, Integer orderNumber, String orderDescription, LocalDateTime orderDate, LocalDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+    public OrderEntity(String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
@@ -119,20 +123,20 @@ public class OrderEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getOrderDate() {
+    public ZonedDateTime getOrderDate() {
         return orderDate;
     }
 
-    public OrderEntity setOrderDate(LocalDateTime orderDate) {
+    public OrderEntity setOrderDate(ZonedDateTime orderDate) {
         this.orderDate = orderDate;
         return this;
     }
 
-    public LocalDateTime getDeliveryDate() {
+    public ZonedDateTime getDeliveryDate() {
         return deliveryDate;
     }
 
-    public OrderEntity setDeliveryDate(LocalDateTime deliveryDate) {
+    public OrderEntity setDeliveryDate(ZonedDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
         return this;
     }

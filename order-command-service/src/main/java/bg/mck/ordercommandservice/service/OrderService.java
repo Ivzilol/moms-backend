@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 
@@ -25,15 +27,11 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ConstructionSiteService constructionSiteService;
-    private final ServiceService serviceService;
-    private final TransportService transportService;
     private final OrderMapper orderMapper;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, ServiceService serviceService, TransportService transportService, OrderMapper orderMapper) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
-        this.serviceService = serviceService;
-        this.transportService = transportService;
         this.orderMapper = orderMapper;
     }
 
@@ -59,9 +57,12 @@ public class OrderService {
         ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
 
+        ZoneId z = ZoneId.of("Europe/Sofia");
+
         orderEntity.setUsername(email)
                 .setOrderNumber(lastOrderNumber.orElse(0) + 1)
                 .setOrderStatus(OrderStatus.CREATED)
+                .setOrderDate(ZonedDateTime.now(z).plusHours(3)) //FIXME: find a better way to set the time and timezone
                 .setConstructionSite(constructionSiteByNumberAndName);
 
         orderRepository.save(orderEntity);
