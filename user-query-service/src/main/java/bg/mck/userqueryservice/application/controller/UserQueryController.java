@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class UserQueryController {
 
@@ -50,5 +52,21 @@ public class UserQueryController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(userDto);
+    }
+
+    @Operation(summary = "Retrieve all users details", description = "Giving information about all users.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Users details successfully retrieved",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDetailsDTO.class))),
+            @ApiResponse(responseCode = "404", description = "No users in the database",
+                    content = @Content(mediaType = "application/json"))
+    })
+    @RequestMapping("/getallusers")
+    public ResponseEntity<List<UserDetailsDTO>> getAllUsers() {
+        try {
+            return ResponseEntity.ok().body(userQueryService.getAllUsersAsDTO());
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
