@@ -1,6 +1,6 @@
 package bg.mck.ordercommandservice.mapper;
 
-import bg.mck.ordercommandservice.dto.Material.InsulationDTO;
+import bg.mck.ordercommandservice.dto.InsulationDTO;
 import bg.mck.ordercommandservice.entity.InsulationEntity;
 import org.mapstruct.Mapper;
 

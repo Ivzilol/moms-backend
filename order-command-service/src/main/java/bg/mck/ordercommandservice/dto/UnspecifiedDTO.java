@@ -1,4 +1,4 @@
-package bg.mck.ordercommandservice.dto.Material;
+package bg.mck.ordercommandservice.dto;
 
 public class UnspecifiedDTO extends BaseDTO {
 

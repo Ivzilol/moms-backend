@@ -1,6 +1,6 @@
 package bg.mck.ordercommandservice.mapper;
 
-import bg.mck.ordercommandservice.dto.Material.GalvanisedSheetDTO;
+import bg.mck.ordercommandservice.dto.GalvanisedSheetDTO;
 import bg.mck.ordercommandservice.entity.GalvanisedSheetEntity;
 import org.mapstruct.Mapper;
 

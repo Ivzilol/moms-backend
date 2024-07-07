@@ -1,8 +1,6 @@
 package bg.mck.ordercommandservice.controller;
 
-import bg.mck.ordercommandservice.dto.Material.*;
-import bg.mck.ordercommandservice.dto.ServiceDTO;
-import bg.mck.ordercommandservice.dto.TransportDTO;
+import bg.mck.ordercommandservice.dto.*;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.exception.ErrorMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;

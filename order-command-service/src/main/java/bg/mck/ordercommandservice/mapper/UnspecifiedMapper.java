@@ -1,6 +1,6 @@
 package bg.mck.ordercommandservice.mapper;
 
-import bg.mck.ordercommandservice.dto.Material.UnspecifiedDTO;
+import bg.mck.ordercommandservice.dto.UnspecifiedDTO;
 import bg.mck.ordercommandservice.entity.UnspecifiedEntity;
 import org.mapstruct.Mapper;
 

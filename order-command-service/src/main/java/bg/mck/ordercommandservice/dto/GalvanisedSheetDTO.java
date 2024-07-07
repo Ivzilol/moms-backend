@@ -1,4 +1,4 @@
-package bg.mck.ordercommandservice.dto.Material;
+package bg.mck.ordercommandservice.dto;
 
 
 import jakarta.validation.constraints.DecimalMin;

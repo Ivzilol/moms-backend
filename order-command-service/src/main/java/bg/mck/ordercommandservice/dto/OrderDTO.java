@@ -1,7 +1,5 @@
 package bg.mck.ordercommandservice.dto;
 
-import bg.mck.ordercommandservice.dto.Material.*;
-
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import jakarta.validation.Valid;

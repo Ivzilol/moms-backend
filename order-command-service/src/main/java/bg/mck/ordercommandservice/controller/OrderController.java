@@ -1,7 +1,6 @@
 package bg.mck.ordercommandservice.controller;
 
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
-import bg.mck.ordercommandservice.dto.errorDTO.OrderCreationErrorsDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +38,7 @@ public class OrderController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order created successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = OrderCreationErrorsDTO.class))})
+                            schema = @Schema(implementation = CreateOrderDTO.class))})
     }
     )
     @PostMapping("/create-order")

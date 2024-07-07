@@ -1,10 +1,7 @@
 package bg.mck.ordercommandservice.dto;
 
-import bg.mck.ordercommandservice.dto.Material.BaseDTO;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 
 public class TransportDTO extends BaseDTO {
 
