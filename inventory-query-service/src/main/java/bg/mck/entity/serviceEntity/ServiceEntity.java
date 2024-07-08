@@ -1,32 +1,27 @@
 package bg.mck.entity.serviceEntity;
 
-import jakarta.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Objects;
-
-@Entity
-@Table(name = "services")
+@Document(collection = "services")
 public class ServiceEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String name;
 
     public ServiceEntity() {
     }
 
-    public ServiceEntity(Long id, String name) {
+    public ServiceEntity(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

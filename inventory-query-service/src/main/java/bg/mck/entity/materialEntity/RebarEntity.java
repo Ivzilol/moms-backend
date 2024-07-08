@@ -1,46 +1,39 @@
-package bg.mck.entity.transportEntity;
+package bg.mck.entity.materialEntity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Objects;
+@Document(collection = "rebars")
+public class RebarEntity {
 
-@Entity
-@Table(name = "transports")
-public class TransportEntity {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
     private String name;
 
     @DecimalMin(value = "0.0", message = "MaxLength must be positive")
     @Column(name = "max_length_in_centimeters")
-    private Double maxLength;
+    private Double MaxLength;
 
     @DecimalMin(value = "0.0", message = "weight must be positive")
     @Column(name = "weight_in_kg")
     private Double weight;
 
-    private String Truck;
-
-    public TransportEntity() {
+    public RebarEntity() {
     }
 
-    public TransportEntity(Long id, String name, Double maxLength, Double weight, String truck) {
+    public RebarEntity(String id, String name, Double maxLength, Double weight) {
         this.id = id;
         this.name = name;
-        this.maxLength = maxLength;
+        MaxLength = maxLength;
         this.weight = weight;
-        Truck = truck;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -53,11 +46,11 @@ public class TransportEntity {
     }
 
     public Double getMaxLength() {
-        return maxLength;
+        return MaxLength;
     }
 
     public void setMaxLength(Double maxLength) {
-        this.maxLength = maxLength;
+        MaxLength = maxLength;
     }
 
     public Double getWeight() {
@@ -66,13 +59,5 @@ public class TransportEntity {
 
     public void setWeight(Double weight) {
         this.weight = weight;
-    }
-
-    public String getTruck() {
-        return Truck;
-    }
-
-    public void setTruck(String truck) {
-        Truck = truck;
     }
 }

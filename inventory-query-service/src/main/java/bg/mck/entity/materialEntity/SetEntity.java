@@ -1,18 +1,13 @@
 package bg.mck.entity.materialEntity;
 
-import bg.mck.entity.categoryEntity.CategoryEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Objects;
-
-@Entity
-@Table(name = "sets")
+@Document(collection = "")
 public class SetEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -26,26 +21,22 @@ public class SetEntity {
     @Column(name = "max_length_in_centimeters")
     private String maxLength;
 
-    @ManyToOne
-    private CategoryEntity category;
-
     public SetEntity() {
     }
 
-    public SetEntity(Long id, String name, Double galvanisedSheetThickness, String color, String maxLength, CategoryEntity category) {
+    public SetEntity(String id, String name, Double galvanisedSheetThickness, String color, String maxLength) {
         this.id = id;
         this.name = name;
         this.galvanisedSheetThickness = galvanisedSheetThickness;
         this.color = color;
         this.maxLength = maxLength;
-        this.category = category;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -79,13 +70,5 @@ public class SetEntity {
 
     public void setMaxLength(String maxLength) {
         this.maxLength = maxLength;
-    }
-
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
     }
 }

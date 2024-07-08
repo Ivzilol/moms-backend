@@ -2,29 +2,26 @@ package bg.mck.entity.materialEntity;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 
-import java.util.Objects;
-
-@Entity
-@Table(name = "unspecified")
-public class UnspecifiedEntity {
+@Table
+@Entity(name = "metals")
+public class MetalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   private String name;
+    private String name;
 
-   @ManyToOne
-   private CategoryEntity category;
+    @DecimalMin(value = "0.0", message = "Weight must be positive")
+    @Column(name = "total_weight_in_kg")
+    private Double totalWeight;
 
-    public UnspecifiedEntity() {
-    }
+    @ManyToOne
+    private CategoryEntity category;
 
-    public UnspecifiedEntity(Long id, String name, CategoryEntity category) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
+    public MetalEntity() {
     }
 
     public Long getId() {
@@ -41,6 +38,14 @@ public class UnspecifiedEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(Double totalWeight) {
+        this.totalWeight = totalWeight;
     }
 
     public CategoryEntity getCategory() {

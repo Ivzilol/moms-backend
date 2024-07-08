@@ -1,52 +1,41 @@
 package bg.mck.entity.materialEntity;
 
-import bg.mck.entity.categoryEntity.CategoryEntity;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 
-import java.util.Objects;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "fastener")
+@Document(collection = "fastener")
 public class FastenerEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+    private String id;
 
     private String name;
 
     private String type;
 
-    @DecimalMin(value = "0.0", message = "Length must be positive")
-    @Column(name = "length_in_mm")
     private Double length;
 
     private String model;
 
     private String clazz;
 
-    @ManyToOne
-    private CategoryEntity category;
-
     public FastenerEntity() {
     }
 
-    public FastenerEntity(Long id, String name, String type, Double length, String model, String clazz, CategoryEntity category) {
+    public FastenerEntity(String id, String name, String type, Double length, String model, String clazz) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.length = length;
         this.model = model;
         this.clazz = clazz;
-        this.category = category;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -88,13 +77,5 @@ public class FastenerEntity {
 
     public void setClazz(String clazz) {
         this.clazz = clazz;
-    }
-
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
     }
 }

@@ -1,48 +1,28 @@
 package bg.mck.entity.materialEntity;
 
-import bg.mck.entity.categoryEntity.CategoryEntity;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Objects;
-
-@Entity
-@Table(name = "panels")
+@Document(collection = "panels")
 public class PanelEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String name;
 
-    @DecimalMin(value = "0.0", message = "Length must be positive")
-    @Column(name = "length_in_centimeters")
     private Double length;
 
-    @DecimalMin(value = "0.0", message = "Width must be positive")
-    @Column(name = "width_in_centimeters")
     private Double width;
 
-    @DecimalMin(value = "0.0", message = "Thickness must be positive")
-    @Column(name = "total_thickness_in_mm")
     private Double totalThickness;
 
-    @DecimalMin(value = "0.0", message = "FrontSheetThickness must be positive")
-    @Column(name = "front_sheet_thickness_in_mm")
     private Double FrontSheetThickness;
 
-    @DecimalMin(value = "0.0", message = "BackSheetThickness must be positive")
-    @Column(name = "back_sheet_thickness_in_mm")
     private Double BackSheetThickness;
-
-    @ManyToOne
-    private CategoryEntity category;
 
     public PanelEntity() {
     }
 
-    public PanelEntity(Long id, String name, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, CategoryEntity category) {
+    public PanelEntity(String id, String name, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness) {
         this.id = id;
         this.name = name;
         this.length = length;
@@ -50,14 +30,13 @@ public class PanelEntity {
         this.totalThickness = totalThickness;
         FrontSheetThickness = frontSheetThickness;
         BackSheetThickness = backSheetThickness;
-        this.category = category;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -107,13 +86,5 @@ public class PanelEntity {
 
     public void setBackSheetThickness(Double backSheetThickness) {
         BackSheetThickness = backSheetThickness;
-    }
-
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
     }
 }

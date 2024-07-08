@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/${APPLICATION_VERSION}/inventory/command")
 public class InventoryController {
 
-    private final InventoryService inventoryService;
-
-    public InventoryController(InventoryService inventoryService) {
-        this.inventoryService = inventoryService;
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<?> createMaterial(@RequestBody CreateMaterialDTO createMaterialDTO) {
-        this.inventoryService.createMaterial(createMaterialDTO);
-        return ResponseEntity.ok().build();
-    }
+//    private final InventoryService inventoryService;
+//
+//    public InventoryController(InventoryService inventoryService) {
+//        this.inventoryService = inventoryService;
+//    }
+//
+//    @PostMapping("/create")
+//    public ResponseEntity<?> createMaterial(@RequestBody CreateMaterialDTO createMaterialDTO) {
+//        this.inventoryService.createMaterial(createMaterialDTO);
+//        return ResponseEntity.ok().build();
+//    }
 }
