@@ -4,6 +4,7 @@ import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.FastenerEntity;
+import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.EventCreationHelper;
@@ -11,6 +12,7 @@ import bg.mck.events.MaterialEvent;
 import bg.mck.events.RegisterMaterialEvent;
 import bg.mck.repository.CategoryRepository;
 import bg.mck.repository.FastenerRepository;
+import bg.mck.repository.GalvanisedSheetRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,13 +24,16 @@ public class InventoryService {
 
     private final FastenerRepository fastenerRepository;
 
+    private final GalvanisedSheetRepository galvanisedSheetRepository;
+
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
 
     public InventoryService(CategoryRepository categoryRepository,
                             FastenerRepository fastenerRepository,
-                            InventoryQueryServiceClient inventoryQueryServiceClient) {
+                            GalvanisedSheetRepository galvanisedSheetRepository, InventoryQueryServiceClient inventoryQueryServiceClient) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
+        this.galvanisedSheetRepository = galvanisedSheetRepository;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
     }
 
@@ -67,7 +72,8 @@ public class InventoryService {
             this.fastenerRepository.save(fastenerEntity);
             FastenerEntity createdFastener = this.fastenerRepository
                     .findByName(createMaterialDTO.getName());
-            String materialType = String.valueOf(this.categoryRepository.findByMaterialType(MaterialType.FASTENERS));
+            String materialType = String.valueOf(this.categoryRepository
+                    .findByMaterialType(MaterialType.FASTENERS));
 
             RegisterMaterialEvent registerMaterialEvent = new RegisterMaterialEvent(
                     createdFastener.getId(),
@@ -86,10 +92,38 @@ public class InventoryService {
             MaterialEvent<RegisterMaterialEvent> materialEvent =
                     EventCreationHelper.toMaterialEvent(registerMaterialEvent);
 
-            inventoryQueryServiceClient.sendEvent(materialEvent, String.valueOf(EventType.MaterialRegister));
+            inventoryQueryServiceClient.sendEvent(materialEvent,
+                    String.valueOf(EventType.MaterialRegister));
+        }
+
+        if (createMaterialDTO.getMaterialType().equals(MaterialType.GALVANIZED_SHEET)) {
+            GalvanisedSheetEntity galvanisedSheetEntity = mapGalvanizedEntity(createMaterialDTO);
+            this.galvanisedSheetRepository.save(galvanisedSheetEntity);
+            GalvanisedSheetEntity createdGalvanized = this.galvanisedSheetRepository
+                    .findByName(createMaterialDTO.getType());
+            String materialType = String.valueOf(this.categoryRepository
+                    .findByMaterialType(MaterialType.GALVANIZED_SHEET));
+
         }
 
     }
+
+    private GalvanisedSheetEntity mapGalvanizedEntity(CreateMaterialDTO createMaterialDTO) {
+        return Optional.of(new GalvanisedSheetEntity())
+                .map(galvanisedEntity -> {
+                    galvanisedEntity.setName(createMaterialDTO.getType());
+                    galvanisedEntity.setType(createMaterialDTO.getType());
+                    galvanisedEntity.setMaxLength(createMaterialDTO.getMaxLength());
+                    galvanisedEntity.setArea(createMaterialDTO.getArea());
+                    galvanisedEntity.setQuantity(createMaterialDTO.getQuantity());
+                    galvanisedEntity.setDescription(createMaterialDTO.getDescription());
+                    galvanisedEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
+                    galvanisedEntity.setCategory(this.categoryRepository.findByMaterialType(
+                            MaterialType.GALVANIZED_SHEET).orElse(null));
+                    return galvanisedEntity;
+                }).orElseThrow(() -> new RuntimeException("Failed to map GalvanisedSheetEntity"));
+    }
+
 
     private FastenerEntity mapFastenerEntity(CreateMaterialDTO createMaterialDTO) {
         return Optional.of(new FastenerEntity())

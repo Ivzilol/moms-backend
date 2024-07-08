@@ -31,6 +31,8 @@ public class CreateMaterialDTO {
     private String steel;
     private Double weight;
 
+    private Double maxLength;
+
     public MaterialType getMaterialType() {
         return materialType;
     }
@@ -221,5 +223,13 @@ public class CreateMaterialDTO {
 
     public void setWeight(Double weight) {
         this.weight = weight;
+    }
+
+    public Double getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(Double maxLength) {
+        this.maxLength = maxLength;
     }
 }
