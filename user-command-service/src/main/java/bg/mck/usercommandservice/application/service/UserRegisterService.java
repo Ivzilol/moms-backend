@@ -33,8 +33,6 @@ public class UserRegisterService {
     private final UserQueryServiceClient userQueryClient;
     private final ObjectMapper objectMapper;
 
-    @Value("${SUPERADMIN_PASSWORD}")
-    private String superAdminPassword;
 
     public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, UserQueryServiceClient queryServiceClient, ObjectMapper objectMapper) {
         this.authorityRepository = authorityRepository;

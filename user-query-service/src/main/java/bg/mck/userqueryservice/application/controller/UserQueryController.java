@@ -61,7 +61,7 @@ public class UserQueryController {
             @ApiResponse(responseCode = "404", description = "No users in the database",
                     content = @Content(mediaType = "application/json"))
     })
-    @RequestMapping("/getallusers")
+    @RequestMapping("/${APPLICATION_VERSION}/superadmin/user/query/getallusers")
     public ResponseEntity<List<UserDetailsDTO>> getAllUsers() {
         try {
             return ResponseEntity.ok().body(userQueryService.getAllUsersAsDTO());
