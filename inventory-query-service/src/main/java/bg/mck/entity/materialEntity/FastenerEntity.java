@@ -7,10 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Objects;
 
 @Document(collection = "fasteners")
-public class FastenerEntity {
+public class FastenerEntity extends BaseMaterialEntity{
 
-    @Id
-    private String id;
     private String name;
     private String description;
     private String diameter;
@@ -24,8 +22,7 @@ public class FastenerEntity {
     public FastenerEntity() {
     }
 
-    public FastenerEntity(String id, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
-        this.id = id;
+    public FastenerEntity(String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
         this.name = name;
         this.description = description;
         this.diameter = diameter;
@@ -37,14 +34,6 @@ public class FastenerEntity {
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public FastenerEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getName() {
         return name;
@@ -132,19 +121,18 @@ public class FastenerEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FastenerEntity that = (FastenerEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(diameter, that.diameter) && Objects.equals(length, that.length) && Objects.equals(model, that.model) && Objects.equals(clazz, that.clazz) && Objects.equals(quantity, that.quantity) && Objects.equals(note, that.note) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
+        return Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(diameter, that.diameter) && Objects.equals(length, that.length) && Objects.equals(model, that.model) && Objects.equals(clazz, that.clazz) && Objects.equals(quantity, that.quantity) && Objects.equals(note, that.note) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, diameter, length, model, clazz, quantity, note, specificationFileUrl);
+        return Objects.hash(name, description, diameter, length, model, clazz, quantity, note, specificationFileUrl);
     }
 
     @Override
     public String toString() {
         return "FastenerEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", diameter='" + diameter + '\'' +
                 ", length=" + length +

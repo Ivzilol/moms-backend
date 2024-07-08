@@ -15,9 +15,10 @@ public class InventoryEventController {
     }
 
     @PostMapping("/inventory/events")
-    <T extends BaseEvent> void sendEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType) {
-
-
-
+    <T extends BaseEvent> void processMaterialEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType,
+                                                    @RequestHeader("Material-Type") String materialType) {
+        eventService.processMaterialEvent(data, eventType, materialType);
     }
+
+
 }
