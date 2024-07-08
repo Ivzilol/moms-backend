@@ -23,7 +23,6 @@ public class OrderEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String orderDescription;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private ZonedDateTime orderDate;
 
     @NotNull(message = "Delivery date must not be empty.")
