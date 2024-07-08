@@ -1,26 +1,16 @@
 package bg.mck.entity.transportEntity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Objects;
-
-@Entity
-@Table(name = "transports")
+@Document(collection = "transports")
 public class TransportEntity {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
     private String name;
 
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
-    @Column(name = "max_length_in_centimeters")
     private Double maxLength;
 
-    @DecimalMin(value = "0.0", message = "weight must be positive")
-    @Column(name = "weight_in_kg")
     private Double weight;
 
     private String Truck;
@@ -28,7 +18,7 @@ public class TransportEntity {
     public TransportEntity() {
     }
 
-    public TransportEntity(Long id, String name, Double maxLength, Double weight, String truck) {
+    public TransportEntity(String id, String name, Double maxLength, Double weight, String truck) {
         this.id = id;
         this.name = name;
         this.maxLength = maxLength;
@@ -36,11 +26,11 @@ public class TransportEntity {
         Truck = truck;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

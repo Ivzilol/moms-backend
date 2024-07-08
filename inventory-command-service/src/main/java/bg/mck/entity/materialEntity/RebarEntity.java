@@ -2,6 +2,7 @@ package bg.mck.entity.materialEntity;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 
 import java.util.Objects;
 
@@ -13,17 +14,15 @@ public class RebarEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer positionNumber;
-    private String type;
-    private String steel;
-    private Double diameter;
-    private Double length;
-    private Double weight;
+   private String name;
 
-    private Double quantity;
-    @Column(columnDefinition="TEXT")
-    private String note;
-    private String specificationFileUrl;
+    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
+    @Column(name = "max_length_in_centimeters")
+    private Double MaxLength;
+
+    @DecimalMin(value = "0.0", message = "weight must be positive")
+    @Column(name = "weight_in_kg")
+    private Double weight;
 
     @ManyToOne
     private CategoryEntity category;
@@ -31,24 +30,11 @@ public class RebarEntity {
     public RebarEntity() {
     }
 
-    public RebarEntity(Long id, Integer positionNumber, String type, String steel, Double diameter, Double length, Double weight, Double quantity, String note, String specificationFileUrl) {
+    public RebarEntity(Long id, String name, Double maxLength, Double weight, CategoryEntity category) {
         this.id = id;
-        this.positionNumber = positionNumber;
-        this.type = type;
-        this.steel = steel;
-        this.diameter = diameter;
-        this.length = length;
+        this.name = name;
+        MaxLength = maxLength;
         this.weight = weight;
-        this.quantity = quantity;
-        this.note = note;
-        this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
         this.category = category;
     }
 
@@ -60,44 +46,20 @@ public class RebarEntity {
         this.id = id;
     }
 
-    public Integer getPositionNumber() {
-        return positionNumber;
+    public String getName() {
+        return name;
     }
 
-    public void setPositionNumber(Integer positionNumber) {
-        this.positionNumber = positionNumber;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public Double getMaxLength() {
+        return MaxLength;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getSteel() {
-        return steel;
-    }
-
-    public void setSteel(String steel) {
-        this.steel = steel;
-    }
-
-    public Double getDiameter() {
-        return diameter;
-    }
-
-    public void setDiameter(Double diameter) {
-        this.diameter = diameter;
-    }
-
-    public Double getLength() {
-        return length;
-    }
-
-    public void setLength(Double length) {
-        this.length = length;
+    public void setMaxLength(Double maxLength) {
+        MaxLength = maxLength;
     }
 
     public Double getWeight() {
@@ -108,65 +70,11 @@ public class RebarEntity {
         this.weight = weight;
     }
 
-    public Double getQuantity() {
-        return quantity;
+    public CategoryEntity getCategory() {
+        return category;
     }
 
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public void setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RebarEntity that = (RebarEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(positionNumber, that.positionNumber)
-                && Objects.equals(type, that.type)
-                && Objects.equals(steel, that.steel)
-                && Objects.equals(diameter, that.diameter)
-                && Objects.equals(length, that.length)
-                && Objects.equals(weight, that.weight)
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(note, that.note)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, positionNumber, type, steel, diameter, length, weight, quantity, note, specificationFileUrl);
-    }
-
-    @Override
-    public String toString() {
-        return "RebarRepository{" +
-                "id=" + id +
-                ", positionNumber=" + positionNumber +
-                ", type='" + type + '\'' +
-                ", steel='" + steel + '\'' +
-                ", diameter=" + diameter +
-                ", length=" + length +
-                ", weight=" + weight +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 }
