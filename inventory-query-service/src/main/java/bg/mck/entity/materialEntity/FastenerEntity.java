@@ -6,12 +6,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "fastener")
 public class FastenerEntity {
 
-
     private String id;
 
     private String name;
 
     private String type;
+
+    private String diameter;
 
     private Double length;
 
@@ -19,16 +20,29 @@ public class FastenerEntity {
 
     private String clazz;
 
+
+    private Double quantity;
+
+
+    private String description;
+
+
+    private String specificationFileUrl;
+
     public FastenerEntity() {
     }
 
-    public FastenerEntity(String id, String name, String type, Double length, String model, String clazz) {
+    public FastenerEntity(String id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;
         this.type = type;
+        this.diameter = diameter;
         this.length = length;
         this.model = model;
         this.clazz = clazz;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getId() {
@@ -55,6 +69,14 @@ public class FastenerEntity {
         this.type = type;
     }
 
+    public String getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(String diameter) {
+        this.diameter = diameter;
+    }
+
     public Double getLength() {
         return length;
     }
@@ -77,5 +99,29 @@ public class FastenerEntity {
 
     public void setClazz(String clazz) {
         this.clazz = clazz;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }

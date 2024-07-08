@@ -15,15 +15,24 @@ public class GalvanisedSheetEntity {
 
     private Double area;
 
+    private Double quantity;
+
+    private String description;
+
+    private String specificationFileUrl;
+
     public GalvanisedSheetEntity() {
     }
 
-    public GalvanisedSheetEntity(String id, String name, String type, Double maxLength, Double area) {
+    public GalvanisedSheetEntity(String id, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.maxLength = maxLength;
         this.area = area;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getId() {
@@ -64,5 +73,29 @@ public class GalvanisedSheetEntity {
 
     public void setArea(Double area) {
         this.area = area;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }

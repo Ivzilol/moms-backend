@@ -14,6 +14,7 @@ public class RebarEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // description
    private String name;
 
     @DecimalMin(value = "0.0", message = "MaxLength must be positive")
@@ -24,17 +25,29 @@ public class RebarEntity {
     @Column(name = "weight_in_kg")
     private Double weight;
 
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+
+    private String specificationFileUrl;
+
     @ManyToOne
     private CategoryEntity category;
 
     public RebarEntity() {
     }
 
-    public RebarEntity(Long id, String name, Double maxLength, Double weight, CategoryEntity category) {
+    public RebarEntity(Long id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
         this.name = name;
         MaxLength = maxLength;
         this.weight = weight;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
         this.category = category;
     }
 
@@ -68,6 +81,30 @@ public class RebarEntity {
 
     public void setWeight(Double weight) {
         this.weight = weight;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public CategoryEntity getCategory() {

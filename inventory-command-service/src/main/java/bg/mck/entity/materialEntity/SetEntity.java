@@ -13,7 +13,7 @@ public class SetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    //galvanisedSheetThickness + color
     private String name;
 
     @DecimalMin(value = "0.0", message = "GalvanisedSheetThickness must be positive")
@@ -26,18 +26,30 @@ public class SetEntity {
     @Column(name = "max_length_in_centimeters")
     private String maxLength;
 
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+
+    private String specificationFileUrl;
+
     @ManyToOne
     private CategoryEntity category;
 
     public SetEntity() {
     }
 
-    public SetEntity(Long id, String name, Double galvanisedSheetThickness, String color, String maxLength, CategoryEntity category) {
+    public SetEntity(Long id, String name, Double galvanisedSheetThickness, String color, String maxLength, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
         this.name = name;
         this.galvanisedSheetThickness = galvanisedSheetThickness;
         this.color = color;
         this.maxLength = maxLength;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
         this.category = category;
     }
 
@@ -79,6 +91,30 @@ public class SetEntity {
 
     public void setMaxLength(String maxLength) {
         this.maxLength = maxLength;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public CategoryEntity getCategory() {

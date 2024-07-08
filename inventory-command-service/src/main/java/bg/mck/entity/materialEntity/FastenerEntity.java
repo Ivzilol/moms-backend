@@ -14,9 +14,12 @@ public class FastenerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //type + diameter + length
     private String name;
 
     private String type;
+
+    private String diameter;
 
     @DecimalMin(value = "0.0", message = "Length must be positive")
     @Column(name = "length_in_mm")
@@ -26,19 +29,33 @@ public class FastenerEntity {
 
     private String clazz;
 
+
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+
+    private String specificationFileUrl;
+
     @ManyToOne
     private CategoryEntity category;
 
     public FastenerEntity() {
     }
 
-    public FastenerEntity(Long id, String name, String type, Double length, String model, String clazz, CategoryEntity category) {
+    public FastenerEntity(Long id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
         this.name = name;
         this.type = type;
+        this.diameter = diameter;
         this.length = length;
         this.model = model;
         this.clazz = clazz;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
         this.category = category;
     }
 
@@ -66,6 +83,14 @@ public class FastenerEntity {
         this.type = type;
     }
 
+    public String getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(String diameter) {
+        this.diameter = diameter;
+    }
+
     public Double getLength() {
         return length;
     }
@@ -88,6 +113,30 @@ public class FastenerEntity {
 
     public void setClazz(String clazz) {
         this.clazz = clazz;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public CategoryEntity getCategory() {

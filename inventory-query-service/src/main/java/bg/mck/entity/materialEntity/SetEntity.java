@@ -1,35 +1,38 @@
 package bg.mck.entity.materialEntity;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "")
+@Document(collection = "sets")
 public class SetEntity {
 
     private String id;
 
     private String name;
 
-    @DecimalMin(value = "0.0", message = "GalvanisedSheetThickness must be positive")
-    @Column(name = "galvanised_sheet_thickness_in_mm")
     private Double galvanisedSheetThickness;
 
     private String color;
 
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
-    @Column(name = "max_length_in_centimeters")
     private String maxLength;
+
+    private Double quantity;
+
+    private String description;
+
+    private String specificationFileUrl;
 
     public SetEntity() {
     }
 
-    public SetEntity(String id, String name, Double galvanisedSheetThickness, String color, String maxLength) {
+    public SetEntity(String id, String name, Double galvanisedSheetThickness, String color, String maxLength, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;
         this.galvanisedSheetThickness = galvanisedSheetThickness;
         this.color = color;
         this.maxLength = maxLength;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getId() {
@@ -70,5 +73,29 @@ public class SetEntity {
 
     public void setMaxLength(String maxLength) {
         this.maxLength = maxLength;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }

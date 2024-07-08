@@ -1,5 +1,7 @@
 package bg.mck.entity.materialEntity;
 
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.DecimalMin;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "panels")
@@ -19,10 +21,16 @@ public class PanelEntity {
 
     private Double BackSheetThickness;
 
+    private Double quantity;
+
+    private String description;
+
+    private String specificationFileUrl;
+
     public PanelEntity() {
     }
 
-    public PanelEntity(String id, String name, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness) {
+    public PanelEntity(String id, String name, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;
         this.length = length;
@@ -30,6 +38,9 @@ public class PanelEntity {
         this.totalThickness = totalThickness;
         FrontSheetThickness = frontSheetThickness;
         BackSheetThickness = backSheetThickness;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getId() {
@@ -86,5 +97,29 @@ public class PanelEntity {
 
     public void setBackSheetThickness(Double backSheetThickness) {
         BackSheetThickness = backSheetThickness;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }

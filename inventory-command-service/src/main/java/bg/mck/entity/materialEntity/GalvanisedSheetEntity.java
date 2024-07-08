@@ -14,6 +14,7 @@ public class GalvanisedSheetEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // type
     private String name;
 
     private String type;
@@ -24,18 +25,30 @@ public class GalvanisedSheetEntity {
     @Column(name = "area_in_square_meters")
     private Double area;
 
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+
+    private String specificationFileUrl;
+
     @ManyToOne
     private CategoryEntity category;
 
     public GalvanisedSheetEntity() {
     }
 
-    public GalvanisedSheetEntity(Long id, String name, String type, Double maxLength, Double area, CategoryEntity category) {
+    public GalvanisedSheetEntity(Long id, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.maxLength = maxLength;
         this.area = area;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
         this.category = category;
     }
 
@@ -77,6 +90,30 @@ public class GalvanisedSheetEntity {
 
     public void setArea(Double area) {
         this.area = area;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public CategoryEntity getCategory() {
