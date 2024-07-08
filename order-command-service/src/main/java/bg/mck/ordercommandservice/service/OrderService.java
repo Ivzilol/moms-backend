@@ -1,10 +1,18 @@
 package bg.mck.ordercommandservice.service;
 
+import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
+import bg.mck.ordercommandservice.dto.FastenerDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
+import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
+import bg.mck.ordercommandservice.event.CreateOrderEvent;
+import bg.mck.ordercommandservice.event.FasterEvent;
+import bg.mck.ordercommandservice.event.OrderEvent;
+import bg.mck.ordercommandservice.event.OrderEventType;
+import bg.mck.ordercommandservice.mapper.FastenerMapper;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
 import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
@@ -17,7 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
@@ -28,11 +38,15 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ConstructionSiteService constructionSiteService;
     private final OrderMapper orderMapper;
+    private final OrderQueryServiceClient orderQueryServiceClient;
+    private final FastenerMapper fastenerMapper;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
         this.orderMapper = orderMapper;
+        this.orderQueryServiceClient = orderQueryServiceClient;
+        this.fastenerMapper = fastenerMapper;
     }
 
 
@@ -68,6 +82,25 @@ public class OrderService {
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());
 
+        orderEntity = orderRepository.findById(orderEntity.getId()).get();
+
+        if (!orderEntity.getFasteners().isEmpty()){
+            Set<FasterEvent> fasteners = new HashSet<>();
+                    orderEntity.getFasteners()
+                    .forEach(fastener -> {
+                        fasteners.add(fastenerMapper.toEvent(fastener));
+                    });
+            OrderEvent<CreateOrderEvent<FasterEvent>> orderEvent = new OrderEvent<>();
+            orderEvent.setEventType(OrderEventType.ORDER_CREATED);
+
+            CreateOrderEvent<FasterEvent> createOrderEvent = orderMapper.toCreateOrderEvent(orderEntity);
+            orderEvent.setEvent(createOrderEvent);
+
+            orderQueryServiceClient.sendEvent(orderEvent, String.valueOf(OrderEventType.ORDER_CREATED));
+        }
+
+
+
         return new CreateOrderDTO.Builder()
                 .orderId(orderEntity.getId())
                 .orderNumber(orderEntity.getOrderNumber())
@@ -75,4 +108,5 @@ public class OrderService {
                 .constructionSiteNumber(orderEntity.getConstructionSite().getConstructionNumber())
                 .build();
     }
+
 }
