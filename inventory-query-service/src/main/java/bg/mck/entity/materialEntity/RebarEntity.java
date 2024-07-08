@@ -1,7 +1,5 @@
 package bg.mck.entity.materialEntity;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "rebars")
@@ -11,22 +9,27 @@ public class RebarEntity {
 
     private String name;
 
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
-    @Column(name = "max_length_in_centimeters")
     private Double MaxLength;
 
-    @DecimalMin(value = "0.0", message = "weight must be positive")
-    @Column(name = "weight_in_kg")
     private Double weight;
+
+    private Double quantity;
+
+    private String description;
+
+    private String specificationFileUrl;
 
     public RebarEntity() {
     }
 
-    public RebarEntity(String id, String name, Double maxLength, Double weight) {
+    public RebarEntity(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;
         MaxLength = maxLength;
         this.weight = weight;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getId() {
@@ -59,5 +62,29 @@ public class RebarEntity {
 
     public void setWeight(Double weight) {
         this.weight = weight;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }

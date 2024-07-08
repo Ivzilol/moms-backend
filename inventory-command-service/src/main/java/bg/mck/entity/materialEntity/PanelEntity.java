@@ -14,6 +14,7 @@ public class PanelEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //type + length + totalThickness
     private String name;
 
     @DecimalMin(value = "0.0", message = "Length must be positive")
@@ -36,13 +37,22 @@ public class PanelEntity {
     @Column(name = "back_sheet_thickness_in_mm")
     private Double BackSheetThickness;
 
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+
+    private String specificationFileUrl;
+
     @ManyToOne
     private CategoryEntity category;
 
     public PanelEntity() {
     }
 
-    public PanelEntity(Long id, String name, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, CategoryEntity category) {
+    public PanelEntity(Long id, String name, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
         this.name = name;
         this.length = length;
@@ -50,6 +60,9 @@ public class PanelEntity {
         this.totalThickness = totalThickness;
         FrontSheetThickness = frontSheetThickness;
         BackSheetThickness = backSheetThickness;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
         this.category = category;
     }
 
@@ -107,6 +120,30 @@ public class PanelEntity {
 
     public void setBackSheetThickness(Double backSheetThickness) {
         BackSheetThickness = backSheetThickness;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public CategoryEntity getCategory() {

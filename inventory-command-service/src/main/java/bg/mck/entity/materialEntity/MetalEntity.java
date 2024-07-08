@@ -12,16 +12,36 @@ public class MetalEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //description
     private String name;
 
     @DecimalMin(value = "0.0", message = "Weight must be positive")
     @Column(name = "total_weight_in_kg")
     private Double totalWeight;
 
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+
+    private String specificationFileUrl;
+
     @ManyToOne
     private CategoryEntity category;
 
     public MetalEntity() {
+    }
+
+    public MetalEntity(Long id, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
+        this.id = id;
+        this.name = name;
+        this.totalWeight = totalWeight;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+        this.category = category;
     }
 
     public Long getId() {
@@ -46,6 +66,30 @@ public class MetalEntity {
 
     public void setTotalWeight(Double totalWeight) {
         this.totalWeight = totalWeight;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public CategoryEntity getCategory() {

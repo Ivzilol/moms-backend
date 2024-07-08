@@ -9,19 +9,28 @@ public class MetalEntity {
 
     private String id;
 
+    //description
     private String name;
 
-    @DecimalMin(value = "0.0", message = "Weight must be positive")
-    @Column(name = "total_weight_in_kg")
     private Double totalWeight;
+
+    private Double quantity;
+
+    private String description;
+
+
+    private String specificationFileUrl;
 
     public MetalEntity() {
     }
 
-    public MetalEntity(String id, String name, Double totalWeight) {
+    public MetalEntity(String id, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;
         this.totalWeight = totalWeight;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getId() {
@@ -46,5 +55,29 @@ public class MetalEntity {
 
     public void setTotalWeight(Double totalWeight) {
         this.totalWeight = totalWeight;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }
