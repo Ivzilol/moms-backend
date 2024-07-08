@@ -2,18 +2,19 @@ package bg.mck.usercommandservice.application.service;
 
 import bg.mck.usercommandservice.application.client.UserQueryServiceClient;
 import bg.mck.usercommandservice.application.dto.ErrorsRegistrationDTO;
+import bg.mck.usercommandservice.application.enums.EventType;
+import bg.mck.usercommandservice.application.events.RegisteredUserEvent;
 import bg.mck.usercommandservice.application.dto.UserRegisterDTO;
 import bg.mck.usercommandservice.application.entity.Authority;
 import bg.mck.usercommandservice.application.entity.UserEntity;
 import bg.mck.usercommandservice.application.enums.AuthorityEnum;
-import bg.mck.usercommandservice.application.enums.EventType;
-import bg.mck.usercommandservice.application.events.RegisteredUserEvent;
 import bg.mck.usercommandservice.application.events.UserEvent;
 import bg.mck.usercommandservice.application.repository.AuthorityRepository;
 import bg.mck.usercommandservice.application.repository.UserRepository;
 import bg.mck.usercommandservice.application.utils.EventCreationHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -32,6 +33,8 @@ public class UserRegisterService {
     private final UserQueryServiceClient userQueryClient;
     private final ObjectMapper objectMapper;
 
+    @Value("${SUPERADMIN_PASSWORD}")
+    private String superAdminPassword;
 
     public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, UserQueryServiceClient queryServiceClient, ObjectMapper objectMapper) {
         this.authorityRepository = authorityRepository;
