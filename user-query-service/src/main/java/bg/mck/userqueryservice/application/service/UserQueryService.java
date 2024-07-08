@@ -8,6 +8,8 @@ import bg.mck.userqueryservice.application.mapper.UserMapper;
 import bg.mck.userqueryservice.application.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserQueryService {
 
@@ -43,6 +45,23 @@ public class UserQueryService {
 
 
         return eventService.reconstructUserEntity(id);
+    }
+
+    public List<UserDetailsDTO> getAllUsersAsDTO() {
+        List<UserDetailsDTO> usersDtos = userRepository.findAll().stream().map(u ->
+                        new UserDetailsDTO()
+                                .setActive(u.isActive())
+                                .setEmail(u.getEmail())
+                                .setId(u.getId())
+                                .setFirstName(u.getFirstName())
+                                .setLastName(u.getLastName())
+                                .setPhoneNumber(u.getPhoneNumber())
+                                .setRoles(u.getRoles()))
+                .toList();
+        if (usersDtos.isEmpty()) {
+            throw new UserNotFoundException("No users in the base.");
+        }
+        return usersDtos;
     }
 }
 

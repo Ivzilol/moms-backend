@@ -75,13 +75,21 @@ public class UserRegisterService {
         user.setLastName(userRegisterDTO.getLastName());
         user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
         user.setActive(true);
-        Authority authority = new Authority();
-        authority.setAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole()));
-        this.authorityRepository.save(authority);
+        Authority authority = new Authority(authorityRepository.getAuthorityByAuthority(AuthorityEnum.valueOf(userRegisterDTO.getRole())));
         if (user.getAuthorities() == null) {
             user.setAuthorities(new HashSet<>());
         }
-        user.getAuthorities().add(authority);
+
+        if (authority.getAuthority().equals(AuthorityEnum.SUPERADMIN)) {
+            user.getAuthorities().addAll(authorityRepository.findAll());
+
+        } else if (authority.getAuthority().equals(AuthorityEnum.ADMIN)) {
+            user.getAuthorities().addAll(List.of(authorityRepository.getAuthorityByAuthority(AuthorityEnum.ADMIN),
+                    authorityRepository.getAuthorityByAuthority(AuthorityEnum.USER)));
+
+        } else {
+            user.getAuthorities().add(authority);
+        }
     }
 
 
