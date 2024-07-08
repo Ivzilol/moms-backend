@@ -56,7 +56,7 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             ResponseEntity<String> responseDto = restTemplate.exchange("http://authorization-service/" + APPLICATION_VERSION + "/authorization/isauthorized",
                     HttpMethod.POST, entity, String.class);
 
-            if (responseDto.getBody().toLowerCase().contains(path)) {
+            if (responseDto.getBody().contains("true")) {
                 return chain.filter(exchange);
             } else {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);

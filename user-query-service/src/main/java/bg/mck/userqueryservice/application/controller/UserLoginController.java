@@ -35,7 +35,7 @@ public class UserLoginController {
                             content = {@Content(mediaType = "application/json")})
             }
     )
-    @PostMapping("/${APPLICATION_VERSION}/user/query/login")
+    @PostMapping("/${APPLICATION_VERSION}/user/user/query/login")
     public ResponseEntity<UserLoginResponseDTO> login(@RequestBody UserLoginDTO userLoginDTO,
                                                       HttpServletResponse response) {
 
