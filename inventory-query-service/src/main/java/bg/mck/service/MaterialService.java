@@ -26,7 +26,7 @@ public class MaterialService {
     }
 
     void processingRegisterMaterial(RegisterFastenerEvent event) {
-        String category= extractCategoryString(event.getCategory());
+        String category = extractCategoryString(event.getCategory());
         assert category != null;
         if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
             saveFastenerMaterial(event);
@@ -60,7 +60,7 @@ public class MaterialService {
     }
 
     public void processingRegisterGalvanized(RegisterGalvanizedEvent event) {
-        String category= extractCategoryString(event.getCategory());
+        String category = extractCategoryString(event.getCategory());
         assert category != null;
         if (category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
             saveGalvanizedMaterial(event);
