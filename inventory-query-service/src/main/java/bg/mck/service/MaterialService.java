@@ -26,7 +26,7 @@ public class MaterialService {
         this.fastenerRepository = fastenerRepository;
     }
 
-    void processingRegisterMaterial(RegisterMaterialEvent event) throws JsonProcessingException {
+    void processingRegisterMaterial(RegisterMaterialEvent event) {
         String category= extractCategoryString(event.getCategory());
         assert category != null;
         if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
