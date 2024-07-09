@@ -30,19 +30,23 @@ public class MaterialService {
         String category= extractCategoryString(event.getCategory());
         assert category != null;
         if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
-            FastenerEntity fastenerEntity = new FastenerEntity();
-            fastenerEntity.setId(String.valueOf(event.getMaterialId()));
-            fastenerEntity.setName(event.getName());
-            fastenerEntity.setType(event.getType());
-            fastenerEntity.setDiameter(event.getDiameter());
-            fastenerEntity.setLength(event.getLength());
-            fastenerEntity.setModel(event.getModel());
-            fastenerEntity.setClazz(event.getClazz());
-            fastenerEntity.setQuantity(event.getQuantity());
-            fastenerEntity.setDescription(event.getDescription());
-            fastenerEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
-            this.fastenerRepository.save(fastenerEntity);
+            saveFastenerMaterial(event);
         }
+    }
+
+    private void saveFastenerMaterial(RegisterMaterialEvent event) {
+        FastenerEntity fastenerEntity = new FastenerEntity();
+        fastenerEntity.setId(String.valueOf(event.getMaterialId()));
+        fastenerEntity.setName(event.getName());
+        fastenerEntity.setType(event.getType());
+        fastenerEntity.setDiameter(event.getDiameter());
+        fastenerEntity.setLength(event.getLength());
+        fastenerEntity.setModel(event.getModel());
+        fastenerEntity.setClazz(event.getClazz());
+        fastenerEntity.setQuantity(event.getQuantity());
+        fastenerEntity.setDescription(event.getDescription());
+        fastenerEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
+        this.fastenerRepository.save(fastenerEntity);
     }
 
     private String extractCategoryString(String category) {
