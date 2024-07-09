@@ -1,14 +1,19 @@
 package bg.mck.service;
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.MaterialType;
 import bg.mck.events.BaseEvent;
 import bg.mck.events.MaterialEvent;
-import bg.mck.events.RegisterMaterialEvent;
+import bg.mck.events.RegisterFastenerEvent;
+import bg.mck.events.RegisterGalvanizedEvent;
 import bg.mck.repository.EventRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+
+import static bg.mck.service.MaterialService.extractCategoryString;
+
 
 @Service
 public class EventService {
@@ -26,15 +31,24 @@ public class EventService {
     }
 
     public void createMaterial(String data, String eventType) throws JsonProcessingException {
-        if (eventType.equals(String.valueOf(EventType.MaterialRegister))) {
-            MaterialEvent<RegisterMaterialEvent> materialEvent =
+            String category = extractCategoryString(data);
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+            category.equals(String.valueOf(MaterialType.FASTENERS))) {
+            MaterialEvent<RegisterFastenerEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
-            MaterialEvent<RegisterMaterialEvent> saveEvent = saveEvent(materialEvent);
+            MaterialEvent<RegisterFastenerEvent> saveEvent = saveEvent(materialEvent);
             this.materialService.processingRegisterMaterial(saveEvent.getEvent());
         }
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+            category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
+            MaterialEvent<RegisterGalvanizedEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterGalvanizedEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterGalvanized(saveEvent.getEvent());
+        }
     }
-
 
 
     private <T extends BaseEvent> MaterialEvent<T> saveEvent(MaterialEvent<T> materialEvent) {

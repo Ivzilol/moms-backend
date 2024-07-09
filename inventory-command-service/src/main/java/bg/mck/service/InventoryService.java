@@ -9,7 +9,8 @@ import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.EventCreationHelper;
 import bg.mck.events.MaterialEvent;
-import bg.mck.events.RegisterMaterialEvent;
+import bg.mck.events.RegisterFastenerEvent;
+import bg.mck.events.RegisterGalvanizedEvent;
 import bg.mck.repository.CategoryRepository;
 import bg.mck.repository.FastenerRepository;
 import bg.mck.repository.GalvanisedSheetRepository;
@@ -76,7 +77,7 @@ public class InventoryService {
             String materialType = String.valueOf(this.categoryRepository
                     .findByMaterialType(MaterialType.FASTENERS));
 
-            RegisterMaterialEvent registerMaterialEvent = new RegisterMaterialEvent(
+            RegisterFastenerEvent registerMaterialEvent = new RegisterFastenerEvent(
                     createdFastener.getId(),
                     EventType.MaterialRegister,
                     materialType,
@@ -90,7 +91,7 @@ public class InventoryService {
                     createdFastener.getQuantity(),
                     createdFastener.getSpecificationFileUrl()
             );
-            MaterialEvent<RegisterMaterialEvent> materialEvent =
+            MaterialEvent<RegisterFastenerEvent> materialEvent =
                     EventCreationHelper.toMaterialEvent(registerMaterialEvent);
 
             inventoryQueryServiceClient.sendEvent(materialEvent,
@@ -105,8 +106,23 @@ public class InventoryService {
             String materialType = String.valueOf(this.categoryRepository
                     .findByMaterialType(MaterialType.GALVANIZED_SHEET));
 
+            RegisterGalvanizedEvent registerGalvanizedEvent = new RegisterGalvanizedEvent(
+                    createdGalvanized.getId(),
+                    EventType.MaterialRegister,
+                    materialType,
+                    createdGalvanized.getName(),
+                    createdGalvanized.getType(),
+                    createdGalvanized.getMaxLength(),
+                    createdGalvanized.getArea(),
+                    createdGalvanized.getQuantity(),
+                    createdGalvanized.getDescription(),
+                    createdGalvanized.getSpecificationFileUrl()
+            );
+            MaterialEvent<RegisterGalvanizedEvent> materialEvent =
+                    EventCreationHelper.toMaterialEvent(registerGalvanizedEvent);
+            inventoryQueryServiceClient.sendEvent(materialEvent,
+                    String.valueOf(EventType.MaterialRegister));
         }
-
     }
 
     private GalvanisedSheetEntity mapGalvanizedEntity(CreateMaterialDTO createMaterialDTO) {

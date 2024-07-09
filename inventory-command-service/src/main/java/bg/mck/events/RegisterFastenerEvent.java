@@ -4,7 +4,7 @@ import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 
-public class RegisterMaterialEvent extends BaseEvent{
+public class RegisterFastenerEvent extends BaseEvent{
 
     private String category;
     private String name;
@@ -18,12 +18,12 @@ public class RegisterMaterialEvent extends BaseEvent{
     private String specificationFileUrl;
 
 
-    public RegisterMaterialEvent() {
+    public RegisterFastenerEvent() {
 
     }
 
 
-    public RegisterMaterialEvent(Long materialId, EventType eventType, String category, String name, String type ,String description, String diameter, Double length, String model, String clazz, Double quantity, String specificationFileUrl) {
+    public RegisterFastenerEvent(Long materialId, EventType eventType, String category, String name, String type , String description, String diameter, Double length, String model, String clazz, Double quantity, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
@@ -37,7 +37,7 @@ public class RegisterMaterialEvent extends BaseEvent{
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public RegisterMaterialEvent(MaterialType materialType, Long id, CategoryEntity category, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
+    public RegisterFastenerEvent(MaterialType materialType, Long id, CategoryEntity category, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
     }
 
     public String getCategory() {

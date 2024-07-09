@@ -1,18 +1,14 @@
 package bg.mck.service;
 
-import bg.mck.dto.CategoryDTO;
 import bg.mck.entity.materialEntity.FastenerEntity;
+import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.RegisterMaterialEvent;
+import bg.mck.events.RegisterFastenerEvent;
+import bg.mck.events.RegisterGalvanizedEvent;
 import bg.mck.repository.FastenerRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import bg.mck.repository.GalvaniseRepository;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,12 +17,15 @@ public class MaterialService {
 
     private final FastenerRepository fastenerRepository;
 
+    private final GalvaniseRepository galvaniseRepository;
 
-    public MaterialService(FastenerRepository fastenerRepository) {
+
+    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository) {
         this.fastenerRepository = fastenerRepository;
+        this.galvaniseRepository = galvaniseRepository;
     }
 
-    void processingRegisterMaterial(RegisterMaterialEvent event) {
+    void processingRegisterMaterial(RegisterFastenerEvent event) {
         String category= extractCategoryString(event.getCategory());
         assert category != null;
         if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
@@ -34,7 +33,7 @@ public class MaterialService {
         }
     }
 
-    private void saveFastenerMaterial(RegisterMaterialEvent event) {
+    private void saveFastenerMaterial(RegisterFastenerEvent event) {
         FastenerEntity fastenerEntity = new FastenerEntity();
         fastenerEntity.setId(String.valueOf(event.getMaterialId()));
         fastenerEntity.setName(event.getName());
@@ -49,7 +48,7 @@ public class MaterialService {
         this.fastenerRepository.save(fastenerEntity);
     }
 
-    private String extractCategoryString(String category) {
+    public static String extractCategoryString(String category) {
         String regex = "materialType=([^}]+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(category);
@@ -58,5 +57,26 @@ public class MaterialService {
         } else {
             return null;
         }
+    }
+
+    public void processingRegisterGalvanized(RegisterGalvanizedEvent event) {
+        String category= extractCategoryString(event.getCategory());
+        assert category != null;
+        if (category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
+            saveGalvanizedMaterial(event);
+        }
+    }
+
+    private void saveGalvanizedMaterial(RegisterGalvanizedEvent event) {
+        GalvanisedSheetEntity galvanisedSheetEntity = new GalvanisedSheetEntity();
+        galvanisedSheetEntity.setId(String.valueOf(event.getMaterialId()));
+        galvanisedSheetEntity.setName(event.getName());
+        galvanisedSheetEntity.setType(event.getType());
+        galvanisedSheetEntity.setMaxLength(event.getMaxLength());
+        galvanisedSheetEntity.setArea(event.getArea());
+        galvanisedSheetEntity.setQuantity(event.getQuantity());
+        galvanisedSheetEntity.setDescription(event.getDescription());
+        galvanisedSheetEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
+        this.galvaniseRepository.save(galvanisedSheetEntity);
     }
 }
