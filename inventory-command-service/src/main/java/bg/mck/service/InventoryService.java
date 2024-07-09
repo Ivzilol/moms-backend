@@ -71,7 +71,8 @@ public class InventoryService {
             FastenerEntity fastenerEntity = mapFastenerEntity(createMaterialDTO);
             this.fastenerRepository.save(fastenerEntity);
             FastenerEntity createdFastener = this.fastenerRepository
-                    .findByName(createMaterialDTO.getName());
+                    .findByName(createMaterialDTO.getType() + " " +
+                            createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength());
             String materialType = String.valueOf(this.categoryRepository
                     .findByMaterialType(MaterialType.FASTENERS));
 
