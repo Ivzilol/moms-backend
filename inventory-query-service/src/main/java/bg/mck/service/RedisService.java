@@ -1,7 +1,6 @@
 package bg.mck.service;
 
 import bg.mck.entity.materialEntity.BaseMaterialEntity;
-import bg.mck.userqueryservice.application.entity.UserEntity;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
