@@ -1,6 +1,6 @@
 package bg.mck.ordercommandservice.event;
 
-public class FasterEvent extends BaseEvent {
+public class FasterEvent {
 
     private Long id;
 

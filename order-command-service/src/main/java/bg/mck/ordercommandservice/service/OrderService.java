@@ -2,18 +2,12 @@ package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
-import bg.mck.ordercommandservice.dto.FastenerDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
-import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
-import bg.mck.ordercommandservice.event.CreateOrderEvent;
-import bg.mck.ordercommandservice.event.FasterEvent;
-import bg.mck.ordercommandservice.event.OrderEvent;
-import bg.mck.ordercommandservice.event.OrderEventType;
-import bg.mck.ordercommandservice.mapper.FastenerMapper;
-import bg.mck.ordercommandservice.mapper.OrderMapper;
+import bg.mck.ordercommandservice.event.*;
+import bg.mck.ordercommandservice.mapper.*;
 import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 
@@ -25,9 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -40,25 +35,41 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final OrderQueryServiceClient orderQueryServiceClient;
     private final FastenerMapper fastenerMapper;
+    private final GalvanisedSheetMapper galvanisedSheetMapper;
+    private final InsulationMapper insulationMapper;
+    private final MetalMapper metalMapper;
+    private final PanelMapper panelMapper;
+    private final RebarMapper rebarMapper;
+    private final ServiceMapper serviceMapper;
+    private final SetMapper setMapper;
+    private final TransportMapper transportMapper;
+    private final UnspecifiedMapper unspecifiedMapper;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
         this.orderMapper = orderMapper;
         this.orderQueryServiceClient = orderQueryServiceClient;
         this.fastenerMapper = fastenerMapper;
+        this.galvanisedSheetMapper = galvanisedSheetMapper;
+        this.insulationMapper = insulationMapper;
+        this.metalMapper = metalMapper;
+        this.panelMapper = panelMapper;
+        this.rebarMapper = rebarMapper;
+        this.serviceMapper = serviceMapper;
+        this.setMapper = setMapper;
+        this.transportMapper = transportMapper;
+        this.unspecifiedMapper = unspecifiedMapper;
     }
 
 
-    public OrderDTO getOrder(Long id) {
+    public OrderDTO getOrder(Long id) { //FIXME: remove after order query service is implemented
         Optional<OrderEntity> orderById = orderRepository.findById(id);
         if (orderById.isPresent()) {
             Long constructionSiteId = orderById.get().getConstructionSite().getId();
 
-            OrderEntity orderEntity = orderById.get();
             OrderDTO orderDTO = orderMapper.toOrderDTO(orderById.get());
             orderDTO.setConstructionSite(constructionSiteService.getConstructionSite(constructionSiteId));
-
 
             return orderDTO;
         }
@@ -83,23 +94,7 @@ public class OrderService {
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());
 
         orderEntity = orderRepository.findById(orderEntity.getId()).get();
-
-        if (!orderEntity.getFasteners().isEmpty()){
-            Set<FasterEvent> fasteners = new HashSet<>();
-                    orderEntity.getFasteners()
-                    .forEach(fastener -> {
-                        fasteners.add(fastenerMapper.toEvent(fastener));
-                    });
-            OrderEvent<CreateOrderEvent<FasterEvent>> orderEvent = new OrderEvent<>();
-            orderEvent.setEventType(OrderEventType.ORDER_CREATED);
-
-            CreateOrderEvent<FasterEvent> createOrderEvent = orderMapper.toCreateOrderEvent(orderEntity);
-            orderEvent.setEvent(createOrderEvent);
-
-            orderQueryServiceClient.sendEvent(orderEvent, String.valueOf(OrderEventType.ORDER_CREATED));
-        }
-
-
+        createEvent(orderEntity);
 
         return new CreateOrderDTO.Builder()
                 .orderId(orderEntity.getId())
@@ -108,5 +103,38 @@ public class OrderService {
                 .constructionSiteNumber(orderEntity.getConstructionSite().getConstructionNumber())
                 .build();
     }
+
+    private void createEvent(OrderEntity orderEntity) {
+        processAndSendEvent(orderEntity, orderEntity.getFasteners(), fastenerMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getGalvanisedSheets(), galvanisedSheetMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getMetals(), metalMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getPanels(), panelMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getRebars(), rebarMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getServices(), serviceMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getSets(), setMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getTransports(), transportMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getInsulation(), insulationMapper::toEvent);
+        processAndSendEvent(orderEntity, orderEntity.getUnspecified(), unspecifiedMapper::toEvent);
+    }
+
+    private <M, E> void processAndSendEvent(OrderEntity orderEntity, Set<M> materials, Function<M, E> mapper) {
+        if (materials == null || materials.isEmpty()) {
+            return;
+        }
+
+        Set<E> materialEvents = materials.stream()
+                .map(mapper)
+                .collect(Collectors.toSet());
+
+        OrderEvent<CreateOrderEvent<E>> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_CREATED);
+
+        CreateOrderEvent<E> createOrderEvent = orderMapper.toEvent(orderEntity);
+        createOrderEvent.setMaterials(materialEvents);
+        orderEvent.setEvent(createOrderEvent);
+
+        orderQueryServiceClient.sendEvent(orderEvent, String.valueOf(OrderEventType.ORDER_CREATED));
+    }
+
 
 }

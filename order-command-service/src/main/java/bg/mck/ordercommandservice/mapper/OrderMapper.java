@@ -13,5 +13,5 @@ public interface OrderMapper {
 
     OrderEntity toOrderEntity(OrderDTO orderDTO);
 
-    CreateOrderEvent toCreateOrderEvent(OrderEntity OrderEntity);
+    CreateOrderEvent toEvent(OrderEntity OrderEntity);
 }

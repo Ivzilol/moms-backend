@@ -4,7 +4,7 @@ import bg.mck.ordercommandservice.event.OrderEvent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(url = "http://localhost:8034", name = "ORDER-QUERY-SERVICE")
+@FeignClient(name = "ORDER-QUERY-SERVICE")
 public interface OrderQueryServiceClient {
 
     @PostMapping("/orders/event")
