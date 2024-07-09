@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/user/command/change-password")
+@RequestMapping("/${APPLICATION_VERSION}/user/user/command/change-password")
 public class UserPasswordController {
 
     private final UserChangePasswordService userChangePasswordService;

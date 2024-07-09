@@ -1,6 +1,7 @@
 package bg.mck.entity.serviceEntity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 
 import java.util.Objects;
 
@@ -12,16 +13,25 @@ public class ServiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
-    private double price;
+
+    private String specificationFileUrl;
 
     public ServiceEntity() {
     }
 
-    public ServiceEntity(Long id, String description, double price) {
+    public ServiceEntity(Long id, String name, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
+        this.name = name;
+        this.quantity = quantity;
         this.description = description;
-        this.price = price;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public Long getId() {
@@ -32,6 +42,22 @@ public class ServiceEntity {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -40,35 +66,11 @@ public class ServiceEntity {
         this.description = description;
     }
 
-    public double getPrice() {
-        return price;
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ServiceEntity that = (ServiceEntity) o;
-        return Double.compare(that.price, price) == 0
-                && Objects.equals(id, that.id)
-                && Objects.equals(description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, price);
-    }
-
-    @Override
-    public String toString() {
-        return "ServiceEntity{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }

@@ -2,6 +2,7 @@ package bg.mck.entity.materialEntity;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 
 import java.util.Objects;
 
@@ -13,16 +14,29 @@ public class FastenerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //type + diameter + length
     private String name;
-    @Column(columnDefinition="TEXT")
-    private String description;
+
+    private String type;
+
     private String diameter;
+
+    @DecimalMin(value = "0.0", message = "Length must be positive")
+    @Column(name = "length_in_mm")
     private Double length;
+
     private String model;
+
     private String clazz;
+
+
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
-    @Column(columnDefinition="TEXT")
-    private String note;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+
     private String specificationFileUrl;
 
     @ManyToOne
@@ -31,16 +45,16 @@ public class FastenerEntity {
     public FastenerEntity() {
     }
 
-    public FastenerEntity(Long id, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl, CategoryEntity category) {
+    public FastenerEntity(Long id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.type = type;
         this.diameter = diameter;
         this.length = length;
         this.model = model;
         this.clazz = clazz;
         this.quantity = quantity;
-        this.note = note;
+        this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.category = category;
     }
@@ -61,12 +75,12 @@ public class FastenerEntity {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getDiameter() {
@@ -109,12 +123,12 @@ public class FastenerEntity {
         this.quantity = quantity;
     }
 
-    public String getNote() {
-        return note;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSpecificationFileUrl() {
@@ -131,41 +145,5 @@ public class FastenerEntity {
 
     public void setCategory(CategoryEntity category) {
         this.category = category;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FastenerEntity that = (FastenerEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(description, that.description)
-                && Objects.equals(diameter, that.diameter)
-                && Objects.equals(length, that.length)
-                && Objects.equals(model, that.model)
-                && Objects.equals(clazz, that.clazz)
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(note, that.note)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, diameter, length, model, clazz, quantity, note, specificationFileUrl);
-    }
-
-    @Override
-    public String toString() {
-        return "FastenerEntity{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", diameter='" + diameter + '\'' +
-                ", length=" + length +
-                ", model='" + model + '\'' +
-                ", clazz='" + clazz + '\'' +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
     }
 }

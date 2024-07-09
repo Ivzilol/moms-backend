@@ -1,39 +1,45 @@
 package bg.mck.entity.materialEntity;
 
-
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.DecimalMin;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Objects;
 
 @Document(collection = "panels")
 public class PanelEntity {
 
-    @Id
     private String id;
-    private String type;
-    private String color;
+
+    private String name;
+
     private Double length;
+
     private Double width;
+
     private Double totalThickness;
-    private Double sheetThickness;
+
+    private Double FrontSheetThickness;
+
+    private Double BackSheetThickness;
+
     private Double quantity;
-    private String note;
+
+    private String description;
+
     private String specificationFileUrl;
 
     public PanelEntity() {
     }
 
-    public PanelEntity(String id, String type, String color, Double length, Double width, Double totalThickness, Double sheetThickness, Double quantity, String note, String specificationFileUrl) {
+    public PanelEntity(String id, String name, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
-        this.type = type;
-        this.color = color;
+        this.name = name;
         this.length = length;
         this.width = width;
         this.totalThickness = totalThickness;
-        this.sheetThickness = sheetThickness;
+        FrontSheetThickness = frontSheetThickness;
+        BackSheetThickness = backSheetThickness;
         this.quantity = quantity;
-        this.note = note;
+        this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
@@ -41,118 +47,79 @@ public class PanelEntity {
         return id;
     }
 
-    public PanelEntity setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public PanelEntity setType(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public PanelEntity setColor(String color) {
-        this.color = color;
-        return this;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getLength() {
         return length;
     }
 
-    public PanelEntity setLength(Double length) {
+    public void setLength(Double length) {
         this.length = length;
-        return this;
     }
 
     public Double getWidth() {
         return width;
     }
 
-    public PanelEntity setWidth(Double width) {
+    public void setWidth(Double width) {
         this.width = width;
-        return this;
     }
 
     public Double getTotalThickness() {
         return totalThickness;
     }
 
-    public PanelEntity setTotalThickness(Double totalThickness) {
+    public void setTotalThickness(Double totalThickness) {
         this.totalThickness = totalThickness;
-        return this;
     }
 
-    public Double getSheetThickness() {
-        return sheetThickness;
+    public Double getFrontSheetThickness() {
+        return FrontSheetThickness;
     }
 
-    public PanelEntity setSheetThickness(Double sheetThickness) {
-        this.sheetThickness = sheetThickness;
-        return this;
+    public void setFrontSheetThickness(Double frontSheetThickness) {
+        FrontSheetThickness = frontSheetThickness;
+    }
+
+    public Double getBackSheetThickness() {
+        return BackSheetThickness;
+    }
+
+    public void setBackSheetThickness(Double backSheetThickness) {
+        BackSheetThickness = backSheetThickness;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public PanelEntity setQuantity(Double quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
-        return this;
     }
 
-    public String getNote() {
-        return note;
+    public String getDescription() {
+        return description;
     }
 
-    public PanelEntity setNote(String note) {
-        this.note = note;
-        return this;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public PanelEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PanelEntity that = (PanelEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(type, that.type) && Objects.equals(color, that.color) && Objects.equals(length, that.length) && Objects.equals(width, that.width) && Objects.equals(totalThickness, that.totalThickness) && Objects.equals(sheetThickness, that.sheetThickness) && Objects.equals(quantity, that.quantity) && Objects.equals(note, that.note) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, type, color, length, width, totalThickness, sheetThickness, quantity, note, specificationFileUrl);
-    }
-
-    @Override
-    public String toString() {
-        return "PanelEntity{" +
-                "id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", color='" + color + '\'' +
-                ", length=" + length +
-                ", width=" + width +
-                ", totalThickness=" + totalThickness +
-                ", sheetThickness=" + sheetThickness +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
     }
 }

@@ -1,28 +1,37 @@
 package bg.mck.entity.materialEntity;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Objects;
 
 @Document(collection = "sets")
 public class SetEntity {
 
-    @Id
     private String id;
-    private String description;
+
+    private String name;
+
+    private Double galvanisedSheetThickness;
+
+    private String color;
+
+    private String maxLength;
+
     private Double quantity;
-    private String note;
+
+    private String description;
+
     private String specificationFileUrl;
 
     public SetEntity() {
     }
 
-    public SetEntity(String id, String description, Double quantity, String note, String specificationFileUrl) {
+    public SetEntity(String id, String name, Double galvanisedSheetThickness, String color, String maxLength, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
-        this.description = description;
+        this.name = name;
+        this.galvanisedSheetThickness = galvanisedSheetThickness;
+        this.color = color;
+        this.maxLength = maxLength;
         this.quantity = quantity;
-        this.note = note;
+        this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
@@ -30,69 +39,63 @@ public class SetEntity {
         return id;
     }
 
-    public SetEntity setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public SetEntity setDescription(String description) {
-        this.description = description;
-        return this;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getGalvanisedSheetThickness() {
+        return galvanisedSheetThickness;
+    }
+
+    public void setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+        this.galvanisedSheetThickness = galvanisedSheetThickness;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(String maxLength) {
+        this.maxLength = maxLength;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public SetEntity setQuantity(Double quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
-        return this;
     }
 
-    public String getNote() {
-        return note;
+    public String getDescription() {
+        return description;
     }
 
-    public SetEntity setNote(String note) {
-        this.note = note;
-        return this;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public SetEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SetEntity setEntity = (SetEntity) o;
-        return Objects.equals(id, setEntity.id) && Objects.equals(description, setEntity.description) && Objects.equals(quantity, setEntity.quantity) && Objects.equals(note, setEntity.note) && Objects.equals(specificationFileUrl, setEntity.specificationFileUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, quantity, note, specificationFileUrl);
-    }
-
-    @Override
-    public String toString() {
-        return "SetEntity{" +
-                "id='" + id + '\'' +
-                ", description='" + description + '\'' +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
     }
 }

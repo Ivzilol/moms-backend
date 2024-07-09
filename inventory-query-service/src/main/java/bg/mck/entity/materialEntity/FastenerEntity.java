@@ -1,146 +1,127 @@
 package bg.mck.entity.materialEntity;
 
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Objects;
+@Document(collection = "fastener")
+public class FastenerEntity {
 
-@Document(collection = "fasteners")
-public class FastenerEntity extends BaseMaterialEntity{
+    private String id;
 
     private String name;
-    private String description;
+
+    private String type;
+
     private String diameter;
+
     private Double length;
+
     private String model;
+
     private String clazz;
+
+
     private Double quantity;
-    private String note;
+
+
+    private String description;
+
+
     private String specificationFileUrl;
 
     public FastenerEntity() {
     }
 
-    public FastenerEntity(String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String note, String specificationFileUrl) {
+    public FastenerEntity(String id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
+        this.id = id;
         this.name = name;
-        this.description = description;
+        this.type = type;
         this.diameter = diameter;
         this.length = length;
         this.model = model;
         this.clazz = clazz;
         this.quantity = quantity;
-        this.note = note;
+        this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
     }
 
-    public FastenerEntity setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
 
-    public FastenerEntity setDescription(String description) {
-        this.description = description;
-        return this;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getDiameter() {
         return diameter;
     }
 
-    public FastenerEntity setDiameter(String diameter) {
+    public void setDiameter(String diameter) {
         this.diameter = diameter;
-        return this;
     }
 
     public Double getLength() {
         return length;
     }
 
-    public FastenerEntity setLength(Double length) {
+    public void setLength(Double length) {
         this.length = length;
-        return this;
     }
 
     public String getModel() {
         return model;
     }
 
-    public FastenerEntity setModel(String model) {
+    public void setModel(String model) {
         this.model = model;
-        return this;
     }
 
     public String getClazz() {
         return clazz;
     }
 
-    public FastenerEntity setClazz(String clazz) {
+    public void setClazz(String clazz) {
         this.clazz = clazz;
-        return this;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public FastenerEntity setQuantity(Double quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
-        return this;
     }
 
-    public String getNote() {
-        return note;
+    public String getDescription() {
+        return description;
     }
 
-    public FastenerEntity setNote(String note) {
-        this.note = note;
-        return this;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public FastenerEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FastenerEntity that = (FastenerEntity) o;
-        return Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(diameter, that.diameter) && Objects.equals(length, that.length) && Objects.equals(model, that.model) && Objects.equals(clazz, that.clazz) && Objects.equals(quantity, that.quantity) && Objects.equals(note, that.note) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description, diameter, length, model, clazz, quantity, note, specificationFileUrl);
-    }
-
-    @Override
-    public String toString() {
-        return "FastenerEntity{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", diameter='" + diameter + '\'' +
-                ", length=" + length +
-                ", model='" + model + '\'' +
-                ", clazz='" + clazz + '\'' +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
     }
 }

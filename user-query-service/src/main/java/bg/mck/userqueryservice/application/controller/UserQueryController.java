@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class UserQueryController {
 
@@ -27,7 +29,7 @@ public class UserQueryController {
             @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/users/credentials/{id}")
+    @GetMapping("/${APPLICATION_VERSION}/user/user/query/credentials/{id}")
     public ResponseEntity<UserCredentialsDTO> getUserCredentialsById(@PathVariable Long id) {
         UserCredentialsDTO userDto = userQueryService.getUserCredentialsById(id);
         if (userDto == null) {
@@ -43,12 +45,28 @@ public class UserQueryController {
             @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/${APPLICATION_VERSION}/user/users/{id}")
+    @GetMapping("/${APPLICATION_VERSION}/user/user/query/user/{id}")
     public ResponseEntity<UserDetailsDTO> getUserDetailsById(@PathVariable Long id) {
         UserDetailsDTO userDto = userQueryService.getUserDetailsById(id);
         if (userDto == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(userDto);
+    }
+
+    @Operation(summary = "Retrieve all users details", description = "Giving information about all users.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Users details successfully retrieved",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDetailsDTO.class))),
+            @ApiResponse(responseCode = "404", description = "No users in the database",
+                    content = @Content(mediaType = "application/json"))
+    })
+    @RequestMapping("/${APPLICATION_VERSION}/superadmin/user/query/getallusers")
+    public ResponseEntity<List<UserDetailsDTO>> getAllUsers() {
+        try {
+            return ResponseEntity.ok().body(userQueryService.getAllUsersAsDTO());
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

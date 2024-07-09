@@ -1,28 +1,27 @@
 package bg.mck.entity.materialEntity;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Objects;
 
 @Document(collection = "unspecified")
 public class UnspecifiedEntity {
 
-    @Id
     private String id;
-    private String description;
+    private String name;
+
     private Double quantity;
-    private String note;
+
+    private String description;
+
     private String specificationFileUrl;
 
     public UnspecifiedEntity() {
     }
 
-    public UnspecifiedEntity(String id, String description, Double quantity, String note, String specificationFileUrl) {
+    public UnspecifiedEntity(String id, String name, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
-        this.description = description;
+        this.name = name;
         this.quantity = quantity;
-        this.note = note;
+        this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
@@ -30,68 +29,39 @@ public class UnspecifiedEntity {
         return id;
     }
 
-    public UnspecifiedEntity setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public UnspecifiedEntity setDescription(String description) {
-        this.description = description;
-        return this;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public UnspecifiedEntity setQuantity(Double quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
-        return this;
     }
 
-    public String getNote() {
-        return note;
+    public String getDescription() {
+        return description;
     }
 
-    public UnspecifiedEntity setNote(String note) {
-        this.note = note;
-        return this;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public UnspecifiedEntity setSpecificationFileUrl(String specificationFileUrl) {
+    public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UnspecifiedEntity that = (UnspecifiedEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(description, that.description) && Objects.equals(quantity, that.quantity) && Objects.equals(note, that.note) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, quantity, note, specificationFileUrl);
-    }
-
-    @Override
-    public String toString() {
-        return "UnspecifiedEntity{" +
-                "id='" + id + '\'' +
-                ", description='" + description + '\'' +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
     }
 }

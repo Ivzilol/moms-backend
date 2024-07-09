@@ -1,73 +1,73 @@
 package bg.mck.entity.serviceEntity;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.DecimalMin;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Objects;
 
 @Document(collection = "services")
 public class ServiceEntity {
 
-    @Id
     private String id;
+
+    private String name;
+
+
+    private Double quantity;
+
+
     private String description;
-    private double price;
+
+
+    private String specificationFileUrl;
 
     public ServiceEntity() {
     }
 
-    public ServiceEntity(String id, String description, double price) {
+    public ServiceEntity(String id, String name, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
+        this.name = name;
+        this.quantity = quantity;
         this.description = description;
-        this.price = price;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getId() {
         return id;
     }
 
-    public ServiceEntity setId(String id) {
+    public void setId(String id) {
         this.id = id;
-        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public ServiceEntity setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
-        return this;
     }
 
-    public double getPrice() {
-        return price;
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
     }
 
-    public ServiceEntity setPrice(double price) {
-        this.price = price;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ServiceEntity that = (ServiceEntity) o;
-        return Double.compare(price, that.price) == 0 && Objects.equals(id, that.id) && Objects.equals(description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, price);
-    }
-
-    @Override
-    public String toString() {
-        return "ServiceEntity{" +
-                "id='" + id + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }
