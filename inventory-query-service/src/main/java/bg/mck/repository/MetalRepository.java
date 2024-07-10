@@ -1,9 +1,9 @@
 package bg.mck.repository;
 
-import bg.mck.entity.materialEntity.PanelEntity;
+import bg.mck.entity.materialEntity.MetalEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PanelRepository extends MongoRepository<PanelEntity, String> {
+public interface MetalRepository extends MongoRepository<MetalEntity, String> {
 }

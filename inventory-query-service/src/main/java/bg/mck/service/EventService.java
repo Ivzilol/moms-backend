@@ -1,23 +1,20 @@
 package bg.mck.service;
 
-import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.*;
-import bg.mck.exceptions.InvalidCategoryException;
-import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.repository.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import static bg.mck.service.MaterialService.extractCategoryString;
+
 
 @Service
 public class EventService {
+
+    private final EventRepository eventRepository;
 
     private final EventMaterialRepository eventMaterialRepository;
     private final FastenerRepository fastenerRepository;
@@ -31,46 +28,14 @@ public class EventService {
     private final DeleteMaterialService deleteMaterialService;
     private final RedisService redisService;
 
-    public EventService(EventMaterialRepository eventMaterialRepository, FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, ObjectMapper objectMapper, DeleteMaterialService deleteMaterialService, RedisService redisService) {
-        this.eventMaterialRepository = eventMaterialRepository;
-        this.fastenerRepository = fastenerRepository;
-        this.galvanisedSheetRepository = galvanisedSheetRepository;
-        this.insulationRepository = insulationRepository;
-        this.panelRepository = panelRepository;
-        this.rebarRepository = rebarRepository;
-        this.setRepository = setRepository;
-        this.unspecifiedRepository = unspecifiedRepository;
+    private final MaterialService materialService;
+
+    public EventService(EventRepository eventRepository, ObjectMapper objectMapper, MaterialService materialService) {
+        this.eventRepository = eventRepository;
         this.objectMapper = objectMapper;
+        this.materialService = materialService;
         this.deleteMaterialService = deleteMaterialService;
         this.redisService = redisService;
-    }
-
-    public void processMaterialEvent(String data, String eventType, String materialType) throws JsonProcessingException {
-        if (eventType.equals(EventType.ItemRegistered.name())) {
-            MaterialEvent<RegisterMaterialEvent> event = objectMapper.readValue(data, new TypeReference<>() {
-            });
-            Long materialId = event.getEvent().getMaterialId();
-            saveEvent(event);
-           //TODO:
-
-        } else if (eventType.equals(EventType.ItemDeleted.name())) {
-            MaterialEvent<MaterialDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
-            });
-
-            Long materialId = event.getEvent().getMaterialId();
-            doesItemExist(materialId, materialType);
-            saveEvent(event);
-            deleteMaterialService.deleteMaterialByIdAndCategory(materialId, materialType);
-
-        } else if (eventType.equals(EventType.ItemUpdated.name())) {
-            MaterialEvent<MaterialUpdatedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
-            });
-            Long materialId = event.getEvent().getMaterialId();
-            doesItemExist(materialId, materialType);
-            saveEvent(event);
-            reconstructMaterialEntity(materialId, MaterialType.valueOf(materialType));
-        }
-
     }
 
     public BaseMaterialEntity reconstructMaterialEntity(Long materialId, MaterialType materialType) {
@@ -140,6 +105,104 @@ public class EventService {
         return null;
     }
 
+    public void createMaterial(String data, String eventType) throws JsonProcessingException {
+            String category = extractCategoryString(data);
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+            category.equals(String.valueOf(MaterialType.FASTENERS))) {
+            MaterialEvent<RegisterFastenerEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterFastenerEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterMaterial(saveEvent.getEvent());
+        }
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+            category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
+            MaterialEvent<RegisterGalvanizedEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterGalvanizedEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterGalvanized(saveEvent.getEvent());
+        }
+    public void processMaterialEvent(String data, String eventType, String materialType) throws JsonProcessingException {
+        if (eventType.equals(EventType.ItemRegistered.name())) {
+            MaterialEvent<RegisterMaterialEvent> event = objectMapper.readValue(data, new TypeReference<>() {
+            });
+            Long materialId = event.getEvent().getMaterialId();
+            saveEvent(event);
+           //TODO:
+
+        } else if (eventType.equals(EventType.ItemDeleted.name())) {
+            MaterialEvent<MaterialDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
+            });
+
+            Long materialId = event.getEvent().getMaterialId();
+            doesItemExist(materialId, materialType);
+            saveEvent(event);
+            deleteMaterialService.deleteMaterialByIdAndCategory(materialId, materialType);
+
+        } else if (eventType.equals(EventType.ItemUpdated.name())) {
+            MaterialEvent<MaterialUpdatedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
+            });
+            Long materialId = event.getEvent().getMaterialId();
+            doesItemExist(materialId, materialType);
+            saveEvent(event);
+            reconstructMaterialEntity(materialId, MaterialType.valueOf(materialType));
+        }
+
+    }
+
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+            category.equals(String.valueOf(MaterialType.INSULATION))) {
+            MaterialEvent<RegisterInsulationEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterInsulationEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterInsulation(saveEvent.getEvent());
+        }
+
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+                category.equals(String.valueOf(MaterialType.METAL))) {
+            MaterialEvent<RegisterMetalEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterMetalEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterMetal(saveEvent.getEvent());
+        }
+
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+                category.equals(String.valueOf(MaterialType.PANELS))) {
+            MaterialEvent<RegisterPanelEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterPanelEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterPanel(saveEvent.getEvent());
+        }
+
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+                category.equals(String.valueOf(MaterialType.REBAR))) {
+            MaterialEvent<RegisterRebarEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterRebarEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterRebar(saveEvent.getEvent());
+        }
+
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+                category.equals(String.valueOf(MaterialType.SET))) {
+            MaterialEvent<RegisterSetEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterSetEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterSet(saveEvent.getEvent());
+        }
+
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+                category.equals(String.valueOf(MaterialType.UNSPECIFIED))) {
+            MaterialEvent<RegisterUnspecifiedEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterUnspecifiedEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterUnspecified(saveEvent.getEvent());
     private void applyFastenerEvent(MaterialEvent<? extends BaseEvent> materialEvent, BaseMaterialEntity materialEntity) {
         BaseEvent event = materialEvent.getEvent();
 
@@ -195,6 +258,8 @@ public class EventService {
         }
 
 
+    private <T extends BaseEvent> MaterialEvent<T> saveEvent(MaterialEvent<T> materialEvent) {
+        return this.eventRepository.save(materialEvent);
     }
 
     private <T> T getItemByMaterialId(MongoRepository<T, Long> repository, Long materialId) {

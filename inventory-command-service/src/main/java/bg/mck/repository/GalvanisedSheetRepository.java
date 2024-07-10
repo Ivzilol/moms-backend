@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GalvanisedSheetRepository extends JpaRepository<GalvanisedSheetEntity, Long> {
+    GalvanisedSheetEntity findByName(String type);
 }

@@ -3,7 +3,6 @@ package bg.mck.events;
 import bg.mck.enums.EventType;
 
 import java.time.LocalDateTime;
-
 public abstract class BaseEvent {
 
     private Long materialId;

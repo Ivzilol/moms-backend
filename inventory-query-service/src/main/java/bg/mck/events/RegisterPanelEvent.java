@@ -1,11 +1,10 @@
-package bg.mck.entity.materialEntity;
+package bg.mck.events;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import bg.mck.enums.EventType;
 
-@Document(collection = "panels")
-public class PanelEntity {
+public class RegisterPanelEvent extends BaseEvent{
 
-    private String id;
+    private String category;
 
     private String name;
 
@@ -19,9 +18,9 @@ public class PanelEntity {
 
     private Double totalThickness;
 
-    private Double frontSheetThickness;
+    private Double FrontSheetThickness;
 
-    private Double backSheetThickness;
+    private Double BackSheetThickness;
 
     private Double quantity;
 
@@ -29,30 +28,32 @@ public class PanelEntity {
 
     private String specificationFileUrl;
 
-    public PanelEntity() {
-    }
-
-    public PanelEntity(String id, String name, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
+    public RegisterPanelEvent(Long materialId, EventType eventType, String category, String name, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl) {
+        super(materialId, eventType);
+        this.category = category;
         this.name = name;
         this.type = type;
         this.color = color;
         this.length = length;
         this.width = width;
         this.totalThickness = totalThickness;
-        this.frontSheetThickness = frontSheetThickness;
-        this.backSheetThickness = backSheetThickness;
+        FrontSheetThickness = frontSheetThickness;
+        BackSheetThickness = backSheetThickness;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public String getId() {
-        return id;
+    public RegisterPanelEvent() {
+
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getName() {
@@ -61,6 +62,22 @@ public class PanelEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Double getLength() {
@@ -88,19 +105,19 @@ public class PanelEntity {
     }
 
     public Double getFrontSheetThickness() {
-        return frontSheetThickness;
+        return FrontSheetThickness;
     }
 
     public void setFrontSheetThickness(Double frontSheetThickness) {
-        this.frontSheetThickness = frontSheetThickness;
+        FrontSheetThickness = frontSheetThickness;
     }
 
     public Double getBackSheetThickness() {
-        return backSheetThickness;
+        return BackSheetThickness;
     }
 
     public void setBackSheetThickness(Double backSheetThickness) {
-        this.backSheetThickness = backSheetThickness;
+        BackSheetThickness = backSheetThickness;
     }
 
     public Double getQuantity() {
@@ -125,21 +142,5 @@ public class PanelEntity {
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 }
