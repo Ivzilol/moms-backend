@@ -6,19 +6,21 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import static bg.mck.errors.ErrorsCreateMaterial.*;
+
 public class CreateMaterialDTO {
 
-    @NotNull(message = "Material Type cannot be empty")
+    @NotNull(message = INVALID_MATERIAL_TYPE)
     private MaterialType materialType;
     private String name;
 
     private String description;
     private String diameter;
-    @DecimalMin(value = "0.0", message = "Length must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_LENGTH)
     private Double length;
     private String model;
     private String clazz;
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_QUANTITY)
     private Double quantity;
     private String note;
     private String specificationFileUrl;
@@ -26,33 +28,33 @@ public class CreateMaterialDTO {
     private String number;
     private String type;
     private Double width;
-    @DecimalMin(value = "0.0", inclusive = false, message = "area must be greater than 0")
+    @DecimalMin(value = "0.0", inclusive = false, message = INVALID_AREA)
     private Double area;
     private String color;
-    @DecimalMin(value = "0.0", message = "Thickness must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_THICKNESS)
     private Double thickness;
 
-    @DecimalMin(value = "0.0", message = "FrontSheetThickness must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_FRONT_THICKNESS)
     private Double frontSheetThickness;
 
-    @DecimalMin(value = "0.0", message = "BackSheetThickness must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_BACK_THICKNESS)
     private Double backSheetThickness;
     private Double thermalPerformance;
     private Double density;
-    @DecimalMin(value = "0.0", message = "Thickness must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_THICKNESS)
     private Double totalThickness;
     private Double sheetThickness;
     private Integer positionNumber;
     private String steel;
-    @DecimalMin(value = "0.0", message = "Width must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_WIDTH)
     private Double weight;
-    @DecimalMin(value = "0.0", inclusive = false, message = "maxLength must be greater than 0")
+    @DecimalMin(value = "0.0", inclusive = false, message = INVALID_MAX_LENGTH)
     private Double maxLength;
 
-    @DecimalMin(value = "0.0", message = "Weight must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_TOTAL_WEIGHT)
     private Double totalWeight;
 
-    @DecimalMin(value = "0.0", message = "GalvanisedSheetThickness must be positive")
+    @DecimalMin(value = "0.0", message = INVALID_GALVANISE)
     private Double galvanisedSheetThickness;
 
     public MaterialType getMaterialType() {

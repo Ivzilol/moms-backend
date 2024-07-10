@@ -2,6 +2,7 @@ package bg.mck.controller;
 
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.dto.ErrorCreateMaterialDTO;
+import bg.mck.service.ErrorsService;
 import bg.mck.service.InventoryService;
 import jakarta.validation.Valid;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -22,15 +23,18 @@ public class MaterialController {
 
     private final InventoryService inventoryService;
 
-    public MaterialController(InventoryService inventoryService) {
+    private final ErrorsService errorsService;
+
+    public MaterialController(InventoryService inventoryService, ErrorsService errorsService) {
         this.inventoryService = inventoryService;
+        this.errorsService = errorsService;
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> createMaterial(@RequestBody @Valid CreateMaterialDTO createMaterialDTO,
                                             BindingResult result) {
         ResponseEntity<ErrorCreateMaterialDTO> errorCreateMaterialDTO =
-                errorRegistrationMaterial(createMaterialDTO, result);
+                errorRegistrationMaterial(result);
         if (errorCreateMaterialDTO != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(errorCreateMaterialDTO.getBody());
@@ -39,13 +43,13 @@ public class MaterialController {
         return ResponseEntity.ok().build();
     }
 
-    private ResponseEntity<ErrorCreateMaterialDTO> errorRegistrationMaterial(CreateMaterialDTO createMaterialDTO, BindingResult result) {
+    private ResponseEntity<ErrorCreateMaterialDTO> errorRegistrationMaterial(BindingResult result) {
         ErrorCreateMaterialDTO errorCreateMaterialDTO = new ErrorCreateMaterialDTO();
         if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-
+            this.errorsService.setErrorsCreateMaterial(errors, errorCreateMaterialDTO);
             return ResponseEntity.ok(errorCreateMaterialDTO);
         }
         return null;
