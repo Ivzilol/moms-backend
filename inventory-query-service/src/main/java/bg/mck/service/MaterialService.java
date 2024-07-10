@@ -2,11 +2,14 @@ package bg.mck.service;
 
 import bg.mck.entity.materialEntity.FastenerEntity;
 import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
+import bg.mck.entity.materialEntity.InsulationEntity;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.RegisterFastenerEvent;
 import bg.mck.events.RegisterGalvanizedEvent;
+import bg.mck.events.RegisterInsulationEvent;
 import bg.mck.repository.FastenerRepository;
 import bg.mck.repository.GalvaniseRepository;
+import bg.mck.repository.InsulationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -19,10 +22,13 @@ public class MaterialService {
 
     private final GalvaniseRepository galvaniseRepository;
 
+    private final InsulationRepository insulationRepository;
 
-    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository) {
+
+    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository) {
         this.fastenerRepository = fastenerRepository;
         this.galvaniseRepository = galvaniseRepository;
+        this.insulationRepository = insulationRepository;
     }
 
     void processingRegisterMaterial(RegisterFastenerEvent event) {
@@ -78,5 +84,17 @@ public class MaterialService {
         galvanisedSheetEntity.setDescription(event.getDescription());
         galvanisedSheetEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
         this.galvaniseRepository.save(galvanisedSheetEntity);
+    }
+
+    public void processingRegisterInsulation(RegisterInsulationEvent event) {
+        InsulationEntity insulationEntity = new InsulationEntity();
+        insulationEntity.setId(String.valueOf(event.getMaterialId()));
+        insulationEntity.setName(event.getName());
+        insulationEntity.setType(event.getType());
+        insulationEntity.setThickness(event.getThickness());
+        insulationEntity.setQuantity(event.getQuantity());
+        insulationEntity.setDescription(event.getDescription());
+        insulationEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
+        this.insulationRepository.save(insulationEntity);
     }
 }

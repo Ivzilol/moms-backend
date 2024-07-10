@@ -2,7 +2,6 @@ package bg.mck.dto;
 
 
 import bg.mck.enums.MaterialType;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 

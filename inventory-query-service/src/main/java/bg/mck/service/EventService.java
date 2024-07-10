@@ -2,10 +2,7 @@ package bg.mck.service;
 
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.BaseEvent;
-import bg.mck.events.MaterialEvent;
-import bg.mck.events.RegisterFastenerEvent;
-import bg.mck.events.RegisterGalvanizedEvent;
+import bg.mck.events.*;
 import bg.mck.repository.EventRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -48,6 +45,16 @@ public class EventService {
             MaterialEvent<RegisterGalvanizedEvent> saveEvent = saveEvent(materialEvent);
             this.materialService.processingRegisterGalvanized(saveEvent.getEvent());
         }
+
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+            category.equals(String.valueOf(MaterialType.INSULATION))) {
+            MaterialEvent<RegisterInsulationEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterInsulationEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterInsulation(saveEvent.getEvent());
+        }
+
     }
 
 
