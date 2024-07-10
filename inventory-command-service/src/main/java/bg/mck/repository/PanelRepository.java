@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PanelRepository extends JpaRepository<PanelEntity, Long> {
+    PanelEntity findByName(String s);
 }

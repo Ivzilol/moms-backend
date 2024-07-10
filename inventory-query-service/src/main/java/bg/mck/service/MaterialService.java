@@ -1,18 +1,9 @@
 package bg.mck.service;
 
-import bg.mck.entity.materialEntity.FastenerEntity;
-import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
-import bg.mck.entity.materialEntity.InsulationEntity;
-import bg.mck.entity.materialEntity.MetalEntity;
+import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.RegisterFastenerEvent;
-import bg.mck.events.RegisterGalvanizedEvent;
-import bg.mck.events.RegisterInsulationEvent;
-import bg.mck.events.RegisterMetalEvent;
-import bg.mck.repository.FastenerRepository;
-import bg.mck.repository.GalvaniseRepository;
-import bg.mck.repository.InsulationRepository;
-import bg.mck.repository.MetalRepository;
+import bg.mck.events.*;
+import bg.mck.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -29,12 +20,15 @@ public class MaterialService {
 
     private final MetalRepository metalRepository;
 
+    private final PanelRepository panelRepository;
 
-    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository) {
+
+    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository) {
         this.fastenerRepository = fastenerRepository;
         this.galvaniseRepository = galvaniseRepository;
         this.insulationRepository = insulationRepository;
         this.metalRepository = metalRepository;
+        this.panelRepository = panelRepository;
     }
 
     void processingRegisterMaterial(RegisterFastenerEvent event) {
@@ -113,5 +107,22 @@ public class MaterialService {
         metalEntity.setDescription(event.getDescription());
         metalEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
         this.metalRepository.save(metalEntity);
+    }
+
+    public void processingRegisterPanel(RegisterPanelEvent event) {
+        PanelEntity panelEntity = new PanelEntity();
+        panelEntity.setId(String.valueOf(event.getMaterialId()));
+        panelEntity.setName(event.getName());
+        panelEntity.setType(event.getType());
+        panelEntity.setColor(event.getColor());
+        panelEntity.setLength(event.getLength());
+        panelEntity.setWidth(event.getWidth());
+        panelEntity.setTotalThickness(event.getTotalThickness());
+        panelEntity.setFrontSheetThickness(event.getFrontSheetThickness());
+        panelEntity.setBackSheetThickness(event.getBackSheetThickness());
+        panelEntity.setQuantity(event.getQuantity());
+        panelEntity.setDescription(event.getDescription());
+        panelEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
+        this.panelRepository.save(panelEntity);
     }
 }

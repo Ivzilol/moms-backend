@@ -3,10 +3,7 @@ package bg.mck.service;
 import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.entity.categoryEntity.CategoryEntity;
-import bg.mck.entity.materialEntity.FastenerEntity;
-import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
-import bg.mck.entity.materialEntity.InsulationEntity;
-import bg.mck.entity.materialEntity.MetalEntity;
+import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.*;
@@ -30,18 +27,21 @@ public class InventoryService {
 
     private final MetalRepository metalRepository;
 
+    private final PanelRepository panelRepository;
+
     public InventoryService(CategoryRepository categoryRepository,
                             FastenerRepository fastenerRepository,
                             GalvanisedSheetRepository galvanisedSheetRepository,
                             InventoryQueryServiceClient inventoryQueryServiceClient,
                             InsulationRepository insulationRepository,
-                            MetalRepository metalRepository) {
+                            MetalRepository metalRepository, PanelRepository panelRepository) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
         this.insulationRepository = insulationRepository;
         this.metalRepository = metalRepository;
+        this.panelRepository = panelRepository;
     }
 
     public void initCategory() {
@@ -116,7 +116,43 @@ public class InventoryService {
                     .findByMaterialType(MaterialType.METAL));
             createMetalEvent(createMetal, materialType);
         }
+
+        if (createMaterialDTO.getMaterialType().equals(MaterialType.PANELS)) {
+            PanelEntity panelEntity = mapPanelEntity(createMaterialDTO);
+            this.panelRepository.save(panelEntity);
+            PanelEntity createPanel = this.panelRepository
+                    .findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength()
+                            + " " + createMaterialDTO.getTotalThickness());
+            String materialType = String.valueOf(this.categoryRepository
+                    .findByMaterialType(MaterialType.PANELS));
+            createPanelEvent(createPanel, materialType);
+        }
     }
+
+    private void createPanelEvent(PanelEntity createPanel, String materialType) {
+        RegisterPanelEvent registerPanelEvent = new RegisterPanelEvent (
+                createPanel.getId(),
+                EventType.MaterialRegister,
+                materialType,
+                createPanel.getName(),
+                createPanel.getType(),
+                createPanel.getColor(),
+                createPanel.getLength(),
+                createPanel.getWidth(),
+                createPanel.getTotalThickness(),
+                createPanel.getFrontSheetThickness(),
+                createPanel.getBackSheetThickness(),
+                createPanel.getQuantity(),
+                createPanel.getDescription(),
+                createPanel.getSpecificationFileUrl()
+        );
+        MaterialEvent<RegisterPanelEvent> materialEvent =
+                EventCreationHelper.toMaterialEvent(registerPanelEvent);
+        inventoryQueryServiceClient.sendEvent(materialEvent,
+                String.valueOf(EventType.MaterialRegister));
+
+    }
+
 
     private void createMetalEvent(MetalEntity createMetal, String materialType) {
         RegisterMetalEvent registerMetalEvent = new RegisterMetalEvent(
@@ -260,5 +296,26 @@ public class InventoryService {
                             MaterialType.METAL).orElse(null));
                     return metalEntity;
                 }).orElseThrow(() -> new RuntimeException("Failed to map MetalEntity"));
+    }
+
+    private PanelEntity mapPanelEntity(CreateMaterialDTO createMaterialDTO) {
+        return Optional.of(new PanelEntity())
+                .map(panelEntity -> {
+                    panelEntity.setName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength()
+                     + " " + createMaterialDTO.getTotalThickness());
+                    panelEntity.setType(createMaterialDTO.getType());
+                    panelEntity.setColor(createMaterialDTO.getColor());
+                    panelEntity.setLength(createMaterialDTO.getLength());
+                    panelEntity.setWidth(createMaterialDTO.getWidth());
+                    panelEntity.setTotalThickness(createMaterialDTO.getTotalThickness());
+                    panelEntity.setFrontSheetThickness(createMaterialDTO.getFrontSheetThickness());
+                    panelEntity.setBackSheetThickness(createMaterialDTO.getBackSheetThickness());
+                    panelEntity.setQuantity(createMaterialDTO.getQuantity());
+                    panelEntity.setDescription(createMaterialDTO.getDescription());
+                    panelEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
+                    panelEntity.setCategory(categoryRepository.findByMaterialType(
+                            MaterialType.PANELS).orElse(null));;
+                    return panelEntity;
+                }).orElseThrow(() -> new RuntimeException("Failed to map MetalPanel"));
     }
 }
