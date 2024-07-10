@@ -6,13 +6,11 @@ import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.FastenerEntity;
 import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
 import bg.mck.entity.materialEntity.InsulationEntity;
+import bg.mck.entity.materialEntity.MetalEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.*;
-import bg.mck.repository.CategoryRepository;
-import bg.mck.repository.FastenerRepository;
-import bg.mck.repository.GalvanisedSheetRepository;
-import bg.mck.repository.InsulationRepository;
+import bg.mck.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,14 +28,20 @@ public class InventoryService {
 
     private final InsulationRepository insulationRepository;
 
+    private final MetalRepository metalRepository;
+
     public InventoryService(CategoryRepository categoryRepository,
                             FastenerRepository fastenerRepository,
-                            GalvanisedSheetRepository galvanisedSheetRepository, InventoryQueryServiceClient inventoryQueryServiceClient, InsulationRepository insulationRepository) {
+                            GalvanisedSheetRepository galvanisedSheetRepository,
+                            InventoryQueryServiceClient inventoryQueryServiceClient,
+                            InsulationRepository insulationRepository,
+                            MetalRepository metalRepository) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
         this.insulationRepository = insulationRepository;
+        this.metalRepository = metalRepository;
     }
 
     public void initCategory() {
@@ -102,7 +106,35 @@ public class InventoryService {
                     .findByMaterialType(MaterialType.INSULATION));
             createInsulationEvent(createInsulation, materialType);
         }
+
+        if (createMaterialDTO.getMaterialType().equals(MaterialType.METAL)) {
+            MetalEntity metalEntity = mapMetalEntity(createMaterialDTO);
+            this.metalRepository.save(metalEntity);
+            MetalEntity createMetal = this.metalRepository
+                    .findByName(createMaterialDTO.getDescription());
+            String materialType = String.valueOf(this.categoryRepository
+                    .findByMaterialType(MaterialType.METAL));
+            createMetalEvent(createMetal, materialType);
+        }
     }
+
+    private void createMetalEvent(MetalEntity createMetal, String materialType) {
+        RegisterMetalEvent registerMetalEvent = new RegisterMetalEvent(
+                createMetal.getId(),
+                EventType.MaterialRegister,
+                materialType,
+                createMetal.getName(),
+                createMetal.getTotalWeight(),
+                createMetal.getQuantity(),
+                createMetal.getDescription(),
+                createMetal.getSpecificationFileUrl()
+        );
+        MaterialEvent<RegisterMetalEvent> materialEvent =
+                EventCreationHelper.toMaterialEvent(registerMetalEvent);
+        inventoryQueryServiceClient.sendEvent(materialEvent,
+                String.valueOf(EventType.MaterialRegister));
+    }
+
 
     private void createInsulationEvent(InsulationEntity createInsulation, String materialType) {
         RegisterInsulationEvent registerInsulationEvent = new RegisterInsulationEvent(
@@ -214,5 +246,19 @@ public class InventoryService {
                             MaterialType.FASTENERS).orElse(null));
                     return fastenerEntity;
                 }).orElseThrow(() -> new RuntimeException("Failed to map FastenerEntity"));
+    }
+
+    private MetalEntity mapMetalEntity(CreateMaterialDTO createMaterialDTO) {
+        return Optional.of(new MetalEntity())
+                .map(metalEntity -> {
+                    metalEntity.setName(createMaterialDTO.getDescription());
+                    metalEntity.setTotalWeight(createMaterialDTO.getTotalWeight());
+                    metalEntity.setQuantity(createMaterialDTO.getQuantity());
+                    metalEntity.setDescription(createMaterialDTO.getDescription());
+                    metalEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
+                    metalEntity.setCategory(categoryRepository.findByMaterialType(
+                            MaterialType.METAL).orElse(null));
+                    return metalEntity;
+                }).orElseThrow(() -> new RuntimeException("Failed to map MetalEntity"));
     }
 }

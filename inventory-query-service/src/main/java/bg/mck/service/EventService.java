@@ -55,6 +55,15 @@ public class EventService {
             this.materialService.processingRegisterInsulation(saveEvent.getEvent());
         }
 
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+                category.equals(String.valueOf(MaterialType.METAL))) {
+            MaterialEvent<RegisterMetalEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterMetalEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterMetal(saveEvent.getEvent());
+        }
+
     }
 
 

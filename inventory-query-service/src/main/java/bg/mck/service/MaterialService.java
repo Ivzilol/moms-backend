@@ -3,13 +3,16 @@ package bg.mck.service;
 import bg.mck.entity.materialEntity.FastenerEntity;
 import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
 import bg.mck.entity.materialEntity.InsulationEntity;
+import bg.mck.entity.materialEntity.MetalEntity;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.RegisterFastenerEvent;
 import bg.mck.events.RegisterGalvanizedEvent;
 import bg.mck.events.RegisterInsulationEvent;
+import bg.mck.events.RegisterMetalEvent;
 import bg.mck.repository.FastenerRepository;
 import bg.mck.repository.GalvaniseRepository;
 import bg.mck.repository.InsulationRepository;
+import bg.mck.repository.MetalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -24,11 +27,14 @@ public class MaterialService {
 
     private final InsulationRepository insulationRepository;
 
+    private final MetalRepository metalRepository;
 
-    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository) {
+
+    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository) {
         this.fastenerRepository = fastenerRepository;
         this.galvaniseRepository = galvaniseRepository;
         this.insulationRepository = insulationRepository;
+        this.metalRepository = metalRepository;
     }
 
     void processingRegisterMaterial(RegisterFastenerEvent event) {
@@ -96,5 +102,16 @@ public class MaterialService {
         insulationEntity.setDescription(event.getDescription());
         insulationEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
         this.insulationRepository.save(insulationEntity);
+    }
+
+    public void processingRegisterMetal(RegisterMetalEvent event) {
+        MetalEntity metalEntity = new MetalEntity();
+        metalEntity.setId(String.valueOf(event.getMaterialId()));
+        metalEntity.setName(event.getName());
+        metalEntity.setTotalWeight(event.getTotalWeight());
+        metalEntity.setQuantity(event.getQuantity());
+        metalEntity.setDescription(event.getDescription());
+        metalEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
+        this.metalRepository.save(metalEntity);
     }
 }
