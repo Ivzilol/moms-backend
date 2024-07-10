@@ -22,13 +22,16 @@ public class MaterialService {
 
     private final PanelRepository panelRepository;
 
+    private final RebarRepository rebarRepository;
 
-    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository) {
+
+    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository, RebarRepository rebarRepository) {
         this.fastenerRepository = fastenerRepository;
         this.galvaniseRepository = galvaniseRepository;
         this.insulationRepository = insulationRepository;
         this.metalRepository = metalRepository;
         this.panelRepository = panelRepository;
+        this.rebarRepository = rebarRepository;
     }
 
     void processingRegisterMaterial(RegisterFastenerEvent event) {
@@ -124,5 +127,17 @@ public class MaterialService {
         panelEntity.setDescription(event.getDescription());
         panelEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
         this.panelRepository.save(panelEntity);
+    }
+
+    public void processingRegisterRebar(RegisterRebarEvent event) {
+        RebarEntity rebarEntity = new RebarEntity();
+        rebarEntity.setId(String.valueOf(event.getMaterialId()));
+        rebarEntity.setName(event.getName());
+        rebarEntity.setMaxLength(event.getMaxLength());
+        rebarEntity.setWeight(event.getWeight());
+        rebarEntity.setQuantity(event.getQuantity());
+        rebarEntity.setDescription(event.getDescription());
+        rebarEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
+        this.rebarRepository.save(rebarEntity);
     }
 }

@@ -29,12 +29,16 @@ public class InventoryService {
 
     private final PanelRepository panelRepository;
 
+    private final RebarRepository rebarRepository;
+
     public InventoryService(CategoryRepository categoryRepository,
                             FastenerRepository fastenerRepository,
                             GalvanisedSheetRepository galvanisedSheetRepository,
                             InventoryQueryServiceClient inventoryQueryServiceClient,
                             InsulationRepository insulationRepository,
-                            MetalRepository metalRepository, PanelRepository panelRepository) {
+                            MetalRepository metalRepository,
+                            PanelRepository panelRepository,
+                            RebarRepository rebarRepository) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
@@ -42,6 +46,7 @@ public class InventoryService {
         this.insulationRepository = insulationRepository;
         this.metalRepository = metalRepository;
         this.panelRepository = panelRepository;
+        this.rebarRepository = rebarRepository;
     }
 
     public void initCategory() {
@@ -127,7 +132,36 @@ public class InventoryService {
                     .findByMaterialType(MaterialType.PANELS));
             createPanelEvent(createPanel, materialType);
         }
+
+        if (createMaterialDTO.getMaterialType().equals(MaterialType.REBAR)) {
+            RebarEntity rebarEntity = mapRebarEntity(createMaterialDTO);
+            this.rebarRepository.save(rebarEntity);
+            RebarEntity createRebar = this.rebarRepository
+                    .findByName(createMaterialDTO.getDescription());
+            String materialType = String.valueOf(this.categoryRepository
+                    .findByMaterialType(MaterialType.REBAR));
+            createRebarEvent(createRebar, materialType);
+        }
     }
+
+    private void createRebarEvent(RebarEntity createRebar, String materialType) {
+        RegisterRebarEvent registerRebarEvent = new RegisterRebarEvent(
+                createRebar.getId(),
+                EventType.MaterialRegister,
+                materialType,
+                createRebar.getName(),
+                createRebar.getMaxLength(),
+                createRebar.getWeight(),
+                createRebar.getQuantity(),
+                createRebar.getDescription(),
+                createRebar.getSpecificationFileUrl()
+        );
+        MaterialEvent<RegisterRebarEvent> materialEvent =
+                EventCreationHelper.toMaterialEvent(registerRebarEvent);
+        inventoryQueryServiceClient.sendEvent(materialEvent,
+                String.valueOf(EventType.MaterialRegister));
+    }
+
 
     private void createPanelEvent(PanelEntity createPanel, String materialType) {
         RegisterPanelEvent registerPanelEvent = new RegisterPanelEvent (
@@ -314,8 +348,23 @@ public class InventoryService {
                     panelEntity.setDescription(createMaterialDTO.getDescription());
                     panelEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
                     panelEntity.setCategory(categoryRepository.findByMaterialType(
-                            MaterialType.PANELS).orElse(null));;
+                            MaterialType.PANELS).orElse(null));
                     return panelEntity;
-                }).orElseThrow(() -> new RuntimeException("Failed to map MetalPanel"));
+                }).orElseThrow(() -> new RuntimeException("Failed to map PanelEntity"));
+    }
+
+    private RebarEntity mapRebarEntity(CreateMaterialDTO createMaterialDTO) {
+        return Optional.of(new RebarEntity())
+                .map(rebarEntity -> {
+                    rebarEntity.setName(createMaterialDTO.getDescription());
+                    rebarEntity.setMaxLength(createMaterialDTO.getMaxLength());
+                    rebarEntity.setWeight(createMaterialDTO.getWeight());
+                    rebarEntity.setQuantity(createMaterialDTO.getQuantity());
+                    rebarEntity.setDescription(createMaterialDTO.getDescription());
+                    rebarEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
+                    rebarEntity.setCategory(categoryRepository.findByMaterialType(
+                            MaterialType.REBAR).orElse(null));
+                    return rebarEntity;
+                }).orElseThrow(() -> new RuntimeException("Failed to map RebarEntity"));
     }
 }

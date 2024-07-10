@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RebarRepository extends JpaRepository<RebarEntity, Long> {
+    RebarEntity findByName(String description);
 }
