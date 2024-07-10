@@ -4,10 +4,11 @@ package bg.mck.dto;
 import bg.mck.enums.MaterialType;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class CreateMaterialDTO {
 
-    @NotEmpty
+    @NotNull(message = "Material Type cannot be empty")
     private MaterialType materialType;
     private String name;
 
