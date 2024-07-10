@@ -4,6 +4,11 @@ import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.dto.ErrorCreateMaterialDTO;
 import bg.mck.service.ErrorsService;
 import bg.mck.service.InventoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -30,6 +35,14 @@ public class MaterialController {
         this.errorsService = errorsService;
     }
 
+    @Operation(summary = "Create Material")
+    @ApiResponses(
+            value = {@ApiResponse(responseCode = "200", description = "Successful registration"),
+                    @ApiResponse(responseCode = "400", description = "Incorrect field",
+                            content = {@Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ErrorCreateMaterialDTO.class))})
+            }
+    )
     @PostMapping("/create")
     public ResponseEntity<?> createMaterial(@RequestBody @Valid CreateMaterialDTO createMaterialDTO,
                                             BindingResult result) {
