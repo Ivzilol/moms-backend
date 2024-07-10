@@ -2,17 +2,23 @@ package bg.mck.dto;
 
 
 import bg.mck.enums.MaterialType;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
 
 public class CreateMaterialDTO {
 
+    @NotEmpty
     private MaterialType materialType;
-
     private String name;
+
     private String description;
     private String diameter;
+    @DecimalMin(value = "0.0", message = "Length must be positive")
     private Double length;
     private String model;
     private String clazz;
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
     private String note;
     private String specificationFileUrl;
@@ -20,18 +26,34 @@ public class CreateMaterialDTO {
     private String number;
     private String type;
     private Double width;
+    @DecimalMin(value = "0.0", inclusive = false, message = "area must be greater than 0")
     private Double area;
     private String color;
+    @DecimalMin(value = "0.0", message = "Thickness must be positive")
     private Double thickness;
+
+    @DecimalMin(value = "0.0", message = "FrontSheetThickness must be positive")
+    private Double frontSheetThickness;
+
+    @DecimalMin(value = "0.0", message = "BackSheetThickness must be positive")
+    private Double backSheetThickness;
     private Double thermalPerformance;
     private Double density;
+    @DecimalMin(value = "0.0", message = "Thickness must be positive")
     private Double totalThickness;
     private Double sheetThickness;
     private Integer positionNumber;
     private String steel;
+    @DecimalMin(value = "0.0", message = "Width must be positive")
     private Double weight;
-
+    @DecimalMin(value = "0.0", inclusive = false, message = "maxLength must be greater than 0")
     private Double maxLength;
+
+    @DecimalMin(value = "0.0", message = "Weight must be positive")
+    private Double totalWeight;
+
+    @DecimalMin(value = "0.0", message = "GalvanisedSheetThickness must be positive")
+    private Double galvanisedSheetThickness;
 
     public MaterialType getMaterialType() {
         return materialType;
@@ -39,6 +61,14 @@ public class CreateMaterialDTO {
 
     public void setMaterialType(MaterialType materialType) {
         this.materialType = materialType;
+    }
+
+    public Double getGalvanisedSheetThickness() {
+        return galvanisedSheetThickness;
+    }
+
+    public void setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+        this.galvanisedSheetThickness = galvanisedSheetThickness;
     }
 
     public String getDescription() {
@@ -231,5 +261,29 @@ public class CreateMaterialDTO {
 
     public void setMaxLength(Double maxLength) {
         this.maxLength = maxLength;
+    }
+
+    public Double getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(Double totalWeight) {
+        this.totalWeight = totalWeight;
+    }
+
+    public Double getFrontSheetThickness() {
+        return frontSheetThickness;
+    }
+
+    public void setFrontSheetThickness(Double frontSheetThickness) {
+        this.frontSheetThickness = frontSheetThickness;
+    }
+
+    public Double getBackSheetThickness() {
+        return backSheetThickness;
+    }
+
+    public void setBackSheetThickness(Double backSheetThickness) {
+        this.backSheetThickness = backSheetThickness;
     }
 }
