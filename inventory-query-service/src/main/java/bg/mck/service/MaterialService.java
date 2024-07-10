@@ -24,14 +24,17 @@ public class MaterialService {
 
     private final RebarRepository rebarRepository;
 
+    private final SetRepository setRepository;
 
-    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository, RebarRepository rebarRepository) {
+
+    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository) {
         this.fastenerRepository = fastenerRepository;
         this.galvaniseRepository = galvaniseRepository;
         this.insulationRepository = insulationRepository;
         this.metalRepository = metalRepository;
         this.panelRepository = panelRepository;
         this.rebarRepository = rebarRepository;
+        this.setRepository = setRepository;
     }
 
     void processingRegisterMaterial(RegisterFastenerEvent event) {
@@ -139,5 +142,18 @@ public class MaterialService {
         rebarEntity.setDescription(event.getDescription());
         rebarEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
         this.rebarRepository.save(rebarEntity);
+    }
+
+    public void processingRegisterSet(RegisterSetEvent event) {
+        SetEntity setEntity = new SetEntity();
+        setEntity.setId(String.valueOf(event.getMaterialId()));
+        setEntity.setName(event.getName());
+        setEntity.setGalvanisedSheetThickness(event.getGalvanisedSheetThickness());
+        setEntity.setColor(event.getColor());
+        setEntity.setMaxLength(event.getMaxLength());
+        setEntity.setQuantity(event.getQuantity());
+        setEntity.setDescription(event.getDescription());
+        setEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
+        this.setRepository.save(setEntity);
     }
 }

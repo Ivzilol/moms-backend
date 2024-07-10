@@ -82,6 +82,15 @@ public class EventService {
             this.materialService.processingRegisterRebar(saveEvent.getEvent());
         }
 
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+                category.equals(String.valueOf(MaterialType.SET))) {
+            MaterialEvent<RegisterSetEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterSetEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterSet(saveEvent.getEvent());
+        }
+
     }
 
 

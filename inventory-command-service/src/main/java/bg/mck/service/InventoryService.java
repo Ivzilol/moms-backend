@@ -31,6 +31,8 @@ public class InventoryService {
 
     private final RebarRepository rebarRepository;
 
+    private final SetRepository setRepository;
+
     public InventoryService(CategoryRepository categoryRepository,
                             FastenerRepository fastenerRepository,
                             GalvanisedSheetRepository galvanisedSheetRepository,
@@ -38,7 +40,7 @@ public class InventoryService {
                             InsulationRepository insulationRepository,
                             MetalRepository metalRepository,
                             PanelRepository panelRepository,
-                            RebarRepository rebarRepository) {
+                            RebarRepository rebarRepository, SetRepository setRepository) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
@@ -47,6 +49,7 @@ public class InventoryService {
         this.metalRepository = metalRepository;
         this.panelRepository = panelRepository;
         this.rebarRepository = rebarRepository;
+        this.setRepository = setRepository;
     }
 
     public void initCategory() {
@@ -142,7 +145,39 @@ public class InventoryService {
                     .findByMaterialType(MaterialType.REBAR));
             createRebarEvent(createRebar, materialType);
         }
+
+        if (createMaterialDTO.getMaterialType().equals(MaterialType.SET)) {
+            SetEntity setEntity = mapSetEntity(createMaterialDTO);
+            this.setRepository.save(setEntity);
+            SetEntity createSet = this.setRepository
+                    .findByName(createMaterialDTO.getGalvanisedSheetThickness() + " " +
+                            createMaterialDTO.getColor());
+
+            String materialType = String.valueOf(this.categoryRepository
+                    .findByMaterialType(MaterialType.SET));
+            createSetEvent(createSet, materialType);
+        }
     }
+
+    private void createSetEvent(SetEntity createSet, String materialType) {
+        RegisterSetEvent registerSetEvent = new RegisterSetEvent(
+                createSet.getId(),
+                EventType.MaterialRegister,
+                materialType,
+                createSet.getName(),
+                createSet.getGalvanisedSheetThickness(),
+                createSet.getColor(),
+                createSet.getMaxLength(),
+                createSet.getQuantity(),
+                createSet.getDescription(),
+                createSet.getSpecificationFileUrl()
+        );
+        MaterialEvent<RegisterSetEvent> materialEvent =
+                EventCreationHelper.toMaterialEvent(registerSetEvent);
+        inventoryQueryServiceClient.sendEvent(materialEvent,
+                String.valueOf(EventType.MaterialRegister));
+    }
+
 
     private void createRebarEvent(RebarEntity createRebar, String materialType) {
         RegisterRebarEvent registerRebarEvent = new RegisterRebarEvent(
@@ -366,5 +401,22 @@ public class InventoryService {
                             MaterialType.REBAR).orElse(null));
                     return rebarEntity;
                 }).orElseThrow(() -> new RuntimeException("Failed to map RebarEntity"));
+    }
+
+    private SetEntity mapSetEntity(CreateMaterialDTO createMaterialDTO) {
+        return Optional.of(new SetEntity())
+                .map(setEntity -> {
+                    setEntity.setName(createMaterialDTO.getGalvanisedSheetThickness() + " " +
+                            createMaterialDTO.getColor());
+                    setEntity.setGalvanisedSheetThickness(createMaterialDTO.getGalvanisedSheetThickness());
+                    setEntity.setColor(createMaterialDTO.getColor());
+                    setEntity.setMaxLength(String.valueOf(createMaterialDTO.getMaxLength()));
+                    setEntity.setQuantity(createMaterialDTO.getQuantity());
+                    setEntity.setDescription(createMaterialDTO.getDescription());
+                    setEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
+                    setEntity.setCategory(categoryRepository.findByMaterialType(
+                            MaterialType.SET).orElse(null));
+                    return setEntity;
+                }).orElseThrow(() -> new RuntimeException("Failed to map SetEntity"));
     }
 }
