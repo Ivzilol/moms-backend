@@ -91,6 +91,15 @@ public class EventService {
             this.materialService.processingRegisterSet(saveEvent.getEvent());
         }
 
+        if (eventType.equals(String.valueOf(EventType.MaterialRegister)) &&
+                category.equals(String.valueOf(MaterialType.UNSPECIFIED))) {
+            MaterialEvent<RegisterUnspecifiedEvent> materialEvent =
+                    objectMapper.readValue(data, new TypeReference<>() {
+                    });
+            MaterialEvent<RegisterUnspecifiedEvent> saveEvent = saveEvent(materialEvent);
+            this.materialService.processingRegisterUnspecified(saveEvent.getEvent());
+        }
+
     }
 
 

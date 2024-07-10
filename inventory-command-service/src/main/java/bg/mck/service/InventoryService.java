@@ -33,6 +33,8 @@ public class InventoryService {
 
     private final SetRepository setRepository;
 
+    private final UnspecifiedRepository unspecifiedRepository;
+
     public InventoryService(CategoryRepository categoryRepository,
                             FastenerRepository fastenerRepository,
                             GalvanisedSheetRepository galvanisedSheetRepository,
@@ -40,7 +42,7 @@ public class InventoryService {
                             InsulationRepository insulationRepository,
                             MetalRepository metalRepository,
                             PanelRepository panelRepository,
-                            RebarRepository rebarRepository, SetRepository setRepository) {
+                            RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
@@ -50,6 +52,7 @@ public class InventoryService {
         this.panelRepository = panelRepository;
         this.rebarRepository = rebarRepository;
         this.setRepository = setRepository;
+        this.unspecifiedRepository = unspecifiedRepository;
     }
 
     public void initCategory() {
@@ -157,7 +160,34 @@ public class InventoryService {
                     .findByMaterialType(MaterialType.SET));
             createSetEvent(createSet, materialType);
         }
+
+        if (createMaterialDTO.getMaterialType().equals(MaterialType.UNSPECIFIED)) {
+            UnspecifiedEntity unspecifiedEntity = mapUnspecifiedEntity(createMaterialDTO);
+            this.unspecifiedRepository.save(unspecifiedEntity);
+            UnspecifiedEntity createUnspecified =
+                    this.unspecifiedRepository.findByName(createMaterialDTO.getDescription());
+            String materialType = String.valueOf(this.categoryRepository
+                    .findByMaterialType(MaterialType.UNSPECIFIED));
+            createUnspecifiedEvent(createUnspecified, materialType);
+        }
     }
+
+    private void createUnspecifiedEvent(UnspecifiedEntity createUnspecified, String materialType) {
+        RegisterUnspecifiedEvent registerUnspecifiedEvent = new RegisterUnspecifiedEvent(
+                createUnspecified.getId(),
+                EventType.MaterialRegister,
+                materialType,
+                createUnspecified.getName(),
+                createUnspecified.getQuantity(),
+                createUnspecified.getDescription(),
+                createUnspecified.getSpecificationFileUrl()
+        );
+        MaterialEvent<RegisterUnspecifiedEvent> materialEvent =
+                EventCreationHelper.toMaterialEvent(registerUnspecifiedEvent);
+        inventoryQueryServiceClient.sendEvent(materialEvent,
+                String.valueOf(EventType.MaterialRegister));
+    }
+
 
     private void createSetEvent(SetEntity createSet, String materialType) {
         RegisterSetEvent registerSetEvent = new RegisterSetEvent(
@@ -418,5 +448,18 @@ public class InventoryService {
                             MaterialType.SET).orElse(null));
                     return setEntity;
                 }).orElseThrow(() -> new RuntimeException("Failed to map SetEntity"));
+    }
+
+    private UnspecifiedEntity mapUnspecifiedEntity(CreateMaterialDTO createMaterialDTO) {
+        return Optional.of(new UnspecifiedEntity())
+                .map(unspecifiedEntity -> {
+                    unspecifiedEntity.setName(createMaterialDTO.getDescription());
+                    unspecifiedEntity.setQuantity(createMaterialDTO.getQuantity());
+                    unspecifiedEntity.setDescription(createMaterialDTO.getDescription());
+                    unspecifiedEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
+                    unspecifiedEntity.setCategory(categoryRepository.findByMaterialType(
+                            MaterialType.UNSPECIFIED).orElse(null));
+                    return unspecifiedEntity;
+                }).orElseThrow(() -> new RuntimeException("Failed to map UnspecifiedEntity"));
     }
 }

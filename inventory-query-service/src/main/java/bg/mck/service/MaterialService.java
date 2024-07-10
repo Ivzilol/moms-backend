@@ -26,8 +26,10 @@ public class MaterialService {
 
     private final SetRepository setRepository;
 
+    private final UnspecifiedRepository unspecifiedRepository;
 
-    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository) {
+
+    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository) {
         this.fastenerRepository = fastenerRepository;
         this.galvaniseRepository = galvaniseRepository;
         this.insulationRepository = insulationRepository;
@@ -35,6 +37,7 @@ public class MaterialService {
         this.panelRepository = panelRepository;
         this.rebarRepository = rebarRepository;
         this.setRepository = setRepository;
+        this.unspecifiedRepository = unspecifiedRepository;
     }
 
     void processingRegisterMaterial(RegisterFastenerEvent event) {
@@ -155,5 +158,15 @@ public class MaterialService {
         setEntity.setDescription(event.getDescription());
         setEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
         this.setRepository.save(setEntity);
+    }
+
+    public void processingRegisterUnspecified(RegisterUnspecifiedEvent event) {
+        UnspecifiedEntity unspecifiedEntity = new UnspecifiedEntity();
+        unspecifiedEntity.setId(String.valueOf(event.getMaterialId()));
+        unspecifiedEntity.setName(event.getName());
+        unspecifiedEntity.setQuantity(event.getQuantity());
+        unspecifiedEntity.setDescription(event.getDescription());
+        unspecifiedEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
+        unspecifiedRepository.save(unspecifiedEntity);
     }
 }
