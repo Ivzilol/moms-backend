@@ -12,7 +12,6 @@ public class CreateMaterialController {
 
     @PostMapping("/inventory/event")
     public ResponseEntity<Void> sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType) throws JsonProcessingException {
-        System.out.println();
         return ResponseEntity.ok().build();
     }
 }

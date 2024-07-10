@@ -42,7 +42,7 @@ public class DeleteMaterialService {
         this.inventoryQueryClient = inventoryQueryClient;
     }
 
-    public void deleteMaterialByIdAndCategory(Long id, String categoryName) {
+    public void deleteMaterialByIdAndCategory(Long materialId, String categoryName) throws JsonProcessingException {
         MaterialType materialType;
         try {
             materialType = MaterialType.valueOf(categoryName.toUpperCase());
@@ -51,23 +51,22 @@ public class DeleteMaterialService {
         }
 
         switch (materialType) {
-            case MaterialType.FASTENERS -> deleteMaterialById(fastenerRepository, id);
-            case MaterialType.GALVANIZED_SHEET -> deleteMaterialById(galvanisedSheetRepository, id);
-            case MaterialType.INSULATION -> deleteMaterialById(insulationRepository, id);
-            case MaterialType.PANELS -> deleteMaterialById(panelRepository, id);
-            case MaterialType.REBAR -> deleteMaterialById(rebarRepository, id);
-            case MaterialType.SET -> deleteMaterialById(setRepository, id);
-            case MaterialType.UNSPECIFIED -> deleteMaterialById(unspecifiedRepository, id);
+            case MaterialType.FASTENERS -> deleteMaterialById(fastenerRepository, materialId);
+            case MaterialType.GALVANIZED_SHEET -> deleteMaterialById(galvanisedSheetRepository, materialId);
+            case MaterialType.INSULATION -> deleteMaterialById(insulationRepository, materialId);
+            case MaterialType.PANELS -> deleteMaterialById(panelRepository, materialId);
+            case MaterialType.REBAR -> deleteMaterialById(rebarRepository, materialId);
+            case MaterialType.SET -> deleteMaterialById(setRepository, materialId);
+            case MaterialType.UNSPECIFIED -> deleteMaterialById(unspecifiedRepository, materialId);
             default -> throw new InvalidCategoryException("Unhandled category type: " + materialType);
         }
 
-        MaterialDeletedEvent event = new MaterialDeletedEvent();
-        event.setMaterialId(id);
-        event.setEventType(EventType.ItemDeleted);
+        MaterialDeletedEvent event = new MaterialDeletedEvent(materialId, EventType.ItemDeleted);
 
         MaterialEvent<MaterialDeletedEvent> materialEvent = EventCreationHelper.toMaterialEvent(event);
 
-        inventoryQueryClient.sendEvent(materialEvent, materialEvent.getEventType().name());
+
+        inventoryQueryClient.sendEvent(objectMapper.writeValueAsString(materialEvent), materialEvent.getEventType().name(), materialEvent.getEventType().name());
     }
 
     private <T> void deleteMaterialById(JpaRepository<T, Long> repository, Long id) {

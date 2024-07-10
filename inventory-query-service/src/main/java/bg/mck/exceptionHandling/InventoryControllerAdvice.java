@@ -3,7 +3,6 @@ package bg.mck.exceptionHandling;
 
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import feign.FeignException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

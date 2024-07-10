@@ -6,12 +6,13 @@ import bg.mck.events.MaterialEvent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(url = "http://localhost:9004", name = "INVENTORY-QUERY-SERVICE")
+@FeignClient(name = "INVENTORY-QUERY-SERVICE")
 public interface InventoryQueryServiceClient {
 
 
     @PostMapping("/inventory/events")
-    <T extends BaseEvent> void sendEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+    <T extends BaseEvent> void sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType,
+                                         @RequestHeader("Material-Type") String materialType);
 
     @GetMapping("/inventory/items/{id}")
     InventoryItemDetailsDTO getInventoryItemById(@PathVariable("id") Long id);

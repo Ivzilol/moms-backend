@@ -4,9 +4,7 @@ package bg.mck.entity.materialEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "fastener")
-public class FastenerEntity {
-
-    private String id;
+public class FastenerEntity extends BaseMaterialEntity{
 
     private String name;
 
@@ -32,8 +30,7 @@ public class FastenerEntity {
     public FastenerEntity() {
     }
 
-    public FastenerEntity(String id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
+    public FastenerEntity(String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
         this.name = name;
         this.type = type;
         this.diameter = diameter;
@@ -45,13 +42,6 @@ public class FastenerEntity {
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

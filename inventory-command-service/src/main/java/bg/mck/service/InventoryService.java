@@ -6,7 +6,6 @@ import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.FastenerEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.EventCreationHelper;
 import bg.mck.events.MaterialEvent;
 import bg.mck.events.RegisterMaterialEvent;
 import bg.mck.repository.CategoryRepository;
@@ -18,47 +17,47 @@ import java.util.Optional;
 @Service
 public class InventoryService {
 
-//    private final CategoryRepository categoryRepository;
-//
-//    private final FastenerRepository fastenerRepository;
-//
-//
-//    private final InventoryQueryServiceClient inventoryQueryServiceClient;
-//
-//    public InventoryService(CategoryRepository categoryRepository,
-//                            FastenerRepository fastenerRepository,
-//                            InventoryQueryServiceClient inventoryQueryServiceClient) {
-//        this.categoryRepository = categoryRepository;
-//        this.fastenerRepository = fastenerRepository;
-//        this.inventoryQueryServiceClient = inventoryQueryServiceClient;
-//    }
-//
-//    public void initCategory() {
-//        if (categoryRepository.count() == 0) {
-//            CategoryEntity categoryFasteners = new CategoryEntity();
-//            categoryFasteners.setMaterialType(MaterialType.FASTENERS);
-//            categoryRepository.save(categoryFasteners);
-//            CategoryEntity categoryGalvanised = new CategoryEntity();
-//            categoryGalvanised.setMaterialType(MaterialType.GALVANIZED_SHEET);
-//            categoryRepository.save(categoryGalvanised);
-//            CategoryEntity categoryInsulation = new CategoryEntity();
-//            categoryInsulation.setMaterialType(MaterialType.INSULATION);
-//            categoryRepository.save(categoryInsulation);
-//            CategoryEntity categoryPanel = new CategoryEntity();
-//            categoryPanel.setMaterialType(MaterialType.PANELS);
-//            categoryRepository.save(categoryPanel);
-//            CategoryEntity categoryRebar = new CategoryEntity();
-//            categoryRebar.setMaterialType(MaterialType.REBAR);
-//            categoryRepository.save(categoryRebar);
-//            CategoryEntity categorySet = new CategoryEntity();
-//            categorySet.setMaterialType(MaterialType.SET);
-//            categoryRepository.save(categorySet);
-//            CategoryEntity categoryUnspecified = new CategoryEntity();
-//            categoryUnspecified.setMaterialType(MaterialType.UNSPECIFIED);
-//            categoryRepository.save(categoryUnspecified);
-//        }
-//    }
-//
+    private final CategoryRepository categoryRepository;
+
+    private final FastenerRepository fastenerRepository;
+
+
+    private final InventoryQueryServiceClient inventoryQueryServiceClient;
+
+    public InventoryService(CategoryRepository categoryRepository,
+                            FastenerRepository fastenerRepository,
+                            InventoryQueryServiceClient inventoryQueryServiceClient) {
+        this.categoryRepository = categoryRepository;
+        this.fastenerRepository = fastenerRepository;
+        this.inventoryQueryServiceClient = inventoryQueryServiceClient;
+    }
+
+    public void initCategory() {
+        if (categoryRepository.count() == 0) {
+            CategoryEntity categoryFasteners = new CategoryEntity();
+            categoryFasteners.setMaterialType(MaterialType.FASTENERS);
+            categoryRepository.save(categoryFasteners);
+            CategoryEntity categoryGalvanised = new CategoryEntity();
+            categoryGalvanised.setMaterialType(MaterialType.GALVANIZED_SHEET);
+            categoryRepository.save(categoryGalvanised);
+            CategoryEntity categoryInsulation = new CategoryEntity();
+            categoryInsulation.setMaterialType(MaterialType.INSULATION);
+            categoryRepository.save(categoryInsulation);
+            CategoryEntity categoryPanel = new CategoryEntity();
+            categoryPanel.setMaterialType(MaterialType.PANELS);
+            categoryRepository.save(categoryPanel);
+            CategoryEntity categoryRebar = new CategoryEntity();
+            categoryRebar.setMaterialType(MaterialType.REBAR);
+            categoryRepository.save(categoryRebar);
+            CategoryEntity categorySet = new CategoryEntity();
+            categorySet.setMaterialType(MaterialType.SET);
+            categoryRepository.save(categorySet);
+            CategoryEntity categoryUnspecified = new CategoryEntity();
+            categoryUnspecified.setMaterialType(MaterialType.UNSPECIFIED);
+            categoryRepository.save(categoryUnspecified);
+        }
+    }
+
 //    public void createMaterial(CreateMaterialDTO createMaterialDTO) {
 //        if (createMaterialDTO.getMaterialType().equals(MaterialType.FASTENERS)) {
 //            FastenerEntity fastenerEntity = mapFastenerEntity(createMaterialDTO);
@@ -88,7 +87,7 @@ public class InventoryService {
 //        }
 //
 //    }
-//
+
 //    private FastenerEntity mapFastenerEntity(CreateMaterialDTO createMaterialDTO) {
 //        return Optional.of(new FastenerEntity())
 //                .map(fastenerEntity -> {

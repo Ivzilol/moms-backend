@@ -7,6 +7,8 @@ import bg.mck.events.*;
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.repository.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
@@ -43,15 +45,17 @@ public class EventService {
         this.redisService = redisService;
     }
 
-    public <T extends BaseEvent> void processMaterialEvent(MaterialEvent<T> data, String eventType, String materialType) {
+    public void processMaterialEvent(String data, String eventType, String materialType) throws JsonProcessingException {
         if (eventType.equals(EventType.ItemRegistered.name())) {
-            MaterialEvent<RegisterMaterialEvent> event = (MaterialEvent<RegisterMaterialEvent>) data;
+            MaterialEvent<RegisterMaterialEvent> event = objectMapper.readValue(data, new TypeReference<>() {
+            });
             Long materialId = event.getEvent().getMaterialId();
             saveEvent(event);
+           //TODO:
 
-            //TODO:
         } else if (eventType.equals(EventType.ItemDeleted.name())) {
-            MaterialEvent<MaterialDeletedEvent> event = (MaterialEvent<MaterialDeletedEvent>) data;
+            MaterialEvent<MaterialDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
+            });
 
             Long materialId = event.getEvent().getMaterialId();
             doesItemExist(materialId, materialType);
@@ -59,18 +63,20 @@ public class EventService {
             deleteMaterialService.deleteMaterialByIdAndCategory(materialId, materialType);
 
         } else if (eventType.equals(EventType.ItemUpdated.name())) {
-            // TODO:
-
+            MaterialEvent<MaterialUpdatedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
+            });
+            Long materialId = event.getEvent().getMaterialId();
+            doesItemExist(materialId, materialType);
+            saveEvent(event);
+            reconstructMaterialEntity(materialId, MaterialType.valueOf(materialType));
         }
 
     }
 
     public BaseMaterialEntity reconstructMaterialEntity(Long materialId, MaterialType materialType) {
-        List<MaterialEvent<? extends BaseEvent>> events = eventMaterialRepository.
-                findMaterialEventByMaterialTypeAndEventMaterialId(materialType, materialId);
+        List<MaterialEvent<? extends BaseEvent>> events = eventMaterialRepository.findMaterialEventByMaterialTypeAndEventMaterialId(materialType, materialId);
 
         BaseMaterialEntity baseMaterialEntity = applyEvents(events, materialType);
-
 
         return baseMaterialEntity;
 
@@ -79,7 +85,6 @@ public class EventService {
 //
 //        return userEntity;
     }
-
 
 
     private BaseMaterialEntity applyEvents(List<MaterialEvent<? extends BaseEvent>> events, MaterialType materialType) {
@@ -94,37 +99,37 @@ public class EventService {
 
         } else if (materialType.equals(MaterialType.GALVANIZED_SHEET)) {
             GalvanisedSheetEntity galvanisedSheetEntity = new GalvanisedSheetEntity();
-            for (var event :events) {
+            for (var event : events) {
                 applyGalvanisedSheetEvent(event, galvanisedSheetEntity);
             }
 
             return null;
         } else if (materialType.equals(MaterialType.INSULATION)) {
             InsulationEntity insulationEntity = new InsulationEntity();
-            for (var event :events) {
+            for (var event : events) {
                 applyInsulationEvent(event, insulationEntity);
             }
         } else if (materialType.equals(MaterialType.PANELS)) {
             PanelEntity panelEntity = new PanelEntity();
-            for (var event :events) {
+            for (var event : events) {
                 applyPanelEvents(event, panelEntity);
             }
             return null;
         } else if (materialType.equals(MaterialType.REBAR)) {
             RebarEntity rebarEntity = new RebarEntity();
-            for (var event :events) {
+            for (var event : events) {
                 applyRebarEvent(event, rebarEntity);
             }
             return null;
         } else if (materialType.equals(MaterialType.SET)) {
             SetEntity setEntity = new SetEntity();
-            for (var event :events) {
+            for (var event : events) {
                 applySetEvent(event, setEntity);
             }
             return null;
         } else if (materialType.equals(MaterialType.UNSPECIFIED)) {
             UnspecifiedEntity unspecifiedEntity = new UnspecifiedEntity();
-            for (var event :events) {
+            for (var event : events) {
                 applyUnspecifiedEvent(event, unspecifiedEntity);
             }
             return null;

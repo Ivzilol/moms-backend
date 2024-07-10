@@ -22,6 +22,4 @@ public class BaseMaterialEntity {
         this.id = id;
         return this;
     }
-
-
 }

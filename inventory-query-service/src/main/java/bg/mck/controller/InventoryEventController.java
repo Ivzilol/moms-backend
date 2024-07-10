@@ -3,6 +3,7 @@ package bg.mck.controller;
 import bg.mck.events.BaseEvent;
 import bg.mck.events.MaterialEvent;
 import bg.mck.service.EventService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,9 +16,11 @@ public class InventoryEventController {
     }
 
     @PostMapping("/inventory/events")
-    <T extends BaseEvent> void processMaterialEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType,
-                                                    @RequestHeader("Material-Type") String materialType) {
+     void processMaterialEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType,
+                                                    @RequestHeader("Material-Type") String materialType) throws JsonProcessingException {
+        System.out.println(data);
         eventService.processMaterialEvent(data, eventType, materialType);
+
     }
 
 

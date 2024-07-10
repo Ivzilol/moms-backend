@@ -3,11 +3,12 @@ package bg.mck.controller;
 import bg.mck.service.DeleteMaterialService;
 import bg.mck.service.DeleteServiceService;
 import bg.mck.service.DeleteTransportService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/inventory/command")
+@RequestMapping("/${APPLICATION_VERSION}/user/inventory/command")
 public class DeleteInventoryItemController {
 
 
@@ -22,7 +23,7 @@ public class DeleteInventoryItemController {
     }
 
     @DeleteMapping("/materials/{id}")
-    public ResponseEntity<Void> deleteMaterialByIdAndCategory(@PathVariable Long id, @RequestParam (name = "category") String categoryName) {
+    public ResponseEntity<Void> deleteMaterialByIdAndCategory(@PathVariable Long id, @RequestParam (name = "category") String categoryName) throws JsonProcessingException {
         deleteMaterialService.deleteMaterialByIdAndCategory(id, categoryName);
         return ResponseEntity.noContent().build();
     }
