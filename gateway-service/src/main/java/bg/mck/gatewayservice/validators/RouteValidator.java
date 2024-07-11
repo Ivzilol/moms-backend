@@ -10,22 +10,18 @@ import java.util.function.Predicate;
 @Component
 public class RouteValidator {
 
-    public static String APPLICATION_VERSION;
+    public List<String> openApiEndPoints;
+    public Predicate<ServerHttpRequest> isSecured;
 
-
-    public RouteValidator(@Value("${APPLICATION_VERSION}") String version) {
-        APPLICATION_VERSION = version;
+    public RouteValidator(@Value("${APPLICATION_VERSION}") String applicationVersion) {
+        this.openApiEndPoints = List.of(
+                "/" + applicationVersion + "/user/user/query/login",
+                "/" + applicationVersion + "/authentication/validate",
+                "/" + applicationVersion + "/authentication/generate-token",
+                "/" + applicationVersion + "/authentication/getroles",
+                "/" + applicationVersion + "/authorization/isauthorized",
+                "http://localhost:8761"
+        );
+        this.isSecured = request -> openApiEndPoints.contains(request.getURI().getPath());
     }
-
-    public static final List<String> openApiEndPoints = List.of(
-            "/" + APPLICATION_VERSION + "/users/login",
-            "/" + APPLICATION_VERSION + "/authentication/validate",
-            "/" + APPLICATION_VERSION + "/authentication/generate-token",
-            "/" + APPLICATION_VERSION + "/authentication/getroles",
-            "/" + APPLICATION_VERSION + "/authorization/isauthorized",
-            "http://localhost:8761"
-    );
-
-    public Predicate<ServerHttpRequest> isSecured =
-            request -> openApiEndPoints.contains(request.getURI().getPath());
 }

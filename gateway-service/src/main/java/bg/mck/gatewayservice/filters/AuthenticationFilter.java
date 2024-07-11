@@ -1,21 +1,21 @@
 package bg.mck.gatewayservice.filters;
 
 import bg.mck.gatewayservice.validators.RouteValidator;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import static bg.mck.gatewayservice.validators.RouteValidator.APPLICATION_VERSION;
-
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
     private final RouteValidator routeValidator;
     private final RestTemplate restTemplate;
+    @Value("${APPLICATION_VERSION}")
+    private String APPLICATION_VERSION;
 
     @Autowired
     public AuthenticationFilter(RouteValidator routeValidator, RestTemplate restTemplate) {
@@ -56,12 +56,6 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     return exchange.getResponse().setComplete();
                 }
                 return chain.filter(exchange);
-            }
-
-            String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-            if (token == null || !token.startsWith("Bearer ") || token.trim().isBlank()) {
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                return exchange.getResponse().setComplete();
             }
 
             return chain.filter(exchange);
