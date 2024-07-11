@@ -20,7 +20,6 @@ import java.util.Optional;
 @Service
 public class MaterialEventService {
 
-
     private final EventMaterialRepository eventMaterialRepository;
     private final FastenerRepository fastenerRepository;
     private final GalvanisedSheetRepository galvanisedSheetRepository;
