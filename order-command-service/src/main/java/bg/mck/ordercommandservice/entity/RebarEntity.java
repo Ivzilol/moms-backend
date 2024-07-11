@@ -11,7 +11,7 @@ public class RebarEntity extends BaseMaterialEntity {
 
     @DecimalMin(value = "0.0", message = "MaxLength must be positive")
     @Column(name = "max_length_in_centimeters")
-    private Double MaxLength;
+    private Double maxLength;
 
     @DecimalMin(value = "0.0", message = "weight must be positive")
     @Column(name = "weight_in_kg")
@@ -22,11 +22,11 @@ public class RebarEntity extends BaseMaterialEntity {
     }
 
     public Double getMaxLength() {
-        return MaxLength;
+        return maxLength;
     }
 
     public RebarEntity setMaxLength(Double maxLength) {
-        MaxLength = maxLength;
+        this.maxLength = maxLength;
         return this;
     }
 
