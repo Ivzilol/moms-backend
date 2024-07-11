@@ -3,7 +3,7 @@ package bg.mck.controller;
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.dto.ErrorCreateMaterialDTO;
 import bg.mck.service.ErrorsService;
-import bg.mck.service.InventoryService;
+import bg.mck.service.MaterialRegisterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/inventory/command")
-public class MaterialController {
+@RequestMapping("/${APPLICATION_VERSION}/user/inventory/command")
+public class MaterialRegisterController {
 
-    private final InventoryService inventoryService;
+    private final MaterialRegisterService inventoryService;
 
     private final ErrorsService errorsService;
 
-    public MaterialController(InventoryService inventoryService, ErrorsService errorsService) {
+    public MaterialRegisterController(MaterialRegisterService inventoryService, ErrorsService errorsService) {
         this.inventoryService = inventoryService;
         this.errorsService = errorsService;
     }

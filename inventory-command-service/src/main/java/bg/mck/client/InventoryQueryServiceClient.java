@@ -11,8 +11,8 @@ public interface InventoryQueryServiceClient {
 
 
     @PostMapping("/inventory/events")
-    <T extends BaseEvent> void sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType,
-                                         @RequestHeader("Material-Type") String materialType);
+    <T extends BaseEvent> void sendMaterialEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType,
+                                                 @RequestHeader("Material-Type") String materialType);
 
     @GetMapping("/inventory/items/{id}")
     InventoryItemDetailsDTO getInventoryItemById(@PathVariable("id") Long id);

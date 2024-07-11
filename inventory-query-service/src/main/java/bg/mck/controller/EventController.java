@@ -1,25 +1,25 @@
 package bg.mck.controller;
 
-import bg.mck.service.EventService;
+import bg.mck.service.MaterialEventService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class EventController {
 
-    private final EventService createMaterialService;
+    private final MaterialEventService materialEventService;
 
-    public EventController(EventService createMaterialService) {
-        this.createMaterialService = createMaterialService;
+    public EventController(MaterialEventService materialEventService) {
+        this.materialEventService = materialEventService;
     }
 
-    @PostMapping("/inventory/event")
-    public ResponseEntity<Void> sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType) throws JsonProcessingException {
-        this.createMaterialService.createMaterial(data, eventType);
+    @PostMapping("/inventory/events")
+    public ResponseEntity<Void> processMaterialEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType,
+                                                     @RequestHeader("Material-Type") String materialType) throws JsonProcessingException {
+        materialEventService.processMaterialEvent(data, eventType, materialType);
         return ResponseEntity.ok().build();
     }
+
+
 }

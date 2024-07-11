@@ -1,8 +1,8 @@
 package bg.mck.controller;
 
-import bg.mck.service.DeleteMaterialService;
-import bg.mck.service.DeleteServiceService;
-import bg.mck.service.DeleteTransportService;
+import bg.mck.service.MaterialDeleteService;
+import bg.mck.service.ServiceDeleteService;
+import bg.mck.service.TransportDeleteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,31 +12,31 @@ import org.springframework.web.bind.annotation.*;
 public class DeleteInventoryItemController {
 
 
-    private final DeleteMaterialService deleteMaterialService;
-    private final DeleteServiceService deleteServiceService;
-    private final DeleteTransportService deleteTransportService;
+    private final MaterialDeleteService materialDeleteService;
+    private final ServiceDeleteService serviceDeleteService;
+    private final TransportDeleteService transportDeleteService;
 
-    public DeleteInventoryItemController(DeleteMaterialService deleteMaterialService, DeleteServiceService deleteServiceService, DeleteTransportService deleteTransportService) {
-        this.deleteMaterialService = deleteMaterialService;
-        this.deleteServiceService = deleteServiceService;
-        this.deleteTransportService = deleteTransportService;
+    public DeleteInventoryItemController(MaterialDeleteService materialDeleteService, ServiceDeleteService serviceDeleteService, TransportDeleteService transportDeleteService) {
+        this.materialDeleteService = materialDeleteService;
+        this.serviceDeleteService = serviceDeleteService;
+        this.transportDeleteService = transportDeleteService;
     }
 
     @DeleteMapping("/materials/{id}")
     public ResponseEntity<Void> deleteMaterialByIdAndCategory(@PathVariable Long id, @RequestParam (name = "category") String categoryName) throws JsonProcessingException {
-        deleteMaterialService.deleteMaterialByIdAndCategory(id, categoryName);
+        materialDeleteService.deleteMaterialByIdAndCategory(id, categoryName);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/services/{id}")
     public ResponseEntity<Void> deleteServiceById(@PathVariable Long id) {
-        deleteServiceService.deleteServiceById(id);
+        serviceDeleteService.deleteServiceById(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/transports/{id}")
     public ResponseEntity<Void> deleteTransportById(@PathVariable Long id) {
-        deleteTransportService.deleteTransportById(id);
+        transportDeleteService.deleteTransportById(id);
         return ResponseEntity.noContent().build();
     }
 

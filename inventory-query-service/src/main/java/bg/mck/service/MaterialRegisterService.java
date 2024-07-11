@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class MaterialService {
+public class MaterialRegisterService {
 
     private final FastenerRepository fastenerRepository;
 
@@ -29,7 +29,7 @@ public class MaterialService {
     private final UnspecifiedRepository unspecifiedRepository;
 
 
-    public MaterialService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository) {
+    public MaterialRegisterService(FastenerRepository fastenerRepository, GalvaniseRepository galvaniseRepository, InsulationRepository insulationRepository, MetalRepository metalRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository) {
         this.fastenerRepository = fastenerRepository;
         this.galvaniseRepository = galvaniseRepository;
         this.insulationRepository = insulationRepository;
@@ -41,8 +41,8 @@ public class MaterialService {
     }
 
     void processingRegisterMaterial(RegisterFastenerEvent event) {
-        String category = extractCategoryString(event.getCategory());
-        assert category != null;
+        String category = event.getCategory();
+
         if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
             saveFastenerMaterial(event);
         }
@@ -75,8 +75,7 @@ public class MaterialService {
     }
 
     public void processingRegisterGalvanized(RegisterGalvanizedEvent event) {
-        String category = extractCategoryString(event.getCategory());
-        assert category != null;
+        String category = event.getCategory();
         if (category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
             saveGalvanizedMaterial(event);
         }

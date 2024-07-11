@@ -3,9 +3,7 @@ package bg.mck.entity.materialEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "panels")
-public class PanelEntity {
-
-    private String id;
+public class PanelEntity extends BaseMaterialEntity{
 
     private String name;
 
@@ -33,7 +31,7 @@ public class PanelEntity {
     }
 
     public PanelEntity(String id, String name, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.type = type;
         this.color = color;
@@ -45,14 +43,6 @@ public class PanelEntity {
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

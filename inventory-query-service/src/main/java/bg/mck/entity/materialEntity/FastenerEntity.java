@@ -30,7 +30,8 @@ public class FastenerEntity extends BaseMaterialEntity{
     public FastenerEntity() {
     }
 
-    public FastenerEntity(String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
+    public FastenerEntity(String id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
+        super(id);
         this.name = name;
         this.type = type;
         this.diameter = diameter;
@@ -41,7 +42,6 @@ public class FastenerEntity extends BaseMaterialEntity{
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
-
 
     public String getName() {
         return name;

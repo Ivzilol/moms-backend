@@ -8,12 +8,13 @@ import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.*;
 import bg.mck.repository.*;
+import bg.mck.utils.EventCreationHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class InventoryService {
+public class MaterialRegisterService {
 
     private final CategoryRepository categoryRepository;
 
@@ -35,14 +36,14 @@ public class InventoryService {
 
     private final UnspecifiedRepository unspecifiedRepository;
 
-    public InventoryService(CategoryRepository categoryRepository,
-                            FastenerRepository fastenerRepository,
-                            GalvanisedSheetRepository galvanisedSheetRepository,
-                            InventoryQueryServiceClient inventoryQueryServiceClient,
-                            InsulationRepository insulationRepository,
-                            MetalRepository metalRepository,
-                            PanelRepository panelRepository,
-                            RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository) {
+    public MaterialRegisterService(CategoryRepository categoryRepository,
+                                   FastenerRepository fastenerRepository,
+                                   GalvanisedSheetRepository galvanisedSheetRepository,
+                                   InventoryQueryServiceClient inventoryQueryServiceClient,
+                                   InsulationRepository insulationRepository,
+                                   MetalRepository metalRepository,
+                                   PanelRepository panelRepository,
+                                   RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository) {
         this.categoryRepository = categoryRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
@@ -91,8 +92,9 @@ public class InventoryService {
             FastenerEntity createdFastener = this.fastenerRepository
                     .findByName(createMaterialDTO.getType() + " " +
                             createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength());
-            String materialType = String.valueOf(this.categoryRepository
-                    .findByMaterialType(MaterialType.FASTENERS));
+            Optional<CategoryEntity> byMaterialType = this.categoryRepository
+                    .findByMaterialType(MaterialType.FASTENERS);
+            String materialType = byMaterialType.get().getMaterialType().name();
 
             createFastenersEvent(createdFastener, materialType);
         }
@@ -102,8 +104,9 @@ public class InventoryService {
             this.galvanisedSheetRepository.save(galvanisedSheetEntity);
             GalvanisedSheetEntity createdGalvanized = this.galvanisedSheetRepository
                     .findByName(createMaterialDTO.getType());
-            String materialType = String.valueOf(this.categoryRepository
-                    .findByMaterialType(MaterialType.GALVANIZED_SHEET));
+            Optional<CategoryEntity> byMaterialType = this.categoryRepository
+                    .findByMaterialType(MaterialType.GALVANIZED_SHEET);
+            String materialType = byMaterialType.get().getMaterialType().name();
 
             createGalvanizedEvent(createdGalvanized, materialType);
         }
@@ -113,8 +116,10 @@ public class InventoryService {
             this.insulationRepository.save(insulationEntity);
             InsulationEntity createInsulation = this.insulationRepository
                     .findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getThickness());
-            String materialType = String.valueOf(this.categoryRepository
-                    .findByMaterialType(MaterialType.INSULATION));
+            Optional<CategoryEntity> byMaterialType = this.categoryRepository
+                    .findByMaterialType(MaterialType.INSULATION);
+            String materialType = byMaterialType.get().getMaterialType().name();
+
             createInsulationEvent(createInsulation, materialType);
         }
 
@@ -123,8 +128,10 @@ public class InventoryService {
             this.metalRepository.save(metalEntity);
             MetalEntity createMetal = this.metalRepository
                     .findByName(createMaterialDTO.getDescription());
-            String materialType = String.valueOf(this.categoryRepository
-                    .findByMaterialType(MaterialType.METAL));
+            Optional<CategoryEntity> byMaterialType = this.categoryRepository
+                    .findByMaterialType(MaterialType.METAL);
+            String materialType = byMaterialType.get().getMaterialType().name();
+
             createMetalEvent(createMetal, materialType);
         }
 
@@ -134,8 +141,10 @@ public class InventoryService {
             PanelEntity createPanel = this.panelRepository
                     .findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength()
                             + " " + createMaterialDTO.getTotalThickness());
-            String materialType = String.valueOf(this.categoryRepository
-                    .findByMaterialType(MaterialType.PANELS));
+            Optional<CategoryEntity> byMaterialType = this.categoryRepository
+                    .findByMaterialType(MaterialType.PANELS);
+            String materialType = byMaterialType.get().getMaterialType().name();
+
             createPanelEvent(createPanel, materialType);
         }
 
@@ -144,8 +153,10 @@ public class InventoryService {
             this.rebarRepository.save(rebarEntity);
             RebarEntity createRebar = this.rebarRepository
                     .findByName(createMaterialDTO.getDescription());
-            String materialType = String.valueOf(this.categoryRepository
-                    .findByMaterialType(MaterialType.REBAR));
+            Optional<CategoryEntity> byMaterialType = this.categoryRepository
+                    .findByMaterialType(MaterialType.REBAR);
+            String materialType = byMaterialType.get().getMaterialType().name();
+
             createRebarEvent(createRebar, materialType);
         }
 
@@ -156,8 +167,10 @@ public class InventoryService {
                     .findByName(createMaterialDTO.getGalvanisedSheetThickness() + " " +
                             createMaterialDTO.getColor());
 
-            String materialType = String.valueOf(this.categoryRepository
-                    .findByMaterialType(MaterialType.SET));
+            Optional<CategoryEntity> byMaterialType = this.categoryRepository
+                    .findByMaterialType(MaterialType.SET);
+            String materialType = byMaterialType.get().getMaterialType().name();
+
             createSetEvent(createSet, materialType);
         }
 
@@ -166,8 +179,10 @@ public class InventoryService {
             this.unspecifiedRepository.save(unspecifiedEntity);
             UnspecifiedEntity createUnspecified =
                     this.unspecifiedRepository.findByName(createMaterialDTO.getDescription());
-            String materialType = String.valueOf(this.categoryRepository
-                    .findByMaterialType(MaterialType.UNSPECIFIED));
+            Optional<CategoryEntity> byMaterialType = this.categoryRepository
+                    .findByMaterialType(MaterialType.UNSPECIFIED);
+            String materialType = byMaterialType.get().getMaterialType().name();
+
             createUnspecifiedEvent(createUnspecified, materialType);
         }
     }
@@ -175,7 +190,7 @@ public class InventoryService {
     private void createUnspecifiedEvent(UnspecifiedEntity createUnspecified, String materialType) {
         RegisterUnspecifiedEvent registerUnspecifiedEvent = new RegisterUnspecifiedEvent(
                 createUnspecified.getId(),
-                EventType.MaterialRegister,
+                EventType.ItemRegistered,
                 materialType,
                 createUnspecified.getName(),
                 createUnspecified.getQuantity(),
@@ -184,15 +199,15 @@ public class InventoryService {
         );
         MaterialEvent<RegisterUnspecifiedEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerUnspecifiedEvent);
-        inventoryQueryServiceClient.sendEvent(materialEvent,
-                String.valueOf(EventType.MaterialRegister));
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
+                String.valueOf(EventType.ItemRegistered), materialType);
     }
 
 
     private void createSetEvent(SetEntity createSet, String materialType) {
         RegisterSetEvent registerSetEvent = new RegisterSetEvent(
                 createSet.getId(),
-                EventType.MaterialRegister,
+                EventType.ItemRegistered,
                 materialType,
                 createSet.getName(),
                 createSet.getGalvanisedSheetThickness(),
@@ -204,15 +219,15 @@ public class InventoryService {
         );
         MaterialEvent<RegisterSetEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerSetEvent);
-        inventoryQueryServiceClient.sendEvent(materialEvent,
-                String.valueOf(EventType.MaterialRegister));
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
+                String.valueOf(EventType.ItemRegistered), materialType);
     }
 
 
     private void createRebarEvent(RebarEntity createRebar, String materialType) {
         RegisterRebarEvent registerRebarEvent = new RegisterRebarEvent(
                 createRebar.getId(),
-                EventType.MaterialRegister,
+                EventType.ItemRegistered,
                 materialType,
                 createRebar.getName(),
                 createRebar.getMaxLength(),
@@ -223,15 +238,15 @@ public class InventoryService {
         );
         MaterialEvent<RegisterRebarEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerRebarEvent);
-        inventoryQueryServiceClient.sendEvent(materialEvent,
-                String.valueOf(EventType.MaterialRegister));
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
+                String.valueOf(EventType.ItemRegistered), materialType);
     }
 
 
     private void createPanelEvent(PanelEntity createPanel, String materialType) {
         RegisterPanelEvent registerPanelEvent = new RegisterPanelEvent (
                 createPanel.getId(),
-                EventType.MaterialRegister,
+                EventType.ItemRegistered,
                 materialType,
                 createPanel.getName(),
                 createPanel.getType(),
@@ -247,8 +262,8 @@ public class InventoryService {
         );
         MaterialEvent<RegisterPanelEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerPanelEvent);
-        inventoryQueryServiceClient.sendEvent(materialEvent,
-                String.valueOf(EventType.MaterialRegister));
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
+                String.valueOf(EventType.ItemRegistered), materialType);
 
     }
 
@@ -256,7 +271,7 @@ public class InventoryService {
     private void createMetalEvent(MetalEntity createMetal, String materialType) {
         RegisterMetalEvent registerMetalEvent = new RegisterMetalEvent(
                 createMetal.getId(),
-                EventType.MaterialRegister,
+                EventType.ItemRegistered,
                 materialType,
                 createMetal.getName(),
                 createMetal.getTotalWeight(),
@@ -266,15 +281,15 @@ public class InventoryService {
         );
         MaterialEvent<RegisterMetalEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerMetalEvent);
-        inventoryQueryServiceClient.sendEvent(materialEvent,
-                String.valueOf(EventType.MaterialRegister));
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
+                String.valueOf(EventType.ItemRegistered), materialType);
     }
 
 
     private void createInsulationEvent(InsulationEntity createInsulation, String materialType) {
         RegisterInsulationEvent registerInsulationEvent = new RegisterInsulationEvent(
                 createInsulation.getId(),
-                EventType.MaterialRegister,
+                EventType.ItemRegistered,
                 materialType,
                 createInsulation.getName(),
                 createInsulation.getType(),
@@ -286,14 +301,14 @@ public class InventoryService {
         );
         MaterialEvent<RegisterInsulationEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerInsulationEvent);
-        inventoryQueryServiceClient.sendEvent(materialEvent,
-                String.valueOf(EventType.MaterialRegister));
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
+                String.valueOf(EventType.ItemRegistered), materialType);
     }
 
     private void createGalvanizedEvent(GalvanisedSheetEntity createdGalvanized, String materialType) {
         RegisterGalvanizedEvent registerGalvanizedEvent = new RegisterGalvanizedEvent(
                 createdGalvanized.getId(),
-                EventType.MaterialRegister,
+                EventType.ItemRegistered,
                 materialType,
                 createdGalvanized.getName(),
                 createdGalvanized.getType(),
@@ -305,14 +320,14 @@ public class InventoryService {
         );
         MaterialEvent<RegisterGalvanizedEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerGalvanizedEvent);
-        inventoryQueryServiceClient.sendEvent(materialEvent,
-                String.valueOf(EventType.MaterialRegister));
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
+                String.valueOf(EventType.ItemRegistered), materialType);
     }
 
     private void createFastenersEvent(FastenerEntity createdFastener, String materialType) {
         RegisterFastenerEvent registerMaterialEvent = new RegisterFastenerEvent(
                 createdFastener.getId(),
-                EventType.MaterialRegister,
+                EventType.ItemRegistered,
                 materialType,
                 createdFastener.getName(),
                 createdFastener.getType(),
@@ -324,11 +339,13 @@ public class InventoryService {
                 createdFastener.getQuantity(),
                 createdFastener.getSpecificationFileUrl()
         );
+
         MaterialEvent<RegisterFastenerEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerMaterialEvent);
+        materialEvent.setMaterialType(MaterialType.FASTENERS);
 
-        inventoryQueryServiceClient.sendEvent(materialEvent,
-                String.valueOf(EventType.MaterialRegister));
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
+                String.valueOf(EventType.ItemRegistered), materialType);
     }
 
     private InsulationEntity mapInsulationEntity(CreateMaterialDTO createMaterialDTO) {

@@ -17,12 +17,13 @@ public class RedisService {
         this.redisTemplate = redisTemplate;
     }
 
-    public BaseMaterialEntity getCachedObject(Long id) {
-        return redisTemplate.opsForValue().get(CACHE_KEY + id);
+    @SuppressWarnings("unchecked")
+    public <T extends BaseMaterialEntity> T getCachedObject(Long id, String materialType, Class<T> clazz) {
+        return (T) redisTemplate.opsForValue().get(CACHE_KEY + materialType + id);
     }
 
-    public void cacheObject(BaseMaterialEntity materialEntity) {
-        redisTemplate.opsForValue().set(CACHE_KEY + materialEntity.getId(), materialEntity);
+    public void cacheObject(BaseMaterialEntity materialEntity, String materialType) {
+        redisTemplate.opsForValue().set(CACHE_KEY + materialType + materialEntity.getId(), materialEntity);
     }
 
     public void clearCache() {

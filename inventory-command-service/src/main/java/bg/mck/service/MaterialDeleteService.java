@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class DeleteMaterialService {
+public class MaterialDeleteService {
 
 
     private final FastenerRepository fastenerRepository;
@@ -30,7 +30,7 @@ public class DeleteMaterialService {
     private final ObjectMapper objectMapper;
     private final InventoryQueryServiceClient inventoryQueryClient;
 
-    public DeleteMaterialService(FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, ObjectMapper objectMapper, InventoryQueryServiceClient inventoryQueryClient) {
+    public MaterialDeleteService(FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, ObjectMapper objectMapper, InventoryQueryServiceClient inventoryQueryClient) {
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
         this.insulationRepository = insulationRepository;
@@ -66,7 +66,7 @@ public class DeleteMaterialService {
         MaterialEvent<MaterialDeletedEvent> materialEvent = EventCreationHelper.toMaterialEvent(event);
 
 
-        inventoryQueryClient.sendEvent(objectMapper.writeValueAsString(materialEvent), materialEvent.getEventType().name(), materialEvent.getEventType().name());
+        inventoryQueryClient.sendMaterialEvent(materialEvent, materialEvent.getEventType().name(), categoryName);
     }
 
     private <T> void deleteMaterialById(JpaRepository<T, Long> repository, Long id) {
