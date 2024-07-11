@@ -17,6 +17,10 @@ public class PanelEntity {
     //type + length + totalThickness
     private String name;
 
+    private String type;
+
+    private String color;
+
     @DecimalMin(value = "0.0", message = "Length must be positive")
     @Column(name = "length_in_centimeters")
     private Double length;
@@ -52,9 +56,11 @@ public class PanelEntity {
     public PanelEntity() {
     }
 
-    public PanelEntity(Long id, String name, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
+    public PanelEntity(Long id, String name, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
         this.name = name;
+        this.type = type;
+        this.color = color;
         this.length = length;
         this.width = width;
         this.totalThickness = totalThickness;
@@ -152,5 +158,21 @@ public class PanelEntity {
 
     public void setCategory(CategoryEntity category) {
         this.category = category;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
