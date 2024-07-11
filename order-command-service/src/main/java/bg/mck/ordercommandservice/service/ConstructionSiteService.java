@@ -65,5 +65,6 @@ public class ConstructionSiteService {
         ConstructionSiteEntity savedConstructionSite = constructionSiteRepository.save(constructionSiteEntity);
         return constructionSiteMapper.toDTO(savedConstructionSite);
     }
+
 }
 
