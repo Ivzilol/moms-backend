@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import static bg.mck.errors.ErrorsCreateMaterial.MATERIAL_EXIST;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/inventory/command")
+@RequestMapping("/${APPLICATION_VERSION}/user/inventory/command")
 public class MaterialController {
 
     private final InventoryService inventoryService;
