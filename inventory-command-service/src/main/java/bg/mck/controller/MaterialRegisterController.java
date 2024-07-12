@@ -3,7 +3,7 @@ package bg.mck.controller;
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.dto.ErrorCreateMaterialDTO;
 import bg.mck.service.ErrorsService;
-import bg.mck.service.InventoryService;
+import bg.mck.service.MaterialRegisterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,12 +28,12 @@ import static bg.mck.errors.ErrorsCreateMaterial.MATERIAL_EXIST;
 @RequestMapping("/${APPLICATION_VERSION}/user/inventory/command")
 public class MaterialRegisterController {
 
-    private final MaterialRegisterService inventoryService;
+    private final MaterialRegisterService materialRegisterService;
 
     private final ErrorsService errorsService;
 
-    public MaterialRegisterController(MaterialRegisterService inventoryService, ErrorsService errorsService) {
-        this.inventoryService = inventoryService;
+    public MaterialRegisterController(MaterialRegisterService materialRegisterService, ErrorsService errorsService) {
+        this.materialRegisterService = materialRegisterService;
         this.errorsService = errorsService;
     }
 
@@ -55,7 +55,7 @@ public class MaterialRegisterController {
                     .body(errorCreateMaterialDTO.getBody());
         }
 
-        this.inventoryService.createMaterial(createMaterialDTO);
+        this.materialRegisterService.createMaterial(createMaterialDTO);
         return ResponseEntity.ok().build();
     }
 
@@ -63,7 +63,7 @@ public class MaterialRegisterController {
             BindingResult result,
             CreateMaterialDTO createMaterialDTO) {
         ErrorCreateMaterialDTO errorCreateMaterialDTO = new ErrorCreateMaterialDTO();
-        boolean checkMaterialName = this.inventoryService.checkMaterialName(createMaterialDTO);
+        boolean checkMaterialName = this.materialRegisterService.checkMaterialName(createMaterialDTO);
         if (checkMaterialName) {
             errorCreateMaterialDTO.setMaterialAlreadyExist(MATERIAL_EXIST);
         }
