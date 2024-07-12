@@ -1,8 +1,15 @@
 package bg.mck.userqueryservice.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class UserLoginDTO {
 
+    @NotNull
+    @NotBlank(message = "Email is required")
     private String email;
+    @NotNull
+    @NotBlank(message = "Password is required")
     private String password;
 
     public UserLoginDTO(String email, String password) {

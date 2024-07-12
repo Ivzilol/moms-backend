@@ -18,16 +18,47 @@ spring:
         predicates:
           - Path=/${APPLICATION_VERSION}/authentication/**
 
+      - id: authorization-service
+        uri: lb://authorization-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/authorization/**
+
       - id: user-query-service
         uri: lb://user-query-service
         predicates:
           - Path=/${APPLICATION_VERSION}/user/user/query/**, /${APPLICATION_VERSION}/superadmin/user/query/**
+        filters:
+          - name: AuthorizationFilter
+          - name: AuthenticationFilter
 
       - id: user-command-service
         uri: lb://user-command-service
         predicates:
           - Path=/${APPLICATION_VERSION}/user/user/command/**, /${APPLICATION_VERSION}/superadmin/user/command/**
+        filters:
+          - name: AuthorizationFilter
+          - name: AuthenticationFilter
 
+      - id: inventory-command-service
+        uri: lb://inventory-command-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/user/inventory/command/**, /${APPLICATION_VERSION}/superadmin/inventory/command/**
+        filters:
+          - name: AuthorizationFilter
+          - name: AuthenticationFilter
+
+      - id: inventory-query-service
+        uri: lb://inventory-query-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/user/inventory/query/**, /${APPLICATION_VERSION}/superadmin/inventory/query/**
+        filters:
+          - name: AuthorizationFilter
+          - name: AuthenticationFilter
+
+      - id: order-command-service
+        uri: lb://order-command-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/user/order/command/**, /${APPLICATION_VERSION}/admin/order/command/**
         filters:
           - name: AuthorizationFilter
           - name: AuthenticationFilter

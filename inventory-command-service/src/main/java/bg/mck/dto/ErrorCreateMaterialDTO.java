@@ -26,6 +26,8 @@ public class ErrorCreateMaterialDTO {
 
     private String invalidGalvanise;
 
+    private String materialAlreadyExist;
+
     public ErrorCreateMaterialDTO() {
     }
 
@@ -123,5 +125,13 @@ public class ErrorCreateMaterialDTO {
 
     public void setInvalidGalvanise(String invalidGalvanise) {
         this.invalidGalvanise = invalidGalvanise;
+    }
+
+    public String getMaterialAlreadyExist() {
+        return materialAlreadyExist;
+    }
+
+    public void setMaterialAlreadyExist(String materialAlreadyExist) {
+        this.materialAlreadyExist = materialAlreadyExist;
     }
 }

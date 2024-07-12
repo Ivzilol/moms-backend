@@ -24,6 +24,8 @@ public class ErrorsCreateMaterial {
 
     public static final String INVALID_GALVANISE = "GalvanisedSheetThickness must be positive";
 
+    public static final String MATERIAL_EXIST = "Material already exist";
+
 
 
 

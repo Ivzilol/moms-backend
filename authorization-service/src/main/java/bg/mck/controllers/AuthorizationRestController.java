@@ -22,10 +22,12 @@ public class AuthorizationRestController {
 
     @PostMapping("/isauthorized")
     @ExceptionHandler(NullPointerException.class)
-
     public ResponseEntity<?> isAuthorized(@RequestBody AuthorizationDTO authorizationDTO) {
-        return authService.isAuthorized(authorizationDTO) ?
-                ResponseEntity.ok(authService.isAuthorized(authorizationDTO)) :
-                ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        boolean isAuthorized = authService.isAuthorized(authorizationDTO);
+        if (isAuthorized) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

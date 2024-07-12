@@ -3,7 +3,6 @@ package bg.mck.dto;
 
 import bg.mck.enums.MaterialType;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import static bg.mck.errors.ErrorsCreateMaterial.*;
@@ -13,7 +12,6 @@ public class CreateMaterialDTO {
     @NotNull(message = INVALID_MATERIAL_TYPE)
     private MaterialType materialType;
     private String name;
-
     private String description;
     private String diameter;
     @DecimalMin(value = "0.0", message = INVALID_LENGTH)

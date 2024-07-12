@@ -3,7 +3,7 @@ package bg.mck.controller;
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.dto.ErrorCreateMaterialDTO;
 import bg.mck.service.ErrorsService;
-import bg.mck.service.MaterialRegisterService;
+import bg.mck.service.InventoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static bg.mck.errors.ErrorsCreateMaterial.MATERIAL_EXIST;
 
 @RestController
 @RequestMapping("/${APPLICATION_VERSION}/user/inventory/command")
@@ -47,17 +49,24 @@ public class MaterialRegisterController {
     public ResponseEntity<?> createMaterial(@RequestBody @Valid CreateMaterialDTO createMaterialDTO,
                                             BindingResult result) {
         ResponseEntity<ErrorCreateMaterialDTO> errorCreateMaterialDTO =
-                errorRegistrationMaterial(result);
+                errorRegistrationMaterial(result, createMaterialDTO);
         if (errorCreateMaterialDTO != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(errorCreateMaterialDTO.getBody());
         }
+
         this.inventoryService.createMaterial(createMaterialDTO);
         return ResponseEntity.ok().build();
     }
 
-    private ResponseEntity<ErrorCreateMaterialDTO> errorRegistrationMaterial(BindingResult result) {
+    private ResponseEntity<ErrorCreateMaterialDTO> errorRegistrationMaterial(
+            BindingResult result,
+            CreateMaterialDTO createMaterialDTO) {
         ErrorCreateMaterialDTO errorCreateMaterialDTO = new ErrorCreateMaterialDTO();
+        boolean checkMaterialName = this.inventoryService.checkMaterialName(createMaterialDTO);
+        if (checkMaterialName) {
+            errorCreateMaterialDTO.setMaterialAlreadyExist(MATERIAL_EXIST);
+        }
         if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)

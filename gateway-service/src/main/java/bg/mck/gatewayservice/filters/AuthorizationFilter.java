@@ -3,19 +3,20 @@ package bg.mck.gatewayservice.filters;
 import bg.mck.gatewayservice.models.dto.AuthorizationDTO;
 import bg.mck.gatewayservice.validators.RouteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import static bg.mck.gatewayservice.validators.RouteValidator.APPLICATION_VERSION;
-
 @Component
 public class AuthorizationFilter extends AbstractGatewayFilterFactory<AuthorizationFilter.Config> {
 
     private final RouteValidator routeValidator;
     private final RestTemplate restTemplate;
+    @Value("${APPLICATION_VERSION}")
+    private String APPLICATION_VERSION;
 
 
     @Autowired
@@ -56,7 +57,7 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
             ResponseEntity<String> responseDto = restTemplate.exchange("http://authorization-service/" + APPLICATION_VERSION + "/authorization/isauthorized",
                     HttpMethod.POST, entity, String.class);
 
-            if (responseDto.getBody().contains("true")) {
+            if (responseDto.getStatusCode().equals(HttpStatus.OK)) {
                 return chain.filter(exchange);
             } else {
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
