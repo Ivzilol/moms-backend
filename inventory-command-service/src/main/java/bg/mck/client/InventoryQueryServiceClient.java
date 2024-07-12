@@ -1,17 +1,32 @@
 package bg.mck.client;
 
+import bg.mck.dto.InventoryItemDetailsDTO;
 import bg.mck.events.BaseEvent;
 import bg.mck.events.MaterialEvent;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
-@FeignClient(url = "http://localhost:9004", name = "inventory-query-service")
+@FeignClient(name = "INVENTORY-QUERY-SERVICE")
 public interface InventoryQueryServiceClient {
 
 
-    @PostMapping("/inventory/event")
-    <T extends BaseEvent> void sendEvent(@RequestBody MaterialEvent data, @RequestHeader("Event-Type") String eventType);
+    @PostMapping("/inventory/materials/events")
+    <T extends BaseEvent> void sendMaterialEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType,
+                                                 @RequestHeader("Material-Type") String materialType);
+
+    @PostMapping("/inventory/services/events")
+    <T extends BaseEvent> void sendServiceEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+
+    @PostMapping("/inventory/transport/events")
+    <T extends BaseEvent> void sendTransportEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+
+    @PostMapping("/inventory/construction/events")
+    <T extends BaseEvent> void sendConstructionEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+
+    @GetMapping("/inventory/items/{id}")
+    InventoryItemDetailsDTO getInventoryItemById(@PathVariable("id") Long id);
+
+    @GetMapping("inventory/items/{id}/exists")
+    boolean existsInventoryItemById(@PathVariable("id") Long id);
 
 }

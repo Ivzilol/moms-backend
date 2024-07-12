@@ -3,9 +3,8 @@ package bg.mck.entity.materialEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "rebars")
-public class RebarEntity {
+public class RebarEntity extends BaseMaterialEntity{
 
-    private String id;
 
     private String name;
 
@@ -23,21 +22,13 @@ public class RebarEntity {
     }
 
     public RebarEntity(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
+        super(id);
         this.name = name;
         MaxLength = maxLength;
         this.weight = weight;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

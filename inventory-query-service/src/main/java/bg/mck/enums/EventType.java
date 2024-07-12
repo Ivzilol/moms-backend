@@ -2,7 +2,7 @@ package bg.mck.enums;
 
 public enum EventType {
 
-    MaterialRegister, EditMaterial, DeleteMaterial;
+    ItemRegistered, ItemUpdated, ItemDeleted;
 
     EventType() {
     }
