@@ -3,7 +3,7 @@ package bg.mck.service;
 import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.*;
-import bg.mck.repository.*;
+import bg.mck.repository.material.*;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;

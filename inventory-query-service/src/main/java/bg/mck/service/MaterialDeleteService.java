@@ -4,7 +4,7 @@ package bg.mck.service;
 import bg.mck.enums.MaterialType;
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.repository.*;
+import bg.mck.repository.material.*;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 

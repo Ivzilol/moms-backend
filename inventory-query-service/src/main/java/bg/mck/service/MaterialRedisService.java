@@ -7,18 +7,18 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class RedisService {
+public class MaterialRedisService {
 
-    private static final String CACHE_KEY = "inventoryQueryCache";
+    private static final String CACHE_KEY = "inventoryMaterialQueryCache";
 
     private final RedisTemplate<String, BaseMaterialEntity> redisTemplate;
 
-    public RedisService(RedisTemplate<String, BaseMaterialEntity> redisTemplate) {
+    public MaterialRedisService(RedisTemplate<String, BaseMaterialEntity> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BaseMaterialEntity> T getCachedObject(Long id, String materialType, Class<T> clazz) {
+    public <T extends BaseMaterialEntity> T getCachedObject(String id, String materialType, Class<T> clazz) {
         return (T) redisTemplate.opsForValue().get(CACHE_KEY + materialType + id);
     }
 
@@ -33,4 +33,9 @@ public class RedisService {
         }
     }
 
+    public void clearCacheForObject(String id, String materialType) {
+        redisTemplate.delete(CACHE_KEY + materialType + id);
+    }
+
 }
+

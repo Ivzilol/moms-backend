@@ -6,15 +6,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class EventController {
+public class MaterialEventController {
 
     private final MaterialEventService materialEventService;
 
-    public EventController(MaterialEventService materialEventService) {
+    public MaterialEventController(MaterialEventService materialEventService) {
         this.materialEventService = materialEventService;
     }
 
-    @PostMapping("/inventory/events")
+    @PostMapping("/inventory/materials/events")
     public ResponseEntity<Void> processMaterialEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType,
                                                      @RequestHeader("Material-Type") String materialType) throws JsonProcessingException {
         materialEventService.processMaterialEvent(data, eventType, materialType);

@@ -10,9 +10,18 @@ import org.springframework.web.bind.annotation.*;
 public interface InventoryQueryServiceClient {
 
 
-    @PostMapping("/inventory/events")
+    @PostMapping("/inventory/materials/events")
     <T extends BaseEvent> void sendMaterialEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType,
                                                  @RequestHeader("Material-Type") String materialType);
+
+    @PostMapping("/inventory/services/events")
+    <T extends BaseEvent> void sendServiceEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+
+    @PostMapping("/inventory/transport/events")
+    <T extends BaseEvent> void sendTransportEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+
+    @PostMapping("/inventory/construction/events")
+    <T extends BaseEvent> void sendConstructionEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
 
     @GetMapping("/inventory/items/{id}")
     InventoryItemDetailsDTO getInventoryItemById(@PathVariable("id") Long id);

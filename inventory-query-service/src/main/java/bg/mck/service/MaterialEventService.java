@@ -6,7 +6,7 @@ import bg.mck.enums.MaterialType;
 import bg.mck.events.*;
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.repository.*;
+import bg.mck.repository.material.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,12 +31,12 @@ public class MaterialEventService {
     private final MetalRepository metalRepository;
     private final ObjectMapper objectMapper;
     private final MaterialDeleteService materialDeleteService;
-    private final RedisService redisService;
+    private final MaterialRedisService materialRedisService;
     private final MaterialRegisterService materialRegisterService;
 
     public MaterialEventService(EventMaterialRepository eventMaterialRepository, FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository,
                                 PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, MetalRepository metalRepository,
-                                ObjectMapper objectMapper, MaterialDeleteService materialDeleteService, RedisService redisService, MaterialRegisterService materialRegisterService) {
+                                ObjectMapper objectMapper, MaterialDeleteService materialDeleteService, MaterialRedisService materialRedisService, MaterialRegisterService materialRegisterService) {
         this.eventMaterialRepository = eventMaterialRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
@@ -48,7 +48,7 @@ public class MaterialEventService {
         this.metalRepository = metalRepository;
         this.objectMapper = objectMapper;
         this.materialDeleteService = materialDeleteService;
-        this.redisService = redisService;
+        this.materialRedisService = materialRedisService;
         this.materialRegisterService = materialRegisterService;
     }
 
@@ -65,11 +65,11 @@ public class MaterialEventService {
             doesItemExist(materialId, materialType);
             saveEvent(event);
             materialDeleteService.deleteMaterialByIdAndCategory(String.valueOf(materialId), materialType);
-
+            materialRedisService.clearCacheForObject(String.valueOf(materialId), materialType);
         } else if (eventType.equals(EventType.ItemUpdated.name())) {
             updateEvent(data, materialType);
         } else {
-            throw new InvalidCategoryException("Unhandled category type: " + materialType);
+            throw new IllegalArgumentException("Invalid event type: " + eventType);
         }
 
     }
@@ -88,7 +88,7 @@ public class MaterialEventService {
             }
 
             fastenerRepository.save(fastenerEntity);
-            redisService.cacheObject(fastenerEntity, materialType);
+            materialRedisService.cacheObject(fastenerEntity, materialType);
             return fastenerEntity;
         } else if (materialType.equals(MaterialType.GALVANIZED_SHEET.name())) {
             GalvanisedSheetEntity galvanisedSheetEntity = new GalvanisedSheetEntity();
@@ -97,7 +97,7 @@ public class MaterialEventService {
             }
 
             galvanisedSheetRepository.save(galvanisedSheetEntity);
-            redisService.cacheObject(galvanisedSheetEntity, materialType);
+            materialRedisService.cacheObject(galvanisedSheetEntity, materialType);
             return galvanisedSheetEntity;
         } else if (materialType.equals(MaterialType.INSULATION.name())) {
             InsulationEntity insulationEntity = new InsulationEntity();
@@ -105,7 +105,7 @@ public class MaterialEventService {
                 applyInsulationEvent(event, insulationEntity);
             }
             insulationRepository.save(insulationEntity);
-            redisService.cacheObject(insulationEntity, materialType);
+            materialRedisService.cacheObject(insulationEntity, materialType);
             return insulationEntity;
         } else if (materialType.equals(MaterialType.PANELS.name())) {
             PanelEntity panelEntity = new PanelEntity();
@@ -113,7 +113,7 @@ public class MaterialEventService {
                 applyPanelEvents(event, panelEntity);
             }
             panelRepository.save(panelEntity);
-            redisService.cacheObject(panelEntity, materialType);
+            materialRedisService.cacheObject(panelEntity, materialType);
             return panelEntity;
         } else if (materialType.equals(MaterialType.REBAR.name())) {
             RebarEntity rebarEntity = new RebarEntity();
@@ -121,7 +121,7 @@ public class MaterialEventService {
                 applyRebarEvent(event, rebarEntity);
             }
             rebarRepository.save(rebarEntity);
-            redisService.cacheObject(rebarEntity, materialType);
+            materialRedisService.cacheObject(rebarEntity, materialType);
             return rebarEntity;
         } else if (materialType.equals(MaterialType.SET.name())) {
             SetEntity setEntity = new SetEntity();
@@ -129,7 +129,7 @@ public class MaterialEventService {
                 applySetEvent(event, setEntity);
             }
             setRepository.save(setEntity);
-            redisService.cacheObject(setEntity, materialType);
+            materialRedisService.cacheObject(setEntity, materialType);
             return setEntity;
         } else if (materialType.equals(MaterialType.UNSPECIFIED.name())) {
             UnspecifiedEntity unspecifiedEntity = new UnspecifiedEntity();
@@ -137,7 +137,7 @@ public class MaterialEventService {
                 applyUnspecifiedEvent(event, unspecifiedEntity);
             }
             unspecifiedRepository.save(unspecifiedEntity);
-            redisService.cacheObject(unspecifiedEntity, materialType);
+            materialRedisService.cacheObject(unspecifiedEntity, materialType);
             return unspecifiedEntity;
         } else if (materialType.equals(MaterialType.METAL.name())) {
             MetalEntity metalEntity = new MetalEntity();
@@ -145,7 +145,7 @@ public class MaterialEventService {
                 applyMetalEvent(event, metalEntity);
             }
             metalRepository.save(metalEntity);
-            redisService.cacheObject(metalEntity, materialType);
+            materialRedisService.cacheObject(metalEntity, materialType);
             return metalEntity;
         }
         else {
