@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public abstract class BaseEvent {
 
-    private Long OrderId;
+    private Long orderId;
 
     private OrderEventType eventType;
 
@@ -14,17 +14,17 @@ public abstract class BaseEvent {
     }
 
     public BaseEvent(Long orderId, OrderEventType eventType, LocalDateTime localDateTime) {
-        OrderId = orderId;
+        this.orderId = orderId;
         this.eventType = eventType;
         this.localDateTime = localDateTime;
     }
 
     public Long getOrderId() {
-        return OrderId;
+        return orderId;
     }
 
     public BaseEvent setOrderId(Long orderId) {
-        OrderId = orderId;
+        this.orderId = orderId;
         return this;
     }
 
