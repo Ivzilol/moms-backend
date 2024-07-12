@@ -1,4 +1,4 @@
-package bg.mck.ordercommandservice.UnitTests;
+package bg.mck.ordercommandservice.unitTests;
 
 import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
@@ -70,10 +70,11 @@ public class OrderCreationTests {
 
     @BeforeEach
     public void setUp() {
-        // Initialize the objects with sample data
-        orderDTO = new OrderDTO();
-        orderEntity = new OrderEntity();
         constructionSiteEntity = new ConstructionSiteEntity();
+        orderDTO = new OrderDTO();
+//        orderDTO.setConstructionSite();
+        orderEntity = new OrderEntity();
+
         expectedCreateOrderDTO = new CreateOrderDTO.Builder()
                 .orderId(1L)
                 .orderNumber(2)
@@ -84,7 +85,7 @@ public class OrderCreationTests {
         // Mock the behavior of the dependencies
         when(orderMapper.toOrderEntity(orderDTO)).thenReturn(orderEntity);
         when(constructionSiteService.getConstructionSiteByNumberAndName(orderDTO.getConstructionSite())).thenReturn(constructionSiteEntity);
-        when(orderRepository.findLastOrderNumber()).thenReturn(Optional.of(2));
+        when(orderRepository.findLastOrderNumber()).thenReturn(Optional.of(3));
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
 
     }
@@ -96,17 +97,15 @@ public class OrderCreationTests {
 
     @Test
     void testCreateOrder() {
-        String email = "test@example.com";
-
-        CreateOrderDTO result = orderService.createOrder(orderDTO, email);
+        CreateOrderDTO result = orderService.createOrder(orderDTO, "test@example.com");
 
         // Verify that the orderRepository.save method was called
         verify(orderRepository).save(orderEntity);
 
         // Verify the properties of the saved OrderEntity
-        assertEquals(email, orderEntity.getUsername());
+        assertEquals("test@example.com", orderEntity.getUsername());
         assertEquals(OrderStatus.CREATED, orderEntity.getOrderStatus());
-        assertEquals(3, orderEntity.getOrderNumber());
+        assertEquals(4, orderEntity.getOrderNumber());
         assertEquals(constructionSiteEntity, orderEntity.getConstructionSite());
 
         // Verify the properties of the returned CreateOrderDTO

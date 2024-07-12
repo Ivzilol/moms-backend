@@ -1,4 +1,4 @@
-package bg.mck.ordercommandservice.UnitTests;
+package bg.mck.ordercommandservice.unitTests;
 
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
