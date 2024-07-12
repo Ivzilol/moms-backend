@@ -14,7 +14,7 @@ public class TransportDTO extends BaseDTO {
     @Column(name = "weight_in_kg")
     private Double weight;
 
-    private String Truck;
+    private String truck;
 
     public TransportDTO() {
     }
@@ -23,7 +23,7 @@ public class TransportDTO extends BaseDTO {
         super(id, quantity, description, specificationFileUrl);
         this.maxLength = maxLength;
         this.weight = weight;
-        Truck = truck;
+        this.truck = truck;
     }
 
     public Double getMaxLength() {
@@ -45,11 +45,11 @@ public class TransportDTO extends BaseDTO {
     }
 
     public String getTruck() {
-        return Truck;
+        return truck;
     }
 
     public TransportDTO setTruck(String truck) {
-        Truck = truck;
+        this.truck = truck;
         return this;
     }
 }

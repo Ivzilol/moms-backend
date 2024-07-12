@@ -26,11 +26,11 @@ public class PanelEntity extends BaseMaterialEntity {
 
     @DecimalMin(value = "0.0", message = "FrontSheetThickness must be positive")
     @Column(name = "front_sheet_thickness_in_mm")
-    private Double FrontSheetThickness;
+    private Double frontSheetThickness;
 
     @DecimalMin(value = "0.0", message = "BackSheetThickness must be positive")
     @Column(name = "back_sheet_thickness_in_mm")
-    private Double BackSheetThickness;
+    private Double backSheetThickness;
 
 
     public PanelEntity() {
@@ -83,20 +83,20 @@ public class PanelEntity extends BaseMaterialEntity {
     }
 
     public Double getFrontSheetThickness() {
-        return FrontSheetThickness;
+        return frontSheetThickness;
     }
 
     public PanelEntity setFrontSheetThickness(Double frontSheetThickness) {
-        FrontSheetThickness = frontSheetThickness;
+        this.frontSheetThickness = frontSheetThickness;
         return this;
     }
 
     public Double getBackSheetThickness() {
-        return BackSheetThickness;
+        return backSheetThickness;
     }
 
     public PanelEntity setBackSheetThickness(Double backSheetThickness) {
-        BackSheetThickness = backSheetThickness;
+        this.backSheetThickness = backSheetThickness;
         return this;
     }
 }

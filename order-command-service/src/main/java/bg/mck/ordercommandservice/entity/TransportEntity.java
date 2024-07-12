@@ -17,7 +17,7 @@ public class TransportEntity extends BaseMaterialEntity {
     @Column(name = "weight_in_kg")
     private Double weight;
 
-    private String Truck;
+    private String truck;
 
 
     public Double getMaxLength() {
@@ -39,11 +39,11 @@ public class TransportEntity extends BaseMaterialEntity {
     }
 
     public String getTruck() {
-        return Truck;
+        return truck;
     }
 
     public TransportEntity setTruck(String truck) {
-        Truck = truck;
+        this.truck = truck;
         return this;
     }
 
