@@ -24,6 +24,7 @@ public class OrderEntity extends BaseEntity {
     private String orderDescription;
 
     private ZonedDateTime orderDate;
+    private String specificationFileUrl;
 
     @NotNull(message = "Delivery date must not be empty.")
     @Future(message = "Delivery date must be in the future.")
@@ -75,7 +76,7 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+    public OrderEntity(String specificationFileUrl, String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
@@ -93,6 +94,16 @@ public class OrderEntity extends BaseEntity {
         this.unspecified = unspecified;
         this.services = services;
         this.transports = transports;
+        this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public OrderEntity setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
+        return this;
     }
 
     public String getUsername() {
