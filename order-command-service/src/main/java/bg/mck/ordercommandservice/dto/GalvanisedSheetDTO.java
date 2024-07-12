@@ -8,7 +8,7 @@ public class GalvanisedSheetDTO extends BaseDTO{
     private String type;
 
     @DecimalMin(value = "0.0", message = "Length must be greater than 0")
-    private Double Maxlength;
+    private Double maxlength;
 
     @DecimalMin(value = "0.0", message = "Area must be greater than 0")
     private Double area;
@@ -19,7 +19,7 @@ public class GalvanisedSheetDTO extends BaseDTO{
 
     public GalvanisedSheetDTO(String type, Double maxlength, Double area) {
         this.type = type;
-        Maxlength = maxlength;
+        this.maxlength = maxlength;
         this.area = area;
     }
 
@@ -33,11 +33,11 @@ public class GalvanisedSheetDTO extends BaseDTO{
     }
 
     public Double getMaxlength() {
-        return Maxlength;
+        return maxlength;
     }
 
     public GalvanisedSheetDTO setMaxlength(Double maxlength) {
-        Maxlength = maxlength;
+        this.maxlength = maxlength;
         return this;
     }
 
