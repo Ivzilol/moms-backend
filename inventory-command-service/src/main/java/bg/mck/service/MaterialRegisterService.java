@@ -199,7 +199,7 @@ public class MaterialRegisterService {
         );
         MaterialEvent<RegisterUnspecifiedEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerUnspecifiedEvent);
-        inventoryQueryServiceClient.sendServiceEvent(materialEvent,
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
                 String.valueOf(EventType.ItemRegistered), materialType);
     }
 
@@ -219,7 +219,7 @@ public class MaterialRegisterService {
         );
         MaterialEvent<RegisterSetEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerSetEvent);
-        inventoryQueryServiceClient.sendServiceEvent(materialEvent,
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
                 String.valueOf(EventType.ItemRegistered), materialType);
     }
 
@@ -238,7 +238,7 @@ public class MaterialRegisterService {
         );
         MaterialEvent<RegisterRebarEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerRebarEvent);
-        inventoryQueryServiceClient.sendServiceEvent(materialEvent,
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
                 String.valueOf(EventType.ItemRegistered), materialType);
     }
 
@@ -262,7 +262,7 @@ public class MaterialRegisterService {
         );
         MaterialEvent<RegisterPanelEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerPanelEvent);
-        inventoryQueryServiceClient.sendServiceEvent(materialEvent,
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
                 String.valueOf(EventType.ItemRegistered), materialType);
 
     }
@@ -281,7 +281,7 @@ public class MaterialRegisterService {
         );
         MaterialEvent<RegisterMetalEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerMetalEvent);
-        inventoryQueryServiceClient.sendServiceEvent(materialEvent,
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
                 String.valueOf(EventType.ItemRegistered), materialType);
     }
 
@@ -301,7 +301,7 @@ public class MaterialRegisterService {
         );
         MaterialEvent<RegisterInsulationEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerInsulationEvent);
-        inventoryQueryServiceClient.sendServiceEvent(materialEvent,
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
                 String.valueOf(EventType.ItemRegistered), materialType);
     }
 
@@ -320,7 +320,7 @@ public class MaterialRegisterService {
         );
         MaterialEvent<RegisterGalvanizedEvent> materialEvent =
                 EventCreationHelper.toMaterialEvent(registerGalvanizedEvent);
-        inventoryQueryServiceClient.sendServiceEvent(materialEvent,
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
                 String.valueOf(EventType.ItemRegistered), materialType);
     }
 
@@ -344,7 +344,7 @@ public class MaterialRegisterService {
                 EventCreationHelper.toMaterialEvent(registerMaterialEvent);
         materialEvent.setMaterialType(MaterialType.FASTENERS);
 
-        inventoryQueryServiceClient.sendServiceEvent(materialEvent,
+        inventoryQueryServiceClient.sendMaterialEvent(materialEvent,
                 String.valueOf(EventType.ItemRegistered), materialType);
     }
 
