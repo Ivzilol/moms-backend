@@ -2,6 +2,7 @@ package bg.mck.entity.materialEntity;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 
 import java.util.Objects;
 
@@ -13,16 +14,24 @@ public class GalvanisedSheetEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String marking; //Означение
-    private String number;
+    // type
+    private String name;
+
     private String type;
-    private Double length;
-    private Double width;
+    @DecimalMin(value = "0.0", inclusive = false, message = "maxLength must be greater than 0")
+    @Column(name = "max_length_in_centimeters")
+    private Double maxLength;
+    @DecimalMin(value = "0.0", inclusive = false, message = "area must be greater than 0")
+    @Column(name = "area_in_square_meters")
     private Double area;
 
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
+
     @Column(columnDefinition = "TEXT")
-    private String note;
+    private String description;
+
+
     private String specificationFileUrl;
 
     @ManyToOne
@@ -31,24 +40,15 @@ public class GalvanisedSheetEntity {
     public GalvanisedSheetEntity() {
     }
 
-    public GalvanisedSheetEntity(Long id, String marking, String number, String type, Double length, Double width, Double area, Double quantity, String note, String specificationFileUrl) {
+    public GalvanisedSheetEntity(Long id, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
-        this.marking = marking;
-        this.number = number;
+        this.name = name;
         this.type = type;
-        this.length = length;
-        this.width = width;
+        this.maxLength = maxLength;
         this.area = area;
         this.quantity = quantity;
-        this.note = note;
+        this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
         this.category = category;
     }
 
@@ -60,20 +60,12 @@ public class GalvanisedSheetEntity {
         this.id = id;
     }
 
-    public String getMarking() {
-        return marking;
+    public String getName() {
+        return name;
     }
 
-    public void setMarking(String marking) {
-        this.marking = marking;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -84,20 +76,12 @@ public class GalvanisedSheetEntity {
         this.type = type;
     }
 
-    public Double getLength() {
-        return length;
+    public Double getMaxLength() {
+        return maxLength;
     }
 
-    public void setLength(Double length) {
-        this.length = length;
-    }
-
-    public Double getWidth() {
-        return width;
-    }
-
-    public void setWidth(Double width) {
-        this.width = width;
+    public void setMaxLength(Double maxLength) {
+        this.maxLength = maxLength;
     }
 
     public Double getArea() {
@@ -116,12 +100,12 @@ public class GalvanisedSheetEntity {
         this.quantity = quantity;
     }
 
-    public String getNote() {
-        return note;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSpecificationFileUrl() {
@@ -132,42 +116,11 @@ public class GalvanisedSheetEntity {
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GalvanisedSheetEntity that = (GalvanisedSheetEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(marking, that.marking)
-                && Objects.equals(number, that.number)
-                && Objects.equals(type, that.type)
-                && Objects.equals(length, that.length)
-                && Objects.equals(width, that.width)
-                && Objects.equals(area, that.area)
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(note, that.note)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl);
+    public CategoryEntity getCategory() {
+        return category;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, marking, number, type, length, width, area, quantity, note, specificationFileUrl);
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
-
-    @Override
-    public String toString() {
-        return "GalvanisedSheetEntity{" +
-                "id=" + id +
-                ", marking='" + marking + '\'' +
-                ", number='" + number + '\'' +
-                ", type='" + type + '\'' +
-                ", length=" + length +
-                ", width=" + width +
-                ", area=" + area +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
-    }
-
 }

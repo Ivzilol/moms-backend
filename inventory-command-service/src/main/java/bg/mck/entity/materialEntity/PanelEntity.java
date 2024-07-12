@@ -2,6 +2,7 @@ package bg.mck.entity.materialEntity;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 
 import java.util.Objects;
 
@@ -13,15 +14,40 @@ public class PanelEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //type + length + totalThickness
+    private String name;
+
     private String type;
+
     private String color;
+
+    @DecimalMin(value = "0.0", message = "Length must be positive")
+    @Column(name = "length_in_centimeters")
     private Double length;
+
+    @DecimalMin(value = "0.0", message = "Width must be positive")
+    @Column(name = "width_in_centimeters")
     private Double width;
+
+    @DecimalMin(value = "0.0", message = "Thickness must be positive")
+    @Column(name = "total_thickness_in_mm")
     private Double totalThickness;
-    private Double sheetThickness;
+
+    @DecimalMin(value = "0.0", message = "FrontSheetThickness must be positive")
+    @Column(name = "front_sheet_thickness_in_mm")
+    private Double FrontSheetThickness;
+
+    @DecimalMin(value = "0.0", message = "BackSheetThickness must be positive")
+    @Column(name = "back_sheet_thickness_in_mm")
+    private Double BackSheetThickness;
+
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
-    @Column(columnDefinition="TEXT")
-    private String note;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+
     private String specificationFileUrl;
 
     @ManyToOne
@@ -30,24 +56,19 @@ public class PanelEntity {
     public PanelEntity() {
     }
 
-    public PanelEntity(Long id, String type, String color, Double length, Double width, Double totalThickness, Double sheetThickness, Double quantity, String note, String specificationFileUrl) {
+    public PanelEntity(Long id, String name, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
+        this.name = name;
         this.type = type;
         this.color = color;
         this.length = length;
         this.width = width;
         this.totalThickness = totalThickness;
-        this.sheetThickness = sheetThickness;
+        FrontSheetThickness = frontSheetThickness;
+        BackSheetThickness = backSheetThickness;
         this.quantity = quantity;
-        this.note = note;
+        this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
         this.category = category;
     }
 
@@ -59,20 +80,12 @@ public class PanelEntity {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getLength() {
@@ -99,12 +112,20 @@ public class PanelEntity {
         this.totalThickness = totalThickness;
     }
 
-    public Double getSheetThickness() {
-        return sheetThickness;
+    public Double getFrontSheetThickness() {
+        return FrontSheetThickness;
     }
 
-    public void setSheetThickness(Double sheetThickness) {
-        this.sheetThickness = sheetThickness;
+    public void setFrontSheetThickness(Double frontSheetThickness) {
+        FrontSheetThickness = frontSheetThickness;
+    }
+
+    public Double getBackSheetThickness() {
+        return BackSheetThickness;
+    }
+
+    public void setBackSheetThickness(Double backSheetThickness) {
+        BackSheetThickness = backSheetThickness;
     }
 
     public Double getQuantity() {
@@ -115,12 +136,12 @@ public class PanelEntity {
         this.quantity = quantity;
     }
 
-    public String getNote() {
-        return note;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSpecificationFileUrl() {
@@ -131,41 +152,27 @@ public class PanelEntity {
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PanelEntity that = (PanelEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(type, that.type)
-                && Objects.equals(color, that.color)
-                && Objects.equals(length, that.length)
-                && Objects.equals(width, that.width)
-                && Objects.equals(totalThickness, that.totalThickness)
-                && Objects.equals(sheetThickness, that.sheetThickness)
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(note, that.note)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl);
+    public CategoryEntity getCategory() {
+        return category;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, type, color, length, width, totalThickness, sheetThickness, quantity, note, specificationFileUrl);
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "PanelEntity{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", color='" + color + '\'' +
-                ", length=" + length +
-                ", width=" + width +
-                ", totalThickness=" + totalThickness +
-                ", sheetThickness=" + sheetThickness +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

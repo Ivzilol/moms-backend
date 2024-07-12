@@ -1,9 +1,7 @@
 package bg.mck.entity.transportEntity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 
 import java.util.Objects;
 
@@ -15,16 +13,39 @@ public class TransportEntity {
     @GeneratedValue
     private Long id;
 
+    private String name;
+
+    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
+    @Column(name = "max_length_in_centimeters")
+    private Double maxLength;
+
+    @DecimalMin(value = "0.0", message = "weight must be positive")
+    @Column(name = "weight_in_kg")
+    private Double weight;
+
+    private String Truck;
+
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
-    private double distance;
+
+
+    private String specificationFileUrl;
 
     public TransportEntity() {
     }
 
-    public TransportEntity(Long id, String description, double distance) {
+    public TransportEntity(Long id, String name, Double maxLength, Double weight, String truck, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
+        this.name = name;
+        this.maxLength = maxLength;
+        this.weight = weight;
+        Truck = truck;
+        this.quantity = quantity;
         this.description = description;
-        this.distance = distance;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public Long getId() {
@@ -35,6 +56,46 @@ public class TransportEntity {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(Double maxLength) {
+        this.maxLength = maxLength;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public String getTruck() {
+        return Truck;
+    }
+
+    public void setTruck(String truck) {
+        Truck = truck;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -43,35 +104,11 @@ public class TransportEntity {
         this.description = description;
     }
 
-    public double getDistance() {
-        return distance;
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
     }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TransportEntity that = (TransportEntity) o;
-        return Double.compare(that.distance, distance) == 0
-                && Objects.equals(id, that.id)
-                && Objects.equals(description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, distance);
-    }
-
-    @Override
-    public String toString() {
-        return "TransportRepository{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", distance=" + distance +
-                '}';
+    public void setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
     }
 }

@@ -28,7 +28,7 @@ public class AuthService {
         String roles = restTemplate.getForObject("http://authentication-service/"+ APPLICATION_VERSION +"/authentication/getroles/" + authorizationDTO.getToken()
                 , String.class);
         try {
-            boolean isAuthorized = roles.contains(authorizationDTO.getPathToReach());
+            boolean isAuthorized = roles.toLowerCase().contains(authorizationDTO.getPathToReach());
             logger.info(isAuthorized ? "The user is authorized!" : "The user is not authorized!");
             return isAuthorized;
         } catch (NullPointerException e) {

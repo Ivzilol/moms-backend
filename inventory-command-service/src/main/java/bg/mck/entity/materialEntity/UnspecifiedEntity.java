@@ -2,8 +2,7 @@ package bg.mck.entity.materialEntity;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import jakarta.persistence.*;
-
-import java.util.Objects;
+import jakarta.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "unspecified")
@@ -13,33 +12,30 @@ public class UnspecifiedEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition="TEXT")
+    //description
+   private String name;
+
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
+    private Double quantity;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    private Double quantity;
-    @Column(columnDefinition="TEXT")
-    private String note;
+
     private String specificationFileUrl;
 
-    @ManyToOne
-    private CategoryEntity category;
+   @ManyToOne
+   private CategoryEntity category;
 
     public UnspecifiedEntity() {
     }
 
-    public UnspecifiedEntity(Long id, String description, Double quantity, String note, String specificationFileUrl) {
+    public UnspecifiedEntity(Long id, String name, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
         this.id = id;
-        this.description = description;
+        this.name = name;
         this.quantity = quantity;
-        this.note = note;
+        this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
         this.category = category;
     }
 
@@ -51,12 +47,12 @@ public class UnspecifiedEntity {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getQuantity() {
@@ -67,12 +63,12 @@ public class UnspecifiedEntity {
         this.quantity = quantity;
     }
 
-    public String getNote() {
-        return note;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSpecificationFileUrl() {
@@ -83,31 +79,11 @@ public class UnspecifiedEntity {
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UnspecifiedEntity that = (UnspecifiedEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(description, that.description)
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(note, that.note)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl);
+    public CategoryEntity getCategory() {
+        return category;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, quantity, note, specificationFileUrl);
-    }
-
-    @Override
-    public String toString() {
-        return "UnspecifiedEntity{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", quantity=" + quantity +
-                ", note='" + note + '\'' +
-                ", specificationFileUrl='" + specificationFileUrl + '\'' +
-                '}';
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 }

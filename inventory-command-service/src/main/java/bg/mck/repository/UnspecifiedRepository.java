@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UnspecifiedRepository extends JpaRepository<UnspecifiedEntity, Long> {
+    UnspecifiedEntity findByName(String description);
 }
