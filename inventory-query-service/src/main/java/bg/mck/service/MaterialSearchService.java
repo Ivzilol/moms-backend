@@ -38,9 +38,10 @@ public class MaterialSearchService {
     }
 
     public List<MaterialDTO> findMaterialByCategoryAndName(String category, String materialName) {
+        String regex = "^" + materialName;
         List<MaterialDTO> materialDTO = new ArrayList<>();
         if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
-            processingFasteners(materialName, materialDTO);
+            processingFasteners(regex, materialDTO);
         } else if (category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
 
         } else if (category.equals(String.valueOf(MaterialType.INSULATION))) {
@@ -59,10 +60,10 @@ public class MaterialSearchService {
         return materialDTO;
     }
 
-    private void processingFasteners(String materialName, List<MaterialDTO> materialDTO) {
-        String regex = "^" + materialName;
+    private void processingFasteners(String regex, List<MaterialDTO> materialDTO) {
         Sort sort = Sort.by(Sort.Direction.ASC, "materialName");
-        List<FastenerEntity> fastenerEntities = this.fastenerRepository.findByPartOfName(regex, sort);
+        List<FastenerEntity> fastenerEntities = this.fastenerRepository
+                .findByPartOfName(regex, sort);
         for (FastenerEntity entity : fastenerEntities) {
             MaterialDTO currentMaterial = new MaterialDTO();
             currentMaterial.setId(entity.getId());
