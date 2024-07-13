@@ -39,9 +39,9 @@ public class MaterialSearchService {
 
     public List<MaterialDTO> findMaterialByCategoryAndName(String category, String materialName) {
         String regex = "^" + materialName;
-        List<MaterialDTO> materialDTO = new ArrayList<>();
+        Sort sort = Sort.by(Sort.Direction.ASC, "materialName");
         if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
-            processingFasteners(regex, materialDTO);
+            return this.fastenerRepository.findByPartOfName(regex, sort);
         } else if (category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
 
         } else if (category.equals(String.valueOf(MaterialType.INSULATION))) {
@@ -57,26 +57,6 @@ public class MaterialSearchService {
         } else if (category.equals(String.valueOf(MaterialType.UNSPECIFIED))) {
 
         }
-        return materialDTO;
-    }
-
-    private void processingFasteners(String regex, List<MaterialDTO> materialDTO) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "materialName");
-        List<FastenerEntity> fastenerEntities = this.fastenerRepository
-                .findByPartOfName(regex, sort);
-        for (FastenerEntity entity : fastenerEntities) {
-            MaterialDTO currentMaterial = new MaterialDTO();
-            currentMaterial.setId(entity.getId());
-            currentMaterial.setName(entity.getName());
-            currentMaterial.setType(entity.getType());
-            currentMaterial.setDiameter(entity.getDiameter());
-            currentMaterial.setLength(entity.getLength());
-            currentMaterial.setModel(entity.getModel());
-            currentMaterial.setClazz(entity.getClazz());
-            currentMaterial.setQuantity(entity.getQuantity());
-            currentMaterial.setDescription(entity.getDescription());
-            currentMaterial.setSpecificationFileUrl(entity.getSpecificationFileUrl());
-            materialDTO.add(currentMaterial);
-        }
+        return null;
     }
 }

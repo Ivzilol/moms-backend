@@ -22,6 +22,18 @@ public class MaterialDTO {
 
     private String specificationFileUrl;
 
+    public MaterialDTO(String id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.diameter = diameter;
+        this.length = length;
+        this.model = model;
+        this.clazz = clazz;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
 
     public String getId() {
         return id;
