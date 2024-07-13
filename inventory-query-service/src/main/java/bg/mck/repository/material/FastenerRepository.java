@@ -1,6 +1,7 @@
 package bg.mck.repository.material;
 
 import bg.mck.entity.materialEntity.FastenerEntity;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,5 +14,5 @@ public interface FastenerRepository extends MongoRepository<FastenerEntity, Stri
     FastenerEntity findByName(String name);
 
     @Query("{ 'name' : { $regex: ?0, $options: 'i' } }")
-    List<FastenerEntity> findByPartOfName(String materialName);
+    List<FastenerEntity> findByPartOfName(String materialName, Sort sort);
 }
