@@ -29,6 +29,7 @@ public class OrderDTO {
     private OrderStatus orderStatus;
 
     private MaterialType materialType;
+    private String specificationFileUrl;
 
     private Set<@Valid FastenerDTO> fasteners;
     private Set<@Valid GalvanisedSheetDTO> galvanisedSheets;
@@ -44,7 +45,7 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<@Valid FastenerDTO> fasteners, Set<@Valid GalvanisedSheetDTO> galvanisedSheets, Set<@Valid InsulationDTO> insulation, Set<@Valid MetalDTO> metals, Set<@Valid PanelDTO> panels, Set<@Valid RebarDTO> rebars, Set<@Valid SetDTO> sets, Set<@Valid UnspecifiedDTO> unspecified, Set<@Valid ServiceDTO> services, Set<@Valid TransportDTO> transports) {
+    public OrderDTO(String specificationFileUrl,String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<@Valid FastenerDTO> fasteners, Set<@Valid GalvanisedSheetDTO> galvanisedSheets, Set<@Valid InsulationDTO> insulation, Set<@Valid MetalDTO> metals, Set<@Valid PanelDTO> panels, Set<@Valid RebarDTO> rebars, Set<@Valid SetDTO> sets, Set<@Valid UnspecifiedDTO> unspecified, Set<@Valid ServiceDTO> services, Set<@Valid TransportDTO> transports) {
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
@@ -61,6 +62,7 @@ public class OrderDTO {
         this.unspecified = unspecified;
         this.services = services;
         this.transports = transports;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getOrderDescription() {
@@ -204,6 +206,15 @@ public class OrderDTO {
 
     public OrderDTO setTransports(Set<@Valid TransportDTO> transports) {
         this.transports = transports;
+        return this;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public OrderDTO setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
         return this;
     }
 }
