@@ -1,5 +1,6 @@
 package bg.mck.controller;
 
+import bg.mck.dto.FastenersDTO;
 import bg.mck.dto.MaterialDTO;
 import bg.mck.service.MaterialSearchService;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class MaterialQueryController {
     @GetMapping("/search")
     public ResponseEntity<?> getMaterialByPartOfName(@RequestParam("category") String category,
                                                      @RequestParam("materialName") String materialName) {
-        List<MaterialDTO> materialDTO = this.materialSearchService
+        List<? extends MaterialDTO> materialDTO = this.materialSearchService
                 .findMaterialByCategoryAndName(category, materialName);
         return ResponseEntity.ok(materialDTO);
     }
