@@ -22,6 +22,9 @@ public class FastenersDTO implements MaterialDTO {
 
     private String specificationFileUrl;
 
+    public FastenersDTO() {
+    }
+
     public FastenersDTO(String id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;

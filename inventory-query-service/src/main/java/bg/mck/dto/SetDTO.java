@@ -18,6 +18,9 @@ public class SetDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
+    public SetDTO() {
+    }
+
     public SetDTO(String id, String name, Double galvanisedSheetThickness, String color, String maxLength, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;

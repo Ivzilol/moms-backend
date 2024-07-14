@@ -26,6 +26,9 @@ public class PanelsDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
+    public PanelsDTO() {
+    }
+
     public PanelsDTO(String id, String name, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;

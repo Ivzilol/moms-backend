@@ -4,6 +4,7 @@ import bg.mck.dto.FastenersDTO;
 import bg.mck.dto.MaterialDTO;
 import bg.mck.enums.MaterialType;
 import bg.mck.repository.material.*;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,7 @@ public class MaterialSearchService {
         this.unspecifiedRepository = unspecifiedRepository;
     }
 
+    @Cacheable(value = "materials", key = "#category + '_' + #materialName")
     public List<? extends MaterialDTO> findMaterialByCategoryAndName(String category, String materialName) {
         String regex = "^" + materialName;
         Sort sort = Sort.by(Sort.Direction.ASC, "materialName");

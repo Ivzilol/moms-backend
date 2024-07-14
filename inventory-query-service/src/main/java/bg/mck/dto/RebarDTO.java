@@ -16,6 +16,9 @@ public class RebarDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
+    public RebarDTO() {
+    }
+
     public RebarDTO(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;

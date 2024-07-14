@@ -18,6 +18,8 @@ public class GalvanisedDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
+    public GalvanisedDTO() {
+    }
 
     public GalvanisedDTO(Long id, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl) {
         this.id = id;

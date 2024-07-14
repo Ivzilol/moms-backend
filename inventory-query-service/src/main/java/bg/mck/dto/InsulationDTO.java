@@ -16,6 +16,9 @@ public class InsulationDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
+    public InsulationDTO() {
+    }
+
     public InsulationDTO(Long id, String name, String type, Double thickness, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;

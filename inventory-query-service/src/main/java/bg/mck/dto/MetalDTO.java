@@ -14,6 +14,9 @@ public class MetalDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
+    public MetalDTO() {
+    }
+
     public MetalDTO(String id, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;
