@@ -55,7 +55,7 @@ public class MaterialSearchService {
         } else if (category.equals(String.valueOf(MaterialType.REBAR))) {
             return this.rebarRepository.findByPartOfName(regex, sort);
         } else if (category.equals(String.valueOf(MaterialType.SET))) {
-
+            return this.setRepository.findByPartOfName(regex, sort);
         } else if (category.equals(String.valueOf(MaterialType.UNSPECIFIED))) {
 
         }
