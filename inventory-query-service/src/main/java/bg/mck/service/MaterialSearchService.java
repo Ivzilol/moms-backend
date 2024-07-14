@@ -47,7 +47,7 @@ public class MaterialSearchService {
         } else if (category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
             return this.galvanisedSheetRepository.findByPartOfName(regex, sort);
         } else if (category.equals(String.valueOf(MaterialType.INSULATION))) {
-
+            return this.insulationRepository.findByPartOfName(regex, sort);
         } else if (category.equals(String.valueOf(MaterialType.METAL))) {
 
         } else if (category.equals(String.valueOf(MaterialType.PANELS))) {
