@@ -1,6 +1,5 @@
 package bg.mck.config;
 
-import bg.mck.dto.MaterialDTO;
 import bg.mck.entity.constructions.ConstructionSiteEntity;
 import bg.mck.entity.materialEntity.BaseMaterialEntity;
 import bg.mck.entity.serviceEntity.ServiceEntity;
@@ -22,7 +21,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableCaching
 public class RedisConfig {
-
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
@@ -82,6 +80,4 @@ public class RedisConfig {
         template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         return template;
     }
-
-
 }
