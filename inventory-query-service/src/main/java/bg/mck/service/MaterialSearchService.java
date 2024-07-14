@@ -51,7 +51,7 @@ public class MaterialSearchService {
         } else if (category.equals(String.valueOf(MaterialType.METAL))) {
             return this.metalRepository.findByPartOfName(regex, sort);
         } else if (category.equals(String.valueOf(MaterialType.PANELS))) {
-
+            return this.panelRepository.findByPartOfName(regex, sort);
         } else if (category.equals(String.valueOf(MaterialType.REBAR))) {
 
         } else if (category.equals(String.valueOf(MaterialType.SET))) {
