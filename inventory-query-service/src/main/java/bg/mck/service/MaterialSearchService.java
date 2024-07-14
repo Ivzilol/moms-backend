@@ -1,6 +1,5 @@
 package bg.mck.service;
 
-import bg.mck.dto.FastenersDTO;
 import bg.mck.dto.MaterialDTO;
 import bg.mck.enums.MaterialType;
 import bg.mck.repository.material.*;
