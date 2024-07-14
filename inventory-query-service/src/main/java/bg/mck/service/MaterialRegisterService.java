@@ -41,10 +41,9 @@ public class MaterialRegisterService {
         this.unspecifiedRepository = unspecifiedRepository;
     }
 
-    @CacheEvict(value = "materials", allEntries = true)
+    @CacheEvict(value = "materials", key = "#event.category + '_' + #event.name.substring(0,2)")
     public void processingRegisterMaterial(RegisterFastenerEvent event) {
         String category = event.getCategory();
-
         if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
             saveFastenerMaterial(event);
         }
@@ -76,7 +75,7 @@ public class MaterialRegisterService {
         }
     }
 
-    @CacheEvict(value = "materials", allEntries = true)
+    @CacheEvict(value = "materials", key = "#event.category + '_' + #event.name.substring(0,2)")
     public void processingRegisterGalvanized(RegisterGalvanizedEvent event) {
         String category = event.getCategory();
         if (category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
@@ -97,7 +96,7 @@ public class MaterialRegisterService {
         this.galvaniseRepository.save(galvanisedSheetEntity);
     }
 
-    @CacheEvict(value = "materials", allEntries = true)
+    @CacheEvict(value = "materials", key = "#event.category + '_' + #event.name.substring(0,2)")
     public void processingRegisterInsulation(RegisterInsulationEvent event) {
         InsulationEntity insulationEntity = new InsulationEntity();
         insulationEntity.setId(String.valueOf(event.getMaterialId()));
@@ -110,7 +109,7 @@ public class MaterialRegisterService {
         this.insulationRepository.save(insulationEntity);
     }
 
-    @CacheEvict(value = "materials", allEntries = true)
+    @CacheEvict(value = "materials", key = "#event.category + '_' + #event.name.substring(0,2)")
     public void processingRegisterMetal(RegisterMetalEvent event) {
         MetalEntity metalEntity = new MetalEntity();
         metalEntity.setId(String.valueOf(event.getMaterialId()));
@@ -122,7 +121,7 @@ public class MaterialRegisterService {
         this.metalRepository.save(metalEntity);
     }
 
-    @CacheEvict(value = "materials", allEntries = true)
+    @CacheEvict(value = "materials", key = "#event.category + '_' + #event.name.substring(0,2)")
     public void processingRegisterPanel(RegisterPanelEvent event) {
         PanelEntity panelEntity = new PanelEntity();
         panelEntity.setId(String.valueOf(event.getMaterialId()));
@@ -140,7 +139,7 @@ public class MaterialRegisterService {
         this.panelRepository.save(panelEntity);
     }
 
-    @CacheEvict(value = "materials", allEntries = true)
+    @CacheEvict(value = "materials", key = "#event.category + '_' + #event.name.substring(0,2)")
     public void processingRegisterRebar(RegisterRebarEvent event) {
         RebarEntity rebarEntity = new RebarEntity();
         rebarEntity.setId(String.valueOf(event.getMaterialId()));
@@ -153,7 +152,7 @@ public class MaterialRegisterService {
         this.rebarRepository.save(rebarEntity);
     }
 
-    @CacheEvict(value = "materials", allEntries = true)
+    @CacheEvict(value = "materials", key = "#event.category + '_' + #event.name.substring(0,2)")
     public void processingRegisterSet(RegisterSetEvent event) {
         SetEntity setEntity = new SetEntity();
         setEntity.setId(String.valueOf(event.getMaterialId()));
@@ -167,7 +166,7 @@ public class MaterialRegisterService {
         this.setRepository.save(setEntity);
     }
 
-    @CacheEvict(value = "materials", allEntries = true)
+    @CacheEvict(value = "materials", key = "#event.category + '_' + #event.name.substring(0,2)")
     public void processingRegisterUnspecified(RegisterUnspecifiedEvent event) {
         UnspecifiedEntity unspecifiedEntity = new UnspecifiedEntity();
         unspecifiedEntity.setId(String.valueOf(event.getMaterialId()));
