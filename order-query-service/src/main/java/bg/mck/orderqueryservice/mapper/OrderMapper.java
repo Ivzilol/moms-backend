@@ -1,5 +1,6 @@
 package bg.mck.orderqueryservice.mapper;
 
+import bg.mck.orderqueryservice.dto.OrderDTO;
 import bg.mck.orderqueryservice.entity.*;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.events.*;
@@ -154,4 +155,6 @@ public interface OrderMapper {
     ServiceEntity toServiceEntity(ServiceEvent event);
 
     TransportEntity toTransportEntity(TransportEvent event);
+
+    OrderDTO fromOrderEntityToDTO(OrderEntity orderEntity);
 }

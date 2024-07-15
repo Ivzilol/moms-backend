@@ -1,20 +1,18 @@
-package bg.mck.orderqueryservice.config;
+package bg.mck.orderqueryservice.config.mongo;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import org.bson.BsonReader;
-import org.bson.BsonWriter;
-import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 @Configuration
 public class MongoConfig {
@@ -54,5 +52,13 @@ public class MongoConfig {
                 .build();
 
         return MongoClients.create(settings);
+    }
+
+    @Bean
+    public MongoCustomConversions customConversions() {
+        return new MongoCustomConversions(Arrays.asList(
+                new ZonedDateTimeToStringConverter(),
+                new StringToZonedDateTimeConverter()
+        ));
     }
 }
