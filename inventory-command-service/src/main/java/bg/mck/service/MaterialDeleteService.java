@@ -51,13 +51,13 @@ public class MaterialDeleteService {
         }
 
         switch (materialType) {
-            case MaterialType.FASTENERS -> deleteMaterialById(fastenerRepository, materialId);
-            case MaterialType.GALVANIZED_SHEET -> deleteMaterialById(galvanisedSheetRepository, materialId);
-            case MaterialType.INSULATION -> deleteMaterialById(insulationRepository, materialId);
-            case MaterialType.PANELS -> deleteMaterialById(panelRepository, materialId);
-            case MaterialType.REBAR -> deleteMaterialById(rebarRepository, materialId);
-            case MaterialType.SET -> deleteMaterialById(setRepository, materialId);
-            case MaterialType.UNSPECIFIED -> deleteMaterialById(unspecifiedRepository, materialId);
+            case FASTENERS -> deleteMaterialById(fastenerRepository, materialId);
+            case GALVANIZED_SHEET -> deleteMaterialById(galvanisedSheetRepository, materialId);
+            case INSULATION -> deleteMaterialById(insulationRepository, materialId);
+            case PANELS -> deleteMaterialById(panelRepository, materialId);
+            case REBAR -> deleteMaterialById(rebarRepository, materialId);
+            case SET -> deleteMaterialById(setRepository, materialId);
+            case UNSPECIFIED -> deleteMaterialById(unspecifiedRepository, materialId);
             default -> throw new InvalidCategoryException("Unhandled category type: " + materialType);
         }
 

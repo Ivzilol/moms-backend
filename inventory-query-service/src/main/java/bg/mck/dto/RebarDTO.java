@@ -1,10 +1,8 @@
-package bg.mck.entity.materialEntity;
+package bg.mck.dto;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+public class RebarDTO implements MaterialDTO{
 
-@Document(collection = "rebars")
-public class RebarEntity extends BaseMaterialEntity{
-
+    private String id;
 
     private String name;
 
@@ -18,10 +16,11 @@ public class RebarEntity extends BaseMaterialEntity{
 
     private String specificationFileUrl;
 
-    public RebarEntity() {
+    public RebarDTO() {
     }
 
-    public RebarEntity(String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
+    public RebarDTO(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
+        this.id = id;
         this.name = name;
         this.maxLength = maxLength;
         this.weight = weight;
@@ -30,14 +29,12 @@ public class RebarEntity extends BaseMaterialEntity{
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public RebarEntity(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
-        super(id);
-        this.name = name;
-        this.maxLength = maxLength;
-        this.weight = weight;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

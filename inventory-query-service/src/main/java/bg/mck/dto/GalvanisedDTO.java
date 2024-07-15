@@ -1,16 +1,16 @@
-package bg.mck.entity.materialEntity;
+package bg.mck.dto;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+public class GalvanisedDTO implements MaterialDTO{
 
-@Document(collection = "rebars")
-public class RebarEntity extends BaseMaterialEntity{
-
+    private Long id;
 
     private String name;
 
+    private String type;
+
     private Double maxLength;
 
-    private Double weight;
+    private Double area;
 
     private Double quantity;
 
@@ -18,26 +18,26 @@ public class RebarEntity extends BaseMaterialEntity{
 
     private String specificationFileUrl;
 
-    public RebarEntity() {
+    public GalvanisedDTO() {
     }
 
-    public RebarEntity(String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
+    public GalvanisedDTO(Long id, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl) {
+        this.id = id;
         this.name = name;
+        this.type = type;
         this.maxLength = maxLength;
-        this.weight = weight;
+        this.area = area;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public RebarEntity(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
-        super(id);
-        this.name = name;
-        this.maxLength = maxLength;
-        this.weight = weight;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -48,6 +48,14 @@ public class RebarEntity extends BaseMaterialEntity{
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public Double getMaxLength() {
         return maxLength;
     }
@@ -56,12 +64,12 @@ public class RebarEntity extends BaseMaterialEntity{
         this.maxLength = maxLength;
     }
 
-    public Double getWeight() {
-        return weight;
+    public Double getArea() {
+        return area;
     }
 
-    public void setWeight(Double weight) {
-        this.weight = weight;
+    public void setArea(Double area) {
+        this.area = area;
     }
 
     public Double getQuantity() {
