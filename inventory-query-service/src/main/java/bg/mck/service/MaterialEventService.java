@@ -10,6 +10,7 @@ import bg.mck.repository.material.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
@@ -58,21 +59,18 @@ public class MaterialEventService {
             registerEvent(data, materialType);
 
         } else if (eventType.equals(EventType.ItemDeleted.name())) {
-            MaterialEvent<MaterialDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
-            });
+            deleteEvent(data, materialType);
 
-            Long materialId = event.getEvent().getMaterialId();
-            doesItemExist(materialId, materialType);
-            saveEvent(event);
-            materialDeleteService.deleteMaterialByIdAndCategory(String.valueOf(materialId), materialType);
-            materialRedisService.clearCacheForObject(String.valueOf(materialId), materialType);
         } else if (eventType.equals(EventType.ItemUpdated.name())) {
             updateEvent(data, materialType);
+
         } else {
             throw new IllegalArgumentException("Invalid event type: " + eventType);
         }
 
     }
+
+
 
     @SuppressWarnings("unchecked")
     public <T extends BaseMaterialEntity> T reconstructMaterialEntity(Long materialId, String materialType, Class<T> clazz) {
@@ -312,9 +310,27 @@ public class MaterialEventService {
             Long materialId = materialEvent.getEvent().getMaterialId();
             doesItemExist(materialId, materialType);
             saveEvent(materialEvent);
+            evictCache(materialType, materialEvent.getEvent().getName());
+
             reconstructMaterialEntity(materialId, materialType, FastenerEntity.class);
         }
     }
+
+    private void deleteEvent(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<MaterialDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
+        });
+
+        Long materialId = event.getEvent().getMaterialId();
+        doesItemExist(materialId, materialType);
+        saveEvent(event);
+        evictCache(materialType, event.getEvent().getName());
+
+        materialDeleteService.deleteMaterialByIdAndCategory(String.valueOf(materialId), materialType);
+        materialRedisService.clearCacheForObject(String.valueOf(materialId), materialType);
+    }
+
+    @CacheEvict(value = "materials", key = "#category + '_' + #materialName.substring(0,2)")
+    public void evictCache(String category, String materialName) {}
 
 
 }
