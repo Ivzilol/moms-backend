@@ -76,12 +76,15 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String specificationFileUrl, String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+    public OrderEntity(Long id, String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, String specificationFileUrl, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+        super(id);
         this.username = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
+        this.specificationFileUrl = specificationFileUrl;
         this.deliveryDate = deliveryDate;
+        this.materialType = materialType;
         this.orderStatus = orderStatus;
         this.constructionSite = constructionSite;
         this.fasteners = fasteners;
@@ -94,7 +97,6 @@ public class OrderEntity extends BaseEntity {
         this.unspecified = unspecified;
         this.services = services;
         this.transports = transports;
-        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getSpecificationFileUrl() {

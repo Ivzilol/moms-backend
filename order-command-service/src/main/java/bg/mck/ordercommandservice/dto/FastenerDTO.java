@@ -17,6 +17,15 @@ public class FastenerDTO extends BaseDTO {
     public FastenerDTO() {
     }
 
+    public FastenerDTO(Long id, Double quantity, String description, String specificationFileUrl, String type, String diameter, Double length, String model, String clazz) {
+        super(id, quantity, description, specificationFileUrl);
+        this.type = type;
+        this.diameter = diameter;
+        this.length = length;
+        this.model = model;
+        this.clazz = clazz;
+    }
+
     public FastenerDTO(String type, String diameter, Double length, String model, String clazz) {
         this.type = type;
         this.diameter = diameter;
