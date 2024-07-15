@@ -1,5 +1,4 @@
-package bg.mck.ordercommandservice.unitTests;
-
+package bg.mck.ordercommandservice.service;
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
 import bg.mck.ordercommandservice.dto.FastenerDTO;
@@ -36,8 +35,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderCreationTests {
-
+class OrderServiceTest {
     @Mock
     private OrderRepository orderRepository;
     @Mock
@@ -104,15 +102,3 @@ public class OrderCreationTests {
         assertEquals("Site Name", expectedCreateOrderDTO.getConstructionSiteName());
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

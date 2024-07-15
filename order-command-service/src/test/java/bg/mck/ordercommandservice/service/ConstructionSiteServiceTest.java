@@ -1,4 +1,5 @@
-package bg.mck.ordercommandservice.unitTests;
+package bg.mck.ordercommandservice.service;
+
 
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
@@ -6,7 +7,6 @@ import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
 import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
 import bg.mck.ordercommandservice.repository.ConstructionSiteRepository;
-import bg.mck.ordercommandservice.service.ConstructionSiteService;
 import bg.mck.ordercommandservice.testUtils.ConstructionSiteUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ConstructionSiteTests {
+public class ConstructionSiteServiceTest {
     @Mock
     private ConstructionSiteRepository constructionSiteRepository;
     @InjectMocks
@@ -125,3 +125,4 @@ public class ConstructionSiteTests {
     }
 
 }
+
