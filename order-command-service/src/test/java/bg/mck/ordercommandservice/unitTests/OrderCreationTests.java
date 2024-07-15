@@ -1,27 +1,37 @@
 package bg.mck.ordercommandservice.unitTests;
 
-import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
+import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
+import bg.mck.ordercommandservice.dto.FastenerDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
+import bg.mck.ordercommandservice.entity.FastenerEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
-import bg.mck.ordercommandservice.mapper.*;
+import bg.mck.ordercommandservice.mapper.FastenerMapper;
+import bg.mck.ordercommandservice.mapper.OrderMapper;
+import bg.mck.ordercommandservice.repository.FastenerRepository;
 import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.service.ConstructionSiteService;
 import bg.mck.ordercommandservice.service.OrderService;
+import bg.mck.ordercommandservice.testUtils.ConstructionSiteUtil;
+import bg.mck.ordercommandservice.testUtils.MaterialUtil;
+import bg.mck.ordercommandservice.testUtils.OrderUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.Logger;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -35,86 +45,74 @@ public class OrderCreationTests {
     @Mock
     private OrderMapper orderMapper;
     @Mock
-    private OrderQueryServiceClient orderQueryServiceClient;
-    @Mock
     private FastenerMapper fastenerMapper;
-    @Mock
-    private GalvanisedSheetMapper galvanisedSheetMapper;
-    @Mock
-    private InsulationMapper insulationMapper;
-    @Mock
-    private MetalMapper metalMapper;
-    @Mock
-    private PanelMapper panelMapper;
-    @Mock
-    private RebarMapper rebarMapper;
-    @Mock
-    private ServiceMapper serviceMapper;
-    @Mock
-    private SetMapper setMapper;
-    @Mock
-    private TransportMapper transportMapper;
-    @Mock
-    private UnspecifiedMapper unspecifiedMapper;
 
     @InjectMocks
     private OrderService orderService;
 
-    @Mock
-    private Logger logger;
-
     private OrderDTO orderDTO;
     private OrderEntity orderEntity;
     private ConstructionSiteEntity constructionSiteEntity;
-    private CreateOrderDTO expectedCreateOrderDTO;
+    private ConstructionSiteDTO constructionSiteDTO;
 
     @BeforeEach
     public void setUp() {
-        constructionSiteEntity = new ConstructionSiteEntity();
-        orderDTO = new OrderDTO();
-//        orderDTO.setConstructionSite();
-        orderEntity = new OrderEntity();
+        constructionSiteEntity = ConstructionSiteUtil.createConstructionSiteEntity();
+        constructionSiteDTO = ConstructionSiteUtil.createConstructionSiteDTO();
+        orderDTO = OrderUtil.createOrderDTO();
+        orderEntity = OrderUtil.createOrderEntity();
 
-        expectedCreateOrderDTO = new CreateOrderDTO.Builder()
-                .orderId(1L)
-                .orderNumber(2)
-                .constructionSiteName("Site Name")
-                .constructionSiteNumber("1234")
-                .build();
-
-        // Mock the behavior of the dependencies
         when(orderMapper.toOrderEntity(orderDTO)).thenReturn(orderEntity);
-        when(constructionSiteService.getConstructionSiteByNumberAndName(orderDTO.getConstructionSite())).thenReturn(constructionSiteEntity);
+        when(constructionSiteService.getConstructionSiteByNumberAndName(any(ConstructionSiteDTO.class))).thenReturn(constructionSiteEntity);
         when(orderRepository.findLastOrderNumber()).thenReturn(Optional.of(3));
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
-
     }
+
     @AfterEach
     public void tearDown() {
         orderRepository.deleteAll();
-        reset(orderRepository, constructionSiteService, orderMapper, logger);
+        reset(orderRepository, constructionSiteService, orderMapper);
     }
 
     @Test
-    void testCreateOrder() {
-        CreateOrderDTO result = orderService.createOrder(orderDTO, "test@example.com");
-
-        // Verify that the orderRepository.save method was called
+    void test_CreateOrder_shouldReturn_correctData() {
+        CreateOrderDTO expectedCreateOrderDTO = orderService.createOrder(orderDTO, "test@example.com");
         verify(orderRepository).save(orderEntity);
 
-        // Verify the properties of the saved OrderEntity
-        assertEquals("test@example.com", orderEntity.getUsername());
-        assertEquals(OrderStatus.CREATED, orderEntity.getOrderStatus());
-        assertEquals(4, orderEntity.getOrderNumber());
-        assertEquals(constructionSiteEntity, orderEntity.getConstructionSite());
+        assertEquals(OrderStatus.CREATED, expectedCreateOrderDTO.getOrderStatus());
+        assertEquals(1L, expectedCreateOrderDTO.getOrderId());
+        assertEquals(4, expectedCreateOrderDTO.getOrderNumber());
+        assertEquals("1234", expectedCreateOrderDTO.getConstructionSiteNumber());
+        assertEquals("Site Name", expectedCreateOrderDTO.getConstructionSiteName());
+    }
 
-        // Verify the properties of the returned CreateOrderDTO
-//        assertEquals(expectedCreateOrderDTO.getOrderId(), result.getOrderId());
-//        assertEquals(expectedCreateOrderDTO.getOrderNumber(), result.getOrderNumber());
-//        assertEquals(expectedCreateOrderDTO.getConstructionSiteName(), result.getConstructionSiteName());
-//        assertEquals(expectedCreateOrderDTO.getConstructionSiteNumber(), result.getConstructionSiteNumber());
+    @Test
+    void testCreateOrderWithFasteners() {
+        FastenerDTO fastener1 = MaterialUtil.createFastenerDTO();
+        FastenerDTO fastener2 = MaterialUtil.createFastenerDTO();
 
-        // Verify that the logger.info method was called
-//        verify(logger).info(eq("Order with id {} created successfully"), eq(orderEntity.getId()));
+        orderDTO.setConstructionSite(constructionSiteDTO)
+                .setFasteners(Set.of(fastener1, fastener2));
+
+        CreateOrderDTO expectedCreateOrderDTO = orderService.createOrder(orderDTO, "test@example.com");
+
+        verify(orderRepository, times(1)).save(orderEntity);
+        assertEquals(OrderStatus.CREATED, expectedCreateOrderDTO.getOrderStatus());
+        assertEquals(1L, expectedCreateOrderDTO.getOrderId());
+        assertEquals(4, expectedCreateOrderDTO.getOrderNumber());
+        assertEquals("1234", expectedCreateOrderDTO.getConstructionSiteNumber());
+        assertEquals("Site Name", expectedCreateOrderDTO.getConstructionSiteName());
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

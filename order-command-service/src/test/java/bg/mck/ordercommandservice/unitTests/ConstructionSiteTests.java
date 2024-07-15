@@ -7,6 +7,7 @@ import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
 import bg.mck.ordercommandservice.repository.ConstructionSiteRepository;
 import bg.mck.ordercommandservice.service.ConstructionSiteService;
+import bg.mck.ordercommandservice.testUtils.ConstructionSiteUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,13 +35,8 @@ public class ConstructionSiteTests {
 
     @BeforeEach
     public void setUp() {
-        constructionSiteDTO = new ConstructionSiteDTO();
-        constructionSiteDTO.setConstructionNumber("1234");
-        constructionSiteDTO.setName("Site Name");
-
-        constructionSiteEntity = new ConstructionSiteEntity();
-        constructionSiteEntity.setConstructionNumber("1234");
-        constructionSiteEntity.setName("Site Name");
+        constructionSiteDTO = ConstructionSiteUtil.createConstructionSiteDTO();
+        constructionSiteEntity = ConstructionSiteUtil.createConstructionSiteEntity();
     }
 
     @Test
