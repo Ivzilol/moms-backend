@@ -13,7 +13,7 @@ import java.util.Set;
 public class CreateOrderEvent<T> extends BaseEvent {
 
 
-    private String username;
+    private String email;
     private Integer orderNumber;
     private String orderDescription;
     private ZonedDateTime orderDate;
@@ -29,7 +29,7 @@ public class CreateOrderEvent<T> extends BaseEvent {
 
     public CreateOrderEvent(OrderEventType eventType, Long orderId, LocalDateTime localDateTime, String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteDTO constructionSite, Set<T> materials) {
         super(eventType, orderId, localDateTime);
-        this.username = username;
+        this.email = username;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
@@ -40,12 +40,12 @@ public class CreateOrderEvent<T> extends BaseEvent {
         this.materials = materials;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public CreateOrderEvent<T> setUsername(String username) {
-        this.username = username;
+    public CreateOrderEvent<T> setEmail(String email) {
+        this.email = email;
         return this;
     }
 

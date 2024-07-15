@@ -5,9 +5,7 @@ import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -16,7 +14,7 @@ import java.util.Set;
 public class OrderEntity extends BaseEntity {
 
     @NotNull
-    private String username;
+    private String email;
 
     private Integer orderNumber;
 
@@ -75,8 +73,8 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
-        this.username = username;
+    public OrderEntity(String email, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+        this.email = email;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
@@ -95,12 +93,12 @@ public class OrderEntity extends BaseEntity {
         this.transports = transports;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public OrderEntity setUsername(String username) {
-        this.username = username;
+    public OrderEntity setEmail(String username) {
+        this.email = username;
         return this;
     }
 

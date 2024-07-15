@@ -1,4 +1,4 @@
-package bg.mck.orderqueryservice.config;
+package bg.mck.orderqueryservice.utils;
 
 import bg.mck.orderqueryservice.events.*;
 import com.google.gson.reflect.TypeToken;
@@ -47,5 +47,4 @@ public class EventTypeMapper {
     public Map<String, Map<String, Type>> getTypeEvents() {
         return typeEvents;
     }
-
 }

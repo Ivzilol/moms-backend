@@ -1,4 +1,4 @@
-package bg.mck.orderqueryservice.config;
+package bg.mck.orderqueryservice.config.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
