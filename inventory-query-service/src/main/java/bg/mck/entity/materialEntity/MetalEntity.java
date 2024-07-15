@@ -5,9 +5,9 @@ import jakarta.validation.constraints.DecimalMin;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "metals")
-public class MetalEntity {
+public class MetalEntity extends BaseMaterialEntity{
 
-    private String id;
+
 
     //description
     private String name;
@@ -25,20 +25,12 @@ public class MetalEntity {
     }
 
     public MetalEntity(String id, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.totalWeight = totalWeight;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

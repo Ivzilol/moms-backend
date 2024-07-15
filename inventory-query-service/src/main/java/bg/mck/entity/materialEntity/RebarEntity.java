@@ -3,13 +3,12 @@ package bg.mck.entity.materialEntity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "rebars")
-public class RebarEntity {
+public class RebarEntity extends BaseMaterialEntity{
 
-    private String id;
 
     private String name;
 
-    private Double MaxLength;
+    private Double maxLength;
 
     private Double weight;
 
@@ -22,22 +21,23 @@ public class RebarEntity {
     public RebarEntity() {
     }
 
-    public RebarEntity(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
+    public RebarEntity(String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
         this.name = name;
-        MaxLength = maxLength;
+        this.maxLength = maxLength;
         this.weight = weight;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public RebarEntity(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
+        super(id);
+        this.name = name;
+        this.maxLength = maxLength;
+        this.weight = weight;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getName() {
@@ -49,11 +49,11 @@ public class RebarEntity {
     }
 
     public Double getMaxLength() {
-        return MaxLength;
+        return maxLength;
     }
 
     public void setMaxLength(Double maxLength) {
-        MaxLength = maxLength;
+        this.maxLength = maxLength;
     }
 
     public Double getWeight() {
