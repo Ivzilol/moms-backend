@@ -103,7 +103,7 @@ public class OrderCreationTests {
         verify(orderRepository).save(orderEntity);
 
         // Verify the properties of the saved OrderEntity
-        assertEquals("test@example.com", orderEntity.getUsername());
+        assertEquals("test@example.com", orderEntity.getEmail());
         assertEquals(OrderStatus.CREATED, orderEntity.getOrderStatus());
         assertEquals(4, orderEntity.getOrderNumber());
         assertEquals(constructionSiteEntity, orderEntity.getConstructionSite());
