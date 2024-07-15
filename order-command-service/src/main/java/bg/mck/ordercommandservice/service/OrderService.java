@@ -93,8 +93,8 @@ public class OrderService {
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());
 
-//        orderEntity = orderRepository.findById(orderEntity.getId()).get();
-//        createEvent(orderEntity);
+        orderEntity = orderRepository.findById(orderEntity.getId()).get();
+        createEvent(orderEntity);
 
         return new CreateOrderDTO.Builder()
                 .orderId(orderEntity.getId())
