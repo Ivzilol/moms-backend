@@ -1,13 +1,17 @@
-package bg.mck.ordercommandservice.event;
+package bg.mck.orderqueryservice.events;
 
-import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
-import bg.mck.ordercommandservice.entity.enums.MaterialType;
-import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 
+import bg.mck.orderqueryservice.dto.ConstructionSiteDTO;
+import bg.mck.orderqueryservice.entity.enums.MaterialType;
+import bg.mck.orderqueryservice.entity.enums.OrderStatus;
+
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
+
 public class CreateOrderEvent<T> extends BaseEvent {
+
 
     private String email;
     private Integer orderNumber;
@@ -16,11 +20,24 @@ public class CreateOrderEvent<T> extends BaseEvent {
     private ZonedDateTime deliveryDate;
     private MaterialType materialType;
     private OrderStatus orderStatus;
-    private ConstructionSiteEntity constructionSite;
+    private ConstructionSiteDTO constructionSite;
 
-    private Set<T> Materials;
+    private Set<T> materials;
 
     public CreateOrderEvent() {
+    }
+
+    public CreateOrderEvent(OrderEventType eventType, Long orderId, LocalDateTime localDateTime, String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteDTO constructionSite, Set<T> materials) {
+        super(eventType, orderId, localDateTime);
+        this.email = username;
+        this.orderNumber = orderNumber;
+        this.orderDescription = orderDescription;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+        this.materialType = materialType;
+        this.orderStatus = orderStatus;
+        this.constructionSite = constructionSite;
+        this.materials = materials;
     }
 
     public String getEmail() {
@@ -86,21 +103,21 @@ public class CreateOrderEvent<T> extends BaseEvent {
         return this;
     }
 
-    public ConstructionSiteEntity getConstructionSite() {
+    public ConstructionSiteDTO getConstructionSite() {
         return constructionSite;
     }
 
-    public CreateOrderEvent<T> setConstructionSite(ConstructionSiteEntity constructionSite) {
+    public CreateOrderEvent<T> setConstructionSite(ConstructionSiteDTO constructionSite) {
         this.constructionSite = constructionSite;
         return this;
     }
 
     public Set<T> getMaterials() {
-        return Materials;
+        return materials;
     }
 
     public CreateOrderEvent<T> setMaterials(Set<T> materials) {
-        Materials = materials;
+        this.materials = materials;
         return this;
     }
 }

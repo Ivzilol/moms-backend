@@ -1,88 +1,51 @@
-package bg.mck.ordercommandservice.entity;
+package bg.mck.orderqueryservice.entity;
 
-import bg.mck.ordercommandservice.entity.enums.MaterialType;
-import bg.mck.ordercommandservice.entity.enums.OrderStatus;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
+import bg.mck.orderqueryservice.entity.enums.MaterialType;
+import bg.mck.orderqueryservice.entity.enums.OrderStatus;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
-@Entity
-@Table(name = "orders")
-public class OrderEntity extends BaseEntity {
+@Document("orders")
+public class OrderEntity {
 
-    @NotNull
+    private String id;
     private String email;
-
     private Integer orderNumber;
-
-    @Column(columnDefinition = "TEXT")
     private String orderDescription;
-
     private ZonedDateTime orderDate;
-    private String specificationFileUrl;
-
-    @NotNull(message = "Delivery date must not be empty.")
-    @Future(message = "Delivery date must be in the future.")
     private ZonedDateTime deliveryDate;
-
-    @NotNull(message = "Material type must not be empty.")
-    @Enumerated(EnumType.STRING)
     private MaterialType materialType;
-
-    @NotNull(message = "Order status must not be empty.")
-    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-
-    @ManyToOne
     private ConstructionSiteEntity constructionSite;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
     private Set<FastenerEntity> fasteners;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
     private Set<GalvanisedSheetEntity> galvanisedSheets;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
     private Set<InsulationEntity> insulation;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
     private Set<MetalEntity> metals;
-    @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<PanelEntity> panels;
-    @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<RebarEntity> rebars;
-    @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<SetEntity> sets;
-    @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<UnspecifiedEntity> unspecified;
-    @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<ServiceEntity> services;
-    @JoinColumn(name = "order_id")
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<TransportEntity> transports;
 
 
     public OrderEntity() {
     }
 
-    public OrderEntity(Long id, String email, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, String specificationFileUrl, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
-        super(id);
+    public OrderEntity(String id, String email, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+        this.id = id;
         this.email = email;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
-        this.specificationFileUrl = specificationFileUrl;
         this.deliveryDate = deliveryDate;
         this.materialType = materialType;
         this.orderStatus = orderStatus;
@@ -99,12 +62,12 @@ public class OrderEntity extends BaseEntity {
         this.transports = transports;
     }
 
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
+    public String getId() {
+        return id;
     }
 
-    public OrderEntity setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
+    public OrderEntity setId(String id) {
+        this.id = id;
         return this;
     }
 
@@ -112,8 +75,8 @@ public class OrderEntity extends BaseEntity {
         return email;
     }
 
-    public OrderEntity setEmail(String username) {
-        this.email = username;
+    public OrderEntity setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -150,6 +113,15 @@ public class OrderEntity extends BaseEntity {
 
     public OrderEntity setDeliveryDate(ZonedDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
+        return this;
+    }
+
+    public MaterialType getMaterialType() {
+        return materialType;
+    }
+
+    public OrderEntity setMaterialType(MaterialType materialType) {
+        this.materialType = materialType;
         return this;
     }
 
@@ -258,15 +230,6 @@ public class OrderEntity extends BaseEntity {
 
     public OrderEntity setTransports(Set<TransportEntity> transports) {
         this.transports = transports;
-        return this;
-    }
-
-    public MaterialType getMaterialType() {
-        return materialType;
-    }
-
-    public OrderEntity setMaterialType(MaterialType materialType) {
-        this.materialType = materialType;
         return this;
     }
 }

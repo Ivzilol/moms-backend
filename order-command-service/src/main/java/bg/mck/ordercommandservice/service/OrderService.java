@@ -85,7 +85,7 @@ public class OrderService {
 
         ZoneId z = ZoneId.of("Europe/Sofia");
 
-        orderEntity.setUsername(email)
+        orderEntity.setEmail(email)
                 .setOrderNumber(lastOrderNumber.orElse(0) + 1)
                 .setOrderStatus(OrderStatus.CREATED)
                 .setOrderDate(ZonedDateTime.now(z).plusHours(3)) //FIXME: find a better way to set the time and timezone
@@ -136,6 +136,7 @@ public class OrderService {
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
         createOrderEvent.setEventTime(LocalDateTime.now());
         createOrderEvent.setMaterials(materialEvents);
+        createOrderEvent.setEmail(orderEntity.getEmail());
         orderEvent.setEvent(createOrderEvent);
 
         orderQueryServiceClient.sendEvent(orderEvent, String.valueOf(OrderEventType.ORDER_CREATED));
