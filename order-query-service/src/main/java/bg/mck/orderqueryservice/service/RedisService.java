@@ -4,12 +4,15 @@ import bg.mck.orderqueryservice.entity.OrderEntity;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
 public class RedisService {
 
     private final String CACHE_KEY = "orderQueryService";
+    private static final String CACHE_KEY_EMAIL = "userQueryEmail";
+
 
     private final RedisTemplate<String, OrderEntity> redisTemplate;
 
@@ -18,12 +21,21 @@ public class RedisService {
     }
 
 
-    public OrderEntity getCachedObject(Long id) {
+    public OrderEntity getCachedObjectById(Long id) {
         return redisTemplate.opsForValue().get(CACHE_KEY + id);
+    }
+
+    public List<OrderEntity> getCachedObjects() {
+        return redisTemplate.opsForValue().multiGet(redisTemplate.keys(CACHE_KEY + "*"));
+    }
+
+    public List<OrderEntity> getCachedObjectsByEmail(String email) {
+        return redisTemplate.opsForValue().multiGet(redisTemplate.keys(CACHE_KEY_EMAIL + "*"));
     }
 
     public void cacheObject(OrderEntity orderEntity) {
         redisTemplate.opsForValue().set(CACHE_KEY + orderEntity.getId(), orderEntity);
+        redisTemplate.opsForValue().set(CACHE_KEY_EMAIL + orderEntity.getEmail(), orderEntity);
     }
 
 

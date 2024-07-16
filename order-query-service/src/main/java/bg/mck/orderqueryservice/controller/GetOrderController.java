@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -36,6 +33,17 @@ public class GetOrderController {
     }
 
 
+    @GetMapping("admin/order/query/get-order/{id}")
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getOrderById(id));
+    }
+
+    @GetMapping("/user/order/query/get-order-by-orderNumber/{number}")
+    public ResponseEntity<OrderDTO> getOrderByOrderNumber(@PathVariable Integer number) {
+        return ResponseEntity.ok(orderService.getOrderByOrderNumber(number));
+    }
+
+
     @GetMapping("user/order/query/get-my-orders")
     public ResponseEntity<List<OrderDTO>> getMyOrders(@RequestHeader(HttpHeaders.AUTHORIZATION) String token ) {
 
@@ -43,5 +51,10 @@ public class GetOrderController {
         String email = restTemplate
                 .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
         return ResponseEntity.ok(orderService.getMyOrders(email));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
