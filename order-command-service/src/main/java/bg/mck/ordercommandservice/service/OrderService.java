@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -97,6 +98,7 @@ public class OrderService {
         createEvent(orderEntity);
 
         return new CreateOrderDTO.Builder()
+                .orderStatus(orderEntity.getOrderStatus())
                 .orderId(orderEntity.getId())
                 .orderNumber(orderEntity.getOrderNumber())
                 .constructionSiteName(orderEntity.getConstructionSite().getName())
@@ -131,6 +133,8 @@ public class OrderService {
 
         CreateOrderEvent<E> createOrderEvent = orderMapper.toEvent(orderEntity);
         createOrderEvent.setOrderId(orderEntity.getId());
+        createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
+        createOrderEvent.setEventTime(LocalDateTime.now());
         createOrderEvent.setMaterials(materialEvents);
         createOrderEvent.setEmail(orderEntity.getEmail());
         orderEvent.setEvent(createOrderEvent);

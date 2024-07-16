@@ -18,6 +18,13 @@ public class BaseMaterialEntity extends BaseEntity {
     public BaseMaterialEntity() {
     }
 
+    public BaseMaterialEntity(Long id, Double quantity, String description, String specificationFileUrl) {
+        super(id);
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
+
     public BaseMaterialEntity(Double quantity, String note, String specificationFileUrl) {
         this.quantity = quantity;
         this.description = note;

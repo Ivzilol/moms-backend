@@ -21,6 +21,15 @@ public class FastenerEntity extends BaseMaterialEntity {
     public FastenerEntity() {
     }
 
+    public FastenerEntity(Double quantity, String note, String specificationFileUrl, String type, String diameter, Double length, String model, String clazz) {
+        super(quantity, note, specificationFileUrl);
+        this.type = type;
+        this.diameter = diameter;
+        this.length = length;
+        this.model = model;
+        this.clazz = clazz;
+    }
+
     public FastenerEntity(String type, String description, String diameter, Double length, String model, String clazz) {
         this.type = type;
         this.diameter = diameter;
