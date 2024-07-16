@@ -7,6 +7,7 @@ import bg.mck.orderqueryservice.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,13 +42,12 @@ public class OrderService {
     }
 
     public List<OrderDTO> getMyOrders(String email) {
-        List<OrderDTO> collect = orderRepository
+
+        return orderRepository
                 .findByEmail(email)
                 .stream()
                 .map(orderMapper::fromOrderEntityToDTO)
                 .collect(Collectors.toList());
-
-        return collect;
     }
 
     public OrderDTO getOrderById(Long id) {
@@ -61,10 +61,9 @@ public class OrderService {
     }
 
     public OrderDTO getOrderByOrderNumber(Integer number) {
-        OrderEntity entity = orderRepository.findByOrderNumber(number);
-        if (entity == null) {
-            throw new IllegalArgumentException("Order with number: " + number + " not found");
-        }
-        return orderMapper.fromOrderEntityToDTO(entity);
+        return orderRepository
+                .findByOrderNumber(number)
+                .map(orderMapper::fromOrderEntityToDTO)
+                .orElseThrow(() -> new IllegalArgumentException("Order with number: " + number + " not found"));
     }
 }

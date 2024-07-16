@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("${APPLICATION_VERSION}/")
-public class GetOrderController {
+public class OrderController {
 
     private final OrderService orderService;
     private final RestTemplate restTemplate;
@@ -21,7 +21,7 @@ public class GetOrderController {
     private String APPLICATION_VERSION;
 
     @Autowired
-    public GetOrderController(OrderService orderService, RestTemplate restTemplate) {
+    public OrderController(OrderService orderService, RestTemplate restTemplate) {
         this.orderService = orderService;
         this.restTemplate = restTemplate;
     }
