@@ -26,7 +26,6 @@ import java.util.List;
 public class MaterialQueryController {
 
     private final MaterialSearchService materialSearchService;
-
     private final MaterialQueryService materialQueryService;
 
     public MaterialQueryController(MaterialQueryService materialQueryService, MaterialSearchService materialSearchService) {
