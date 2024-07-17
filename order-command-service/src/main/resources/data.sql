@@ -8,15 +8,15 @@ values (1, '18.23.1', 'Жилищна сграда В'),
        (7, '101.54.8', 'Склад за храни'),
        (8, '2.11.9', 'Цех за панели');
 
-insert into orders (id, delivery_date, material_type, order_date, order_description, order_number, order_status, username, construction_site_id)
-values  (1, '2024-09-05 14:57:57.000000', 'INSULATION', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 1, 'CREATED', 'test@abv.bg', 1),
-        (2, '2024-09-05 14:57:57.000000', 'METAL', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 2, 'CREATED', 'test@abv.bg', 2),
-        (3, '2024-09-05 14:57:57.000000', 'FASTENERS', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 34, 'CREATED', 'test@abv.bg', 2),
-        (4, '2024-09-05 14:57:57.000000', 'REBAR', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 4, 'CREATED', 'test@abv.bg', 3),
-        (5, '2024-09-05 14:57:57.000000', 'SERVICE', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 5, 'CREATED', 'test@abv.bg', 2),
-        (6, '2024-09-05 14:57:57.000000', 'TRANSPORT', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 6, 'CREATED', 'test@abv.bg', 2),
-        (7, '2024-09-05 14:57:57.000000', 'GALVANIZED_SHEET', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 22, 'CREATED', 'test@abv.bg', 2),
-        (8, '2024-09-05 14:57:57.000000', 'PANELS', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 8, 'CREATED', 'test@abv.bg', 2);
+insert into orders (id, delivery_date, material_type, order_date, order_description, order_number, order_status, specification_file_url,email, construction_site_id)
+values  (1, '2024-09-05 14:57:57.000000', 'INSULATION', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 1, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 1),
+        (2, '2024-09-05 14:57:57.000000', 'METAL', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 2, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
+        (3, '2024-09-05 14:57:57.000000', 'FASTENERS', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 34, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
+        (4, '2024-09-05 14:57:57.000000', 'REBAR', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 4, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 3),
+        (5, '2024-09-05 14:57:57.000000', 'SERVICE', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 5, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
+        (6, '2024-09-05 14:57:57.000000', 'TRANSPORT', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 6, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
+        (7, '2024-09-05 14:57:57.000000', 'GALVANIZED_SHEET', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 22, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
+        (8, '2024-09-05 14:57:57.000000', 'PANELS', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 8, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2);
 
 insert into services (id, description, quantity, specification_file_url, order_id)
 values  (1, 'Армировка на стени', 10, null, 5),

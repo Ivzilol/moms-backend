@@ -8,7 +8,7 @@ public abstract class BaseEvent {
 
     private OrderEventType eventType;
 
-    private LocalDateTime localDateTime;
+    private LocalDateTime eventTime;
 
     public BaseEvent() {
     }
@@ -16,7 +16,7 @@ public abstract class BaseEvent {
     public BaseEvent(Long orderId, OrderEventType eventType, LocalDateTime localDateTime) {
         this.orderId = orderId;
         this.eventType = eventType;
-        this.localDateTime = localDateTime;
+        this.eventTime = localDateTime;
     }
 
     public Long getOrderId() {
@@ -37,12 +37,12 @@ public abstract class BaseEvent {
         return this;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getEventTime() {
+        return eventTime;
     }
 
-    public BaseEvent setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public BaseEvent setEventTime(LocalDateTime eventTime) {
+        this.eventTime = eventTime;
         return this;
     }
 }

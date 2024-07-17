@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
@@ -84,7 +85,7 @@ public class OrderService {
 
         ZoneId z = ZoneId.of("Europe/Sofia");
 
-        orderEntity.setUsername(email)
+        orderEntity.setEmail(email)
                 .setOrderNumber(lastOrderNumber.orElse(0) + 1)
                 .setOrderStatus(OrderStatus.CREATED)
                 .setOrderDate(ZonedDateTime.now(z).plusHours(3)) //FIXME: find a better way to set the time and timezone
@@ -93,10 +94,11 @@ public class OrderService {
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());
 
-//        orderEntity = orderRepository.findById(orderEntity.getId()).get();
-//        createEvent(orderEntity);
+        orderEntity = orderRepository.findById(orderEntity.getId()).get();
+        createEvent(orderEntity);
 
         return new CreateOrderDTO.Builder()
+                .orderStatus(orderEntity.getOrderStatus())
                 .orderId(orderEntity.getId())
                 .orderNumber(orderEntity.getOrderNumber())
                 .constructionSiteName(orderEntity.getConstructionSite().getName())
@@ -130,7 +132,11 @@ public class OrderService {
         orderEvent.setEventType(OrderEventType.ORDER_CREATED);
 
         CreateOrderEvent<E> createOrderEvent = orderMapper.toEvent(orderEntity);
+        createOrderEvent.setOrderId(orderEntity.getId());
+        createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
+        createOrderEvent.setEventTime(LocalDateTime.now());
         createOrderEvent.setMaterials(materialEvents);
+        createOrderEvent.setEmail(orderEntity.getEmail());
         orderEvent.setEvent(createOrderEvent);
 
         orderQueryServiceClient.sendEvent(orderEvent, String.valueOf(OrderEventType.ORDER_CREATED));

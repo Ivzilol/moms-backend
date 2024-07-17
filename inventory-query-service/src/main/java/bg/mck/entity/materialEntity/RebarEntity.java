@@ -8,7 +8,7 @@ public class RebarEntity extends BaseMaterialEntity{
 
     private String name;
 
-    private Double MaxLength;
+    private Double maxLength;
 
     private Double weight;
 
@@ -21,10 +21,19 @@ public class RebarEntity extends BaseMaterialEntity{
     public RebarEntity() {
     }
 
+    public RebarEntity(String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
+        this.name = name;
+        this.maxLength = maxLength;
+        this.weight = weight;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
+
     public RebarEntity(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
         super(id);
         this.name = name;
-        MaxLength = maxLength;
+        this.maxLength = maxLength;
         this.weight = weight;
         this.quantity = quantity;
         this.description = description;
@@ -40,11 +49,11 @@ public class RebarEntity extends BaseMaterialEntity{
     }
 
     public Double getMaxLength() {
-        return MaxLength;
+        return maxLength;
     }
 
     public void setMaxLength(Double maxLength) {
-        MaxLength = maxLength;
+        this.maxLength = maxLength;
     }
 
     public Double getWeight() {

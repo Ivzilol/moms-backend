@@ -16,7 +16,7 @@ import java.util.Set;
 public class OrderEntity extends BaseEntity {
 
     @NotNull
-    private String username;
+    private String email;
 
     private Integer orderNumber;
 
@@ -24,6 +24,7 @@ public class OrderEntity extends BaseEntity {
     private String orderDescription;
 
     private ZonedDateTime orderDate;
+    private String specificationFileUrl;
 
     @NotNull(message = "Delivery date must not be empty.")
     @Future(message = "Delivery date must be in the future.")
@@ -75,12 +76,15 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String username, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
-        this.username = username;
+    public OrderEntity(Long id, String email, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, String specificationFileUrl, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+        super(id);
+        this.email = email;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
+        this.specificationFileUrl = specificationFileUrl;
         this.deliveryDate = deliveryDate;
+        this.materialType = materialType;
         this.orderStatus = orderStatus;
         this.constructionSite = constructionSite;
         this.fasteners = fasteners;
@@ -95,12 +99,21 @@ public class OrderEntity extends BaseEntity {
         this.transports = transports;
     }
 
-    public String getUsername() {
-        return username;
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
     }
 
-    public OrderEntity setUsername(String username) {
-        this.username = username;
+    public OrderEntity setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public OrderEntity setEmail(String username) {
+        this.email = username;
         return this;
     }
 

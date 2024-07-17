@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class CreateOrderEvent<T> extends BaseEvent {
 
-    private String username;
+    private String email;
     private Integer orderNumber;
     private String orderDescription;
     private ZonedDateTime orderDate;
@@ -23,12 +23,12 @@ public class CreateOrderEvent<T> extends BaseEvent {
     public CreateOrderEvent() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public CreateOrderEvent<T> setUsername(String username) {
-        this.username = username;
+    public CreateOrderEvent<T> setEmail(String email) {
+        this.email = email;
         return this;
     }
 

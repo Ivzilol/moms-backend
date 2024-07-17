@@ -11,6 +11,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import bg.mck.dto.FastenersDTO;
+import bg.mck.dto.MaterialDTO;
+import bg.mck.service.MaterialSearchService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,11 +25,13 @@ import java.util.List;
 @RestController
 public class MaterialQueryController {
 
+    private final MaterialSearchService materialSearchService;
 
     private final MaterialQueryService materialQueryService;
 
-    public MaterialQueryController(MaterialQueryService materialQueryService) {
+    public MaterialQueryController(MaterialQueryService materialQueryService, MaterialSearchService materialSearchService) {
         this.materialQueryService = materialQueryService;
+        this.materialSearchService = materialSearchService;
     }
 
     @Operation(summary = "Retrieve material by category and ID", description = "Fetches detailed information of a material given its category and ID")
@@ -61,6 +70,11 @@ public class MaterialQueryController {
     }
 
 
-
-
+    @GetMapping("/${APPLICATION_VERSION}/user/inventory/query/search")
+    public ResponseEntity<?> getMaterialByPartOfName(@RequestParam("category") String category,
+                                                     @RequestParam("materialName") String materialName) {
+        List<? extends MaterialDTO> materialDTO = this.materialSearchService
+                .findMaterialByCategoryAndName(category, materialName);
+        return ResponseEntity.ok(materialDTO);
+    }
 }
