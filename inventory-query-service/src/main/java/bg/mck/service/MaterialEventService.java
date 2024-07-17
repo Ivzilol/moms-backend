@@ -5,6 +5,7 @@ import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.*;
 import bg.mck.exceptions.InvalidCategoryException;
+import bg.mck.exceptions.InvalidEventTypeException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.repository.material.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -65,7 +66,7 @@ public class MaterialEventService {
             updateEvent(data, materialType);
 
         } else {
-            throw new IllegalArgumentException("Invalid event type: " + eventType);
+            throw new InvalidEventTypeException("Invalid event type: " + eventType);
         }
 
     }
@@ -73,8 +74,9 @@ public class MaterialEventService {
 
 
     @SuppressWarnings("unchecked")
-    public <T extends BaseMaterialEntity> T reconstructMaterialEntity(Long materialId, String materialType, Class<T> clazz) {
-        List<MaterialEvent<? extends BaseEvent>> events = eventMaterialRepository.findEventsByMaterialIdAndCategoryOrderByEventLocalDateTimeAsc(materialId, materialType);
+    public <T extends BaseMaterialEntity> T reconstructMaterialEntity(String materialId, String materialType, Class<T> clazz) {
+        doesItemExist(materialId, materialType);
+        List<MaterialEvent<? extends BaseEvent>> events = eventMaterialRepository.findEventsByMaterialIdAndCategoryOrderByEventLocalDateTimeAsc(Long.valueOf(materialId), materialType);
         return (T) applyEvents(events, materialType);
     }
 
@@ -184,9 +186,7 @@ public class MaterialEventService {
 
     private void applyFastenerEvent(MaterialEvent<? extends BaseEvent> materialEvent, FastenerEntity entity) {
         BaseEvent event = materialEvent.getEvent();
-
         if (event instanceof UpdateFastenerEvent) {
-
         } else if (event instanceof RegisterFastenerEvent registerEvent) {
 
         } else if (event instanceof MaterialDeletedEvent deletedEvent) {
@@ -199,7 +199,7 @@ public class MaterialEventService {
         return eventMaterialRepository.save(userEvent);
     }
 
-    private void doesItemExist(Long materialId, String materialType) {
+    private void doesItemExist(String materialId, String materialType) {
         if (materialType.equals(MaterialType.FASTENERS.name())) {
             getItemByMaterialId(fastenerRepository, materialId);
         } else if (materialType.equals(MaterialType.GALVANIZED_SHEET.name())) {
@@ -222,8 +222,8 @@ public class MaterialEventService {
     }
 
 
-    private <T> T getItemByMaterialId(MongoRepository<T, String> repository, Long materialId) {
-        Optional<T> material = repository.findById(String.valueOf(materialId));
+    private <T> T getItemByMaterialId(MongoRepository<T, String> repository, String materialId) {
+        Optional<T> material = repository.findById(materialId);
 
         if (material.isPresent()) {
             return material.get();
@@ -307,7 +307,7 @@ public class MaterialEventService {
             MaterialEvent<UpdateFastenerEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
-            Long materialId = materialEvent.getEvent().getMaterialId();
+            String materialId = materialEvent.getEvent().getMaterialId().toString();
             doesItemExist(materialId, materialType);
             saveEvent(materialEvent);
             evictCache(materialType, materialEvent.getEvent().getName());
@@ -320,13 +320,13 @@ public class MaterialEventService {
         MaterialEvent<MaterialDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
         });
 
-        Long materialId = event.getEvent().getMaterialId();
+        String materialId = event.getEvent().getMaterialId().toString();
         doesItemExist(materialId, materialType);
         saveEvent(event);
         evictCache(materialType, event.getEvent().getName());
 
-        materialDeleteService.deleteMaterialByIdAndCategory(String.valueOf(materialId), materialType);
-        materialRedisService.clearCacheForObject(String.valueOf(materialId), materialType);
+        materialDeleteService.deleteMaterialByIdAndCategory(materialId, materialType);
+        materialRedisService.clearCacheForObject(materialId, materialType);
     }
 
     @CacheEvict(value = "materials", key = "#category + '_' + #materialName.substring(0,2)")

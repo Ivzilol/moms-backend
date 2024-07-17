@@ -1,13 +1,7 @@
 package bg.mck.mapper;
 
-import bg.mck.dto.FastenersDTO;
-import bg.mck.dto.GalvanisedDTO;
-import bg.mck.dto.InsulationDTO;
-import bg.mck.dto.MetalDTO;
-import bg.mck.entity.materialEntity.FastenerEntity;
-import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
-import bg.mck.entity.materialEntity.InsulationEntity;
-import bg.mck.entity.materialEntity.MetalEntity;
+import bg.mck.dto.*;
+import bg.mck.entity.materialEntity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -26,8 +20,17 @@ public interface MaterialMapper {
     MetalEntity toMetalEntity(MetalDTO metalDTO);
     MetalDTO toMetalDTO(MetalEntity metalEntity);
 
+    PanelEntity toPanelEntity(PanelsDTO panelsDTO);
+    PanelsDTO toPanelDTO(PanelEntity panelEntity);
 
+    RebarEntity toRebarEntity(RebarDTO rebarDTO);
+    RebarDTO toRebarDTO(RebarEntity rebarEntity);
 
+    SetEntity toSetEntity(SetDTO setDTO);
+    SetDTO toSetDTO(SetEntity setEntity);
+
+    UnspecifiedEntity toUnspecifiedEntity(UnspecifiedDTO unspecifiedDTO);
+    UnspecifiedDTO toUnspecifiedDTO(UnspecifiedEntity unspecifiedEntity);
 
 
 }

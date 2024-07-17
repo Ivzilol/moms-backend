@@ -34,6 +34,7 @@ public class EventService {
 
 
     public UserEntity reconstructUserEntity(Long userId) {
+        doesUserExist(userId);
         List<UserEvent<? extends BaseEvent>> events = eventRepository.
                 findByEventUserIdOrderByEventLocalDateTimeAsc(userId);
 
