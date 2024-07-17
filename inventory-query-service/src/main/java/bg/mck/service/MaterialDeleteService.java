@@ -1,10 +1,13 @@
 package bg.mck.service;
 
 
+import bg.mck.entity.materialEntity.BaseMaterialEntity;
 import bg.mck.enums.MaterialType;
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.repository.material.*;
+import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +27,7 @@ public class MaterialDeleteService {
     private final MetalRepository metalRepository;
 
 
-    public MaterialDeleteService(FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, MetalRepository metalRepository) {
+    public MaterialDeleteService(FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, MetalRepository metalRepository, ProjectInfoAutoConfiguration projectInfoAutoConfiguration) {
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
         this.insulationRepository = insulationRepository;
@@ -34,6 +37,7 @@ public class MaterialDeleteService {
         this.unspecifiedRepository = unspecifiedRepository;
         this.metalRepository = metalRepository;
     }
+
 
     public void deleteMaterialByIdAndCategory(String id, String categoryName) {
        MaterialType type = MaterialType.valueOf(categoryName.toUpperCase());
@@ -52,7 +56,7 @@ public class MaterialDeleteService {
 
     }
 
-    private <T> void deleteMaterialById(MongoRepository<T, String> repository, String id) {
+    private <T extends BaseMaterialEntity> void deleteMaterialById(MongoRepository<T, String> repository, String id) {
         Optional<T> material = repository.findById(id);
 
         if (material.isPresent()) {

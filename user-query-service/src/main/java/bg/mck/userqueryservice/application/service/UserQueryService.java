@@ -36,12 +36,12 @@ public class UserQueryService {
     }
 
     private UserEntity getUserById(Long id) {
-        userRepository.findById(id.toString()).orElseThrow(() -> new UserNotFoundException("User with ID: " + id + " not found"));
 
         UserEntity cachedUser = redisService.getCachedObject(id);
         if (cachedUser != null) {
             return cachedUser;
         }
+        userRepository.findById(id.toString()).orElseThrow(() -> new UserNotFoundException("User with ID: " + id + " not found"));
 
 
         return eventService.reconstructUserEntity(id);
