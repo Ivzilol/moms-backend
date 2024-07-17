@@ -2,6 +2,7 @@ package bg.mck.exceptionHandling;
 
 
 import bg.mck.exceptions.InvalidCategoryException;
+import bg.mck.exceptions.InvalidEventTypeException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -46,7 +47,7 @@ public class InventoryControllerAdvice {
 
     @ExceptionHandler(InvalidCategoryException.class)
     public ResponseEntity<String> handleInvalidCategoryException(InvalidCategoryException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InventoryItemNotFoundException.class)
@@ -55,6 +56,10 @@ public class InventoryControllerAdvice {
     }
 
 
+    @ExceptionHandler(InvalidEventTypeException.class)
+    public ResponseEntity<String> handleInvalidEventTypeException(InvalidEventTypeException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
 
 }
