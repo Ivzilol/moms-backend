@@ -9,6 +9,7 @@ import bg.mck.orderqueryservice.utils.EventTypeMapper;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.Arrays;
 
 @Service
@@ -33,81 +34,18 @@ public class EventService {
 
     public void processOrderEvent(String data, String eventType) {
         String materialType = getMaterialType(data);
-        if (eventType.equals("ORDER_CREATED")) {
-            if (materialType.equals("FASTENERS")) {
-                OrderEvent<CreateOrderEvent<FasterEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("GALVANIZED_SHEET")) {
-                OrderEvent<CreateOrderEvent<GalvanisedSheetEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("INSULATION")) {
-                OrderEvent<CreateOrderEvent<InsulationEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("METAL")) {
-                OrderEvent<CreateOrderEvent<MetalEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("PANELS")) {
-                OrderEvent<CreateOrderEvent<PanelEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("REBAR")) {
-                OrderEvent<CreateOrderEvent<RebarEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("SET")) {
-                OrderEvent<CreateOrderEvent<SetEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("UNSPECIFIED")) {
-                OrderEvent<CreateOrderEvent<UnspecifiedEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("SERVICE")) {
-                OrderEvent<CreateOrderEvent<ServiceEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-
-            } else if (materialType.equals("TRANSPORT")) {
-                OrderEvent<CreateOrderEvent<TransportEvent>> orderEvent = gson.fromJson(data, eventTypeMapper.getTypeEvents().get(eventType).get(materialType));
-                OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-                orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-                saveEvent(orderEvent);
-                processEntity(orderEntity);
-            } else {
-                throw new IllegalArgumentException("Unknown material type: " + materialType);
-            }
-
+        if (eventType.equals(OrderEventType.ORDER_CREATED.name())) {
+            processCreateEvent(data, eventType, materialType);
         }
+    }
+
+    private <T extends BaseEvent> void processCreateEvent(String data, String eventType, String materialType) {
+        Type eventTypeToken = eventTypeMapper.getTypeEvents().get(eventType).get(materialType);
+        OrderEvent<CreateOrderEvent<T>> orderEvent = gson.fromJson(data, eventTypeToken);
+        OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
+        orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
+        saveEvent(orderEvent);
+        processEntity(orderEntity);
     }
 
     private void processEntity(OrderEntity orderEntity) {
@@ -115,12 +53,14 @@ public class EventService {
         redisService.cacheObject(orderEntity);
     }
 
-    private <T extends BaseEvent> OrderEvent<T> saveEvent(OrderEvent<T> orderEvent) {
-        return eventRepository.save(orderEvent);
+    private <T extends BaseEvent> void saveEvent(OrderEvent<T> orderEvent) {
+        eventRepository.save(orderEvent);
     }
 
     private String getMaterialType(String data) {
         return Arrays.stream(MaterialType.values()).filter(material -> data.contains(material.name()))
-                .findFirst().get().name();
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown material type in data: " + data))
+                .name();
     }
 }
