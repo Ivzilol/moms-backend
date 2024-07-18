@@ -13,10 +13,10 @@ public abstract class BaseEvent {
     public BaseEvent() {
     }
 
-    public BaseEvent(Long orderId, OrderEventType eventType, LocalDateTime localDateTime) {
+    public BaseEvent(Long orderId, OrderEventType eventType, LocalDateTime eventTime) {
         this.orderId = orderId;
         this.eventType = eventType;
-        this.eventTime = localDateTime;
+        this.eventTime = eventTime;
     }
 
     public Long getOrderId() {

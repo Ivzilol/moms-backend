@@ -1,19 +1,35 @@
 package bg.mck.orderqueryservice.utils;
 
 import bg.mck.orderqueryservice.events.*;
+import bg.mck.orderqueryservice.service.EventService;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class EventTypeMapper {
+public class EventTypeUtils {
 
     private Map<String, Map<String, Type>> typeEvents;
+    private Map<String, Method> methodProcessors;
 
-    public EventTypeMapper() {
+    public EventTypeUtils() throws NoSuchMethodException {
+        initializeTypeEvents();
+        initializeMethodProcessors();
+    }
+
+    private void initializeMethodProcessors() throws NoSuchMethodException {
+        this.methodProcessors = Map.of(
+                OrderEventType.ORDER_CREATED.name(), EventService.class.getDeclaredMethod("processCreateEvent", String.class, String.class, String.class),
+                OrderEventType.ORDER_UPDATED.name(), EventService.class.getDeclaredMethod("processUpdateEvent", String.class, String.class, String.class),
+                OrderEventType.ORDER_DELETED.name(), EventService.class.getDeclaredMethod("processDeleteEvent", String.class, String.class, String.class)
+        );
+    }
+
+    private void initializeTypeEvents() {
         this.typeEvents = new HashMap<>();
         this.typeEvents.put("ORDER_CREATED",
                 new HashMap<>() {
@@ -41,10 +57,15 @@ public class EventTypeMapper {
                                 new TypeToken<OrderEvent<CreateOrderEvent<TransportEvent>>>() {}.getType());
                     }
                 }
-                );
+        );
     }
 
     public Map<String, Map<String, Type>> getTypeEvents() {
         return typeEvents;
+    }
+
+
+    public Map<String, Method> getMethodProcessors() {
+        return methodProcessors;
     }
 }
