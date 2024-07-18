@@ -4,6 +4,7 @@ import bg.mck.orderqueryservice.entity.OrderEntity;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.events.BaseEvent;
 import bg.mck.orderqueryservice.events.CreateOrderEvent;
+import bg.mck.orderqueryservice.events.FasterEvent;
 import bg.mck.orderqueryservice.events.OrderEvent;
 import bg.mck.orderqueryservice.mapper.OrderMapper;
 import bg.mck.orderqueryservice.repository.EventRepository;
