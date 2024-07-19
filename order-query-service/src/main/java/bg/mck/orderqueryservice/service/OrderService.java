@@ -2,6 +2,7 @@ package bg.mck.orderqueryservice.service;
 
 import bg.mck.orderqueryservice.dto.OrderDTO;
 import bg.mck.orderqueryservice.entity.OrderEntity;
+import bg.mck.orderqueryservice.exception.OrderNotFoundException;
 import bg.mck.orderqueryservice.mapper.OrderMapper;
 import bg.mck.orderqueryservice.repository.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class OrderService {
         if (orderEntity != null) {
             return orderMapper.fromOrderEntityToDTO(orderEntity);
         } else {
-            throw new IllegalArgumentException("Order with id: " + orderId + " not found");
+            throw new OrderNotFoundException("Order with id " + orderId + " not found");
         }
     }
 
@@ -64,6 +65,6 @@ public class OrderService {
         return orderRepository
                 .findByOrderNumber(number)
                 .map(orderMapper::fromOrderEntityToDTO)
-                .orElseThrow(() -> new IllegalArgumentException("Order with number: " + number + " not found"));
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + number + " not found"));
     }
 }
