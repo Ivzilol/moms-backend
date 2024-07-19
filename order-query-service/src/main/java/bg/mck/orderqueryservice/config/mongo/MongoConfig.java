@@ -3,9 +3,11 @@ package bg.mck.orderqueryservice.config.mongo;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import jakarta.annotation.PostConstruct;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
@@ -16,6 +18,13 @@ import java.util.Arrays;
 
 @Configuration
 public class MongoConfig {
+
+    @Value("${MONGODB_ROOT_USERNAME}")
+    private String mongoUser;
+
+
+    @Value("${MONGODB_ROOT_PASSWORD}")
+    private String mongoPassword;
 
     private static class ZonedDateTimeCodec implements org.bson.codecs.Codec<ZonedDateTime> {
         private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_ZONED_DATE_TIME;
@@ -48,7 +57,7 @@ public class MongoConfig {
 
         MongoClientSettings settings = MongoClientSettings.builder()
                 .codecRegistry(codecRegistry)
-                .applyConnectionString(new com.mongodb.ConnectionString("mongodb://your_username:your_password@localhost:27020/order-query-db?authSource=admin"))
+                .applyConnectionString(new com.mongodb.ConnectionString("mongodb://"+ mongoUser +":"+ mongoPassword +"@localhost:27020/order-query-db?authSource=admin"))
                 .build();
 
         return MongoClients.create(settings);

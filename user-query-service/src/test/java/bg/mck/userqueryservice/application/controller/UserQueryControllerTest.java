@@ -106,7 +106,7 @@ class UserQueryControllerTest {
 
     @Test
     public void testGetUserDetailsById_NotFoundWhenInvalidUserId() throws Exception {
-        mockMvc.perform(get("/" + ApplicationConstants.APPLICATION_VERSION + "/user/users/" + user.getId() + 1))
+        mockMvc.perform(get("/" + ApplicationConstants.APPLICATION_VERSION + "/user/user/query/user/" + user.getId() + 1))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertInstanceOf(UserNotFoundException.class, result.getResolvedException()));;
     }
