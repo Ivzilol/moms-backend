@@ -1,9 +1,9 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
 import java.time.LocalDateTime;
-public abstract class BaseEvent {
+public abstract class BaseMaterialEvent {
 
     private Long materialId;
 
@@ -11,10 +11,10 @@ public abstract class BaseEvent {
 
     private LocalDateTime localDateTime;
 
-    public BaseEvent() {
+    public BaseMaterialEvent() {
     }
 
-    public BaseEvent(Long materialId, EventType eventType) {
+    public BaseMaterialEvent(Long materialId, EventType eventType) {
         this.materialId = materialId;
         this.eventType = eventType;
         this.localDateTime = LocalDateTime.now();

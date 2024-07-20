@@ -2,7 +2,7 @@ package bg.mck.service;
 
 import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.*;
+import bg.mck.events.material.*;
 import bg.mck.repository.material.*;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;

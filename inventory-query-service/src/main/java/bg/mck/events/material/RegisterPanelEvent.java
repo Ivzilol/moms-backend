@@ -1,8 +1,8 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class RegisterPanelEvent extends BaseEvent{
+public class RegisterPanelEvent extends BaseMaterialEvent {
 
     private String category;
 

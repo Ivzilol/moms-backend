@@ -1,18 +1,18 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class RegisterSetEvent extends BaseEvent{
+public class RegisterGalvanizedEvent extends BaseMaterialEvent {
 
     private String category;
 
     private String name;
 
-    private Double galvanisedSheetThickness;
+    private String type;
 
-    private String color;
+    private Double maxLength;
 
-    private String maxLength;
+    private Double area;
 
     private Double quantity;
 
@@ -20,20 +20,20 @@ public class RegisterSetEvent extends BaseEvent{
 
     private String specificationFileUrl;
 
-    public RegisterSetEvent(Long materialId, EventType eventType, String category, String name, Double galvanisedSheetThickness, String color, String maxLength, Double quantity, String description, String specificationFileUrl) {
+    public RegisterGalvanizedEvent() {
+
+    }
+
+    public RegisterGalvanizedEvent(Long materialId, EventType eventType, String category, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        this.color = color;
+        this.type = type;
         this.maxLength = maxLength;
+        this.area = area;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public RegisterSetEvent() {
-
     }
 
     public String getCategory() {
@@ -52,28 +52,28 @@ public class RegisterSetEvent extends BaseEvent{
         this.name = name;
     }
 
-    public Double getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
+    public String getType() {
+        return type;
     }
 
-    public void setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getMaxLength() {
+    public Double getMaxLength() {
         return maxLength;
     }
 
-    public void setMaxLength(String maxLength) {
+    public void setMaxLength(Double maxLength) {
         this.maxLength = maxLength;
+    }
+
+    public Double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
     }
 
     public Double getQuantity() {

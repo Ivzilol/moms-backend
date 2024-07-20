@@ -1,8 +1,8 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class UpdateFastenerEvent extends BaseEvent{
+public class UpdateFastenerEvent extends BaseMaterialEvent {
 
     private String name;
     private String description;

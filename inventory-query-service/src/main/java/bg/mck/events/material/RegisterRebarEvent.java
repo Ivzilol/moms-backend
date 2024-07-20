@@ -1,18 +1,16 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class RegisterGalvanizedEvent extends BaseEvent{
+public class RegisterRebarEvent extends BaseMaterialEvent {
 
     private String category;
 
     private String name;
 
-    private String type;
+    private Double MaxLength;
 
-    private Double maxLength;
-
-    private Double area;
+    private Double weight;
 
     private Double quantity;
 
@@ -20,20 +18,19 @@ public class RegisterGalvanizedEvent extends BaseEvent{
 
     private String specificationFileUrl;
 
-    public RegisterGalvanizedEvent() {
-
-    }
-
-    public RegisterGalvanizedEvent(Long materialId, EventType eventType, String category, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl) {
+    public RegisterRebarEvent(Long materialId, EventType eventType, String category, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
-        this.type = type;
-        this.maxLength = maxLength;
-        this.area = area;
+        MaxLength = maxLength;
+        this.weight = weight;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public RegisterRebarEvent() {
+
     }
 
     public String getCategory() {
@@ -52,28 +49,20 @@ public class RegisterGalvanizedEvent extends BaseEvent{
         this.name = name;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public Double getMaxLength() {
-        return maxLength;
+        return MaxLength;
     }
 
     public void setMaxLength(Double maxLength) {
-        this.maxLength = maxLength;
+        MaxLength = maxLength;
     }
 
-    public Double getArea() {
-        return area;
+    public Double getWeight() {
+        return weight;
     }
 
-    public void setArea(Double area) {
-        this.area = area;
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
     public Double getQuantity() {

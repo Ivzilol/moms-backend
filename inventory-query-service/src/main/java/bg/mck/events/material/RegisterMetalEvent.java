@@ -1,12 +1,14 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class RegisterUnspecifiedEvent extends BaseEvent {
+public class RegisterMetalEvent extends BaseMaterialEvent {
 
     private String category;
 
     private String name;
+
+    private Double totalWeight;
 
     private Double quantity;
 
@@ -14,17 +16,17 @@ public class RegisterUnspecifiedEvent extends BaseEvent {
 
     private String specificationFileUrl;
 
-
-    public RegisterUnspecifiedEvent(Long materialId, EventType eventType, String category, String name, Double quantity, String description, String specificationFileUrl) {
+    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
+        this.totalWeight = totalWeight;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public RegisterUnspecifiedEvent() {
+    public RegisterMetalEvent() {
 
     }
 
@@ -42,6 +44,14 @@ public class RegisterUnspecifiedEvent extends BaseEvent {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(Double totalWeight) {
+        this.totalWeight = totalWeight;
     }
 
     public Double getQuantity() {

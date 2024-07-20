@@ -1,9 +1,9 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 
-public class MaterialEvent<T extends BaseEvent> {
+public class MaterialEvent<T extends BaseMaterialEvent> {
 
     private EventType eventType;
 

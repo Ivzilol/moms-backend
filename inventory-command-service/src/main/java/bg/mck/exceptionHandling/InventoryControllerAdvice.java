@@ -12,12 +12,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-@ControllerAdvice
+@RestControllerAdvice
 public class InventoryControllerAdvice {
 
     @ExceptionHandler(Exception.class)
@@ -50,7 +51,9 @@ public class InventoryControllerAdvice {
         if (status == null) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<>("Feign client error: " + e.getMessage(), status);
+
+        String errorMessage = extractErrorMessage(e.getMessage());
+        return new ResponseEntity<>("Feign client error: " + errorMessage, status);
     }
 
     @ExceptionHandler(InvalidCategoryException.class)
@@ -64,6 +67,13 @@ public class InventoryControllerAdvice {
     }
 
 
+    private String extractErrorMessage(String fullMessage) {
+        int lastColonIndex = fullMessage.lastIndexOf(":");
+        if (lastColonIndex != -1 && lastColonIndex < fullMessage.length() - 1) {
+            return fullMessage.substring(lastColonIndex + 1).trim();
+        }
+        return "Requested resource not found.";
+    }
 
 
 }

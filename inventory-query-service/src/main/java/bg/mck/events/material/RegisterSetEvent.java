@@ -1,14 +1,18 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class RegisterMetalEvent extends BaseEvent{
+public class RegisterSetEvent extends BaseMaterialEvent {
 
     private String category;
 
     private String name;
 
-    private Double totalWeight;
+    private Double galvanisedSheetThickness;
+
+    private String color;
+
+    private String maxLength;
 
     private Double quantity;
 
@@ -16,17 +20,19 @@ public class RegisterMetalEvent extends BaseEvent{
 
     private String specificationFileUrl;
 
-    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl) {
+    public RegisterSetEvent(Long materialId, EventType eventType, String category, String name, Double galvanisedSheetThickness, String color, String maxLength, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
-        this.totalWeight = totalWeight;
+        this.galvanisedSheetThickness = galvanisedSheetThickness;
+        this.color = color;
+        this.maxLength = maxLength;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public RegisterMetalEvent() {
+    public RegisterSetEvent() {
 
     }
 
@@ -46,12 +52,28 @@ public class RegisterMetalEvent extends BaseEvent{
         this.name = name;
     }
 
-    public Double getTotalWeight() {
-        return totalWeight;
+    public Double getGalvanisedSheetThickness() {
+        return galvanisedSheetThickness;
     }
 
-    public void setTotalWeight(Double totalWeight) {
-        this.totalWeight = totalWeight;
+    public void setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+        this.galvanisedSheetThickness = galvanisedSheetThickness;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(String maxLength) {
+        this.maxLength = maxLength;
     }
 
     public Double getQuantity() {

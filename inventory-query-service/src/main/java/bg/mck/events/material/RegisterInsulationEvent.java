@@ -1,16 +1,16 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class RegisterRebarEvent extends BaseEvent{
+public class RegisterInsulationEvent extends BaseMaterialEvent {
 
     private String category;
 
     private String name;
 
-    private Double MaxLength;
+    private String type;
 
-    private Double weight;
+    private Double thickness;
 
     private Double quantity;
 
@@ -18,18 +18,18 @@ public class RegisterRebarEvent extends BaseEvent{
 
     private String specificationFileUrl;
 
-    public RegisterRebarEvent(Long materialId, EventType eventType, String category, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
+    public RegisterInsulationEvent(Long materialId, EventType eventType, String category, String name, String type, Double thickness, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
-        MaxLength = maxLength;
-        this.weight = weight;
+        this.type = type;
+        this.thickness = thickness;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public RegisterRebarEvent() {
+    public RegisterInsulationEvent() {
 
     }
 
@@ -49,20 +49,20 @@ public class RegisterRebarEvent extends BaseEvent{
         this.name = name;
     }
 
-    public Double getMaxLength() {
-        return MaxLength;
+    public String getType() {
+        return type;
     }
 
-    public void setMaxLength(Double maxLength) {
-        MaxLength = maxLength;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Double getWeight() {
-        return weight;
+    public Double getThickness() {
+        return thickness;
     }
 
-    public void setWeight(Double weight) {
-        this.weight = weight;
+    public void setThickness(Double thickness) {
+        this.thickness = thickness;
     }
 
     public Double getQuantity() {

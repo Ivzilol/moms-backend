@@ -23,10 +23,10 @@ public interface InventoryQueryServiceClient {
     @PostMapping("/inventory/services/events")
     <T extends BaseServiceEvent> void sendServiceEvent(@RequestBody ServiceEvent<T> data, @RequestHeader("Event-Type") String eventType);
 
-    @PostMapping("/inventory/transport/events")
+    @PostMapping("/inventory/transports/events")
     <T extends BaseTransportEvent> void sendTransportEvent(@RequestBody TransportEvent<T> data, @RequestHeader("Event-Type") String eventType);
 
-    @PostMapping("/inventory/construction/events")
+    @PostMapping("/inventory/constructions/events")
     <T extends BaseConstructionEvent> void sendConstructionEvent(@RequestBody ConstructionEvent<T> data, @RequestHeader("Event-Type") String eventType);
 
     @GetMapping("/inventory/items/{id}")
