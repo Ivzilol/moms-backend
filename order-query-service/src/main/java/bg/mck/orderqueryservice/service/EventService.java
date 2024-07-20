@@ -107,10 +107,12 @@ public class EventService {
             }
         }
         this.orderRepository.save(orderEntity);
+        saveUpdateEvent(updateOrderDTO);
+    }
 
+    private void saveUpdateEvent(UpdateOrderDTO updateOrderDTO) {
         CreateUpdateOrderEvent createUpdateOrderEvent = OrderMapper
                 .INSTANCE.toCreateUpdateOrderEvent(updateOrderDTO);
-
         OrderEvent<CreateUpdateOrderEvent> orderEvent = new OrderEvent<>();
         orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
         orderEvent.setEvent(createUpdateOrderEvent);
