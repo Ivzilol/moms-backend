@@ -6,10 +6,10 @@ import bg.mck.dto.UpdateMaterialDTO;
 import bg.mck.entity.materialEntity.PanelEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.MaterialEvent;
-import bg.mck.events.PanelUpdateEvent;
+import bg.mck.events.material.MaterialEvent;
+import bg.mck.events.material.PanelUpdateEvent;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.mapper.InventoryMapper;
+import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.PanelRepository;
 import bg.mck.utils.EventCreationHelper;
 import bg.mck.utils.ValidationUtil;
@@ -24,11 +24,11 @@ public class PanelUpdateService {
 
     private final PanelRepository panelRepository;
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
-    private final InventoryMapper inventoryMapper;
-    public PanelUpdateService(PanelRepository panelRepository, InventoryQueryServiceClient inventoryQueryServiceClient, InventoryMapper inventoryMapper) {
+    private final MaterialMapper materialMapper;
+    public PanelUpdateService(PanelRepository panelRepository, InventoryQueryServiceClient inventoryQueryServiceClient, MaterialMapper materialMapper) {
         this.panelRepository = panelRepository;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
-        this.inventoryMapper = inventoryMapper;
+        this.materialMapper = materialMapper;
     }
 
 
@@ -36,7 +36,7 @@ public class PanelUpdateService {
         PanelEntity panelEntity = panelRepository.findById(id)
                 .orElseThrow(() -> new InventoryItemNotFoundException(String.format(MATERIAL_NOT_FOUND_MESSAGE, PANEL, id)));
 
-        PanelUpdateDTO panelUpdateDTO = inventoryMapper.mapPanelDtoFromUpdateMaterialDto(updateMaterialDTO);
+        PanelUpdateDTO panelUpdateDTO = materialMapper.mapPanelDtoFromUpdateMaterialDto(updateMaterialDTO);
 
         if (ValidationUtil.isValid(panelUpdateDTO,PANEL_UPDATE_DTO_NAME)) {
             updatePanelEntity(panelUpdateDTO,panelEntity);
@@ -52,13 +52,13 @@ public class PanelUpdateService {
 
     private PanelUpdateEvent createPanelUpdateEvent(PanelEntity panelEntity) {
         PanelUpdateEvent panelUpdateEvent = new PanelUpdateEvent(panelEntity.getId(), EventType.ItemUpdated);
-        inventoryMapper.mapPanelEntityToEvent(panelEntity, panelUpdateEvent);
+        materialMapper.mapPanelEntityToEvent(panelEntity, panelUpdateEvent);
         panelUpdateEvent.setMaterialType(panelEntity.getCategory().getMaterialType().name());
         panelUpdateEvent.setCategory(MaterialType.PANELS.name());
         return panelUpdateEvent;
     }
     private void updatePanelEntity(PanelUpdateDTO panelUpdateDTO, PanelEntity panelEntity) {
-        inventoryMapper.updatePanelEntityFromDto(panelUpdateDTO,panelEntity);
+        materialMapper.updatePanelEntityFromDto(panelUpdateDTO,panelEntity);
         panelRepository.save(panelEntity);
     }
 }

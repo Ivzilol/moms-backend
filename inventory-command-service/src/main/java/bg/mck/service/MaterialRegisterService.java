@@ -6,7 +6,7 @@ import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.*;
+import bg.mck.events.material.*;
 import bg.mck.repository.*;
 import bg.mck.utils.EventCreationHelper;
 import org.springframework.stereotype.Service;

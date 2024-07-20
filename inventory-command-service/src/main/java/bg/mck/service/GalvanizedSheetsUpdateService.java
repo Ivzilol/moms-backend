@@ -6,10 +6,10 @@ import bg.mck.dto.UpdateMaterialDTO;
 import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.GalvanizedSheetUpdateEvent;
-import bg.mck.events.MaterialEvent;
+import bg.mck.events.material.GalvanizedSheetUpdateEvent;
+import bg.mck.events.material.MaterialEvent;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.mapper.InventoryMapper;
+import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.GalvanisedSheetRepository;
 import bg.mck.utils.EventCreationHelper;
 import bg.mck.utils.ValidationUtil;
@@ -21,14 +21,14 @@ import static bg.mck.enums.ConstantMessages.*;
 public class GalvanizedSheetsUpdateService {
 
     private final GalvanisedSheetRepository galvanisedSheetRepository;
-    private final InventoryMapper inventoryMapper;
+    private final MaterialMapper materialMapper;
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
 
     public GalvanizedSheetsUpdateService(GalvanisedSheetRepository galvanisedSheetRepository,
-                                         InventoryMapper inventoryMapper,
+                                         MaterialMapper materialMapper,
                                          InventoryQueryServiceClient inventoryQueryServiceClient) {
         this.galvanisedSheetRepository = galvanisedSheetRepository;
-        this.inventoryMapper = inventoryMapper;
+        this.materialMapper = materialMapper;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
     }
 
@@ -38,7 +38,7 @@ public class GalvanizedSheetsUpdateService {
                 .orElseThrow(() -> new InventoryItemNotFoundException
                         (String.format(MATERIAL_NOT_FOUND_MESSAGE, GALVANIZED_SHEET, id)));
 
-        GalvanizedSheetUpdateDTO galvanizedSheetUpdateDTO = inventoryMapper
+        GalvanizedSheetUpdateDTO galvanizedSheetUpdateDTO = materialMapper
                 .mapGalvanizedSheetDtoFromUpdateMaterialDTO(updateMaterialDTO);
 
         if (ValidationUtil.isValid(galvanizedSheetUpdateDTO,GALVANIZED_SHEET_DTO_NAME)) {
@@ -59,13 +59,13 @@ public class GalvanizedSheetsUpdateService {
     }
 
     private void updateEntity(GalvanizedSheetUpdateDTO galvanizedSheetUpdateDTO, GalvanisedSheetEntity galvanisedSheetEntity) {
-        inventoryMapper.updateGalvanizedSheetEntityFromDto(galvanizedSheetUpdateDTO,galvanisedSheetEntity);
+        materialMapper.updateGalvanizedSheetEntityFromDto(galvanizedSheetUpdateDTO,galvanisedSheetEntity);
         galvanisedSheetRepository.save(galvanisedSheetEntity);
     }
 
     private GalvanizedSheetUpdateEvent createGalvanizedSheetUpdateEvent(GalvanisedSheetEntity galvanisedSheetEntity) {
         GalvanizedSheetUpdateEvent galvanizedSheetUpdateEvent = new GalvanizedSheetUpdateEvent(galvanisedSheetEntity.getId(), EventType.ItemUpdated);
-        inventoryMapper.mapGalvanizedSheetToEvent(galvanisedSheetEntity, galvanizedSheetUpdateEvent);
+        materialMapper.mapGalvanizedSheetToEvent(galvanisedSheetEntity, galvanizedSheetUpdateEvent);
         galvanizedSheetUpdateEvent.setMaterialType(galvanisedSheetEntity.getCategory().getMaterialType().name());
         galvanizedSheetUpdateEvent.setCategory(MaterialType.GALVANIZED_SHEET.name());
         return galvanizedSheetUpdateEvent;
