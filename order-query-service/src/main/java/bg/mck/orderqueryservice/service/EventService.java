@@ -106,10 +106,10 @@ public class EventService {
                 }
             }
         }
-
         this.orderRepository.save(orderEntity);
 
-        CreateUpdateOrderEvent createUpdateOrderEvent = createUpdateOrderEventFromDTO(updateOrderDTO);
+        CreateUpdateOrderEvent createUpdateOrderEvent = OrderMapper
+                .INSTANCE.toCreateUpdateOrderEvent(updateOrderDTO);
 
         OrderEvent<CreateUpdateOrderEvent> orderEvent = new OrderEvent<>();
         orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
@@ -118,27 +118,6 @@ public class EventService {
     }
 
     private void updateFastenerEntity(FastenerEntity entity, UpdateOrderDTO updateOrderDTO) {
-        entity.setType(updateOrderDTO.getType());
-        entity.setDiameter(updateOrderDTO.getDiameter());
-        entity.setLength(updateOrderDTO.getLength());
-        entity.setModel(updateOrderDTO.getModel());
-        entity.setClazz(updateOrderDTO.getClazz());
-        entity.setQuantity(updateOrderDTO.getQuantity());
-        entity.setDescription(updateOrderDTO.getDescription());
-        entity.setSpecificationFileUrl(updateOrderDTO.getSpecificationFileUrl());
-    }
-
-    private CreateUpdateOrderEvent createUpdateOrderEventFromDTO(UpdateOrderDTO updateOrderDTO) {
-        CreateUpdateOrderEvent event = new CreateUpdateOrderEvent();
-        event.setId(updateOrderDTO.getId());
-        event.setType(updateOrderDTO.getType());
-        event.setDiameter(updateOrderDTO.getDiameter());
-        event.setLength(updateOrderDTO.getLength());
-        event.setModel(updateOrderDTO.getModel());
-        event.setClazz(updateOrderDTO.getClazz());
-        event.setQuantity(updateOrderDTO.getQuantity());
-        event.setDescription(updateOrderDTO.getDescription());
-        event.setSpecificationFileUrl(updateOrderDTO.getSpecificationFileUrl());
-        return event;
+        orderMapper.toUpdateFasterEntity(updateOrderDTO, entity);
     }
 }

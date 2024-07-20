@@ -1,18 +1,22 @@
 package bg.mck.orderqueryservice.mapper;
 
 import bg.mck.orderqueryservice.dto.OrderDTO;
+import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
 import bg.mck.orderqueryservice.entity.*;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.events.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", imports = MaterialType.class)
 public interface OrderMapper {
+
+    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
     @Mapping(target = "fasteners", expression = "java(mapFasteners(event.getMaterials(), event.getMaterialType()))")
     @Mapping(target = "galvanisedSheets", expression = "java(mapGalvanisedSheets(event.getMaterials(), event.getMaterialType()))")
@@ -157,4 +161,8 @@ public interface OrderMapper {
     TransportEntity toTransportEntity(TransportEvent event);
 
     OrderDTO fromOrderEntityToDTO(OrderEntity orderEntity);
+
+    void toUpdateFasterEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget FastenerEntity fastenerEntity);
+
+    CreateUpdateOrderEvent toCreateUpdateOrderEvent(UpdateOrderDTO updateOrderDTO);
 }
