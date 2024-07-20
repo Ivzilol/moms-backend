@@ -4,9 +4,7 @@ import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
 import bg.mck.orderqueryservice.entity.FastenerEntity;
 import bg.mck.orderqueryservice.entity.OrderEntity;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
-import bg.mck.orderqueryservice.events.BaseEvent;
-import bg.mck.orderqueryservice.events.CreateOrderEvent;
-import bg.mck.orderqueryservice.events.OrderEvent;
+import bg.mck.orderqueryservice.events.*;
 import bg.mck.orderqueryservice.mapper.OrderMapper;
 import bg.mck.orderqueryservice.repository.EventRepository;
 import bg.mck.orderqueryservice.repository.OrderRepository;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
@@ -97,22 +96,49 @@ public class EventService {
         Integer orderNumber = Integer.parseInt(String.valueOf(updateOrderDTO.getOrderNumber()));
         Optional<OrderEntity> optionalOrderEntity = this.orderRepository.findByOrderNumber(orderNumber);
         OrderEntity orderEntity = optionalOrderEntity.get();
+
         if (String.valueOf(MaterialType.FASTENERS).equals(updateOrderDTO.getMaterialType())) {
             Set<FastenerEntity> fasteners = orderEntity.getFasteners();
             for (FastenerEntity entity : fasteners) {
                 if (entity.getId().equals(updateOrderDTO.getId())) {
-                    entity.setType(updateOrderDTO.getType());
-                    entity.setDiameter(updateOrderDTO.getDiameter());
-                    entity.setLength(updateOrderDTO.getLength());
-                    entity.setModel(updateOrderDTO.getModel());
-                    entity.setClazz(updateOrderDTO.getClazz());
-                    entity.setQuantity(updateOrderDTO.getQuantity());
-                    entity.setDescription(updateOrderDTO.getDescription());
-                    entity.setSpecificationFileUrl(updateOrderDTO.getSpecificationFileUrl());
+                    updateFastenerEntity(entity, updateOrderDTO);
                     break;
                 }
             }
         }
+
         this.orderRepository.save(orderEntity);
+
+        CreateUpdateOrderEvent createUpdateOrderEvent = createUpdateOrderEventFromDTO(updateOrderDTO);
+
+        OrderEvent<CreateUpdateOrderEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(createUpdateOrderEvent);
+        this.eventRepository.save(orderEvent);
+    }
+
+    private void updateFastenerEntity(FastenerEntity entity, UpdateOrderDTO updateOrderDTO) {
+        entity.setType(updateOrderDTO.getType());
+        entity.setDiameter(updateOrderDTO.getDiameter());
+        entity.setLength(updateOrderDTO.getLength());
+        entity.setModel(updateOrderDTO.getModel());
+        entity.setClazz(updateOrderDTO.getClazz());
+        entity.setQuantity(updateOrderDTO.getQuantity());
+        entity.setDescription(updateOrderDTO.getDescription());
+        entity.setSpecificationFileUrl(updateOrderDTO.getSpecificationFileUrl());
+    }
+
+    private CreateUpdateOrderEvent createUpdateOrderEventFromDTO(UpdateOrderDTO updateOrderDTO) {
+        CreateUpdateOrderEvent event = new CreateUpdateOrderEvent();
+        event.setId(updateOrderDTO.getId());
+        event.setType(updateOrderDTO.getType());
+        event.setDiameter(updateOrderDTO.getDiameter());
+        event.setLength(updateOrderDTO.getLength());
+        event.setModel(updateOrderDTO.getModel());
+        event.setClazz(updateOrderDTO.getClazz());
+        event.setQuantity(updateOrderDTO.getQuantity());
+        event.setDescription(updateOrderDTO.getDescription());
+        event.setSpecificationFileUrl(updateOrderDTO.getSpecificationFileUrl());
+        return event;
     }
 }
