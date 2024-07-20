@@ -14,4 +14,6 @@ public interface FastenerMapper {
     FastenerEntity toEntity(FastenerDTO fastenerDTO);
 
     FasterEvent toEvent(FastenerEntity fastenerEntity);
+
+
 }
