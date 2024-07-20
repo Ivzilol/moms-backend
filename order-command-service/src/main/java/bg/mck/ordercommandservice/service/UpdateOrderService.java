@@ -1,8 +1,10 @@
 package bg.mck.ordercommandservice.service;
 
+import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.entity.FastenerEntity;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
+import bg.mck.ordercommandservice.event.OrderEventType;
 import bg.mck.ordercommandservice.repository.FastenerRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,11 @@ public class UpdateOrderService {
 
     private final FastenerRepository fastenerRepository;
 
-    public UpdateOrderService(FastenerRepository fastenerRepository) {
+    private final OrderQueryServiceClient orderQueryServiceClient;
+
+    public UpdateOrderService(FastenerRepository fastenerRepository, OrderQueryServiceClient orderQueryServiceClient) {
         this.fastenerRepository = fastenerRepository;
+        this.orderQueryServiceClient = orderQueryServiceClient;
     }
 
     public void updateOrder(UpdateOrderDTO updateOrderDTO, String email) {
@@ -35,6 +40,7 @@ public class UpdateOrderService {
         fastenerEntity.get().setDescription(updateOrderDTO.getDescription());
         fastenerEntity.get().setSpecificationFileUrl(updateOrderDTO.getSpecificationFileUrl());
         this.fastenerRepository.save(fastenerEntity.get());
+        orderQueryServiceClient.sendUpdateEvent(updateOrderDTO, String.valueOf(OrderEventType.ORDER_UPDATED));
 
     }
 }

@@ -7,7 +7,6 @@ public class FasterEvent {
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
     private String type;
     private String diameter;
     private Double length;
