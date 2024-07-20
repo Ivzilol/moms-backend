@@ -1,10 +1,10 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 
-public class RegisterFastenerEvent extends BaseEvent{
+public class RegisterFastenerEvent extends BaseMaterialEvent {
 
     private String category;
     private String name;

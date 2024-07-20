@@ -1,8 +1,8 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class UnspecifiedUpdateEvent extends BaseEvent {
+public class UnspecifiedUpdateEvent extends BaseMaterialEvent {
 
     public UnspecifiedUpdateEvent() {
     }

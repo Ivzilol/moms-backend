@@ -1,9 +1,9 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 import jakarta.persistence.Column;
 
-public class GalvanizedSheetUpdateEvent extends BaseEvent {
+public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
     private String category;
     private String materialType;
     private String marking;

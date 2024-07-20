@@ -4,14 +4,12 @@ import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.MaterialDeletedEvent;
-import bg.mck.events.MaterialEvent;
+import bg.mck.events.material.MaterialDeletedEvent;
+import bg.mck.events.material.MaterialEvent;
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.repository.*;
 import bg.mck.utils.EventCreationHelper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 

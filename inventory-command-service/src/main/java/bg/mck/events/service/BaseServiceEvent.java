@@ -1,32 +1,32 @@
-package bg.mck.events;
+package bg.mck.events.service;
 
 import bg.mck.enums.EventType;
 
 import java.time.LocalDateTime;
 
-public abstract class BaseEvent {
+public abstract class BaseServiceEvent {
 
-    private Long materialId;
+    private Long serviceId;
 
     private EventType eventType;
 
     private LocalDateTime localDateTime;
 
-    public BaseEvent() {
+    public BaseServiceEvent() {
     }
 
-    public BaseEvent(Long materialId, EventType eventType) {
-        this.materialId = materialId;
+    public BaseServiceEvent(Long serviceId, EventType eventType) {
+        this.serviceId = serviceId;
         this.eventType = eventType;
         this.localDateTime = LocalDateTime.now();
     }
 
-    public Long getMaterialId() {
-        return materialId;
+    public Long getServiceId() {
+        return serviceId;
     }
 
-    public void setMaterialId(Long materialId) {
-        this.materialId = materialId;
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
     }
 
     public EventType getEventType() {

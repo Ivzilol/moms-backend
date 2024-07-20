@@ -6,10 +6,10 @@ import bg.mck.dto.UpdateMaterialDTO;
 import bg.mck.entity.materialEntity.RebarEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.MaterialEvent;
-import bg.mck.events.RebarUpdateEvent;
+import bg.mck.events.material.MaterialEvent;
+import bg.mck.events.material.RebarUpdateEvent;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.mapper.InventoryMapper;
+import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.RebarRepository;
 import bg.mck.utils.EventCreationHelper;
 import bg.mck.utils.ValidationUtil;
@@ -23,18 +23,18 @@ public class RebarUpdateService {
 
     private final RebarRepository rebarRepository;
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
-    private final InventoryMapper inventoryMapper;
-    public RebarUpdateService(RebarRepository rebarRepository, InventoryQueryServiceClient inventoryQueryServiceClient, InventoryMapper inventoryMapper, ValidationUtil validationUtil) {
+    private final MaterialMapper materialMapper;
+    public RebarUpdateService(RebarRepository rebarRepository, InventoryQueryServiceClient inventoryQueryServiceClient, MaterialMapper materialMapper, ValidationUtil validationUtil) {
         this.rebarRepository = rebarRepository;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
-        this.inventoryMapper = inventoryMapper;
+        this.materialMapper = materialMapper;
     }
 
     public void updateRebar(Long id, UpdateMaterialDTO updateMaterialDTO) throws MethodArgumentNotValidException, NoSuchMethodException {
         RebarEntity rebarEntity = rebarRepository.findById(id)
                 .orElseThrow(() -> new InventoryItemNotFoundException(String.format(MATERIAL_NOT_FOUND_MESSAGE,REBAR,id)));
 
-        RebarUpdateDTO rebarUpdateDTO = inventoryMapper.mapRebarDtoFromUpdateMaterialDto(updateMaterialDTO);
+        RebarUpdateDTO rebarUpdateDTO = materialMapper.mapRebarDtoFromUpdateMaterialDto(updateMaterialDTO);
 
         if (ValidationUtil.isValid(rebarUpdateDTO,REBAR_UPDATE_DTO_NAME)) {
             updateRebarEntity(rebarUpdateDTO, rebarEntity);
@@ -53,14 +53,14 @@ public class RebarUpdateService {
 
     private RebarUpdateEvent createRebarUpdateEvent(RebarEntity rebarEntity) {
         RebarUpdateEvent rebarUpdateEvent = new RebarUpdateEvent(rebarEntity.getId(), EventType.ItemUpdated);
-        inventoryMapper.mapRebarEntityToEvent(rebarEntity,rebarUpdateEvent);
+        materialMapper.mapRebarEntityToEvent(rebarEntity,rebarUpdateEvent);
         rebarUpdateEvent.setMaterialType(rebarEntity.getCategory().getMaterialType().name());
         rebarUpdateEvent.setCategory(MaterialType.REBAR.name());
         return rebarUpdateEvent;
     }
 
     private void updateRebarEntity(RebarUpdateDTO rebarUpdateDTO, RebarEntity rebarEntity) {
-        inventoryMapper.updateRebarEntityFromDto(rebarUpdateDTO,rebarEntity);
+        materialMapper.updateRebarEntityFromDto(rebarUpdateDTO,rebarEntity);
         rebarRepository.save(rebarEntity);
     }
 }

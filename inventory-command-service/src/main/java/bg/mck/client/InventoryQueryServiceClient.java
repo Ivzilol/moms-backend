@@ -1,8 +1,14 @@
 package bg.mck.client;
 
 import bg.mck.dto.InventoryItemDetailsDTO;
-import bg.mck.events.BaseEvent;
-import bg.mck.events.MaterialEvent;
+import bg.mck.events.construction.BaseConstructionEvent;
+import bg.mck.events.construction.ConstructionEvent;
+import bg.mck.events.material.BaseMaterialEvent;
+import bg.mck.events.material.MaterialEvent;
+import bg.mck.events.service.BaseServiceEvent;
+import bg.mck.events.service.ServiceEvent;
+import bg.mck.events.transport.BaseTransportEvent;
+import bg.mck.events.transport.TransportEvent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,17 +17,17 @@ public interface InventoryQueryServiceClient {
 
 
     @PostMapping("/inventory/materials/events")
-    <T extends BaseEvent> void sendMaterialEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType,
-                                                 @RequestHeader("Material-Type") String materialType);
+    <T extends BaseMaterialEvent> void sendMaterialEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType,
+                                                         @RequestHeader("Material-Type") String materialType);
 
     @PostMapping("/inventory/services/events")
-    <T extends BaseEvent> void sendServiceEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+    <T extends BaseServiceEvent> void sendServiceEvent(@RequestBody ServiceEvent<T> data, @RequestHeader("Event-Type") String eventType);
 
     @PostMapping("/inventory/transport/events")
-    <T extends BaseEvent> void sendTransportEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+    <T extends BaseTransportEvent> void sendTransportEvent(@RequestBody TransportEvent<T> data, @RequestHeader("Event-Type") String eventType);
 
     @PostMapping("/inventory/construction/events")
-    <T extends BaseEvent> void sendConstructionEvent(@RequestBody MaterialEvent<T> data, @RequestHeader("Event-Type") String eventType);
+    <T extends BaseConstructionEvent> void sendConstructionEvent(@RequestBody ConstructionEvent<T> data, @RequestHeader("Event-Type") String eventType);
 
     @GetMapping("/inventory/items/{id}")
     InventoryItemDetailsDTO getInventoryItemById(@PathVariable("id") Long id);

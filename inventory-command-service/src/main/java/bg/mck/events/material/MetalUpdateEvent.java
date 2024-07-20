@@ -1,10 +1,8 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
 
-public class MetalUpdateEvent extends BaseEvent {
+public class MetalUpdateEvent extends BaseMaterialEvent {
     private String category;
     private String materialType;
     private String name;

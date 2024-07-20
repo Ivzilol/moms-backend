@@ -1,8 +1,8 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class MaterialDeletedEvent extends BaseEvent {
+public class MaterialDeletedEvent extends BaseMaterialEvent {
 
     private String name;
 

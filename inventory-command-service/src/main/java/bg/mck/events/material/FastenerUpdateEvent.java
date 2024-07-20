@@ -1,9 +1,9 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 import jakarta.persistence.Column;
 
-public class FastenerUpdateEvent extends BaseEvent {
+public class FastenerUpdateEvent extends BaseMaterialEvent {
 
     private String category;
     private String materialType;

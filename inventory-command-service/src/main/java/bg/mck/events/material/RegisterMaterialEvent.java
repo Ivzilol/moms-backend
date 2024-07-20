@@ -1,12 +1,10 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 
-import java.time.LocalDateTime;
-
-public class RegisterMaterialEvent extends BaseEvent{
+public class RegisterMaterialEvent extends BaseMaterialEvent {
 
     private String category;
     private String name;

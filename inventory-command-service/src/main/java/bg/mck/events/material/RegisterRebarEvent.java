@@ -1,14 +1,16 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class RegisterMetalEvent extends BaseEvent{
+public class RegisterRebarEvent extends BaseMaterialEvent {
 
     private String category;
 
     private String name;
 
-    private Double totalWeight;
+    private Double MaxLength;
+
+    private Double weight;
 
     private Double quantity;
 
@@ -16,17 +18,18 @@ public class RegisterMetalEvent extends BaseEvent{
 
     private String specificationFileUrl;
 
-    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl) {
+    public RegisterRebarEvent(Long materialId, EventType eventType, String category, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
-        this.totalWeight = totalWeight;
+        MaxLength = maxLength;
+        this.weight = weight;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public RegisterMetalEvent() {
+    public RegisterRebarEvent() {
 
     }
 
@@ -46,12 +49,20 @@ public class RegisterMetalEvent extends BaseEvent{
         this.name = name;
     }
 
-    public Double getTotalWeight() {
-        return totalWeight;
+    public Double getMaxLength() {
+        return MaxLength;
     }
 
-    public void setTotalWeight(Double totalWeight) {
-        this.totalWeight = totalWeight;
+    public void setMaxLength(Double maxLength) {
+        MaxLength = maxLength;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
     public Double getQuantity() {

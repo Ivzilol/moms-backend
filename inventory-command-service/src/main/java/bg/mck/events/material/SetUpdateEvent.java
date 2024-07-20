@@ -1,8 +1,8 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class SetUpdateEvent extends BaseEvent {
+public class SetUpdateEvent extends BaseMaterialEvent {
 
     public SetUpdateEvent() {
     }

@@ -1,9 +1,8 @@
-package bg.mck.events;
+package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
-import jakarta.persistence.Column;
 
-public class RebarUpdateEvent extends BaseEvent {
+public class RebarUpdateEvent extends BaseMaterialEvent {
 
     public RebarUpdateEvent() {
     }

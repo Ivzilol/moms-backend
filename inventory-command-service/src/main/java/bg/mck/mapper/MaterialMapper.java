@@ -2,7 +2,7 @@ package bg.mck.mapper;
 
 import bg.mck.dto.*;
 import bg.mck.entity.materialEntity.*;
-import bg.mck.events.*;
+import bg.mck.events.material.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -10,9 +10,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface InventoryMapper {
+public interface MaterialMapper {
 
-    InventoryMapper INSTANCE = Mappers.getMapper(InventoryMapper.class);
+    MaterialMapper INSTANCE = Mappers.getMapper(MaterialMapper.class);
 
     FastenerUpdateDTO mapFastenerDtoFromUpdateMaterialDTO(UpdateMaterialDTO updateMaterialDTO);
     InsulationUpdateDTO mapInsulationDtoFromUpdateMaterialDTO(UpdateMaterialDTO updateMaterialDTO);
