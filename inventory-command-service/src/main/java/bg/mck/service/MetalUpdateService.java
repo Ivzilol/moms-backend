@@ -6,10 +6,10 @@ import bg.mck.dto.UpdateMaterialDTO;
 import bg.mck.entity.materialEntity.MetalEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.MaterialEvent;
-import bg.mck.events.MetalUpdateEvent;
+import bg.mck.events.material.MaterialEvent;
+import bg.mck.events.material.MetalUpdateEvent;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.mapper.InventoryMapper;
+import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.MetalRepository;
 import bg.mck.utils.EventCreationHelper;
 import bg.mck.utils.ValidationUtil;
@@ -22,12 +22,12 @@ import static bg.mck.enums.ConstantMessages.*;
 public class MetalUpdateService {
 
     private final MetalRepository metalRepository;
-    private final InventoryMapper inventoryMapper;
+    private final MaterialMapper materialMapper;
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
 
-    public MetalUpdateService(MetalRepository metalRepository, InventoryMapper inventoryMapper, InventoryQueryServiceClient inventoryQueryServiceClient) {
+    public MetalUpdateService(MetalRepository metalRepository, MaterialMapper materialMapper, InventoryQueryServiceClient inventoryQueryServiceClient) {
         this.metalRepository = metalRepository;
-        this.inventoryMapper = inventoryMapper;
+        this.materialMapper = materialMapper;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
     }
 
@@ -35,7 +35,7 @@ public class MetalUpdateService {
         MetalEntity metalEntity = metalRepository.findById(id)
                 .orElseThrow(() -> new InventoryItemNotFoundException(String.format(MATERIAL_NOT_FOUND_MESSAGE, METAL, id)));
 
-        MetalUpdateDTO metalUpdateDTO = inventoryMapper.mapMetalDtoFromUpdateMaterialDto(updateMaterialDTO);
+        MetalUpdateDTO metalUpdateDTO = materialMapper.mapMetalDtoFromUpdateMaterialDto(updateMaterialDTO);
 
         if (ValidationUtil.isValid(metalUpdateDTO,METAL_DTO_NAME)) {
             updateMetalEntity(metalUpdateDTO,metalEntity);
@@ -52,14 +52,14 @@ public class MetalUpdateService {
 
     private MetalUpdateEvent createMetalUpdateEvent(MetalEntity metalEntity) {
         MetalUpdateEvent metalUpdateEvent = new MetalUpdateEvent(metalEntity.getId(), EventType.ItemUpdated);
-        inventoryMapper.mapMetalEntityToEvent(metalEntity,metalUpdateEvent);
+        materialMapper.mapMetalEntityToEvent(metalEntity,metalUpdateEvent);
         metalUpdateEvent.setMaterialType(metalEntity.getCategory().getMaterialType().name());
         metalUpdateEvent.setCategory(MaterialType.METAL.name());
         return metalUpdateEvent;
     }
 
     private void updateMetalEntity(MetalUpdateDTO metalUpdateDTO, MetalEntity metalEntity) {
-        inventoryMapper.updateMetalEntityFromDto(metalUpdateDTO,metalEntity);
+        materialMapper.updateMetalEntityFromDto(metalUpdateDTO,metalEntity);
         metalRepository.save(metalEntity);
     }
 }

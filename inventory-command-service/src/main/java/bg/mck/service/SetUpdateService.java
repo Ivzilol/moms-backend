@@ -6,10 +6,10 @@ import bg.mck.dto.UpdateMaterialDTO;
 import bg.mck.entity.materialEntity.SetEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.MaterialEvent;
-import bg.mck.events.SetUpdateEvent;
+import bg.mck.events.material.MaterialEvent;
+import bg.mck.events.material.SetUpdateEvent;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.mapper.InventoryMapper;
+import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.SetRepository;
 import bg.mck.utils.EventCreationHelper;
 import bg.mck.utils.ValidationUtil;
@@ -22,11 +22,11 @@ import static bg.mck.enums.ConstantMessages.*;
 public class SetUpdateService {
 
     private final SetRepository setRepository;
-    private final InventoryMapper inventoryMapper;
+    private final MaterialMapper materialMapper;
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
-    public SetUpdateService(SetRepository setRepository, InventoryMapper inventoryMapper, InventoryQueryServiceClient inventoryQueryServiceClient) {
+    public SetUpdateService(SetRepository setRepository, MaterialMapper materialMapper, InventoryQueryServiceClient inventoryQueryServiceClient) {
         this.setRepository = setRepository;
-        this.inventoryMapper = inventoryMapper;
+        this.materialMapper = materialMapper;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
     }
 
@@ -34,7 +34,7 @@ public class SetUpdateService {
         SetEntity setEntity = setRepository.findById(id)
                 .orElseThrow(() -> new InventoryItemNotFoundException(String.format(MATERIAL_NOT_FOUND_MESSAGE, SET, id)));
 
-        SetUpdateDTO setUpdateDTO = inventoryMapper.mapSetDtoFromUpdateMaterialDto(updateMaterialDTO);
+        SetUpdateDTO setUpdateDTO = materialMapper.mapSetDtoFromUpdateMaterialDto(updateMaterialDTO);
 
         if (ValidationUtil.isValid(setUpdateDTO,SET_UPDATE_DTO_NAME)) {
             updateSetEntity(setUpdateDTO, setEntity);
@@ -52,14 +52,14 @@ public class SetUpdateService {
 
     private SetUpdateEvent createSetUpdateEvent(SetEntity setEntity) {
         SetUpdateEvent setUpdateEvent = new SetUpdateEvent(setEntity.getId(), EventType.ItemUpdated);
-        inventoryMapper.mapSetEntityToEvent(setEntity,setUpdateEvent);
+        materialMapper.mapSetEntityToEvent(setEntity,setUpdateEvent);
         setUpdateEvent.setMaterialType(setEntity.getCategory().getMaterialType().name());
         setUpdateEvent.setCategory(MaterialType.SET.name());
         return setUpdateEvent;
     }
 
     private void updateSetEntity(SetUpdateDTO setUpdateDTO, SetEntity setEntity) {
-        inventoryMapper.updateSetEntityFromDto(setUpdateDTO,setEntity);
+        materialMapper.updateSetEntityFromDto(setUpdateDTO,setEntity);
         setRepository.save(setEntity);
 
     }

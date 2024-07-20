@@ -3,7 +3,7 @@ package bg.mck.service;
 import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.*;
+import bg.mck.events.material.*;
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InvalidEventTypeException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
@@ -76,11 +76,11 @@ public class MaterialEventService {
     @SuppressWarnings("unchecked")
     public <T extends BaseMaterialEntity> T reconstructMaterialEntity(String materialId, String materialType, Class<T> clazz) {
         doesItemExist(materialId, materialType);
-        List<MaterialEvent<? extends BaseEvent>> events = eventMaterialRepository.findEventsByMaterialIdAndCategoryOrderByEventLocalDateTimeAsc(Long.valueOf(materialId), materialType);
+        List<MaterialEvent<? extends BaseMaterialEvent>> events = eventMaterialRepository.findEventsByMaterialIdAndCategoryOrderByEventLocalDateTimeAsc(Long.valueOf(materialId), materialType);
         return (T) applyEvents(events, materialType);
     }
 
-    private BaseMaterialEntity applyEvents(List<MaterialEvent<? extends BaseEvent>> events, String materialType) {
+    private BaseMaterialEntity applyEvents(List<MaterialEvent<? extends BaseMaterialEvent>> events, String materialType) {
         if (materialType.equals(MaterialType.FASTENERS.name())) {
             FastenerEntity fastenerEntity = new FastenerEntity();
             for (var event : events) {
@@ -154,38 +154,38 @@ public class MaterialEventService {
 
     }
 
-    private void applyMetalEvent(MaterialEvent<? extends BaseEvent> event, MetalEntity metalEntity) {
+    private void applyMetalEvent(MaterialEvent<? extends BaseMaterialEvent> event, MetalEntity metalEntity) {
 
 
     }
 
-    private void applyUnspecifiedEvent(MaterialEvent<? extends BaseEvent> event, UnspecifiedEntity unspecifiedEntity) {
+    private void applyUnspecifiedEvent(MaterialEvent<? extends BaseMaterialEvent> event, UnspecifiedEntity unspecifiedEntity) {
 
     }
 
-    private void applySetEvent(MaterialEvent<? extends BaseEvent> event, SetEntity setEntity) {
+    private void applySetEvent(MaterialEvent<? extends BaseMaterialEvent> event, SetEntity setEntity) {
 
     }
 
-    private void applyRebarEvent(MaterialEvent<? extends BaseEvent> event, RebarEntity rebarEntity) {
+    private void applyRebarEvent(MaterialEvent<? extends BaseMaterialEvent> event, RebarEntity rebarEntity) {
 
     }
 
-    private void applyPanelEvents(MaterialEvent<? extends BaseEvent> event, PanelEntity panelEntity) {
+    private void applyPanelEvents(MaterialEvent<? extends BaseMaterialEvent> event, PanelEntity panelEntity) {
 
     }
 
-    private void applyInsulationEvent(MaterialEvent<? extends BaseEvent> event, InsulationEntity insulationEntity) {
+    private void applyInsulationEvent(MaterialEvent<? extends BaseMaterialEvent> event, InsulationEntity insulationEntity) {
 
     }
 
-    private void applyGalvanisedSheetEvent(MaterialEvent<? extends BaseEvent> event, GalvanisedSheetEntity galvanisedSheetEntity) {
+    private void applyGalvanisedSheetEvent(MaterialEvent<? extends BaseMaterialEvent> event, GalvanisedSheetEntity galvanisedSheetEntity) {
 
     }
 
 
-    private void applyFastenerEvent(MaterialEvent<? extends BaseEvent> materialEvent, FastenerEntity entity) {
-        BaseEvent event = materialEvent.getEvent();
+    private void applyFastenerEvent(MaterialEvent<? extends BaseMaterialEvent> materialEvent, FastenerEntity entity) {
+        BaseMaterialEvent event = materialEvent.getEvent();
         if (event instanceof UpdateFastenerEvent) {
         } else if (event instanceof RegisterFastenerEvent registerEvent) {
 
@@ -195,8 +195,8 @@ public class MaterialEventService {
     }
 
 
-    private <T extends BaseEvent> MaterialEvent<T> saveEvent(MaterialEvent<T> userEvent) {
-        return eventMaterialRepository.save(userEvent);
+    private <T extends BaseMaterialEvent> MaterialEvent<T> saveEvent(MaterialEvent<T> materialEvent) {
+        return eventMaterialRepository.save(materialEvent);
     }
 
     private void doesItemExist(String materialId, String materialType) {

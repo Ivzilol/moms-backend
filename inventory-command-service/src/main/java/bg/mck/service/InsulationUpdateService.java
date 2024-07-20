@@ -6,10 +6,10 @@ import bg.mck.dto.UpdateMaterialDTO;
 import bg.mck.entity.materialEntity.InsulationEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.InsulationUpdateEvent;
-import bg.mck.events.MaterialEvent;
+import bg.mck.events.material.InsulationUpdateEvent;
+import bg.mck.events.material.MaterialEvent;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.mapper.InventoryMapper;
+import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.InsulationRepository;
 import bg.mck.utils.EventCreationHelper;
 import bg.mck.utils.ValidationUtil;
@@ -21,13 +21,13 @@ import static bg.mck.enums.ConstantMessages.*;
 public class InsulationUpdateService {
 
     private final InsulationRepository insulationRepository;
-    private final InventoryMapper inventoryMapper;
+    private final MaterialMapper materialMapper;
 
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
 
-    public InsulationUpdateService(InsulationRepository insulationRepository, InventoryMapper inventoryMapper, InventoryQueryServiceClient inventoryQueryServiceClient) {
+    public InsulationUpdateService(InsulationRepository insulationRepository, MaterialMapper materialMapper, InventoryQueryServiceClient inventoryQueryServiceClient) {
         this.insulationRepository = insulationRepository;
-        this.inventoryMapper = inventoryMapper;
+        this.materialMapper = materialMapper;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
     }
 
@@ -36,7 +36,7 @@ public class InsulationUpdateService {
                 .orElseThrow(() ->
                         new InventoryItemNotFoundException(String.format(MATERIAL_NOT_FOUND_MESSAGE, INSULATION, id)));
 
-        InsulationUpdateDTO insulationUpdateDTO = inventoryMapper.mapInsulationDtoFromUpdateMaterialDTO(updateMaterialDTO);
+        InsulationUpdateDTO insulationUpdateDTO = materialMapper.mapInsulationDtoFromUpdateMaterialDTO(updateMaterialDTO);
 
         if (ValidationUtil.isValid(insulationUpdateDTO,INSULATION_UPDATE_DTO_NAME)) {
             updateInsulationEntity(insulationUpdateDTO,insulationEntity);
@@ -54,14 +54,14 @@ public class InsulationUpdateService {
 
     private InsulationUpdateEvent createInsulationUpdateEvent(InsulationEntity insulationEntity) {
         InsulationUpdateEvent insulationUpdateEvent = new InsulationUpdateEvent(insulationEntity.getId(), EventType.ItemUpdated);
-        inventoryMapper.mapInsulationEntityToEvent(insulationEntity,insulationUpdateEvent);
+        materialMapper.mapInsulationEntityToEvent(insulationEntity,insulationUpdateEvent);
         insulationUpdateEvent.setMaterialType(insulationEntity.getCategory().getMaterialType().name());
         insulationUpdateEvent.setCategory(MaterialType.INSULATION.name());
         return insulationUpdateEvent;
     }
 
     private void updateInsulationEntity(InsulationUpdateDTO insulationUpdateDTO, InsulationEntity insulationEntity) {
-        inventoryMapper.updateInsulationEntityFromDto(insulationUpdateDTO,insulationEntity);
+        materialMapper.updateInsulationEntityFromDto(insulationUpdateDTO,insulationEntity);
         insulationRepository.save(insulationEntity);
     }
 }

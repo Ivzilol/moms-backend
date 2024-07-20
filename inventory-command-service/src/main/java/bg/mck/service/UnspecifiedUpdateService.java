@@ -6,10 +6,10 @@ import bg.mck.dto.UpdateMaterialDTO;
 import bg.mck.entity.materialEntity.UnspecifiedEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
-import bg.mck.events.MaterialEvent;
-import bg.mck.events.UnspecifiedUpdateEvent;
+import bg.mck.events.material.MaterialEvent;
+import bg.mck.events.material.UnspecifiedUpdateEvent;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.mapper.InventoryMapper;
+import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.UnspecifiedRepository;
 import bg.mck.utils.EventCreationHelper;
 import bg.mck.utils.ValidationUtil;
@@ -22,12 +22,12 @@ import static bg.mck.enums.ConstantMessages.*;
 public class UnspecifiedUpdateService {
 
     private final UnspecifiedRepository unspecifiedRepository;
-    private final InventoryMapper inventoryMapper;
+    private final MaterialMapper materialMapper;
     private final InventoryQueryServiceClient inventoryQueryServiceClient;
 
-    public UnspecifiedUpdateService(UnspecifiedRepository unspecifiedRepository, InventoryMapper inventoryMapper, InventoryQueryServiceClient inventoryQueryServiceClient) {
+    public UnspecifiedUpdateService(UnspecifiedRepository unspecifiedRepository, MaterialMapper materialMapper, InventoryQueryServiceClient inventoryQueryServiceClient) {
         this.unspecifiedRepository = unspecifiedRepository;
-        this.inventoryMapper = inventoryMapper;
+        this.materialMapper = materialMapper;
         this.inventoryQueryServiceClient = inventoryQueryServiceClient;
     }
 
@@ -37,7 +37,7 @@ public class UnspecifiedUpdateService {
                 .orElseThrow(() ->
                         new InventoryItemNotFoundException(String.format(MATERIAL_NOT_FOUND_MESSAGE, UNSPECIFIED, id)));
 
-        UnspecifiedUpdateDTO unspecifiedUpdateDTO = inventoryMapper.mapUnspecifiedDtoFromUpdateMaterialDto(updateMaterialDTO);
+        UnspecifiedUpdateDTO unspecifiedUpdateDTO = materialMapper.mapUnspecifiedDtoFromUpdateMaterialDto(updateMaterialDTO);
 
         if (ValidationUtil.isValid(unspecifiedUpdateDTO,UNSPECIFIED_UPDATE_DTO_NAME)) {
             updateUnspecifiedEntity(unspecifiedUpdateDTO,unspecifiedEntity);
@@ -56,14 +56,14 @@ public class UnspecifiedUpdateService {
     private UnspecifiedUpdateEvent createUnspecifiedUpdateEvent(UnspecifiedEntity unspecifiedEntity) {
         UnspecifiedUpdateEvent unspecifiedUpdateEvent = new UnspecifiedUpdateEvent(unspecifiedEntity.getId(),
                 EventType.ItemUpdated);
-        inventoryMapper.mapUnspecifiedEntityToEvent(unspecifiedEntity,unspecifiedUpdateEvent);
+        materialMapper.mapUnspecifiedEntityToEvent(unspecifiedEntity,unspecifiedUpdateEvent);
         unspecifiedUpdateEvent.setMaterialType(unspecifiedEntity.getCategory().getMaterialType().name());
         unspecifiedUpdateEvent.setCategory(MaterialType.UNSPECIFIED.name());
         return  unspecifiedUpdateEvent;
     }
 
     private void updateUnspecifiedEntity(UnspecifiedUpdateDTO unspecifiedUpdateDTO, UnspecifiedEntity unspecifiedEntity) {
-        inventoryMapper.updateUnspecifiedEntityFromDto(unspecifiedUpdateDTO,unspecifiedEntity);
+        materialMapper.updateUnspecifiedEntityFromDto(unspecifiedUpdateDTO,unspecifiedEntity);
         unspecifiedRepository.save(unspecifiedEntity);
     }
 }
