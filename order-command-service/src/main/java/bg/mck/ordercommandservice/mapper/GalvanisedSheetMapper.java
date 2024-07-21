@@ -5,6 +5,7 @@ import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.entity.GalvanisedSheetEntity;
 import bg.mck.ordercommandservice.event.GalvanisedSheetEvent;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface GalvanisedSheetMapper {
@@ -15,5 +16,5 @@ public interface GalvanisedSheetMapper {
 
     GalvanisedSheetEvent toEvent(GalvanisedSheetEntity galvanisedSheetEntity);
 
-    void toUpdateGalvanisedSheetEntity(UpdateOrderDTO updateOrderDTO, GalvanisedSheetEntity galvanisedSheetEntity);
+    void toUpdateGalvanisedSheetEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget GalvanisedSheetEntity galvanisedSheetEntity);
 }

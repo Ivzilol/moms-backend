@@ -4,12 +4,15 @@ import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.entity.FastenerEntity;
 import bg.mck.ordercommandservice.entity.GalvanisedSheetEntity;
+import bg.mck.ordercommandservice.entity.InsulationEntity;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.event.OrderEventType;
 import bg.mck.ordercommandservice.mapper.FastenerMapper;
 import bg.mck.ordercommandservice.mapper.GalvanisedSheetMapper;
+import bg.mck.ordercommandservice.mapper.InsulationMapper;
 import bg.mck.ordercommandservice.repository.FastenerRepository;
 import bg.mck.ordercommandservice.repository.GalvanisedSheetRepository;
+import bg.mck.ordercommandservice.repository.InsulationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +31,18 @@ public class UpdateOrderService {
 
     private final GalvanisedSheetMapper galvanisedSheetMapper;
 
-    public UpdateOrderService(FastenerRepository fastenerRepository, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetRepository galvanisedSheetRepository, GalvanisedSheetMapper galvanisedSheetMapper) {
+    private final InsulationRepository insulationRepository;
+
+    private final InsulationMapper insulationMapper;
+
+    public UpdateOrderService(FastenerRepository fastenerRepository, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetRepository galvanisedSheetRepository, GalvanisedSheetMapper galvanisedSheetMapper, InsulationRepository insulationRepository, InsulationMapper insulationMapper) {
         this.fastenerRepository = fastenerRepository;
         this.orderQueryServiceClient = orderQueryServiceClient;
         this.fastenerMapper = fastenerMapper;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
         this.galvanisedSheetMapper = galvanisedSheetMapper;
+        this.insulationRepository = insulationRepository;
+        this.insulationMapper = insulationMapper;
     }
 
     @Transactional
@@ -44,6 +53,7 @@ public class UpdateOrderService {
             case GALVANIZED_SHEET:
                 updateGalvanisedSheetEntity(updateOrderDTO);
             case INSULATION:
+                updateInsulationEntity(updateOrderDTO);
             case METAL:
             case PANELS:
             case REBAR:
@@ -51,6 +61,12 @@ public class UpdateOrderService {
             case SERVICE:
             case TRANSPORT:
         }
+    }
+
+    private void updateInsulationEntity(UpdateOrderDTO updateOrderDTO) {
+        Optional<InsulationEntity> insulationEntity = this.insulationRepository
+                .findById(Long.parseLong(updateOrderDTO.getId()));
+        insulationMapper.toUpdateInsulationEntity(updateOrderDTO, insulationEntity.get());
     }
 
     private void updateFastenerEntity(UpdateOrderDTO updateOrderDTO) {
