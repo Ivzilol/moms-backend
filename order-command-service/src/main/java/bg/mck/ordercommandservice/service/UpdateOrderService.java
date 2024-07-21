@@ -39,7 +39,6 @@ public class UpdateOrderService {
                 .findById(Long.parseLong(updateOrderDTO.getId()));
         fastenerMapper.toUpdateFasterEntity(updateOrderDTO, fastenerEntity.get());
         this.fastenerRepository.save(fastenerEntity.get());
-
         try {
             orderQueryServiceClient.sendUpdateEvent(updateOrderDTO, String.valueOf(OrderEventType.ORDER_UPDATED));
         } catch (Exception e) {
