@@ -66,6 +66,9 @@ public class OrderController {
     @PatchMapping("/update-order")
     public ResponseEntity<?> updateOrder(@Valid @RequestBody UpdateOrderDTO updateOrderDTO,
                                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+//        token = token.substring(7);
+//        String email = restTemplate
+//                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
         this.updateOrderService.updateOrder(updateOrderDTO, token);
         return ResponseEntity.ok().build();
     }

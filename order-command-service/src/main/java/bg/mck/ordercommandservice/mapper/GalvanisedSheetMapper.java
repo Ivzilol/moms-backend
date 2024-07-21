@@ -1,6 +1,7 @@
 package bg.mck.ordercommandservice.mapper;
 
 import bg.mck.ordercommandservice.dto.GalvanisedSheetDTO;
+import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.entity.GalvanisedSheetEntity;
 import bg.mck.ordercommandservice.event.GalvanisedSheetEvent;
 import org.mapstruct.Mapper;
@@ -13,4 +14,6 @@ public interface GalvanisedSheetMapper {
     GalvanisedSheetEntity toEntity(GalvanisedSheetDTO galvanisedSheetDTO);
 
     GalvanisedSheetEvent toEvent(GalvanisedSheetEntity galvanisedSheetEntity);
+
+    void toUpdateGalvanisedSheetEntity(UpdateOrderDTO updateOrderDTO, GalvanisedSheetEntity galvanisedSheetEntity);
 }

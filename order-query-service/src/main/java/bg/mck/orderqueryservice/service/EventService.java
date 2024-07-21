@@ -97,15 +97,35 @@ public class EventService {
         Optional<OrderEntity> optionalOrderEntity = this.orderRepository.findByOrderNumber(orderNumber);
         OrderEntity orderEntity = optionalOrderEntity.get();
 
-        if (String.valueOf(MaterialType.FASTENERS).equals(updateOrderDTO.getMaterialType())) {
-            Set<FastenerEntity> fasteners = orderEntity.getFasteners();
-            for (FastenerEntity entity : fasteners) {
-                if (entity.getId().equals(updateOrderDTO.getId())) {
-                    updateFastenerEntity(entity, updateOrderDTO);
-                    break;
+        switch (MaterialType.valueOf(updateOrderDTO.getMaterialType())) {
+            case FASTENERS:
+                Set<FastenerEntity> fasteners = orderEntity.getFasteners();
+                for (FastenerEntity entity : fasteners) {
+                    if (entity.getId().equals(updateOrderDTO.getId())) {
+                        updateFastenerEntity(entity, updateOrderDTO);
+                        break;
+                    }
                 }
-            }
+            case GALVANIZED_SHEET:
+            case INSULATION:
+            case METAL:
+            case PANELS:
+            case SERVICE:
+            case SET:
+            case TRANSPORT:
+            case UNSPECIFIED:
+                break;
         }
+
+//        if (String.valueOf(MaterialType.FASTENERS).equals(updateOrderDTO.getMaterialType())) {
+//            Set<FastenerEntity> fasteners = orderEntity.getFasteners();
+//            for (FastenerEntity entity : fasteners) {
+//                if (entity.getId().equals(updateOrderDTO.getId())) {
+//                    updateFastenerEntity(entity, updateOrderDTO);
+//                    break;
+//                }
+//            }
+//        }
         this.orderRepository.save(orderEntity);
         saveUpdateEvent(updateOrderDTO);
     }
@@ -116,7 +136,7 @@ public class EventService {
         OrderEvent<CreateUpdateOrderEvent> orderEvent = new OrderEvent<>();
         orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
         orderEvent.setEvent(createUpdateOrderEvent);
-        this.eventRepository.save(orderEvent);
+        saveEvent(orderEvent);
     }
 
     private void updateFastenerEntity(FastenerEntity entity, UpdateOrderDTO updateOrderDTO) {
