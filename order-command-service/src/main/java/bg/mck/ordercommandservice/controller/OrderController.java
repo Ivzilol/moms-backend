@@ -56,11 +56,17 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrder(order, email));
     }
 
+    @Operation(summary = "Update order")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order update successfully"),
+            @ApiResponse(responseCode = "400", description = "Incorrect data",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UpdateOrderDTO.class))})
+    }
+    )
     @PatchMapping("/update-order")
     public ResponseEntity<?> updateOrder(@Valid @RequestBody UpdateOrderDTO updateOrderDTO,
                                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         this.updateOrderService.updateOrder(updateOrderDTO, token);
         return ResponseEntity.ok().build();
     }
-
 }
