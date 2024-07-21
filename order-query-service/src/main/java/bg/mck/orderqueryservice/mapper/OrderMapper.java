@@ -165,4 +165,8 @@ public interface OrderMapper {
     void toUpdateFasterEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget FastenerEntity fastenerEntity);
 
     CreateUpdateOrderEvent toCreateUpdateOrderEvent(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateGalvanisedEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget GalvanisedSheetEntity galvanisedSheetEntity);
+
+    GalvanisedSheetEvent toUpdateGalvaniseSheet(UpdateOrderDTO updateOrderDTO);
 }

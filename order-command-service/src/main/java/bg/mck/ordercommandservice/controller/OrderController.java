@@ -49,10 +49,10 @@ public class OrderController {
     @PostMapping("/create-order")
     public ResponseEntity<CreateOrderDTO> createOrder(@Valid @RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
-        token = token.substring(7);
-        String email = restTemplate
-                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
-
+//        token = token.substring(7);
+//        String email = restTemplate
+//                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
+        String email = token;
         return ResponseEntity.ok(orderService.createOrder(order, email));
     }
 

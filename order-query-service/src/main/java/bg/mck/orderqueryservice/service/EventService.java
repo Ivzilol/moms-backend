@@ -2,6 +2,7 @@ package bg.mck.orderqueryservice.service;
 
 import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
 import bg.mck.orderqueryservice.entity.FastenerEntity;
+import bg.mck.orderqueryservice.entity.GalvanisedSheetEntity;
 import bg.mck.orderqueryservice.entity.OrderEntity;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.events.*;
@@ -98,36 +99,53 @@ public class EventService {
         OrderEntity orderEntity = optionalOrderEntity.get();
 
         switch (MaterialType.valueOf(updateOrderDTO.getMaterialType())) {
-            case FASTENERS:
-                Set<FastenerEntity> fasteners = orderEntity.getFasteners();
-                for (FastenerEntity entity : fasteners) {
-                    if (entity.getId().equals(updateOrderDTO.getId())) {
-                        updateFastenerEntity(entity, updateOrderDTO);
-                        break;
-                    }
-                }
-            case GALVANIZED_SHEET:
-            case INSULATION:
-            case METAL:
-            case PANELS:
-            case SERVICE:
-            case SET:
-            case TRANSPORT:
-            case UNSPECIFIED:
-                break;
+            case FASTENERS -> processingFasteners(updateOrderDTO, orderEntity);
+            case GALVANIZED_SHEET -> processingGalvanizedSheet(updateOrderDTO, orderEntity);
+//            case INSULATION ->
+//            case METAL ->
+//            case PANELS ->
+//            case SERVICE ->
+//            case SET ->
+//            case TRANSPORT ->
+//            case UNSPECIFIED ->
         }
 
-//        if (String.valueOf(MaterialType.FASTENERS).equals(updateOrderDTO.getMaterialType())) {
-//            Set<FastenerEntity> fasteners = orderEntity.getFasteners();
-//            for (FastenerEntity entity : fasteners) {
-//                if (entity.getId().equals(updateOrderDTO.getId())) {
-//                    updateFastenerEntity(entity, updateOrderDTO);
-//                    break;
-//                }
-//            }
-//        }
         this.orderRepository.save(orderEntity);
         saveUpdateEvent(updateOrderDTO);
+    }
+
+    private void processingGalvanizedSheet(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<GalvanisedSheetEntity> galvanisedSheetEntities = orderEntity.getGalvanisedSheets();
+        for (GalvanisedSheetEntity entity : galvanisedSheetEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateGalvanisedSheetEntity(entity, updateOrderDTO);
+                break;
+            }
+        }
+    }
+
+    private void updateGalvanisedSheetEntity(GalvanisedSheetEntity entity, UpdateOrderDTO updateOrderDTO) {
+        GalvanisedSheetEvent galvanisedSheetEvent = OrderMapper
+                .INSTANCE.toUpdateGalvaniseSheet(updateOrderDTO);
+        OrderEvent<GalvanisedSheetEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(galvanisedSheetEvent);
+        saveEvent(orderEvent);
+        updateGalvanisedEntity(entity, updateOrderDTO);
+    }
+
+    private void updateGalvanisedEntity(GalvanisedSheetEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdateGalvanisedEntity(updateOrderDTO, entity);
+    }
+
+    private void processingFasteners(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<FastenerEntity> fasteners = orderEntity.getFasteners();
+        for (FastenerEntity entity : fasteners) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateFastenerEntity(entity, updateOrderDTO);
+                break;
+            }
+        }
     }
 
     private void saveUpdateEvent(UpdateOrderDTO updateOrderDTO) {
