@@ -45,7 +45,16 @@ public class UpdateOrderService {
 
     private final UnspecifiedMapper unspecifiedMapper;
 
-    public UpdateOrderService(FastenerRepository fastenerRepository, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetRepository galvanisedSheetRepository, GalvanisedSheetMapper galvanisedSheetMapper, InsulationRepository insulationRepository, InsulationMapper insulationMapper, MetalRepository metalRepository, MetalMapper metalMapper, PanelRepository panelRepository, PanelMapper panelMapper, RebarRepository rebarRepository, RebarMapper rebarMapper, UnspecifiedRepository unspecifiedRepository, UnspecifiedMapper unspecifiedMapper) {
+    private final ServiceRepository serviceRepository;
+
+    private final ServiceMapper serviceMapper;
+
+    private final TransportRepository transportRepository;
+
+    private final TransportMapper transportMapper;
+
+
+    public UpdateOrderService(FastenerRepository fastenerRepository, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetRepository galvanisedSheetRepository, GalvanisedSheetMapper galvanisedSheetMapper, InsulationRepository insulationRepository, InsulationMapper insulationMapper, MetalRepository metalRepository, MetalMapper metalMapper, PanelRepository panelRepository, PanelMapper panelMapper, RebarRepository rebarRepository, RebarMapper rebarMapper, UnspecifiedRepository unspecifiedRepository, UnspecifiedMapper unspecifiedMapper, ServiceRepository serviceRepository, ServiceMapper serviceMapper, TransportRepository transportRepository, TransportMapper transportMapper) {
         this.fastenerRepository = fastenerRepository;
         this.orderQueryServiceClient = orderQueryServiceClient;
         this.fastenerMapper = fastenerMapper;
@@ -61,29 +70,40 @@ public class UpdateOrderService {
         this.rebarMapper = rebarMapper;
         this.unspecifiedRepository = unspecifiedRepository;
         this.unspecifiedMapper = unspecifiedMapper;
+        this.serviceRepository = serviceRepository;
+        this.serviceMapper = serviceMapper;
+        this.transportRepository = transportRepository;
+        this.transportMapper = transportMapper;
     }
 
     @Transactional
     public void updateOrder(UpdateOrderDTO updateOrderDTO, String email) {
         switch (MaterialType.valueOf(updateOrderDTO.getMaterialType())) {
-            case FASTENERS:
-                updateFastenerEntity(updateOrderDTO);
-            case GALVANIZED_SHEET:
-                updateGalvanisedSheetEntity(updateOrderDTO);
-            case INSULATION:
-                updateInsulationEntity(updateOrderDTO);
-            case METAL:
-                updateMetalEntity(updateOrderDTO);
-            case PANELS:
-                updatePanelsEntity(updateOrderDTO);
-            case REBAR:
-                updateRebarEntity(updateOrderDTO);
-            case UNSPECIFIED:
-                updateUnspecifiedEntity(updateOrderDTO);
-            case SERVICE:
-            case TRANSPORT:
+            case FASTENERS -> updateFastenerEntity(updateOrderDTO);
+            case GALVANIZED_SHEET -> updateGalvanisedSheetEntity(updateOrderDTO);
+            case INSULATION -> updateInsulationEntity(updateOrderDTO);
+            case METAL -> updateMetalEntity(updateOrderDTO);
+            case PANELS -> updatePanelsEntity(updateOrderDTO);
+            case REBAR -> updateRebarEntity(updateOrderDTO);
+            case UNSPECIFIED -> updateUnspecifiedEntity(updateOrderDTO);
+            case SERVICE -> updateServiceEntity(updateOrderDTO);
+            case TRANSPORT -> updateTransportEntity(updateOrderDTO);
         }
         sendEvent(updateOrderDTO);
+    }
+
+    private void updateTransportEntity(UpdateOrderDTO updateOrderDTO) {
+        Optional<TransportEntity> transportEntity = this.transportRepository
+                .findById(Long.parseLong(updateOrderDTO.getId()));
+        transportMapper.toUpdateTransportEntity(updateOrderDTO, transportEntity.get());
+        this.transportRepository.save(transportEntity.get());
+    }
+
+    private void updateServiceEntity(UpdateOrderDTO updateOrderDTO) {
+        Optional<ServiceEntity> serviceEntity = this.serviceRepository
+                .findById(Long.parseLong(updateOrderDTO.getId()));
+        serviceMapper.toUpdateServiceEntity(updateOrderDTO, serviceEntity.get());
+        this.serviceRepository.save(serviceEntity.get());
     }
 
     private void updateUnspecifiedEntity(UpdateOrderDTO updateOrderDTO) {

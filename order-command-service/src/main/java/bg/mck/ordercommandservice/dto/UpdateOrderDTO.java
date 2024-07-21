@@ -53,6 +53,8 @@ public class UpdateOrderDTO {
     @DecimalMin(value = "0.0", message = INVALID_GALVANISE)
     private Double galvanisedSheetThickness;
 
+    private String truck;
+
     public String getId() {
         return id;
     }
@@ -299,5 +301,13 @@ public class UpdateOrderDTO {
 
     public void setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
+    }
+
+    public String getTruck() {
+        return truck;
+    }
+
+    public void setTruck(String truck) {
+        this.truck = truck;
     }
 }
