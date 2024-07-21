@@ -8,6 +8,7 @@ import bg.mck.ordercommandservice.event.OrderEventType;
 import bg.mck.ordercommandservice.mapper.FastenerMapper;
 import bg.mck.ordercommandservice.repository.FastenerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,6 +27,7 @@ public class UpdateOrderService {
         this.fastenerMapper = fastenerMapper;
     }
 
+    @Transactional
     public void updateOrder(UpdateOrderDTO updateOrderDTO, String email) {
         if (updateOrderDTO.getMaterialType().equals(String.valueOf(MaterialType.FASTENERS))) {
             updateFastenerEntity(updateOrderDTO);
@@ -37,7 +39,11 @@ public class UpdateOrderService {
                 .findById(Long.parseLong(updateOrderDTO.getId()));
         fastenerMapper.toUpdateFasterEntity(updateOrderDTO, fastenerEntity.get());
         this.fastenerRepository.save(fastenerEntity.get());
-        orderQueryServiceClient.sendUpdateEvent(updateOrderDTO, String.valueOf(OrderEventType.ORDER_UPDATED));
 
+        try {
+            orderQueryServiceClient.sendUpdateEvent(updateOrderDTO, String.valueOf(OrderEventType.ORDER_UPDATED));
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update order in external service", e);
+        }
     }
 }
