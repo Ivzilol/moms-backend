@@ -103,12 +103,35 @@ public class EventService {
             case PANELS -> processingPanels(updateOrderDTO, orderEntity);
             case REBAR -> processingRebar(updateOrderDTO, orderEntity);
             case SERVICE -> processingService(updateOrderDTO, orderEntity);
-//            case SET ->
+            case SET -> processingSet(updateOrderDTO, orderEntity);
 //            case TRANSPORT ->
 //            case UNSPECIFIED ->
         }
 
         this.orderRepository.save(orderEntity);
+    }
+
+    private void processingSet(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<SetEntity> setEntities = orderEntity.getSets();
+        for (SetEntity entity : setEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateSetEntity(entity, updateOrderDTO);
+            }
+        }
+    }
+
+    private void updateSetEntity(SetEntity entity, UpdateOrderDTO updateOrderDTO) {
+        SetEvent setEvent = OrderMapper
+                .INSTANCE.toUpdateSet(updateOrderDTO);
+        OrderEvent<SetEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(setEvent);
+        saveEvent(orderEvent);
+        updateSet(entity, updateOrderDTO);
+    }
+
+    private void updateSet(SetEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdateSetEntity(updateOrderDTO, entity);
     }
 
     private void processingRebar(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {

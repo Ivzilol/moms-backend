@@ -53,8 +53,12 @@ public class UpdateOrderService {
 
     private final TransportMapper transportMapper;
 
+    private final SetRepository setRepository;
 
-    public UpdateOrderService(FastenerRepository fastenerRepository, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetRepository galvanisedSheetRepository, GalvanisedSheetMapper galvanisedSheetMapper, InsulationRepository insulationRepository, InsulationMapper insulationMapper, MetalRepository metalRepository, MetalMapper metalMapper, PanelRepository panelRepository, PanelMapper panelMapper, RebarRepository rebarRepository, RebarMapper rebarMapper, UnspecifiedRepository unspecifiedRepository, UnspecifiedMapper unspecifiedMapper, ServiceRepository serviceRepository, ServiceMapper serviceMapper, TransportRepository transportRepository, TransportMapper transportMapper) {
+    private final SetMapper setMapper;
+
+
+    public UpdateOrderService(FastenerRepository fastenerRepository, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetRepository galvanisedSheetRepository, GalvanisedSheetMapper galvanisedSheetMapper, InsulationRepository insulationRepository, InsulationMapper insulationMapper, MetalRepository metalRepository, MetalMapper metalMapper, PanelRepository panelRepository, PanelMapper panelMapper, RebarRepository rebarRepository, RebarMapper rebarMapper, UnspecifiedRepository unspecifiedRepository, UnspecifiedMapper unspecifiedMapper, ServiceRepository serviceRepository, ServiceMapper serviceMapper, TransportRepository transportRepository, TransportMapper transportMapper, SetRepository setRepository, SetMapper setMapper) {
         this.fastenerRepository = fastenerRepository;
         this.orderQueryServiceClient = orderQueryServiceClient;
         this.fastenerMapper = fastenerMapper;
@@ -74,6 +78,8 @@ public class UpdateOrderService {
         this.serviceMapper = serviceMapper;
         this.transportRepository = transportRepository;
         this.transportMapper = transportMapper;
+        this.setRepository = setRepository;
+        this.setMapper = setMapper;
     }
 
     @Transactional
@@ -88,8 +94,16 @@ public class UpdateOrderService {
             case UNSPECIFIED -> updateUnspecifiedEntity(updateOrderDTO);
             case SERVICE -> updateServiceEntity(updateOrderDTO);
             case TRANSPORT -> updateTransportEntity(updateOrderDTO);
+            case SET -> updateSetEntity(updateOrderDTO);
         }
         sendEvent(updateOrderDTO);
+    }
+
+    private void updateSetEntity(UpdateOrderDTO updateOrderDTO) {
+        Optional<SetEntity> setEntity = this.setRepository
+                .findById(Long.parseLong(updateOrderDTO.getId()));
+        setMapper.toUpdateSetEntity(updateOrderDTO, setEntity.get());
+        this.setRepository.save(setEntity.get());
     }
 
     private void updateTransportEntity(UpdateOrderDTO updateOrderDTO) {

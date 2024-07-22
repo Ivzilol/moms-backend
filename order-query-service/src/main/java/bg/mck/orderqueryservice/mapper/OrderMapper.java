@@ -189,4 +189,8 @@ public interface OrderMapper {
     RebarEvent toUpdateRebar(UpdateOrderDTO updateOrderDTO);
 
     void toUpdateRebarEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget RebarEntity entity);
+
+    SetEvent toUpdateSet(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateSetEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget SetEntity entity);
 }
