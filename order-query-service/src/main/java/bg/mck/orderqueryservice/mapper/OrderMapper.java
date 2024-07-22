@@ -181,4 +181,12 @@ public interface OrderMapper {
     PanelEvent toUpdatePanel(UpdateOrderDTO updateOrderDTO);
 
     void toUpdatePanelEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget PanelEntity entity);
+
+    ServiceEvent toUpdateService(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateServiceEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget ServiceEntity entity);
+
+    RebarEvent toUpdateRebar(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateRebarEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget RebarEntity entity);
 }

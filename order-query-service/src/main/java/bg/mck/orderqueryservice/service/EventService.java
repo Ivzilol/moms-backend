@@ -101,13 +101,61 @@ public class EventService {
             case INSULATION -> processingInsulation(updateOrderDTO, orderEntity);
             case METAL -> processingMetal(updateOrderDTO, orderEntity);
             case PANELS -> processingPanels(updateOrderDTO, orderEntity);
-//            case SERVICE ->
+            case REBAR -> processingRebar(updateOrderDTO, orderEntity);
+            case SERVICE -> processingService(updateOrderDTO, orderEntity);
 //            case SET ->
 //            case TRANSPORT ->
 //            case UNSPECIFIED ->
         }
 
         this.orderRepository.save(orderEntity);
+    }
+
+    private void processingRebar(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<RebarEntity> rebarEntities = orderEntity.getRebars();
+        for (RebarEntity entity : rebarEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateRebarEntity(entity, updateOrderDTO);
+            }
+        }
+    }
+
+    private void updateRebarEntity(RebarEntity entity, UpdateOrderDTO updateOrderDTO) {
+        RebarEvent rebarEvent = OrderMapper
+                .INSTANCE.toUpdateRebar(updateOrderDTO);
+        OrderEvent<RebarEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(rebarEvent);
+        saveEvent(orderEvent);
+        updateRebar(entity, updateOrderDTO);
+    }
+
+    private void updateRebar(RebarEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdateRebarEntity(updateOrderDTO, entity);
+    }
+
+    private void processingService(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<ServiceEntity> serviceEntities = orderEntity.getServices();
+        for (ServiceEntity entity : serviceEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateServiceEntity(entity, updateOrderDTO);
+                break;
+            }
+        }
+    }
+
+    private void updateServiceEntity(ServiceEntity entity, UpdateOrderDTO updateOrderDTO) {
+        ServiceEvent serviceEvent = OrderMapper
+                .INSTANCE.toUpdateService(updateOrderDTO);
+        OrderEvent<ServiceEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(serviceEvent);
+        saveEvent(orderEvent);
+        updateService(entity, updateOrderDTO);
+    }
+
+    private void updateService(ServiceEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdateServiceEntity(updateOrderDTO, entity);
     }
 
     private void processingPanels(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
