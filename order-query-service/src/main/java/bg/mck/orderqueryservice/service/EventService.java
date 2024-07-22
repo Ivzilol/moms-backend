@@ -100,7 +100,7 @@ public class EventService {
             case GALVANIZED_SHEET -> processingGalvanizedSheet(updateOrderDTO, orderEntity);
             case INSULATION -> processingInsulation(updateOrderDTO, orderEntity);
             case METAL -> processingMetal(updateOrderDTO, orderEntity);
-//            case PANELS ->
+            case PANELS -> processingPanels(updateOrderDTO, orderEntity);
 //            case SERVICE ->
 //            case SET ->
 //            case TRANSPORT ->
@@ -108,6 +108,30 @@ public class EventService {
         }
 
         this.orderRepository.save(orderEntity);
+    }
+
+    private void processingPanels(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<PanelEntity> panelEntities = orderEntity.getPanels();
+        for (PanelEntity entity : panelEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updatePanelEntity(entity, updateOrderDTO);
+                break;
+            }
+        }
+    }
+
+    private void updatePanelEntity(PanelEntity entity, UpdateOrderDTO updateOrderDTO) {
+        PanelEvent panelEvent = OrderMapper
+                .INSTANCE.toUpdatePanel(updateOrderDTO);
+        OrderEvent<PanelEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(panelEvent);
+        saveEvent(orderEvent);
+        updatePanel(entity, updateOrderDTO);
+    }
+
+    private void updatePanel(PanelEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdatePanelEntity(updateOrderDTO, entity);
     }
 
     private void processingMetal(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {

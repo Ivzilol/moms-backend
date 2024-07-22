@@ -177,4 +177,8 @@ public interface OrderMapper {
     MetalEvent toUpdateMetal(UpdateOrderDTO updateOrderDTO);
 
     void toUpdateMetalEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget MetalEntity entity);
+
+    PanelEvent toUpdatePanel(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdatePanelEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget PanelEntity entity);
 }
