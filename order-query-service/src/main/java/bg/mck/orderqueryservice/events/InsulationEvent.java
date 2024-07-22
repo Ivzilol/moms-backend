@@ -1,6 +1,6 @@
 package bg.mck.orderqueryservice.events;
 
-public class InsulationEvent {
+public class InsulationEvent extends BaseEvent{
 
     private Long id;
 

@@ -169,4 +169,8 @@ public interface OrderMapper {
     void toUpdateGalvanisedEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget GalvanisedSheetEntity galvanisedSheetEntity);
 
     GalvanisedSheetEvent toUpdateGalvaniseSheet(UpdateOrderDTO updateOrderDTO);
+
+    InsulationEvent toUpdateInsulation(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateInsulationEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget InsulationEntity entity);
 }

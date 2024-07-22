@@ -3,6 +3,7 @@ package bg.mck.orderqueryservice.service;
 import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
 import bg.mck.orderqueryservice.entity.FastenerEntity;
 import bg.mck.orderqueryservice.entity.GalvanisedSheetEntity;
+import bg.mck.orderqueryservice.entity.InsulationEntity;
 import bg.mck.orderqueryservice.entity.OrderEntity;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.events.*;
@@ -101,7 +102,7 @@ public class EventService {
         switch (MaterialType.valueOf(updateOrderDTO.getMaterialType())) {
             case FASTENERS -> processingFasteners(updateOrderDTO, orderEntity);
             case GALVANIZED_SHEET -> processingGalvanizedSheet(updateOrderDTO, orderEntity);
-//            case INSULATION ->
+            case INSULATION -> processingInsulation(updateOrderDTO, orderEntity);
 //            case METAL ->
 //            case PANELS ->
 //            case SERVICE ->
@@ -111,7 +112,29 @@ public class EventService {
         }
 
         this.orderRepository.save(orderEntity);
-        saveUpdateEvent(updateOrderDTO);
+    }
+
+    private void processingInsulation(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<InsulationEntity> insulationEntities = orderEntity.getInsulation();
+        for (InsulationEntity entity : insulationEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateInsulationEntity(entity, updateOrderDTO);
+                break;
+            }
+        }
+    }
+
+    private void updateInsulationEntity(InsulationEntity entity, UpdateOrderDTO updateOrderDTO) {
+        InsulationEvent insulationEvent = OrderMapper
+                .INSTANCE.toUpdateInsulation(updateOrderDTO);
+        OrderEvent<InsulationEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        saveEvent(orderEvent);
+        updateInsulation(entity, updateOrderDTO);
+    }
+
+    private void updateInsulation(InsulationEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdateInsulationEntity(updateOrderDTO, entity);
     }
 
     private void processingGalvanizedSheet(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
@@ -142,19 +165,20 @@ public class EventService {
         Set<FastenerEntity> fasteners = orderEntity.getFasteners();
         for (FastenerEntity entity : fasteners) {
             if (entity.getId().equals(updateOrderDTO.getId())) {
-                updateFastenerEntity(entity, updateOrderDTO);
+                saveUpdateEvent(entity, updateOrderDTO);
                 break;
             }
         }
     }
 
-    private void saveUpdateEvent(UpdateOrderDTO updateOrderDTO) {
+    private void saveUpdateEvent(FastenerEntity entity, UpdateOrderDTO updateOrderDTO) {
         CreateUpdateOrderEvent createUpdateOrderEvent = OrderMapper
                 .INSTANCE.toCreateUpdateOrderEvent(updateOrderDTO);
         OrderEvent<CreateUpdateOrderEvent> orderEvent = new OrderEvent<>();
         orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
         orderEvent.setEvent(createUpdateOrderEvent);
         saveEvent(orderEvent);
+        updateFastenerEntity(entity, updateOrderDTO);
     }
 
     private void updateFastenerEntity(FastenerEntity entity, UpdateOrderDTO updateOrderDTO) {
