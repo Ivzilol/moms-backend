@@ -193,4 +193,12 @@ public interface OrderMapper {
     SetEvent toUpdateSet(UpdateOrderDTO updateOrderDTO);
 
     void toUpdateSetEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget SetEntity entity);
+
+    TransportEvent toUpdateTransport(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateTransportEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget TransportEntity entity);
+
+    UnspecifiedEvent toUpdateUnspecified(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateUnspecifiedEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget UnspecifiedEntity entity);
 }

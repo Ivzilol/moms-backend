@@ -10,6 +10,7 @@ import bg.mck.orderqueryservice.repository.OrderRepository;
 import bg.mck.orderqueryservice.utils.EventTypeUtils;
 import com.google.gson.Gson;
 import jakarta.persistence.EntityNotFoundException;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
@@ -104,11 +105,57 @@ public class EventService {
             case REBAR -> processingRebar(updateOrderDTO, orderEntity);
             case SERVICE -> processingService(updateOrderDTO, orderEntity);
             case SET -> processingSet(updateOrderDTO, orderEntity);
-//            case TRANSPORT ->
-//            case UNSPECIFIED ->
+            case TRANSPORT -> processingTransport(updateOrderDTO, orderEntity);
+            case UNSPECIFIED -> processingUnspecified(updateOrderDTO, orderEntity);
         }
 
         this.orderRepository.save(orderEntity);
+    }
+
+    private void processingUnspecified(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<UnspecifiedEntity> unspecifiedEntities = orderEntity.getUnspecified();
+        for (UnspecifiedEntity entity : unspecifiedEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateUnspecifiedEntity(entity, updateOrderDTO);
+            }
+        }
+    }
+
+    private void updateUnspecifiedEntity(UnspecifiedEntity entity, UpdateOrderDTO updateOrderDTO) {
+        UnspecifiedEvent unspecifiedEvent = OrderMapper
+                .INSTANCE.toUpdateUnspecified(updateOrderDTO);
+        OrderEvent<UnspecifiedEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(unspecifiedEvent);
+        saveEvent(orderEvent);
+        updateUnspecified(entity, updateOrderDTO);
+    }
+
+    private void updateUnspecified(UnspecifiedEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdateUnspecifiedEntity(updateOrderDTO, entity);
+    }
+
+    private void processingTransport(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<TransportEntity> transportEntities = orderEntity.getTransports();
+        for (TransportEntity entity : transportEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateTransportEntity(entity, updateOrderDTO);
+            }
+        }
+    }
+
+    private void updateTransportEntity(TransportEntity entity, UpdateOrderDTO updateOrderDTO) {
+        TransportEvent transportEvent = OrderMapper
+                .INSTANCE.toUpdateTransport(updateOrderDTO);
+        OrderEvent<TransportEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(transportEvent);
+        saveEvent(orderEvent);
+        updateTransport(entity, updateOrderDTO);
+    }
+
+    private void updateTransport(TransportEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdateTransportEntity(updateOrderDTO, entity);
     }
 
     private void processingSet(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
