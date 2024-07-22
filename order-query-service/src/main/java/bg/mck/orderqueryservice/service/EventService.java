@@ -1,10 +1,7 @@
 package bg.mck.orderqueryservice.service;
 
 import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
-import bg.mck.orderqueryservice.entity.FastenerEntity;
-import bg.mck.orderqueryservice.entity.GalvanisedSheetEntity;
-import bg.mck.orderqueryservice.entity.InsulationEntity;
-import bg.mck.orderqueryservice.entity.OrderEntity;
+import bg.mck.orderqueryservice.entity.*;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.events.*;
 import bg.mck.orderqueryservice.mapper.OrderMapper;
@@ -32,7 +29,6 @@ public class EventService {
     private final EventTypeUtils eventTypeUtils;
     private final Gson gson;
     private final OrderService orderService;
-
     private final OrderRepository orderRepository;
 
     public EventService(EventRepository eventRepository, RedisService redisService, OrderMapper orderMapper, EventTypeUtils eventTypeUtils, Gson gson, OrderService orderService, OrderRepository orderRepository) throws NoSuchMethodException {
@@ -103,7 +99,7 @@ public class EventService {
             case FASTENERS -> processingFasteners(updateOrderDTO, orderEntity);
             case GALVANIZED_SHEET -> processingGalvanizedSheet(updateOrderDTO, orderEntity);
             case INSULATION -> processingInsulation(updateOrderDTO, orderEntity);
-//            case METAL ->
+            case METAL -> processingMetal(updateOrderDTO, orderEntity);
 //            case PANELS ->
 //            case SERVICE ->
 //            case SET ->
@@ -112,6 +108,30 @@ public class EventService {
         }
 
         this.orderRepository.save(orderEntity);
+    }
+
+    private void processingMetal(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
+        Set<MetalEntity> metalEntities = orderEntity.getMetals();
+        for (MetalEntity entity : metalEntities) {
+            if (entity.getId().equals(updateOrderDTO.getId())) {
+                updateMetalEntity(entity, updateOrderDTO);
+                break;
+            }
+        }
+    }
+
+    private void updateMetalEntity(MetalEntity entity, UpdateOrderDTO updateOrderDTO) {
+        MetalEvent metalEvent = OrderMapper
+                .INSTANCE.toUpdateMetal(updateOrderDTO);
+        OrderEvent<MetalEvent> orderEvent = new OrderEvent<>();
+        orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(metalEvent);
+        saveEvent(orderEvent);
+        updateMetal(entity, updateOrderDTO);
+    }
+
+    private void updateMetal(MetalEntity entity, UpdateOrderDTO updateOrderDTO) {
+        orderMapper.toUpdateMetalEntity(updateOrderDTO, entity);
     }
 
     private void processingInsulation(UpdateOrderDTO updateOrderDTO, OrderEntity orderEntity) {
@@ -129,6 +149,7 @@ public class EventService {
                 .INSTANCE.toUpdateInsulation(updateOrderDTO);
         OrderEvent<InsulationEvent> orderEvent = new OrderEvent<>();
         orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+        orderEvent.setEvent(insulationEvent);
         saveEvent(orderEvent);
         updateInsulation(entity, updateOrderDTO);
     }

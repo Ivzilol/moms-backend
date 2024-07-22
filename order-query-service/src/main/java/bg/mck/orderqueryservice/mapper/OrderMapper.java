@@ -173,4 +173,8 @@ public interface OrderMapper {
     InsulationEvent toUpdateInsulation(UpdateOrderDTO updateOrderDTO);
 
     void toUpdateInsulationEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget InsulationEntity entity);
+
+    MetalEvent toUpdateMetal(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateMetalEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget MetalEntity entity);
 }
