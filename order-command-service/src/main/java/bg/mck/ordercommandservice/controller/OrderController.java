@@ -49,10 +49,9 @@ public class OrderController {
     @PostMapping("/create-order")
     public ResponseEntity<CreateOrderDTO> createOrder(@Valid @RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
-//        token = token.substring(7);
-//        String email = restTemplate
-//                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
-        String email = token;
+        token = token.substring(7);
+        String email = restTemplate
+                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
         return ResponseEntity.ok(orderService.createOrder(order, email));
     }
 
@@ -66,10 +65,10 @@ public class OrderController {
     @PatchMapping("/update-order")
     public ResponseEntity<?> updateOrder(@Valid @RequestBody UpdateOrderDTO updateOrderDTO,
                                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-//        token = token.substring(7);
-//        String email = restTemplate
-//                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
-        this.updateOrderService.updateOrder(updateOrderDTO, token);
+        token = token.substring(7);
+        String email = restTemplate
+                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
+        this.updateOrderService.updateOrder(updateOrderDTO, email);
         return ResponseEntity.ok().build();
     }
 }
