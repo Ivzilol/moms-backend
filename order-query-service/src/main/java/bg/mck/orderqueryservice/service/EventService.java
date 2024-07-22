@@ -9,17 +9,13 @@ import bg.mck.orderqueryservice.repository.EventRepository;
 import bg.mck.orderqueryservice.repository.OrderRepository;
 import bg.mck.orderqueryservice.utils.EventTypeUtils;
 import com.google.gson.Gson;
-import jakarta.persistence.EntityNotFoundException;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class EventService {
