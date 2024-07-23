@@ -1,7 +1,7 @@
 package bg.mck.orderqueryservice.events;
 
 
-public class GalvanisedSheetEvent {
+public class GalvanisedSheetEvent extends BaseEvent{
     private Long id;
 
     private Double quantity;
