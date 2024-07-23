@@ -5,7 +5,6 @@ import jakarta.validation.constraints.DecimalMin;
 
 public class TransportDTO extends BaseDTO {
 
-
     @DecimalMin(value = "0.0", message = "MaxLength must be positive")
     @Column(name = "max_length_in_centimeters")
     private Double maxLength;
@@ -19,8 +18,8 @@ public class TransportDTO extends BaseDTO {
     public TransportDTO() {
     }
 
-    public TransportDTO(Long id, Double quantity, String description, String specificationFileUrl, Double maxLength, Double weight, String truck) {
-        super(id, quantity, description, specificationFileUrl);
+    public TransportDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, Double maxLength, Double weight, String truck) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.maxLength = maxLength;
         this.weight = weight;
         this.truck = truck;

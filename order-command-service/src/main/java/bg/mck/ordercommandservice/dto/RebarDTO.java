@@ -13,6 +13,12 @@ public class RebarDTO extends BaseDTO{
     public RebarDTO() {
     }
 
+    public RebarDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, Double maxLength, Double weight) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        this.maxLength = maxLength;
+        this.weight = weight;
+    }
+
     public RebarDTO(Double maxLength, Double weight) {
         this.maxLength = maxLength;
         this.weight = weight;

@@ -10,7 +10,7 @@ public class FasterEvent {
 
     private String type;
     private String diameter;
-    private Double length;
+    private String length;
     private String model;
     private String clazz;
 
@@ -71,11 +71,11 @@ public class FasterEvent {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public FasterEvent setLength(Double length) {
+    public FasterEvent setLength(String length) {
         this.length = length;
         return this;
     }

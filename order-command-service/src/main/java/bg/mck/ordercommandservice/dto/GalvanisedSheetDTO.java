@@ -17,6 +17,13 @@ public class GalvanisedSheetDTO extends BaseDTO{
     public GalvanisedSheetDTO() {
     }
 
+    public GalvanisedSheetDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, Double maxlength, Double area) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
+        this.maxlength = maxlength;
+        this.area = area;
+    }
+
     public GalvanisedSheetDTO(String type, Double maxlength, Double area) {
         this.type = type;
         this.maxlength = maxlength;

@@ -1,6 +1,7 @@
 package bg.mck.ordercommandservice.dto;
 
-import jakarta.validation.constraints.DecimalMin;
+import bg.mck.ordercommandservice.entity.enums.LengthUnits;
+import jakarta.validation.constraints.Pattern;
 
 public class FastenerDTO extends BaseDTO {
 
@@ -8,8 +9,9 @@ public class FastenerDTO extends BaseDTO {
     private String type;
     private String diameter;
 
-    @DecimalMin(value = "0.0", message = "Length must be positive")
-    private Double length;
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    private String length;
+    private LengthUnits lengthUnit;
     private String model;
     private String clazz;
 
@@ -17,19 +19,21 @@ public class FastenerDTO extends BaseDTO {
     public FastenerDTO() {
     }
 
-    public FastenerDTO(Long id, Double quantity, String description, String specificationFileUrl, String type, String diameter, Double length, String model, String clazz) {
-        super(id, quantity, description, specificationFileUrl);
+    public FastenerDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String diameter, String length, LengthUnits lengthUnit, String model, String clazz) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.diameter = diameter;
         this.length = length;
+        this.lengthUnit = lengthUnit;
         this.model = model;
         this.clazz = clazz;
     }
 
-    public FastenerDTO(String type, String diameter, Double length, String model, String clazz) {
+    public FastenerDTO(String type, String diameter, String length, LengthUnits lengthUnit, String model, String clazz) {
         this.type = type;
         this.diameter = diameter;
         this.length = length;
+        this.lengthUnit = lengthUnit;
         this.model = model;
         this.clazz = clazz;
     }
@@ -43,6 +47,15 @@ public class FastenerDTO extends BaseDTO {
         return this;
     }
 
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public FastenerDTO setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
+        return this;
+    }
+
     public String getDiameter() {
         return diameter;
     }
@@ -52,11 +65,11 @@ public class FastenerDTO extends BaseDTO {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public FastenerDTO setLength(Double length) {
+    public FastenerDTO setLength(String length) {
         this.length = length;
         return this;
     }
@@ -78,4 +91,6 @@ public class FastenerDTO extends BaseDTO {
         this.clazz = clazz;
         return this;
     }
+
+
 }

@@ -22,7 +22,8 @@ public class PanelDTO extends BaseDTO{
     public PanelDTO() {
     }
 
-    public PanelDTO(String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness) {
+    public PanelDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.color = color;
         this.length = length;

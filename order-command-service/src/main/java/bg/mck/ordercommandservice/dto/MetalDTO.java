@@ -10,6 +10,11 @@ public class MetalDTO extends BaseDTO{
     public MetalDTO() {
     }
 
+    public MetalDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String weight) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        this.weight = weight;
+    }
+
     public MetalDTO(String weight) {
         this.weight = weight;
     }

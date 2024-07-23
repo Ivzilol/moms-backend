@@ -14,6 +14,12 @@ public class InsulationDTO extends BaseDTO{
     public InsulationDTO() {
     }
 
+    public InsulationDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, Double thickness) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
+        this.thickness = thickness;
+    }
+
     public InsulationDTO(String type, Double thickness) {
         this.type = type;
         this.thickness = thickness;

@@ -3,7 +3,7 @@ package bg.mck.ordercommandservice.dto;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
 
-public class SetDTO extends BaseDTO{
+public class SetDTO extends BaseDTO {
 
     @DecimalMin(value = "0.0", message = "GalvanisedSheetThickness must be positive")
     @Column(name = "galvanised_sheet_thickness_in_mm")
@@ -18,7 +18,8 @@ public class SetDTO extends BaseDTO{
     public SetDTO() {
     }
 
-    public SetDTO(Double galvanisedSheetThickness, String color, String maxLength) {
+    public SetDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, Double galvanisedSheetThickness, String color, String maxLength) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.galvanisedSheetThickness = galvanisedSheetThickness;
         this.color = color;
         this.maxLength = maxLength;
