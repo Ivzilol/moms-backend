@@ -17,7 +17,6 @@ public class OrderDTO {
     @Size(min = 10, message = "Order description must be at least 10 characters long.")
     private String orderDescription;
 
-    @NotNull(message = "Order date must not be empty.")
     private ZonedDateTime orderDate;
 
     @NotNull(message = "Delivery date must not be empty.")

@@ -39,7 +39,6 @@ public class OrderEntity extends BaseEntity {
     private OrderStatus orderStatus;
 
     @ManyToOne
-    @Column(name = "construction_site_id", nullable = false)
     private ConstructionSiteEntity constructionSite;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)

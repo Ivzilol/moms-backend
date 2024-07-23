@@ -1,4 +1,4 @@
-insert into construction_sites (id, construction_number, name)
+insert into construction_sites (id, construction_number, construction_name)
 values (1, '18.23.1', 'Жилищна сграда В'),
        (2, '18.24.1', 'Кауфланд Горубляне'),
        (3, '1.11.5', 'Цех за преработка на метали'),
@@ -8,15 +8,15 @@ values (1, '18.23.1', 'Жилищна сграда В'),
        (7, '101.54.8', 'Склад за храни'),
        (8, '2.11.9', 'Цех за панели');
 
-insert into orders (id, delivery_date, material_type, order_date, order_description, order_number, order_status, specification_file_url,email, construction_site_id)
-values  (1, '2024-09-05 14:57:57.000000', 'INSULATION', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 1, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 1),
-        (2, '2024-09-05 14:57:57.000000', 'METAL', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 2, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
-        (3, '2024-09-05 14:57:57.000000', 'FASTENERS', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 34, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
-        (4, '2024-09-05 14:57:57.000000', 'REBAR', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 4, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 3),
-        (5, '2024-09-05 14:57:57.000000', 'SERVICE', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 5, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
-        (6, '2024-09-05 14:57:57.000000', 'TRANSPORT', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 6, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
-        (7, '2024-09-05 14:57:57.000000', 'GALVANIZED_SHEET', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 22, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2),
-        (8, '2024-09-05 14:57:57.000000', 'PANELS', '2024-07-05 14:58:04.000000', 'sdfgsdgsdfg', 8, 'CREATED','https://test.dropbox.com', 'test@abv.bg', 2);
+insert into orders (id, delivery_date, email, material_type, order_date, order_description, order_number, order_status, specification_file_url, construction_site_id)
+values  (1, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'INSULATION', '2024-07-05 14:58:04.000000', 'Sample order description', 1, 'CREATED', 'https://test.dropbox.com', 1),
+        (2, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'METAL', '2024-07-05 14:58:04.000000', 'Sample order description', 2, 'CREATED', 'https://test.dropbox.com', 2),
+        (3, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'FASTENERS', '2024-07-05 14:58:04.000000', 'Sample order description', 34, 'CREATED', 'https://test.dropbox.com', 2),
+        (4, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'REBAR', '2024-07-05 14:58:04.000000', 'Sample order description', 4, 'CREATED', 'https://test.dropbox.com', 3),
+        (5, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'SERVICE', '2024-07-05 14:58:04.000000', 'Sample order description', 5, 'CREATED', 'https://test.dropbox.com', 2),
+        (6, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'TRANSPORT', '2024-07-05 14:58:04.000000', 'Sample order description', 6, 'CREATED', 'https://test.dropbox.com', 2),
+        (7, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'GALVANIZED_SHEET', '2024-07-05 14:58:04.000000', 'Sample order description', 22, 'CREATED', 'https://test.dropbox.com', 2),
+        (8, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'PANELS', '2024-07-05 14:58:04.000000', 'Sample order description', 8, 'CREATED', 'https://test.dropbox.com', 2);
 
 insert into services (id, description, quantity, specification_file_url, order_id)
 values  (1, 'Армировка на стени', 10, null, 5),
@@ -28,27 +28,27 @@ values  (1, 'Камион за превоз на материали', 5, null, n
         (3, 'Извозване на отпадъци', 1, null, null, 15000, 18000, 6);
 
 
-insert into fastener (id, description, quantity, specification_file_url, clazz, diameter, length_in_mm, model, type, order_id)
-values  (2, null, 10, null, null, 'Сегментен анкер тип  аналог на  HILTI HST3', 120, null, 'Сегментен анкер тип  аналог на  HILTI HST3', 3),
-        (3, null, 20, null, null, 'Сегментен анкер тип  аналог на  HILTI HST3', 140, null, 'Сегментен анкер тип  аналог на  HILTI HST3', 3),
-        (4, null, 10, null, null, 'Сегментен анкер тип  аналог на  HILTI HST3', 120, null, 'Сегментен анкер тип  аналог на  HILTI HST3', 3),
-        (5, null, 10, null, null, 'Сегментен анкер тип  аналог на  HILTI HST3', 100, null, 'Сегментен анкер тип  аналог на  HILTI HST3', 3),
-        (6, null, 3, null, '8.8', 'Шпилка М20', 1000, 'DIN 976', 'Шпилка М20', 3),
-        (7, null, 15, null, '8.8', 'Болт М12х55', 55, 'DIN 931', 'Болт М12х55', 3),
-        (8, null, 30, null, '8.8', 'Болт М16х70', 70, 'DIN 931', 'Болт М16х70', 3),
-        (9, null, 200, null, '8.8', 'Болт М20х70', 70, 'DIN 931', 'Болт М20х70', 3),
-        (10, null, 10, null, '10.9', 'Болт М20х80', 80, 'DIN 931', 'Болт М20х80', 3),
-        (11, null, 10, null, '8.8', 'Болт М30х90', 90, 'DIN 931', 'Болт М30х90', 3),
-        (12, null, 30, null, null, 'Подложна шайба М12', null, 'ISO 7089', 'Подложна шайба М12', 3),
-        (13, null, 15, null, '8', 'Гайка М12', null, 'ISO 4032', 'Гайка М12', 3),
-        (14, null, 60, null, null, 'Подложна шайба М16', null, 'ISO 7089', 'Подложна шайба М16', 3),
-        (15, null, 30, null, '8', 'Гайка М16', null, 'ISO 4032', 'Гайка М16', 3),
-        (16, null, 20, null, null, 'Подложна шайба М20', null, 'ISO 7089', 'Подложна шайба М20', 3),
-        (17, null, 20, null, '10', 'Гайка М20', null, 'ISO 4032', 'Гайка М20', 3),
-        (18, null, 420, null, null, 'Подложна шайба М20', null, 'ISO 7089', 'Подложна шайба М20', 3),
-        (19, null, 420, null, '8', 'Гайка М20', null, 'ISO 4032', 'Гайка М20', 3),
-        (20, null, 20, null, null, 'Подложна шайба М30', null, 'ISO 7089', 'Подложна шайба М30', 3),
-        (21, null, 20, null, '8', 'Гайка М30', null, 'ISO 4032', 'Гайка М30', 3);
+insert into fastener (id, admin_note, description, material_status, quantity, specification_file_url, clazz, diameter, length_in_mm, model, type, order_id)
+values  (2, 'Sample note', 'Цолска резба', 'AVAILABLE', 10, 'https://testURL.com', '10.9', 'Сегментен анкер тип  аналог на  HILTI HST3', 120, 'ISO 7089', 'Сегментен анкер тип  аналог на  HILTI HST3', 3),
+        (3, 'Не могат да се доставят до края на седмицата', 'Иноксови да са', 'UNAVAILABLE', 20, 'https://testURL.com', '10.9', 'Сегментен анкер тип  аналог на  HILTI HST3', 140, 'ISO 4032', 'Сегментен анкер тип  аналог на  HILTI HST3', 3),
+        (4, 'Изчакваме отговор от Мултиком', 'да са на HILTI', 'PENDING', 10, 'https://testURL.com', '10.9', 'Сегментен анкер тип  аналог на  HILTI HST3', 120, 'ISO 7089', 'Сегментен анкер тип  аналог на  HILTI HST3', 3),
+        (5, 'Sample note', 'Цолска резба', 'AVAILABLE', 10, 'https://testURL.com', '10.9', 'Сегментен анкер тип  аналог на  HILTI HST3', 100, 'ISO 4032', 'Сегментен анкер тип  аналог на  HILTI HST3', 3),
+        (6, 'Sample note', 'Иноксови да са', 'UNAVAILABLE', 3, 'https://testURL.com', '8.8', 'Шпилка М20', 1000, 'DIN 976', 'Шпилка М20', 3),
+        (7, 'Sample note', 'Цолска резба', 'PENDING', 15, 'https://testURL.com', '8.8', 'Болт М12х55', 55, 'DIN 931', 'Болт М12х55', 3),
+        (8, 'Sample note', 'Иноксови да са', 'AVAILABLE', 30, 'https://testURL.com', '8.8', 'Болт М16х70', 70, 'DIN 931', 'Болт М16х70', 3),
+        (9, 'Sample note', 'да са на HILTI', 'UNAVAILABLE', 200, 'https://testURL.com', '8.8', 'Болт М20х70', 70, 'DIN 931', 'Болт М20х70', 3),
+        (10, 'Sample note', 'Цолска резба', 'PENDING', 10, 'https://testURL.com', '10.9', 'Болт М20х80', 80, 'DIN 931', 'Болт М20х80', 3),
+        (11, 'Sample note', 'Иноксови да са', 'AVAILABLE', 10, 'https://testURL.com', '8.8', 'Болт М30х90', 90, 'DIN 931', 'Болт М30х90', 3),
+        (12, 'Sample note', 'да са на HILTI', 'UNAVAILABLE', 30, 'https://testURL.com', '10.9', 'Подложна шайба М12', 55, 'ISO 7089', 'Подложна шайба М12', 3),
+        (13, 'Sample note', 'Цолска резба', 'PENDING', 15, 'https://testURL.com', '8', 'Гайка М12', 70, 'ISO 4032', 'Гайка М12', 3),
+        (14, 'Sample note', 'Иноксови да са', 'AVAILABLE', 60, 'https://testURL.com', '10.9', 'Подложна шайба М16', 70, 'ISO 7089', 'Подложна шайба М16', 3),
+        (15, 'Sample note', 'да са на HILTI', 'UNAVAILABLE', 30, 'https://testURL.com', '8', 'Гайка М16', 80, 'ISO 4032', 'Гайка М16', 3),
+        (16, 'Sample note', 'Цолска резба', 'PENDING', 20, 'https://testURL.com', '10.9', 'Подложна шайба М20', 90, 'ISO 7089', 'Подложна шайба М20', 3),
+        (17, 'Sample note', 'Иноксови да са', 'AVAILABLE', 20, 'https://testURL.com', '10', 'Гайка М20', 55, 'ISO 4032', 'Гайка М20', 3),
+        (18, 'Sample note', 'да са на HILTI', 'UNAVAILABLE', 420, 'https://testURL.com', '10.9', 'Подложна шайба М20', 70, 'ISO 7089', 'Подложна шайба М20', 3),
+        (19, 'Sample note', 'Цолска резба', 'PENDING', 420, 'https://testURL.com', '8', 'Гайка М20', 70, 'ISO 4032', 'Гайка М20', 3),
+        (20, 'Sample note', 'Иноксови да са', 'AVAILABLE', 20, 'https://testURL.com', '10.9', 'Подложна шайба М30', 80, 'ISO 7089', 'Подложна шайба М30', 3),
+        (21, 'Sample note', 'да са на HILTI', 'UNAVAILABLE', 20, 'https://testURL.com', '8', 'Гайка М30', 90, 'ISO 4032', 'Гайка М30', 3);
 
 
 
