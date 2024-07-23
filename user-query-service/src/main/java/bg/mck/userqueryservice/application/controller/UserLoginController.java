@@ -42,6 +42,7 @@ public class UserLoginController {
         UserLoginResponseDTO loggedUser = userLoginService.login(userLoginDTO);
 
         String token = userLoginService.generateToken(loggedUser);
+        loggedUser.setToken("Bearer " + token);
         response.setHeader("Authorization", "Bearer " + token);
         return ResponseEntity.ok(loggedUser);
     }

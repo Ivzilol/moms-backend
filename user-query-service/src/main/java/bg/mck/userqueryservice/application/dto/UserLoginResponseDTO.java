@@ -7,11 +7,13 @@ public class UserLoginResponseDTO {
     private String id;
     private String email;
     private Set<String> roles;
+    private String token;
 
-    public UserLoginResponseDTO(String id, String email, Set<String> authorities) {
+    public UserLoginResponseDTO(String id, String email, Set<String> authorities, String token) {
         this.id = id;
         this.email = email;
         this.roles = authorities;
+        this.token = token;
     }
 
     public String getId() {
@@ -39,6 +41,15 @@ public class UserLoginResponseDTO {
 
     public UserLoginResponseDTO setRoles(Set<String> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public UserLoginResponseDTO setToken(String token) {
+        this.token = token;
         return this;
     }
 }
