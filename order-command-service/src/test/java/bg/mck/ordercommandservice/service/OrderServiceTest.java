@@ -7,6 +7,8 @@ import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.FastenerEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
+import bg.mck.ordercommandservice.event.CreateOrderEvent;
+import bg.mck.ordercommandservice.event.FasterEvent;
 import bg.mck.ordercommandservice.mapper.FastenerMapper;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
 import bg.mck.ordercommandservice.repository.FastenerRepository;
@@ -30,6 +32,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static bg.mck.ordercommandservice.testUtils.OrderUtil.createCreateOrderEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -55,15 +58,18 @@ class OrderServiceTest {
 
     @BeforeEach
     public void setUp() {
-        constructionSiteEntity = ConstructionSiteUtil.createConstructionSiteEntity();
+        constructionSiteEntity = ConstructionSiteUtil.createConstructionSiteEntityWithID();
         constructionSiteDTO = ConstructionSiteUtil.createConstructionSiteDTO();
         orderDTO = OrderUtil.createOrderDTO();
         orderEntity = OrderUtil.createOrderEntity();
+        CreateOrderEvent<FasterEvent> createOrderEvent = createCreateOrderEvent();
 
         when(orderMapper.toOrderEntity(orderDTO)).thenReturn(orderEntity);
+        when(orderMapper.toEvent(orderEntity)).thenReturn(createOrderEvent);
         when(constructionSiteService.getConstructionSiteByNumberAndName(any(ConstructionSiteDTO.class))).thenReturn(constructionSiteEntity);
         when(orderRepository.findLastOrderNumber()).thenReturn(Optional.of(3));
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(orderEntity));
     }
 
     @AfterEach
@@ -74,6 +80,11 @@ class OrderServiceTest {
 
     @Test
     void test_CreateOrder_shouldReturn_correctData() {
+        FastenerDTO fastener1 = MaterialUtil.createFastenerDTO();
+        FastenerDTO fastener2 = MaterialUtil.createFastenerDTO();
+
+        orderDTO.setFasteners(Set.of(fastener1, fastener2));
+
         CreateOrderDTO expectedCreateOrderDTO = orderService.createOrder(orderDTO, "test@example.com");
         verify(orderRepository).save(orderEntity);
 

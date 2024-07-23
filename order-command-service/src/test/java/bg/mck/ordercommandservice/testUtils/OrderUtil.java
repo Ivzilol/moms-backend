@@ -1,13 +1,21 @@
 package bg.mck.ordercommandservice.testUtils;
 
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
+import bg.mck.ordercommandservice.dto.FastenerDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
+import bg.mck.ordercommandservice.event.CreateOrderEvent;
+import bg.mck.ordercommandservice.event.FasterEvent;
+import bg.mck.ordercommandservice.event.OrderEvent;
+import bg.mck.ordercommandservice.event.OrderEventType;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class OrderUtil {
     private ConstructionSiteDTO constructionSiteDTO;
@@ -34,8 +42,41 @@ public class OrderUtil {
                 .setOrderStatus(OrderStatus.CREATED)
                 .setOrderDate(ZonedDateTime.parse("2024-07-05T14:58:04Z"))
                 .setDeliveryDate(ZonedDateTime.parse("2025-07-05T14:58:04Z"))
-                .setMaterialType(MaterialType.FASTENERS);
+                .setSpecificationFileUrl("https://www.example.com")
+                .setMaterialType(MaterialType.FASTENERS)
+                .setFasteners(Set.of(MaterialUtil.createFastenerEntity(),
+                        MaterialUtil.createFastenerEntity()));
         orderEntity.setId(1L);
         return orderEntity;
+    }
+
+    public static CreateOrderEvent<FasterEvent> createCreateOrderEvent() {
+        CreateOrderEvent<FasterEvent> createOrderEvent = new CreateOrderEvent<>();
+        OrderEntity orderEntity = createOrderEntity();
+        Set<FasterEvent> fasterEventSet = orderEntity.getFasteners().stream()
+                .map(fastenerEntity -> new FasterEvent()
+                        .setDiameter(fastenerEntity.getDiameter())
+                        .setDescription(fastenerEntity.getDescription())
+                        .setQuantity(fastenerEntity.getQuantity())
+                        .setSpecificationFileUrl(fastenerEntity.getSpecificationFileUrl())
+                        .setClazz(fastenerEntity.getClazz())
+                        .setLength(fastenerEntity.getLength())
+                        .setModel(fastenerEntity.getModel())
+                        .setType(fastenerEntity.getType()))
+                .collect(Collectors.toSet());
+        createOrderEvent.setOrderId(1L)
+                .setEventType(OrderEventType.ORDER_CREATED)
+                .setEventTime(LocalDateTime.now());
+        createOrderEvent.setEmail(orderEntity.getEmail())
+                .setOrderNumber(orderEntity.getOrderNumber())
+                .setOrderDescription(orderEntity.getOrderDescription())
+                .setOrderDate(orderEntity.getOrderDate())
+                .setDeliveryDate(orderEntity.getDeliveryDate())
+                .setMaterialType(orderEntity.getMaterialType())
+                .setOrderStatus(orderEntity.getOrderStatus())
+                .setConstructionSite(orderEntity.getConstructionSite())
+                .setMaterials(fasterEventSet);
+
+        return createOrderEvent;
     }
 }
