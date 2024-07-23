@@ -1,5 +1,6 @@
 package bg.mck.orderqueryservice.controller;
 
+import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
 import bg.mck.orderqueryservice.service.EventService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,9 @@ public class EventController {
         return ResponseEntity.ok().build();
     }
 
-
+    @PostMapping("/update")
+    public ResponseEntity<?> updateEvent(@RequestBody UpdateOrderDTO updateOrderDTO, @RequestHeader("Event-Type") String eventType) {
+        eventService.updateOrder(updateOrderDTO, eventType);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -1,6 +1,6 @@
 package bg.mck.orderqueryservice.events;
 
-public class ServiceEvent {
+public class ServiceEvent extends BaseEvent{
     private Long id;
 
     private Double quantity;

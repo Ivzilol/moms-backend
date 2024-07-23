@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "order_events")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "eventType", visible = true)
 @JsonSubTypes({
@@ -23,11 +25,16 @@ public class OrderEvent<E extends BaseEvent> {
     }
 
 
+
     public OrderEvent(String id, OrderEventType eventType, E event) {
         this.id = id;
         this.eventType = eventType;
         this.event = event;
     }
+
+    public OrderEvent(OrderEventType orderUpdated, long parseLong, LocalDateTime now, String id, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
+    }
+
 
     public String getId() {
         return id;
