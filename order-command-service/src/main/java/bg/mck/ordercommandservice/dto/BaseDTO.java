@@ -13,6 +13,8 @@ public class BaseDTO {
 
     private String specificationFileUrl;
 
+    private String adminNote;
+
     public BaseDTO() {
     }
 

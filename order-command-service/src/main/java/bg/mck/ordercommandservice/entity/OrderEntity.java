@@ -15,30 +15,31 @@ import java.util.Set;
 @Table(name = "orders")
 public class OrderEntity extends BaseEntity {
 
-    @NotNull
+    @Column(name = "email", nullable = false)
     private String email;
-
+    @Column(name = "order_number", nullable = false, unique = true)
     private Integer orderNumber;
 
     @Column(columnDefinition = "TEXT")
     private String orderDescription;
-
+    @Column(name = "order_date", nullable = false, updatable = false)
     private ZonedDateTime orderDate;
     private String specificationFileUrl;
 
-    @NotNull(message = "Delivery date must not be empty.")
     @Future(message = "Delivery date must be in the future.")
+    @Column(name = "delivery_date", nullable = false)
     private ZonedDateTime deliveryDate;
 
-    @NotNull(message = "Material type must not be empty.")
     @Enumerated(EnumType.STRING)
+    @Column(name = "material_type", nullable = false)
     private MaterialType materialType;
 
-    @NotNull(message = "Order status must not be empty.")
     @Enumerated(EnumType.STRING)
+    @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 
     @ManyToOne
+    @Column(name = "construction_site_id", nullable = false)
     private ConstructionSiteEntity constructionSite;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
