@@ -4,16 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "insulation")
 public class InsulationEntity extends BaseMaterialEntity {
 
     private String type;
-
-    @DecimalMin(value = "0.0", message = "Thickness must be positive")
-    @Column(name = "thickness_in_mm")
-    private Double thickness;
+    private String thickness;
 
     public InsulationEntity() {
     }
@@ -28,11 +26,11 @@ public class InsulationEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getThickness() {
+    public String getThickness() {
         return thickness;
     }
 
-    public InsulationEntity setThickness(Double thickness) {
+    public InsulationEntity setThickness(String thickness) {
         this.thickness = thickness;
         return this;
     }

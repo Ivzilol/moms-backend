@@ -79,13 +79,13 @@ values  (1, null, 'междинно ниво +5.70 м', 'APPROVED', 4, 'https://
 
 
 
-insert into metals (id, description, quantity, specification_file_url, total'_wei'ght_in_kg, order_id)
-values  (1, 'Ъглов профил 200 х 200 х 16', 2, null, 5, 2),
-        (2, 'Ъглов профил 200 х 200 х 16', 33, null, 5, 2),
-        (3, 'Ъглов профил 200 х 200 х 16', 25, null, 55, 2),
-        (4, 'Ъглов профил 200 х 200 х 16', 33, null, 55, 2),
-        (5, 'Ъглов профил 200 х 200 х 16', 11, null, 4, 2),
-        (6, 'Ъглов профил 200 х 200 х 16', 1, null, 1, 2);
+insert into metals (id, admin_note, description, material_status, quantity, specification_file_url, total_weight, order_id)
+values  (1, 'не може да се достави', 'Ъглов профил 200 х 200 х 16', 'NOT_APPROVED', 2, null, '5 T', 2),
+        (2, 'не може да се достави', 'Ъглов профил 200 х 200 х 16', 'NOT_APPROVED', 33, null, '5 T', 2),
+        (3, 'не може да се достави', 'Ъглов профил 200 х 200 х 16', 'NOT_APPROVED', 25, null, '55 T', 2),
+        (4, 'не може да се достави', 'Ъглов профил 200 х 200 х 16', 'NOT_APPROVED', 33, null, '55 T', 2),
+        (5, null, 'Ъглов профил 200 х 200 х 16', 'APPROVED', 11, null, '4 T', 2),
+        (6, null, 'Ъглов профил 200 х 200 х 16', 'APPROVED', 1, null, '1000 KG', 2);
 
 
 
@@ -98,15 +98,15 @@ values  (1, null, null, null, 1, 1.5, 'RAL 3000', 1200, 100, null, 90, 8),
         (6, null, null, null, 1, 1.5, 'RAL 3000', 1200, 100, null, 90, 8);
 
 
-insert into insulation (id, description, quantity, specification_file_url, thickness_in_mm, type, order_id)
-values  (1, 'черна', 1, null, 8, 'Тръбна изолация 6 x 08', 1),
-        (2, 'черна', 3, null, 10, 'Тръбна изолация 6 x 10', 1),
-        (3, 'черна', 4, null, 12, 'Тръбна изолация 6 x 12', 1),
-        (4, 'черна', 6, null, 15, 'Тръбна изолация 6 x 15', 1),
-        (5, 'черна', 5, null, 18, 'Тръбна изолация 6 x 18', 1),
-        (6, 'черна', 8, null, 20, 'Тръбна изолация 6 x 20', 1),
-        (7, 'черна', 7, null, 22, 'Тръбна изолация 6 x 22', 1),
-        (8, 'черна', 8, null, 25, 'Тръбна изолация 6 x 25', 1);
+insert into insulation (id, admin_note, description, material_status, quantity, specification_file_url, thickness, type, order_id)
+values  (1, 'sample note from admin', 'черна', 'NOT_APPROVED', 1, null, '8 MM', 'Тръбна изолация 6 x 08', 1),
+        (2, 'sample note from admin', 'черна', 'NOT_APPROVED', 3, null, '10 MM', 'Тръбна изолация 6 x 10', 1),
+        (3, 'sample note from admin', 'черна', 'NOT_APPROVED', 4, null, '12 MM', 'Тръбна изолация 6 x 12', 1),
+        (4, 'sample note from admin', 'черна', 'NOT_APPROVED', 6, null, '15 MM', 'Тръбна изолация 6 x 15', 1),
+        (5, 'sample note from admin', 'черна', 'NOT_APPROVED', 5, null, '18 MM', 'Тръбна изолация 6 x 18', 1),
+        (6, null, 'черна', 'APPROVED', 8, null, '20 MM', 'Тръбна изолация 6 x 20', 1),
+        (7, null, 'черна', 'APPROVED', 7, null, '22 MM', 'Тръбна изолация 6 x 22', 1),
+        (8, null, 'черна', 'APPROVED', 8, null, '25 MM', 'Тръбна изолация 6 x 25', 1);
 
 
 insert into rebars (id, description, quantity, specification_file_url, max_length_in_centimeters, weight_in_kg, order_id)

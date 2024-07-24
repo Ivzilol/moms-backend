@@ -3,19 +3,16 @@ package bg.mck.ordercommandservice.event;
 public class InsulationEvent {
 
     private Long id;
-
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
     private String type;
-
-    private Double thickness;
+    private String thickness;
 
     public InsulationEvent() {
     }
 
-    public InsulationEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, Double thickness) {
+    public InsulationEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String thickness) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -69,11 +66,11 @@ public class InsulationEvent {
         return this;
     }
 
-    public Double getThickness() {
+    public String getThickness() {
         return thickness;
     }
 
-    public InsulationEvent setThickness(Double thickness) {
+    public InsulationEvent setThickness(String thickness) {
         this.thickness = thickness;
         return this;
     }
