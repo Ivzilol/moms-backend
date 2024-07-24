@@ -2,6 +2,7 @@ package bg.mck.entity.serviceEntity;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "services")
@@ -9,6 +10,7 @@ public class ServiceEntity {
 
     private String id;
 
+    @Indexed
     private String name;
 
 

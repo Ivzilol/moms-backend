@@ -1,5 +1,6 @@
 package bg.mck.entity.constructions;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "construction_sites")
@@ -9,6 +10,7 @@ public class ConstructionSiteEntity {
 
     private String constructionNumber;
 
+    @Indexed
     private String name;
 
     public ConstructionSiteEntity() {
