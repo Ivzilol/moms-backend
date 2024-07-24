@@ -81,6 +81,12 @@ public class OrderService {
 
     @Transactional
     public CreateOrderDTO createOrder(OrderDTO order, String email, List<MultipartFile> files) {
+
+        //TODO: implement file upload
+        List<String> filesUrl = uploadFiles(files);
+        //TODO: implement matching files to materials
+        matchFilesToMaterials(order, filesUrl);
+
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
@@ -106,6 +112,22 @@ public class OrderService {
                 .constructionSiteName(orderEntity.getConstructionSite().getName())
                 .constructionSiteNumber(orderEntity.getConstructionSite().getConstructionNumber())
                 .build();
+    }
+
+    private List<String> uploadFiles(List<MultipartFile> files) {
+        if (files == null || files.isEmpty()) {
+            return null;
+        }
+        //TODO: implement file upload
+        return null;
+    }
+
+
+    private static void matchFilesToMaterials(OrderDTO order, List<String> filesUrl) {
+        if (filesUrl == null || filesUrl.isEmpty()) {
+            return;
+        }
+        //TODO: implement matching files to materials
     }
 
     private void createEvent(OrderEntity orderEntity) {
