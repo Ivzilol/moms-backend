@@ -1,60 +1,66 @@
-package bg.mck.entity.materialEntity;
+package bg.mck.dto;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+public class ServiceDTO {
 
-@Document(collection = "unspecified")
-public class UnspecifiedEntity extends BaseMaterialEntity {
-
-    @Indexed
+    private String id;
     private String name;
-
     private Double quantity;
-
     private String description;
-
     private String specificationFileUrl;
 
-    public UnspecifiedEntity() {
+    public ServiceDTO() {
     }
 
-    public UnspecifiedEntity(String id, String name, Double quantity, String description, String specificationFileUrl) {
-        super(id);
+    public ServiceDTO(String id, String name, Double quantity, String description, String specificationFileUrl) {
+        this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ServiceDTO setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public ServiceDTO setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public ServiceDTO setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public ServiceDTO setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public void setSpecificationFileUrl(String specificationFileUrl) {
+    public ServiceDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
     }
 }

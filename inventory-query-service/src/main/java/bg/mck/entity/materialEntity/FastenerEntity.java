@@ -1,11 +1,13 @@
 package bg.mck.entity.materialEntity;
 
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "fastener")
 public class FastenerEntity extends BaseMaterialEntity{
 
+    @Indexed
     private String name;
 
     private String type;

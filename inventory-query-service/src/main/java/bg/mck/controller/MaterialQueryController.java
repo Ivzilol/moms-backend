@@ -9,15 +9,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import bg.mck.service.MaterialSearchService;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/${APPLICATION_VERSION}/user/inventory/query/materials")
 public class MaterialQueryController {
 
     private final MaterialSearchService materialSearchService;
@@ -35,7 +33,7 @@ public class MaterialQueryController {
             @ApiResponse(responseCode = "404", description = "Material not found"),
             @ApiResponse(responseCode = "400", description = "Invalid Category")
     })
-    @GetMapping("/${APPLICATION_VERSION}/admin/inventory/query/{category}/{id}")
+    @GetMapping("/{category}/{id}")
     public ResponseEntity<MaterialDTO> getMaterialByCategoryAndId(@PathVariable String category, @PathVariable String id) {
         MaterialDTO materialDTO = materialQueryService.getMaterialByCategoryAndId(category, id);
 
@@ -53,7 +51,7 @@ public class MaterialQueryController {
             @ApiResponse(responseCode = "404", description = "No materials found"),
             @ApiResponse(responseCode = "400", description = "Invalid Category")
     })
-    @GetMapping("/${APPLICATION_VERSION}/admin/inventory/query/{category}")
+    @GetMapping("/{category}")
     public ResponseEntity<List<MaterialDTO>> getAllMaterialsByCategory(@PathVariable String category) {
         List<MaterialDTO> materialDTOs = materialQueryService.getAllMaterialsByCategory(category);
 
@@ -64,7 +62,7 @@ public class MaterialQueryController {
     }
 
 
-    @GetMapping("/${APPLICATION_VERSION}/user/inventory/query/search")
+    @GetMapping("/search")
     public ResponseEntity<?> getMaterialByPartOfName(@RequestParam("category") String category,
                                                      @RequestParam("materialName") String materialName) {
         List<? extends MaterialDTO> materialDTO = this.materialSearchService
