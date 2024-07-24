@@ -9,19 +9,19 @@ public class GalvanisedSheetEvent {
     private String specificationFileUrl;
 
     private String type;
-    private Double Maxlength;
-    private Double area;
+    private String maxLength;
+    private String area;
 
     public GalvanisedSheetEvent() {
     }
 
-    public GalvanisedSheetEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, Double maxlength, Double area) {
+    public GalvanisedSheetEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String maxLength, String area) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.type = type;
-        Maxlength = maxlength;
+        this.maxLength = maxLength;
         this.area = area;
     }
 
@@ -70,20 +70,20 @@ public class GalvanisedSheetEvent {
         return this;
     }
 
-    public Double getMaxlength() {
-        return Maxlength;
+    public String getMaxLength() {
+        return maxLength;
     }
 
-    public GalvanisedSheetEvent setMaxlength(Double maxlength) {
-        Maxlength = maxlength;
+    public GalvanisedSheetEvent setMaxLength(String maxLength) {
+        this.maxLength = maxLength;
         return this;
     }
 
-    public Double getArea() {
+    public String getArea() {
         return area;
     }
 
-    public GalvanisedSheetEvent setArea(Double area) {
+    public GalvanisedSheetEvent setArea(String area) {
         this.area = area;
         return this;
     }

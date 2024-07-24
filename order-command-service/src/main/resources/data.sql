@@ -52,34 +52,34 @@ values  (2, 'Sample note', 'Цолска резба', 'APPROVED', 10, 'https://t
 
 
 
-insert into galvanised_sheets (id, description, quantity, specification_file_url, area_in_square_meters, max_length_in_centimeters, type, order_id)
-values  (1, 'междинно ниво +5.70 м', 4, null, 41, 1155, 'TR 153x0.75', 7),
-        (2, 'междинно ниво +5.70 м', 3, null, 28, 1065, 'TR 153x0.75', 7),
-        (3, 'междинно ниво +5.70 м', 7, null, 60, 980, 'TR 153x0.75', 7),
-        (4, 'междинно ниво +5.70 м', 13, null, 133, 1175, 'TR 153x0.75', 7),
-        (5, 'междинно ниво +5.70 м', 6, null, 31, 575, 'TR 153x0.75', 7),
-        (6, 'междинно ниво +5.70 м', 5, null, 29, 665, 'TR 153x0.75', 7),
-        (7, 'междинно ниво +5.70 м', 2, null, 23, 1305, 'TR 153x0.75', 7),
-        (8, 'междинно ниво +5.70 м', 5, null, 56, 1285, 'TR 153x0.75', 7),
-        (9, 'междинно ниво +5.70 м', 9, null, 80, 1020, 'TR 153x0.75', 7),
-        (10, 'междинно ниво +5.70 м', 3, null, 14, 510, 'TR 153x0.75', 7),
-        (11, 'междинно ниво +5.70 м', 2, null, 9, 470, 'TR 153x0.75', 7),
-        (12, 'междинно ниво +5.70 м', 3, null, 20, 740, 'TR 153x0.75', 7),
-        (13, 'междинно ниво +5.70 м', 4, null, 10, 270, 'TR 153x0.75', 7),
-        (14, 'покрив', 11, null, 77, 800, 'TR 153x0.75', 7),
-        (15, 'покрив', 6, null, 40, 760, 'TR 153x0.75', 7),
-        (16, 'покрив', 1, null, 11, 1175, 'TR 153x0.75', 7),
-        (17, 'покрив', 1, null, 11, 1250, 'TR 153x0.75', 7),
-        (18, 'покрив', 2, null, 20, 1100, 'TR 153x0.75', 7),
-        (19, 'покрив', 2, null, 15, 860, 'TR 153x0.75', 7),
-        (20, 'покрив', 1, null, 6, 620, 'TR 153x0.75', 7),
-        (21, 'покрив', 3, null, 15, 570, 'TR 153x0.75', 7),
-        (22, 'покрив', 2, null, 7, 370, 'TR 153x0.75', 7),
-        (23, 'покрив', 2, null, 6, 330, 'TR 153x0.75', 7);
+insert into galvanised_sheets (id, admin_note, description, material_status, quantity, specification_file_url, area_in_square_meters, max_length_in_centimeters, type, order_id, area, max_length)
+values  (1, null, 'междинно ниво +5.70 м', 'APPROVED', 4, 'https://uploadFileHere.com', 41, 1155, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (2, null, 'междинно ниво +5.70 м', 'APPROVED', 3, 'https://uploadFileHere.com', 28, 1065, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (3, null, 'междинно ниво +5.70 м', 'APPROVED', 7, 'https://uploadFileHere.com', 60, 980, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (4, null, 'междинно ниво +5.70 м', 'APPROVED', 13, 'https://uploadFileHere.com', 133, 1175, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (5, null, 'междинно ниво +5.70 м', 'APPROVED', 6, 'https://uploadFileHere.com', 31, 575, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (6, null, 'междинно ниво +5.70 м', 'APPROVED', 5, 'https://uploadFileHere.com', 29, 665, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (7, null, 'междинно ниво +5.70 м', 'APPROVED', 2, 'https://uploadFileHere.com', 23, 1305, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (8, null, 'междинно ниво +5.70 м', 'APPROVED', 5, 'https://uploadFileHere.com', 56, 1285, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (9, null, 'междинно ниво +5.70 м', 'APPROVED', 9, 'https://uploadFileHere.com', 80, 1020, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (10, null, 'междинно ниво +5.70 м', 'APPROVED', 3, 'https://uploadFileHere.com', 14, 510, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (11, null, 'междинно ниво +5.70 м', 'APPROVED', 2, 'https://uploadFileHere.com', 9, 470, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (12, null, 'междинно ниво +5.70 м', 'APPROVED', 3, 'https://uploadFileHere.com', 20, 740, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (13, null, 'междинно ниво +5.70 м', 'APPROVED', 4, 'https://uploadFileHere.com', 10, 270, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (14, 'sample admin note', 'покрив', 'NOT_APPROVED', 11, 'https://uploadFileHere.com', 77, 800, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (15, 'sample admin note', 'покрив', 'NOT_APPROVED', 6, 'https://uploadFileHere.com', 40, 760, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (16, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, 'https://uploadFileHere.com', 11, 1175, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (17, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, 'https://uploadFileHere.com', 11, 1250, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (18, 'sample admin note', 'покрив', 'NOT_APPROVED', 2, 'https://uploadFileHere.com', 20, 1100, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (19, 'sample admin note', 'покрив', 'NOT_APPROVED', 2, 'https://uploadFileHere.com', 15, 860, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (20, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, 'https://uploadFileHere.com', 6, 620, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (21, 'sample admin note', 'покрив', 'NOT_APPROVED', 3, 'https://uploadFileHere.com', 15, 570, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (22, 'sample admin note', 'покрив', 'NOT_APPROVED', 2, 'https://uploadFileHere.com', 7, 370, 'TR 153x0.75', 7, '89 M2', '15000 M'),
+        (23, 'sample admin note', 'покрив', 'NOT_APPROVED', 2, 'https://uploadFileHere.com', 6, 330, 'TR 153x0.75', 7, '89 M2', '15000 M');
 
 
 
-insert into metals (id, description, quantity, specification_file_url, total_weight_in_kg, order_id)
+insert into metals (id, description, quantity, specification_file_url, total'_wei'ght_in_kg, order_id)
 values  (1, 'Ъглов профил 200 х 200 х 16', 2, null, 5, 2),
         (2, 'Ъглов профил 200 х 200 х 16', 33, null, 5, 2),
         (3, 'Ъглов профил 200 х 200 х 16', 25, null, 55, 2),
