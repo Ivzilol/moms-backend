@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.dto;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
+import org.springframework.web.multipart.MultipartFile;
 
 public class SetDTO extends BaseDTO {
 

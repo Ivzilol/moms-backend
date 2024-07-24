@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.dto;
 
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.web.multipart.MultipartFile;
 
 public class FastenerDTO extends BaseDTO {
 

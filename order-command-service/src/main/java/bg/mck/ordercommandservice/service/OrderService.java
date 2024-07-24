@@ -16,10 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -78,7 +80,7 @@ public class OrderService {
     }
 
     @Transactional
-    public CreateOrderDTO createOrder(OrderDTO order, String email) {
+    public CreateOrderDTO createOrder(OrderDTO order, String email, List<MultipartFile> files) {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();

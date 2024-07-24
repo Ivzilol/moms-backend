@@ -3,6 +3,9 @@ package bg.mck.ordercommandservice.controller;
 import bg.mck.ordercommandservice.dto.CreateOrderDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.service.OrderService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +17,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/${APPLICATION_VERSION}/user/order/command")
@@ -41,14 +48,23 @@ public class OrderController {
                             schema = @Schema(implementation = CreateOrderDTO.class))})
     }
     )
-    @PostMapping("/create-order")
-    public ResponseEntity<CreateOrderDTO> createOrder(@Valid @RequestBody OrderDTO order, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    @PostMapping(value = "/create-order", consumes = {"multipart/form-data" })
+    public ResponseEntity<CreateOrderDTO> createOrder(@RequestPart(value = "order", required = false) String orderJson,
+                                                      @RequestPart(value = "files", required = false) List<MultipartFile> files,
+                                                      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws JsonProcessingException {
+        OrderDTO order;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+            order = objectMapper.readValue(orderJson, OrderDTO.class);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
+        }
 
         token = token.substring(7);
         String email = restTemplate
                 .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
 
-        return ResponseEntity.ok(orderService.createOrder(order, email));
+        return ResponseEntity.ok(orderService.createOrder(order, email, files));
     }
 
 }
