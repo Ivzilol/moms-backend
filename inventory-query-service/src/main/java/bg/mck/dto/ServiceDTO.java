@@ -1,31 +1,17 @@
-package bg.mck.entity.serviceEntity;
+package bg.mck.dto;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "services")
-public class ServiceEntity {
+public class ServiceDTO {
 
     private String id;
-
-    @Indexed
     private String name;
-
-
     private Double quantity;
-
-
     private String description;
-
-
     private String specificationFileUrl;
 
-    public ServiceEntity() {
+    public ServiceDTO() {
     }
 
-    public ServiceEntity(String id, String name, Double quantity, String description, String specificationFileUrl) {
+    public ServiceDTO(String id, String name, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -37,39 +23,44 @@ public class ServiceEntity {
         return id;
     }
 
-    public void setId(String id) {
+    public ServiceDTO setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public ServiceDTO setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public ServiceDTO setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public ServiceDTO setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public void setSpecificationFileUrl(String specificationFileUrl) {
+    public ServiceDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
     }
 }
