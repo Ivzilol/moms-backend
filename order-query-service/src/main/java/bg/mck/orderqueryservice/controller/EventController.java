@@ -25,9 +25,9 @@ public class EventController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<?> updateEvent(@RequestBody UpdateOrderDTO updateOrderDTO, @RequestHeader("Event-Type") String eventType) {
-        eventService.updateOrder(updateOrderDTO, eventType);
-        return ResponseEntity.ok().build();
-    }
+//    @PostMapping("/update")
+//    public ResponseEntity<?> updateEvent(@RequestBody UpdateOrderDTO updateOrderDTO, @RequestHeader("Event-Type") String eventType) {
+//        eventService.updateOrder(updateOrderDTO, eventType);
+//        return ResponseEntity.ok().build();
+//    }
 }

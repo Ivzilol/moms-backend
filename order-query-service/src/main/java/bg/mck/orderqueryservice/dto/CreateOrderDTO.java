@@ -1,6 +1,5 @@
 package bg.mck.orderqueryservice.dto;
 
-
 import bg.mck.orderqueryservice.entity.enums.OrderStatus;
 
 public class CreateOrderDTO {

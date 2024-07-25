@@ -1,38 +1,61 @@
 package bg.mck.orderqueryservice.dto;
 
 
-import jakarta.validation.constraints.DecimalMin;
+import bg.mck.orderqueryservice.entity.enums.LengthUnits;
+import bg.mck.orderqueryservice.entity.enums.WeightUnits;
 
-public class RebarDTO extends BaseDTO{
+public class RebarDTO extends BaseDTO {
 
+    private String maxLength;
+    private LengthUnits maxLengthUnit;
 
-    private Double maxLength;
-
-    private Double weight;
+    private String weight;
+    private WeightUnits weightUnit;
 
     public RebarDTO() {
     }
 
-    public RebarDTO(Double maxLength, Double weight) {
+    public RebarDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
         this.weight = weight;
+        this.weightUnit = weightUnit;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public RebarDTO setMaxLength(Double maxLength) {
+    public RebarDTO setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public RebarDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public String getWeight() {
         return weight;
     }
 
-    public RebarDTO setWeight(Double weight) {
+    public RebarDTO setWeight(String weight) {
         this.weight = weight;
+        return this;
+    }
+
+    public WeightUnits getWeightUnit() {
+        return weightUnit;
+    }
+
+    public RebarDTO setWeightUnit(WeightUnits weightUnit) {
+        this.weightUnit = weightUnit;
         return this;
     }
 }

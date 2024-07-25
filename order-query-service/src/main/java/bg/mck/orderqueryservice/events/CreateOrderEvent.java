@@ -18,7 +18,7 @@ public class CreateOrderEvent<T> extends BaseEvent {
     private OrderStatus orderStatus;
     private ConstructionSiteEntity constructionSite;
 
-    private Set<T> Materials;
+    private Set<T> materials;
 
     public CreateOrderEvent() {
     }
@@ -96,11 +96,11 @@ public class CreateOrderEvent<T> extends BaseEvent {
     }
 
     public Set<T> getMaterials() {
-        return Materials;
+        return materials;
     }
 
     public CreateOrderEvent<T> setMaterials(Set<T> materials) {
-        Materials = materials;
+        this.materials = materials;
         return this;
     }
 }

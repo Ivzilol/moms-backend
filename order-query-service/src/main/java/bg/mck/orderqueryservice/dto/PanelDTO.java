@@ -1,32 +1,44 @@
 package bg.mck.orderqueryservice.dto;
 
-public class PanelDTO extends BaseDTO{
+import bg.mck.orderqueryservice.entity.enums.LengthUnits;
+
+public class PanelDTO extends BaseDTO {
 
     private String type;
     private String color;
 
-    private Double length;
+    private String length;
+    private LengthUnits lengthUnit;
 
-    private Double width;
+    private String width;
+    private LengthUnits widthUnit;
 
-    private Double totalThickness;
+    private String totalThickness;
+    private LengthUnits totalThicknessUnit;
 
-    private Double FrontSheetThickness;
+    private String frontSheetThickness;
+    private LengthUnits frontSheetThicknessUnit;
 
-    private Double BackSheetThickness;
-
+    private String backSheetThickness;
+    private LengthUnits backSheetThicknessUnit;
 
     public PanelDTO() {
     }
 
-    public PanelDTO(String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness) {
+    public PanelDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.color = color;
         this.length = length;
+        this.lengthUnit = lengthUnit;
         this.width = width;
+        this.widthUnit = widthUnit;
         this.totalThickness = totalThickness;
-        FrontSheetThickness = frontSheetThickness;
-        BackSheetThickness = backSheetThickness;
+        this.totalThicknessUnit = totalThicknessUnit;
+        this.frontSheetThickness = frontSheetThickness;
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        this.backSheetThickness = backSheetThickness;
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
     }
 
     public String getType() {
@@ -47,48 +59,93 @@ public class PanelDTO extends BaseDTO{
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public PanelDTO setLength(Double length) {
+    public PanelDTO setLength(String length) {
         this.length = length;
         return this;
     }
 
-    public Double getWidth() {
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public PanelDTO setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
+        return this;
+    }
+
+    public String getWidth() {
         return width;
     }
 
-    public PanelDTO setWidth(Double width) {
+    public PanelDTO setWidth(String width) {
         this.width = width;
         return this;
     }
 
-    public Double getTotalThickness() {
+    public LengthUnits getWidthUnit() {
+        return widthUnit;
+    }
+
+    public PanelDTO setWidthUnit(LengthUnits widthUnit) {
+        this.widthUnit = widthUnit;
+        return this;
+    }
+
+    public String getTotalThickness() {
         return totalThickness;
     }
 
-    public PanelDTO setTotalThickness(Double totalThickness) {
+    public PanelDTO setTotalThickness(String totalThickness) {
         this.totalThickness = totalThickness;
         return this;
     }
 
-    public Double getFrontSheetThickness() {
-        return FrontSheetThickness;
+    public LengthUnits getTotalThicknessUnit() {
+        return totalThicknessUnit;
     }
 
-    public PanelDTO setFrontSheetThickness(Double frontSheetThickness) {
-        FrontSheetThickness = frontSheetThickness;
+    public PanelDTO setTotalThicknessUnit(LengthUnits totalThicknessUnit) {
+        this.totalThicknessUnit = totalThicknessUnit;
         return this;
     }
 
-    public Double getBackSheetThickness() {
-        return BackSheetThickness;
+    public String getFrontSheetThickness() {
+        return frontSheetThickness;
     }
 
-    public PanelDTO setBackSheetThickness(Double backSheetThickness) {
-        BackSheetThickness = backSheetThickness;
+    public PanelDTO setFrontSheetThickness(String frontSheetThickness) {
+        this.frontSheetThickness = frontSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getFrontSheetThicknessUnit() {
+        return frontSheetThicknessUnit;
+    }
+
+    public PanelDTO setFrontSheetThicknessUnit(LengthUnits frontSheetThicknessUnit) {
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        return this;
+    }
+
+    public String getBackSheetThickness() {
+        return backSheetThickness;
+    }
+
+    public PanelDTO setBackSheetThickness(String backSheetThickness) {
+        this.backSheetThickness = backSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getBackSheetThicknessUnit() {
+        return backSheetThicknessUnit;
+    }
+
+    public PanelDTO setBackSheetThicknessUnit(LengthUnits backSheetThicknessUnit) {
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
         return this;
     }
 }

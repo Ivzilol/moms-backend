@@ -1,5 +1,6 @@
 package bg.mck.orderqueryservice.service;
 
+import bg.mck.orderqueryservice.dto.OrderDTO;
 import bg.mck.orderqueryservice.entity.OrderEntity;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -13,23 +14,23 @@ public class RedisService {
     private final String CACHE_KEY = "orderQueryService";
 
 
-    private final RedisTemplate<String, OrderEntity> redisTemplate;
+    private final RedisTemplate<String, OrderDTO> redisTemplate;
 
-    public RedisService(RedisTemplate<String, OrderEntity> redisTemplate) {
+    public RedisService(RedisTemplate<String, OrderDTO> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
 
-    public OrderEntity getCachedObjectById(Long id) {
+    public OrderDTO getCachedObjectById(Long id) {
         return redisTemplate.opsForValue().get(CACHE_KEY + id);
     }
 
-    public List<OrderEntity> getCachedObjects() {
+    public List<OrderDTO> getCachedObjects() {
         return redisTemplate.opsForValue().multiGet(redisTemplate.keys(CACHE_KEY + "*"));
     }
 
-    public void cacheObject(OrderEntity orderEntity) {
-        redisTemplate.opsForValue().set(CACHE_KEY + orderEntity.getId(), orderEntity);
+    public void cacheObject(OrderDTO orderDTO) {
+        redisTemplate.opsForValue().set(CACHE_KEY + orderDTO.getId(), orderDTO);
     }
 
 

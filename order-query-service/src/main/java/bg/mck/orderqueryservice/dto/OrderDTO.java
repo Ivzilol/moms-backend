@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class OrderDTO {
 
+    private String id;
 
     private String orderDescription;
 
@@ -23,21 +24,22 @@ public class OrderDTO {
     private MaterialType materialType;
     private String specificationFileUrl;
 
-    private Set<@Valid FastenerDTO> fasteners;
-    private Set<@Valid GalvanisedSheetDTO> galvanisedSheets;
-    private Set<@Valid InsulationDTO> insulation;
-    private Set<@Valid MetalDTO> metals;
-    private Set<@Valid PanelDTO> panels;
-    private Set<@Valid RebarDTO> rebars;
-    private Set<@Valid SetDTO> sets;
-    private Set<@Valid UnspecifiedDTO> unspecified;
-    private Set<@Valid ServiceDTO> services;
-    private Set<@Valid TransportDTO> transports;
+    private Set<FastenerDTO> fasteners;
+    private Set<GalvanisedSheetDTO> galvanisedSheets;
+    private Set<InsulationDTO> insulation;
+    private Set<MetalDTO> metals;
+    private Set<PanelDTO> panels;
+    private Set<RebarDTO> rebars;
+    private Set<SetDTO> sets;
+    private Set<UnspecifiedDTO> unspecified;
+    private Set<ServiceDTO> services;
+    private Set<TransportDTO> transports;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String specificationFileUrl,String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<@Valid FastenerDTO> fasteners, Set<@Valid GalvanisedSheetDTO> galvanisedSheets, Set<@Valid InsulationDTO> insulation, Set<@Valid MetalDTO> metals, Set<@Valid PanelDTO> panels, Set<@Valid RebarDTO> rebars, Set<@Valid SetDTO> sets, Set<@Valid UnspecifiedDTO> unspecified, Set<@Valid ServiceDTO> services, Set<@Valid TransportDTO> transports) {
+    public OrderDTO(String id, String specificationFileUrl,String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<FastenerDTO> fasteners, Set<GalvanisedSheetDTO> galvanisedSheets, Set<InsulationDTO> insulation, Set<MetalDTO> metals, Set<PanelDTO> panels, Set<RebarDTO> rebars, Set<SetDTO> sets, Set<UnspecifiedDTO> unspecified, Set<ServiceDTO> services, Set<TransportDTO> transports) {
+        this.id = id;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
@@ -55,6 +57,15 @@ public class OrderDTO {
         this.services = services;
         this.transports = transports;
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public OrderDTO setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public String getOrderDescription() {

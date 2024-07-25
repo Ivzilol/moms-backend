@@ -62,6 +62,14 @@ spring:
         filters:
           - name: AuthorizationFilter
           - name: AuthenticationFilter
+
+      - id: order-query-service
+        uri: lb://order-query-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/user/order/query/**, /${APPLICATION_VERSION}/admin/order/query/**
+        filters:
+          - name: AuthorizationFilter
+          - name: AuthenticationFilter
 eureka:
   instance:
     hostname: localhost

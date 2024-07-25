@@ -46,37 +46,26 @@ public class OrderEntity extends BaseEntity {
     @NotNull
     private OrderStatus orderStatus;
 
-    @DBRef
     private ConstructionSiteEntity constructionSite;
 
-    @DBRef
     private Set<FastenerEntity> fasteners;
 
-    @DBRef
     private Set<GalvanisedSheetEntity> galvanisedSheets;
 
-    @DBRef
     private Set<InsulationEntity> insulation;
 
-    @DBRef
     private Set<MetalEntity> metals;
 
-    @DBRef
     private Set<PanelEntity> panels;
 
-    @DBRef
     private Set<RebarEntity> rebars;
 
-    @DBRef
     private Set<SetEntity> sets;
 
-    @DBRef
     private Set<UnspecifiedEntity> unspecified;
 
-    @DBRef
     private Set<ServiceEntity> services;
 
-    @DBRef
     private Set<TransportEntity> transports;
 
 

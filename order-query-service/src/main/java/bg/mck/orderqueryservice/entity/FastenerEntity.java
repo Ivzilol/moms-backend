@@ -1,7 +1,5 @@
 package bg.mck.orderqueryservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("fastener")
