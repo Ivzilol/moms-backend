@@ -8,6 +8,7 @@ values (1, '18.23.1', 'Жилищна сграда В'),
        (7, '101.54.8', 'Склад за храни'),
        (8, '2.11.9', 'Цех за панели');
 
+
 insert into orders (id, delivery_date, email, material_type, order_date, order_description, order_number, order_status, specification_file_url, construction_site_id)
 values  (1, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'INSULATION', '2024-07-05 14:58:04.000000', 'Sample order description', 1, 'CREATED', 'https://test.dropbox.com', 1),
         (2, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'METAL', '2024-07-05 14:58:04.000000', 'Sample order description', 2, 'CREATED', 'https://test.dropbox.com', 2),
@@ -16,7 +17,9 @@ values  (1, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'INSULATION', '2024-07-
         (5, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'SERVICE', '2024-07-05 14:58:04.000000', 'Sample order description', 5, 'CREATED', 'https://test.dropbox.com', 2),
         (6, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'TRANSPORT', '2024-07-05 14:58:04.000000', 'Sample order description', 6, 'CREATED', 'https://test.dropbox.com', 2),
         (7, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'GALVANIZED_SHEET', '2024-07-05 14:58:04.000000', 'Sample order description', 22, 'CREATED', 'https://test.dropbox.com', 2),
-        (8, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'PANELS', '2024-07-05 14:58:04.000000', 'Sample order description', 8, 'CREATED', 'https://test.dropbox.com', 2);
+        (8, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'PANELS', '2024-07-05 14:58:04.000000', 'Sample order description', 8, 'CREATED', 'https://test.dropbox.com', 2),
+        (9, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'SET', '2024-07-05 14:58:04.000000', 'Sample order description', 9, 'CREATED', 'https://test.dropbox.com', 3),
+        (10, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'UNSPECIFIED', '2024-07-05 14:58:04.000000', 'Sample order description', 10, 'CREATED', 'https://test.dropbox.com', 3);
 
 
 insert into transports (id, description, quantity, specification_file_url, truck, max_length_in_centimeters, weight_in_kg, order_id)
@@ -139,3 +142,29 @@ values  (1, 'Няма да може да бъде изпълнена', 'Арми
         (29, null, 'Къртене', 'APPROVED', 5, null, 5),
         (30, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, null, 5);
 
+
+insert into sets (id, admin_note, description, material_status, quantity, specification_file_url, color, galvanised_sheet_thickness, max_length, order_id)
+values  (1, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 9),
+        (2, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 9),
+        (3, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 9),
+        (4, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 9),
+        (5, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 11),
+        (6, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 11),
+        (7, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 11),
+        (8, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 11),
+        (9, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 12),
+        (10, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 12),
+        (11, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 12),
+        (12, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 12),
+        (13, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 13),
+        (14, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 13),
+        (15, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 13),
+        (16, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 13),
+        (17, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 14),
+        (18, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 14),
+        (19, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 14),
+        (20, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 14),
+        (21, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 15),
+        (22, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, null, 'RAL 7001', '1 MM', '7 M', 15),
+        (23, 'няма налични', 'Обшивка за кръгли колони', 'NOT_APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 15),
+        (24, '<null>', 'Обшивка за кръгли колони', 'APPROVED', 10, 'https://testUrl.com', 'RAL 7001', '1 MM', '7 M', 15);
