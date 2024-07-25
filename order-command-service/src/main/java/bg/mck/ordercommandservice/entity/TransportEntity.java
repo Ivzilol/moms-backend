@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.entity;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -9,31 +10,34 @@ import jakarta.validation.constraints.DecimalMin;
 @Table(name = "transports")
 public class TransportEntity extends BaseMaterialEntity {
 
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
-    @Column(name = "max_length_in_centimeters")
-    private Double maxLength;
-
-    @DecimalMin(value = "0.0", message = "weight must be positive")
-    @Column(name = "weight_in_kg")
-    private Double weight;
-
+    private String maxLength;
+    private String weight;
     private String truck;
 
+    public TransportEntity() {
+    }
 
-    public Double getMaxLength() {
+    public TransportEntity(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String maxLength, String weight, String truck) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        this.maxLength = maxLength;
+        this.weight = weight;
+        this.truck = truck;
+    }
+
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public TransportEntity setMaxLength(Double maxLength) {
+    public TransportEntity setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public TransportEntity setWeight(Double weight) {
+    public TransportEntity setWeight(String weight) {
         this.weight = weight;
         return this;
     }
@@ -45,10 +49,5 @@ public class TransportEntity extends BaseMaterialEntity {
     public TransportEntity setTruck(String truck) {
         this.truck = truck;
         return this;
-    }
-
-    public TransportEntity() {
-
-
     }
 }

@@ -9,32 +9,27 @@ import jakarta.validation.constraints.DecimalMin;
 @Table(name = "rebars")
 public class RebarEntity extends BaseMaterialEntity {
 
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
-    @Column(name = "max_length_in_centimeters")
-    private Double maxLength;
-
-    @DecimalMin(value = "0.0", message = "weight must be positive")
-    @Column(name = "weight_in_kg")
-    private Double weight;
+    private String maxLength;
+    private String weight;
 
     public RebarEntity() {
 
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public RebarEntity setMaxLength(Double maxLength) {
+    public RebarEntity setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public RebarEntity setWeight(Double weight) {
+    public RebarEntity setWeight(String weight) {
         this.weight = weight;
         return this;
     }

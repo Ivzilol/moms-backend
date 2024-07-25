@@ -1,23 +1,22 @@
 package bg.mck.ordercommandservice.event;
 
 public class MetalEvent {
-    private Long id;
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
-    private String weight;
+    private String totalWeight;
 
     public MetalEvent() {
     }
 
-    public MetalEvent(Long id, Double quantity, String description, String specificationFileUrl, String weight) {
+    public MetalEvent(Long id, Double quantity, String description, String specificationFileUrl, String totalWeight) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-        this.weight = weight;
+        this.totalWeight = totalWeight;
     }
 
     public Long getId() {
@@ -56,12 +55,12 @@ public class MetalEvent {
         return this;
     }
 
-    public String getWeight() {
-        return weight;
+    public String getTotalWeight() {
+        return totalWeight;
     }
 
-    public MetalEvent setWeight(String weight) {
-        this.weight = weight;
+    public MetalEvent setTotalWeight(String totalWeight) {
+        this.totalWeight = totalWeight;
         return this;
     }
 }

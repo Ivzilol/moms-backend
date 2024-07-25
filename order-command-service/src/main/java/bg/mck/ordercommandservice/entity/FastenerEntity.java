@@ -1,27 +1,21 @@
 package bg.mck.ordercommandservice.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "fastener")
 public class FastenerEntity extends BaseMaterialEntity {
     private String type;
     private String diameter;
-
-    @DecimalMin(value = "0.0", message = "Length must be positive")
-    @Column(name = "length_in_mm")
-    private Double length;
-
+    private String length;
     private String model;
     private String clazz;
 
     public FastenerEntity() {
     }
 
-    public FastenerEntity(Double quantity, String note, String specificationFileUrl, String type, String diameter, Double length, String model, String clazz) {
+    public FastenerEntity(Double quantity, String note, String specificationFileUrl, String type, String diameter, String length, String model, String clazz) {
         super(quantity, note, specificationFileUrl);
         this.type = type;
         this.diameter = diameter;
@@ -30,7 +24,7 @@ public class FastenerEntity extends BaseMaterialEntity {
         this.clazz = clazz;
     }
 
-    public FastenerEntity(String type, String description, String diameter, Double length, String model, String clazz) {
+    public FastenerEntity(String type, String description, String diameter, String length, String model, String clazz) {
         this.type = type;
         this.diameter = diameter;
         this.length = length;
@@ -56,11 +50,11 @@ public class FastenerEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public FastenerEntity setLength(Double length) {
+    public FastenerEntity setLength(String length) {
         this.length = length;
         return this;
     }

@@ -1,21 +1,18 @@
 package bg.mck.ordercommandservice.event;
 
-import jakarta.validation.constraints.DecimalMin;
-
 public class RebarEvent {
-    private Long id;
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
-    private Double maxLength;
-    private Double weight;
+    private String maxLength;
+    private String weight;
 
     public RebarEvent() {
     }
 
-    public RebarEvent(Long id, Double quantity, String description, String specificationFileUrl, Double maxLength, Double weight) {
+    public RebarEvent(Long id, Double quantity, String description, String specificationFileUrl, String maxLength, String weight) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -60,20 +57,20 @@ public class RebarEvent {
         return this;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public RebarEvent setMaxLength(Double maxLength) {
+    public RebarEvent setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public RebarEvent setWeight(Double weight) {
+    public RebarEvent setWeight(String weight) {
         this.weight = weight;
         return this;
     }

@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +9,9 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "construction_sites")
 public class ConstructionSiteEntity extends BaseEntity {
 
+    @Column(name = "construction_number", nullable = false, unique = true)
     private String constructionNumber;
+    @Column(name = "construction_name", nullable = false)
     private String name;
 
     public ConstructionSiteEntity() {
