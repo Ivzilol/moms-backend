@@ -1,5 +1,7 @@
 package bg.mck.ordercommandservice.entity;
 
+import bg.mck.ordercommandservice.entity.enums.LengthUnits;
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -11,30 +13,29 @@ public class PanelEntity extends BaseMaterialEntity {
 
     private String type;
     private String color;
-
-    @DecimalMin(value = "0.0", message = "Length must be positive")
-    @Column(name = "length_in_centimeters")
-    private Double length;
-
-    @DecimalMin(value = "0.0", message = "Width must be positive")
-    @Column(name = "width_in_centimeters")
-    private Double width;
-
-    @DecimalMin(value = "0.0", message = "Thickness must be positive")
-    @Column(name = "total_thickness_in_mm")
-    private Double totalThickness;
-
-    @DecimalMin(value = "0.0", message = "FrontSheetThickness must be positive")
-    @Column(name = "front_sheet_thickness_in_mm")
-    private Double frontSheetThickness;
-
-    @DecimalMin(value = "0.0", message = "BackSheetThickness must be positive")
-    @Column(name = "back_sheet_thickness_in_mm")
-    private Double backSheetThickness;
+    private String length;
+    private String width;
+    private String totalThickness;
+    private String frontSheetThickness;
+    private String backSheetThickness;
 
 
     public PanelEntity() {
 
+    }
+
+    public PanelEntity(String type) {
+        this.type = type;
+    }
+
+    public PanelEntity(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
+    }
+
+    public PanelEntity(Double quantity, String note, String specificationFileUrl, String type) {
+        super(quantity, note, specificationFileUrl);
+        this.type = type;
     }
 
     public String getType() {
@@ -55,47 +56,47 @@ public class PanelEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public PanelEntity setLength(Double length) {
+    public PanelEntity setLength(String length) {
         this.length = length;
         return this;
     }
 
-    public Double getWidth() {
+    public String getWidth() {
         return width;
     }
 
-    public PanelEntity setWidth(Double width) {
+    public PanelEntity setWidth(String width) {
         this.width = width;
         return this;
     }
 
-    public Double getTotalThickness() {
+    public String getTotalThickness() {
         return totalThickness;
     }
 
-    public PanelEntity setTotalThickness(Double totalThickness) {
+    public PanelEntity setTotalThickness(String totalThickness) {
         this.totalThickness = totalThickness;
         return this;
     }
 
-    public Double getFrontSheetThickness() {
+    public String getFrontSheetThickness() {
         return frontSheetThickness;
     }
 
-    public PanelEntity setFrontSheetThickness(Double frontSheetThickness) {
+    public PanelEntity setFrontSheetThickness(String frontSheetThickness) {
         this.frontSheetThickness = frontSheetThickness;
         return this;
     }
 
-    public Double getBackSheetThickness() {
+    public String getBackSheetThickness() {
         return backSheetThickness;
     }
 
-    public PanelEntity setBackSheetThickness(Double backSheetThickness) {
+    public PanelEntity setBackSheetThickness(String backSheetThickness) {
         this.backSheetThickness = backSheetThickness;
         return this;
     }

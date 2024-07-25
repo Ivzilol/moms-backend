@@ -52,31 +52,25 @@ values  (2, 'Sample note', 'Цолска резба', 'APPROVED', 10, 'https://t
 
 
 
-insert into galvanised_sheets (id, admin_note, description, material_status, quantity, specification_file_url, area_in_square_meters, max_length_in_centimeters, type, order_id, area, max_length)
-values  (1, null, 'междинно ниво +5.70 м', 'APPROVED', 4, 'https://uploadFileHere.com', 41, 1155, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (2, null, 'междинно ниво +5.70 м', 'APPROVED', 3, 'https://uploadFileHere.com', 28, 1065, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (3, null, 'междинно ниво +5.70 м', 'APPROVED', 7, 'https://uploadFileHere.com', 60, 980, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (4, null, 'междинно ниво +5.70 м', 'APPROVED', 13, 'https://uploadFileHere.com', 133, 1175, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (5, null, 'междинно ниво +5.70 м', 'APPROVED', 6, 'https://uploadFileHere.com', 31, 575, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (6, null, 'междинно ниво +5.70 м', 'APPROVED', 5, 'https://uploadFileHere.com', 29, 665, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (7, null, 'междинно ниво +5.70 м', 'APPROVED', 2, 'https://uploadFileHere.com', 23, 1305, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (8, null, 'междинно ниво +5.70 м', 'APPROVED', 5, 'https://uploadFileHere.com', 56, 1285, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (9, null, 'междинно ниво +5.70 м', 'APPROVED', 9, 'https://uploadFileHere.com', 80, 1020, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (10, null, 'междинно ниво +5.70 м', 'APPROVED', 3, 'https://uploadFileHere.com', 14, 510, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (11, null, 'междинно ниво +5.70 м', 'APPROVED', 2, 'https://uploadFileHere.com', 9, 470, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (12, null, 'междинно ниво +5.70 м', 'APPROVED', 3, 'https://uploadFileHere.com', 20, 740, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (13, null, 'междинно ниво +5.70 м', 'APPROVED', 4, 'https://uploadFileHere.com', 10, 270, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (14, 'sample admin note', 'покрив', 'NOT_APPROVED', 11, 'https://uploadFileHere.com', 77, 800, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (15, 'sample admin note', 'покрив', 'NOT_APPROVED', 6, 'https://uploadFileHere.com', 40, 760, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (16, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, 'https://uploadFileHere.com', 11, 1175, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (17, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, 'https://uploadFileHere.com', 11, 1250, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (18, 'sample admin note', 'покрив', 'NOT_APPROVED', 2, 'https://uploadFileHere.com', 20, 1100, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (19, 'sample admin note', 'покрив', 'NOT_APPROVED', 2, 'https://uploadFileHere.com', 15, 860, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (20, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, 'https://uploadFileHere.com', 6, 620, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (21, 'sample admin note', 'покрив', 'NOT_APPROVED', 3, 'https://uploadFileHere.com', 15, 570, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (22, 'sample admin note', 'покрив', 'NOT_APPROVED', 2, 'https://uploadFileHere.com', 7, 370, 'TR 153x0.75', 7, '89 M2', '15000 M'),
-        (23, 'sample admin note', 'покрив', 'NOT_APPROVED', 2, 'https://uploadFileHere.com', 6, 330, 'TR 153x0.75', 7, '89 M2', '15000 M');
-
+insert into galvanised_sheets (id, admin_note, description, material_status, quantity, specification_file_url, area, max_length, type, order_id)
+values  (1, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (2, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (3, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (4, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (5, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (6, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (7, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (8, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (9, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (10, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (11, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (12, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (13, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (14, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (15, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (16, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (17, 'sample admin note', 'покрив', 'NOT_APPROVED', 1, null, '89 M2', '15000 M', 'TR 153x0.75', 7),
+        (18, null, 'междинно ниво +5.70 м', 'APPROVED', 13, null, '89 M2', '15000 M', 'TR 153x0.75', 7);
 
 
 insert into metals (id, admin_note, description, material_status, quantity, specification_file_url, total_weight, order_id)
@@ -89,13 +83,13 @@ values  (1, 'не може да се достави', 'Ъглов профил 2
 
 
 
-insert into panels (id, description, quantity, specification_file_url, back_sheet_thickness_in_mm, front_sheet_thickness_in_mm, color, length_in_centimeters, total_thickness_in_mm, type, width_in_centimeters, order_id)
-values  (1, null, null, null, 1, 1.5, 'RAL 3000', 1200, 100, null, 90, 8),
-        (2, null, null, 'скрит монтаж', 1, 1.5, 'RAL 3000', 1200, 50, 'скрит монтаж', 90, 8),
-        (3, null, null, null, 1, 1.5, 'RAL 3000', 1200, 70, null, 90, 8),
-        (4, null, null, 'oткрит монтаж', 1, 1.5, 'RAL 3000', 1200, 100, 'oткрит монтаж', 90, 8),
-        (5, null, null, 'открит монтаж/ хладилен', 1, 1.5, 'RAL 3000', 1200, 80, 'открит монтаж/ хладилен', 90, 8),
-        (6, null, null, null, 1, 1.5, 'RAL 3000', 1200, 100, null, 90, 8);
+insert into panels (id, admin_note, description, material_status, quantity, specification_file_url, back_sheet_thickness, color, front_sheet_thickness, length, total_thickness, type, width, order_id)
+values  (1, 'Няма да са готови за края на седмицата', null, 'NOT_APPROVED', 4, 'https://testUrl.com', '1 MM', 'RAL 3000', '1.5 MM', '1200 CM', '100 MM', null, '90 MM', 8),
+        (2, 'Няма да са готови за края на седмицата', 'скрит монтаж', 'NOT_APPROVED', 5, 'https://testUrl.com', '1 MM', 'RAL 3000', '1.5 MM', '1200 CM', '50 MM', 'скрит монтаж', '90 MM', 8),
+        (3, 'Няма да са готови за края на седмицата', null, 'NOT_APPROVED', 10, 'https://testUrl.com', '1 MM', 'RAL 3000', '1.5 MM', '1200 CM', '70 MM', null, '90 MM', 8),
+        (4, null, 'oткрит монтаж', 'APPROVED', 190, 'https://testUrl.com', '1 MM', 'RAL 3000', '1.5 MM', '1200 CM', '100 MM', 'oткрит монтаж', '90 MM', 8),
+        (5, null, 'открит монтаж/ хладилен', 'APPROVED', 18, 'https://testUrl.com', '1 MM', 'RAL 3000', '1.5 MM', '1200 CM', '80 MM', 'открит монтаж/ хладилен', '90 MM', 8),
+        (6, null, null, 'APPROVED', 1, 'https://testUrl.com', '1 MM', 'RAL 3000', '1.5 MM', '1200 CM', '90 MM', null, '90 MM', 8);
 
 
 insert into insulation (id, admin_note, description, material_status, quantity, specification_file_url, thickness, type, order_id)
@@ -109,10 +103,11 @@ values  (1, 'sample note from admin', 'черна', 'NOT_APPROVED', 1, null, '8 
         (8, null, 'черна', 'APPROVED', 8, null, '25 MM', 'Тръбна изолация 6 x 25', 1);
 
 
-insert into rebars (id, description, quantity, specification_file_url, max_length_in_centimeters, weight_in_kg, order_id)
-values  (1, null, 528, null, 670, 1.208, 4),
-        (2, null, 440, null, 395, 1.578, 4),
-        (3, null, 440, null, 188, 0.395, 4),
-        (4, null, 935, null, 59, 0.395, 4),
-        (5, null, 440, null, 395, 1.208, 4);
+insert into rebars (id, admin_note, description, material_status, quantity, specification_file_url, max_length, weight, order_id)
+values  (1, null, 'sample rebar description', 'APPROVED', 528, 'https://sampleURL.com', '67 CM', '1.208 T', 4),
+        (2, null, 'sample rebar description', 'APPROVED', 440, 'https://sampleURL.com', '120 CM', '1.578 T', 4),
+        (3, 'Ще дойдат другата седмица', 'sample rebar description', 'NOT_APPROVED', 440, 'https://sampleURL.com', '15 M', '0.395 T', 4),
+        (4, 'Ще дойдат другата седмица', 'sample rebar description', 'NOT_APPROVED', 935, 'https://sampleURL.com', '450 CM', '0.395 T', 4),
+        (5, 'Ще дойдат другата седмица', 'sample rebar description', 'NOT_APPROVED', 440, 'https://sampleURL.com', '150 CM', '1.208 T', 4);
+
 
