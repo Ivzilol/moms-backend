@@ -2,12 +2,15 @@ package bg.mck.ordercommandservice.mapper;
 
 
 import bg.mck.ordercommandservice.dto.FastenerDTO;
+import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.entity.FastenerEntity;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.event.FasterEvent;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface FastenerMapper {
@@ -23,6 +26,8 @@ public interface FastenerMapper {
 
     FasterEvent toEvent(FastenerEntity fastenerEntity);
 
+    void toUpdateFasterEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget FastenerEntity fastenerEntity);
+
     default String concatenateLength(String length, LengthUnits lengthUnit) {
         return length + " " + lengthUnit;
     }
@@ -31,4 +36,3 @@ public interface FastenerMapper {
         return length.split(" ");
     }
 }
-

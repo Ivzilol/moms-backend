@@ -1,9 +1,8 @@
 package bg.mck.service;
 
+import bg.mck.entity.serviceEntity.ServiceEntity;
 import bg.mck.enums.EventType;
-import bg.mck.events.service.BaseServiceEvent;
-import bg.mck.events.service.ServiceDeletedEvent;
-import bg.mck.events.service.ServiceEvent;
+import bg.mck.events.service.*;
 import bg.mck.exceptions.InvalidEventTypeException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.repository.service.EventServiceRepository;
@@ -13,6 +12,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ServiceEventService {
@@ -33,6 +34,23 @@ public class ServiceEventService {
         this.serviceDeleteService = serviceDeleteService;
     }
 
+    public ServiceEntity reconstructServiceEntity(String id) {
+        doesServiceExist(id);
+        List<ServiceEvent<? extends BaseServiceEvent>> events = eventServiceRepository
+                .findServiceEventsByEventServiceIdOrderByEventLocalDateTimeAsc(id);
+
+        ServiceEntity serviceEntity = new ServiceEntity();
+        serviceEntity.setId(id);
+
+        for (var event : events) {
+            applyEvent(event, serviceEntity);
+        }
+
+        serviceRepository.save(serviceEntity);
+        redisService.cacheObject(serviceEntity);
+
+        return serviceEntity;
+    }
 
     public void processServiceEvent(String data, String eventType) throws JsonProcessingException {
         if (eventType.equals(EventType.ItemRegistered.name())) {
@@ -56,6 +74,18 @@ public class ServiceEventService {
 
     }
 
+    private void applyEvent(ServiceEvent<? extends BaseServiceEvent> serviceEvent, ServiceEntity serviceEntity) {
+        BaseServiceEvent event = serviceEvent.getEvent();
+
+        //TODO: implement the logic in the if-else condition
+        if (event instanceof ServiceUpdatedEvent updateEvent) {
+
+        } else if (event instanceof ServiceRegisteredEvent registerEvent) {
+
+        } else if (event instanceof ServiceDeletedEvent deleteEvent) {
+
+        }
+    }
 
     private void doesServiceExist(String serviceId) {
         boolean doesExist = serviceRepository.existsById(serviceId);

@@ -1,56 +1,31 @@
-package bg.mck.entity.materialEntity;
+package bg.mck.orderqueryservice.events;
 
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
 
-@Document(collection = "fastener")
-public class FastenerEntity extends BaseMaterialEntity{
+public class CreateUpdateOrderEvent extends BaseEvent {
 
-    @Indexed
-    private String name;
-
+    private String id;
     private String type;
-
     private String diameter;
-
     private Double length;
-
     private String model;
-
     private String clazz;
-
-
     private Double quantity;
-
-
     private String description;
-
-
     private String specificationFileUrl;
 
-    public FastenerEntity() {
+
+
+
+
+    public String getId() {
+        return id;
     }
 
-    public FastenerEntity(String id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
-        super(id);
-        this.name = name;
-        this.type = type;
-        this.diameter = diameter;
-        this.length = length;
-        this.model = model;
-        this.clazz = clazz;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getType() {

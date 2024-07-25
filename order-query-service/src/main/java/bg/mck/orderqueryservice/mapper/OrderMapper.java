@@ -1,18 +1,22 @@
 package bg.mck.orderqueryservice.mapper;
 
 import bg.mck.orderqueryservice.dto.OrderDTO;
+import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
 import bg.mck.orderqueryservice.entity.*;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.events.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", imports = MaterialType.class)
 public interface OrderMapper {
+
+    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
     @Mapping(target = "fasteners", expression = "java(mapFasteners(event.getMaterials(), event.getMaterialType()))")
     @Mapping(target = "galvanisedSheets", expression = "java(mapGalvanisedSheets(event.getMaterials(), event.getMaterialType()))")
@@ -157,4 +161,44 @@ public interface OrderMapper {
     TransportEntity toTransportEntity(TransportEvent event);
 
     OrderDTO fromOrderEntityToDTO(OrderEntity orderEntity);
+
+    void toUpdateFasterEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget FastenerEntity fastenerEntity);
+
+    CreateUpdateOrderEvent toCreateUpdateOrderEvent(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateGalvanisedEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget GalvanisedSheetEntity galvanisedSheetEntity);
+
+    GalvanisedSheetEvent toUpdateGalvaniseSheet(UpdateOrderDTO updateOrderDTO);
+
+    InsulationEvent toUpdateInsulation(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateInsulationEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget InsulationEntity entity);
+
+    MetalEvent toUpdateMetal(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateMetalEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget MetalEntity entity);
+
+    PanelEvent toUpdatePanel(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdatePanelEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget PanelEntity entity);
+
+    ServiceEvent toUpdateService(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateServiceEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget ServiceEntity entity);
+
+    RebarEvent toUpdateRebar(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateRebarEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget RebarEntity entity);
+
+    SetEvent toUpdateSet(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateSetEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget SetEntity entity);
+
+    TransportEvent toUpdateTransport(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateTransportEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget TransportEntity entity);
+
+    UnspecifiedEvent toUpdateUnspecified(UpdateOrderDTO updateOrderDTO);
+
+    void toUpdateUnspecifiedEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget UnspecifiedEntity entity);
 }

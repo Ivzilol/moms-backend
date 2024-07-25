@@ -1,11 +1,13 @@
 package bg.mck.ordercommandservice.mapper;
 
 import bg.mck.ordercommandservice.dto.GalvanisedSheetDTO;
+import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.entity.GalvanisedSheetEntity;
 import bg.mck.ordercommandservice.entity.enums.AreaUnits;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.event.GalvanisedSheetEvent;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
@@ -27,6 +29,8 @@ public interface GalvanisedSheetMapper {
     GalvanisedSheetEntity toEntity(GalvanisedSheetDTO galvanisedSheetDTO);
 
     GalvanisedSheetEvent toEvent(GalvanisedSheetEntity galvanisedSheetEntity);
+
+    void toUpdateGalvanisedSheetEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget GalvanisedSheetEntity galvanisedSheetEntity);
 
     default String concatenateLength(String unit, LengthUnits unitType) {
         return unit + " " + unitType;

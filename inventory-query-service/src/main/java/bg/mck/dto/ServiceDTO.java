@@ -1,28 +1,39 @@
-package bg.mck.orderqueryservice.events;
+package bg.mck.dto;
 
-public class ServiceEvent extends BaseEvent{
-    private Long id;
+public class ServiceDTO {
 
+    private String id;
+    private String name;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
 
-    public ServiceEvent() {
+    public ServiceDTO() {
     }
 
-    public ServiceEvent(Long id, Double quantity, String description, String specificationFileUrl) {
+    public ServiceDTO(String id, String name, Double quantity, String description, String specificationFileUrl) {
         this.id = id;
+        this.name = name;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public ServiceEvent setId(Long id) {
+    public ServiceDTO setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ServiceDTO setName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -30,7 +41,7 @@ public class ServiceEvent extends BaseEvent{
         return quantity;
     }
 
-    public ServiceEvent setQuantity(Double quantity) {
+    public ServiceDTO setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -39,7 +50,7 @@ public class ServiceEvent extends BaseEvent{
         return description;
     }
 
-    public ServiceEvent setDescription(String description) {
+    public ServiceDTO setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -48,7 +59,7 @@ public class ServiceEvent extends BaseEvent{
         return specificationFileUrl;
     }
 
-    public ServiceEvent setSpecificationFileUrl(String specificationFileUrl) {
+    public ServiceDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }

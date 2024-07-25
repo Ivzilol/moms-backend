@@ -75,7 +75,7 @@ public class UserLoginServiceTests {
 
     @Test
     public void loginCorrectEmailAndPasswordShouldReturnUserLoginResponseDTO() {
-        UserLoginResponseDTO userLoginResponseDTO = new UserLoginResponseDTO(user.getId(), user.getEmail(), user.getRoles());
+        UserLoginResponseDTO userLoginResponseDTO = new UserLoginResponseDTO(user.getId(), user.getEmail(), user.getRoles(), "");
         UserLoginDTO userLoginDTO = getUserLoginDTO();
 
         when(userRepository.findByEmail(userLoginDTO.getEmail())).thenReturn(user);

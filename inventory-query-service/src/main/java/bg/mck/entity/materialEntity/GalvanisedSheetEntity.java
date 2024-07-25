@@ -1,10 +1,12 @@
 package bg.mck.entity.materialEntity;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "galvanised_sheets")
 public class GalvanisedSheetEntity extends BaseMaterialEntity{
 
+    @Indexed
     private String name;
 
     private String type;

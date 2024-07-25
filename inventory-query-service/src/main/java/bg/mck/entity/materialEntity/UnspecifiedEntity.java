@@ -1,11 +1,12 @@
 package bg.mck.entity.materialEntity;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "unspecified")
 public class UnspecifiedEntity extends BaseMaterialEntity {
 
-
+    @Indexed
     private String name;
 
     private Double quantity;
