@@ -1,7 +1,5 @@
 package bg.mck.ordercommandservice.event;
 
-import jakarta.validation.constraints.DecimalMin;
-
 public class RebarEvent {
 
     private Long id;

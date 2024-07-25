@@ -32,10 +32,22 @@ public interface SetMapper {
     void toUpdateSetEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget SetEntity setEntity);
 
     default String concatenate(String length, LengthUnits lengthUnit) {
+        if (length == null && lengthUnit == null) {
+            return null;
+        }
+        if (length == null) {
+            return lengthUnit.toString();
+        }
+        if (lengthUnit == null) {
+            return length;
+        }
         return length + " " + lengthUnit;
     }
 
     default String[] split(String length) {
+        if (length == null) {
+            return null;
+        }
         return length.split(" ");
     }
 }

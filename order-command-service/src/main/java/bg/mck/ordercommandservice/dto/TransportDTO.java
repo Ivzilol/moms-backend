@@ -1,46 +1,64 @@
 package bg.mck.ordercommandservice.dto;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
-import org.springframework.web.multipart.MultipartFile;
+import bg.mck.ordercommandservice.entity.enums.LengthUnits;
+import bg.mck.ordercommandservice.entity.enums.WeightUnits;
+import jakarta.validation.constraints.Pattern;
 
 public class TransportDTO extends BaseDTO {
 
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
-    @Column(name = "max_length_in_centimeters")
-    private Double maxLength;
-
-    @DecimalMin(value = "0.0", message = "weight must be positive")
-    @Column(name = "weight_in_kg")
-    private Double weight;
-
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    private String maxLength;
+    private LengthUnits maxLengthUnit;
+    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
+    private String weight;
+    private WeightUnits weightUnit;
     private String truck;
 
     public TransportDTO() {
     }
 
-    public TransportDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, Double maxLength, Double weight, String truck) {
+    public TransportDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck) {
         super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
         this.weight = weight;
+        this.weightUnit = weightUnit;
         this.truck = truck;
     }
 
-    public Double getMaxLength() {
+    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getMaxLength() {
         return maxLength;
     }
 
-    public TransportDTO setMaxLength(Double maxLength) {
+    public TransportDTO setMaxLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public TransportDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public @Pattern(regexp = "^[^-].*", message = "Weight must be positive") String getWeight() {
         return weight;
     }
 
-    public TransportDTO setWeight(Double weight) {
+    public TransportDTO setWeight(@Pattern(regexp = "^[^-].*", message = "Weight must be positive") String weight) {
         this.weight = weight;
+        return this;
+    }
+
+    public WeightUnits getWeightUnit() {
+        return weightUnit;
+    }
+
+    public TransportDTO setWeightUnit(WeightUnits weightUnit) {
+        this.weightUnit = weightUnit;
         return this;
     }
 

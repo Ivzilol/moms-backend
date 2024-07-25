@@ -1,12 +1,11 @@
 package bg.mck.ordercommandservice.event;
 
 public class PanelEvent {
-    private Long id;
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
     private String type;
     private String color;
     private String length;

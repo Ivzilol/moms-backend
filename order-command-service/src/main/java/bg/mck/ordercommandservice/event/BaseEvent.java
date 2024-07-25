@@ -5,9 +5,7 @@ import java.time.LocalDateTime;
 public abstract class BaseEvent {
 
     private Long orderId;
-
     private OrderEventType eventType;
-
     private LocalDateTime eventTime;
 
     public BaseEvent() {

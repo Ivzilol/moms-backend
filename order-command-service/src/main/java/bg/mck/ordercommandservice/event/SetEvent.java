@@ -1,12 +1,11 @@
 package bg.mck.ordercommandservice.event;
 
 public class SetEvent {
-    private Long id;
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
     private String galvanisedSheetThickness;
     private String color;
     private String maxLength;

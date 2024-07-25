@@ -36,11 +36,23 @@ public interface RebarMapper {
         return length + " " + lengthUnit;
     }
 
-    default String concatenateWeight(String length, WeightUnits weightUnits) {
-        return length + " " + weightUnits;
+    default String concatenateWeight(String unit, WeightUnits unitType) {
+        if (unit == null && unitType == null) {
+            return null;
+        }
+        if (unit == null) {
+            return unitType.toString();
+        }
+        if (unitType == null) {
+            return unit;
+        }
+        return unit + " " + unitType;
     }
 
     default String[] split(String length) {
+        if (length == null) {
+            return null;
+        }
         return length.split(" ");
     }
 }

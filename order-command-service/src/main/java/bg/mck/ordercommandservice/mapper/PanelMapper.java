@@ -44,10 +44,22 @@ public interface PanelMapper {
     void toUpdatePanelEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget PanelEntity panelEntity);
 
     default String concatenate(String unit, LengthUnits unitType) {
+        if (unit == null && unitType == null) {
+            return null;
+        }
+        if (unit == null) {
+            return unitType.toString();
+        }
+        if (unitType == null) {
+            return unit;
+        }
         return unit + " " + unitType;
     }
 
     default String[] split(String unit) {
+        if (unit == null) {
+            return null;
+        }
         return unit.split(" ");
     }
 }

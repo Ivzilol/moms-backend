@@ -27,10 +27,22 @@ public interface InsulationMapper {
     void toUpdateInsulationEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget InsulationEntity insulationEntity);
 
     default String concatenateLength(String length, LengthUnits lengthUnit) {
+        if (length == null && lengthUnit == null) {
+            return null;
+        }
+        if (length == null) {
+            return lengthUnit.toString();
+        }
+        if (lengthUnit == null) {
+            return length;
+        }
         return length + " " + lengthUnit;
     }
 
     default String[] splitLength(String length) {
+        if (length == null) {
+            return null;
+        }
         return length.split(" ");
     }
 

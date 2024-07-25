@@ -3,7 +3,6 @@ package bg.mck.ordercommandservice.event;
 public class FasterEvent {
 
     private Long id;
-
     private Double quantity;
     private String description;
     private String specificationFileUrl;

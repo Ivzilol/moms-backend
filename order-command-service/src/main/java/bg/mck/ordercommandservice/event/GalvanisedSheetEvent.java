@@ -1,13 +1,11 @@
 package bg.mck.ordercommandservice.event;
 
-
 public class GalvanisedSheetEvent {
-    private Long id;
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
     private String type;
     private String maxLength;
     private String area;
