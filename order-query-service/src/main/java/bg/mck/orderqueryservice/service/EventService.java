@@ -3,6 +3,7 @@ package bg.mck.orderqueryservice.service;
 import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
 import bg.mck.orderqueryservice.entity.*;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
+import bg.mck.orderqueryservice.entity.enums.OrderStatus;
 import bg.mck.orderqueryservice.events.*;
 import bg.mck.orderqueryservice.mapper.OrderMapper;
 import bg.mck.orderqueryservice.repository.EventRepository;
@@ -49,6 +50,7 @@ public class EventService {
         OrderEvent<CreateOrderEvent<T>> orderEvent = gson.fromJson(data, eventTypeToken);
         OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
         orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
+        orderEntity.setOrderStatus(OrderStatus.PENDING);
         saveEvent(orderEvent);
         processEntity(orderEntity);
     }
