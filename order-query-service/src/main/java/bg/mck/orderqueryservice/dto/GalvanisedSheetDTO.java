@@ -1,38 +1,21 @@
 package bg.mck.orderqueryservice.dto;
 
 
-import bg.mck.ordercommandservice.entity.enums.AreaUnits;
-import bg.mck.ordercommandservice.entity.enums.LengthUnits;
-import jakarta.validation.constraints.Pattern;
-
-public class GalvanisedSheetDTO extends BaseDTO {
+public class GalvanisedSheetDTO extends BaseDTO{
 
     private String type;
 
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
-    private String maxLength;
-    private LengthUnits maxLengthUnit;
+    private Double maxlength;
 
-    @Pattern(regexp = "^[^-].*", message = "Area must be positive")
-    private String area;
-    private AreaUnits areaUnit;
+    private Double area;
 
 
     public GalvanisedSheetDTO() {
     }
 
-    public GalvanisedSheetDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String maxLength, LengthUnits maxLengthUnit, String area, AreaUnits areaUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public GalvanisedSheetDTO(String type, Double maxlength, Double area) {
         this.type = type;
-        this.maxLength = maxLength;
-        this.maxLengthUnit = maxLengthUnit;
-        this.area = area;
-        this.areaUnit = areaUnit;
-    }
-
-    public GalvanisedSheetDTO(String type, String maxLength, String area) {
-        this.type = type;
-        this.maxLength = maxLength;
+        this.maxlength = maxlength;
         this.area = area;
     }
 
@@ -45,39 +28,21 @@ public class GalvanisedSheetDTO extends BaseDTO {
         return this;
     }
 
-    public String getMaxLength() {
-        return maxLength;
+    public Double getMaxlength() {
+        return maxlength;
     }
 
-    public GalvanisedSheetDTO setMaxLength(String maxLength) {
-        this.maxLength = maxLength;
+    public GalvanisedSheetDTO setMaxlength(Double maxlength) {
+        this.maxlength = maxlength;
         return this;
     }
 
-    public LengthUnits getMaxLengthUnit() {
-        return maxLengthUnit;
-    }
-
-    public GalvanisedSheetDTO setMaxLengthUnit(LengthUnits lengthUnit) {
-        this.maxLengthUnit = lengthUnit;
-        return this;
-    }
-
-    public String getArea() {
+    public Double getArea() {
         return area;
     }
 
-    public GalvanisedSheetDTO setArea(String area) {
+    public GalvanisedSheetDTO setArea(Double area) {
         this.area = area;
-        return this;
-    }
-
-    public AreaUnits getAreaUnit() {
-        return areaUnit;
-    }
-
-    public GalvanisedSheetDTO setAreaUnit(AreaUnits areaUnit) {
-        this.areaUnit = areaUnit;
         return this;
     }
 }

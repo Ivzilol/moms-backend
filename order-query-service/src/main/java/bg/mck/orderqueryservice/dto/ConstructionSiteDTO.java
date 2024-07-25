@@ -4,28 +4,26 @@ import jakarta.validation.constraints.NotNull;
 
 public class ConstructionSiteDTO {
 
-    private Long id;
+    private String id;
 
-    @NotNull(message = "Construction site name must not be empty.")
     private String name;
 
-    @NotNull(message = "Construction site number must not be empty.")
     private String constructionNumber;
 
     public ConstructionSiteDTO() {
     }
 
-    public ConstructionSiteDTO(Long id, String name, String constructionNumber) {
+    public ConstructionSiteDTO(String id, String name, String constructionNumber) {
         this.id = id;
         this.name = name;
         this.constructionNumber = constructionNumber;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public ConstructionSiteDTO setId(Long id) {
+    public ConstructionSiteDTO setId(String id) {
         this.id = id;
         return this;
     }

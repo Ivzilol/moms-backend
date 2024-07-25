@@ -1,30 +1,21 @@
 package bg.mck.orderqueryservice.dto;
 
-import bg.mck.ordercommandservice.entity.enums.MaterialType;
-import bg.mck.ordercommandservice.entity.enums.OrderStatus;
+import bg.mck.orderqueryservice.entity.enums.MaterialType;
+import bg.mck.orderqueryservice.entity.enums.OrderStatus;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
 
 public class OrderDTO {
 
-    private Long id;
 
-    @Size(min = 10, message = "Order description must be at least 10 characters long.")
     private String orderDescription;
 
     private ZonedDateTime orderDate;
 
-    @NotNull(message = "Delivery date must not be empty.")
-    @Future(message = "Delivery date must be in the future.")
     private ZonedDateTime deliveryDate;
 
-    @NotNull(message = "Construction site must not be empty.")
-    @Valid
     private ConstructionSiteDTO constructionSite;
 
     private OrderStatus orderStatus;
@@ -46,8 +37,7 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(Long id, String specificationFileUrl,String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<@Valid FastenerDTO> fasteners, Set<@Valid GalvanisedSheetDTO> galvanisedSheets, Set<@Valid InsulationDTO> insulation, Set<@Valid MetalDTO> metals, Set<@Valid PanelDTO> panels, Set<@Valid RebarDTO> rebars, Set<@Valid SetDTO> sets, Set<@Valid UnspecifiedDTO> unspecified, Set<@Valid ServiceDTO> services, Set<@Valid TransportDTO> transports) {
-        this.id = id;
+    public OrderDTO(String specificationFileUrl,String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<@Valid FastenerDTO> fasteners, Set<@Valid GalvanisedSheetDTO> galvanisedSheets, Set<@Valid InsulationDTO> insulation, Set<@Valid MetalDTO> metals, Set<@Valid PanelDTO> panels, Set<@Valid RebarDTO> rebars, Set<@Valid SetDTO> sets, Set<@Valid UnspecifiedDTO> unspecified, Set<@Valid ServiceDTO> services, Set<@Valid TransportDTO> transports) {
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
@@ -65,15 +55,6 @@ public class OrderDTO {
         this.services = services;
         this.transports = transports;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public OrderDTO setId(Long id) {
-        this.id = id;
-        return this;
     }
 
     public String getOrderDescription() {

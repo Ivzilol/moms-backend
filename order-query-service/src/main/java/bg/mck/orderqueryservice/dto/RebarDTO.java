@@ -1,64 +1,38 @@
 package bg.mck.orderqueryservice.dto;
 
 
-import bg.mck.ordercommandservice.entity.enums.LengthUnits;
-import bg.mck.ordercommandservice.entity.enums.WeightUnits;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.DecimalMin;
 
-public class RebarDTO extends BaseDTO {
+public class RebarDTO extends BaseDTO{
 
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
-    private String maxLength;
-    private LengthUnits maxLengthUnit;
 
-    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
-    private String weight;
-    private WeightUnits weightUnit;
+    private Double maxLength;
+
+    private Double weight;
 
     public RebarDTO() {
     }
 
-    public RebarDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public RebarDTO(Double maxLength, Double weight) {
         this.maxLength = maxLength;
-        this.maxLengthUnit = maxLengthUnit;
         this.weight = weight;
-        this.weightUnit = weightUnit;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getMaxLength() {
+    public Double getMaxLength() {
         return maxLength;
     }
 
-    public RebarDTO setMaxLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String maxLength) {
+    public RebarDTO setMaxLength(Double maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public LengthUnits getMaxLengthUnit() {
-        return maxLengthUnit;
-    }
-
-    public RebarDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
-        this.maxLengthUnit = maxLengthUnit;
-        return this;
-    }
-
-    public @Pattern(regexp = "^[^-].*", message = "Weight must be positive") String getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public RebarDTO setWeight(@Pattern(regexp = "^[^-].*", message = "Weight must be positive") String weight) {
+    public RebarDTO setWeight(Double weight) {
         this.weight = weight;
-        return this;
-    }
-
-    public WeightUnits getWeightUnit() {
-        return weightUnit;
-    }
-
-    public RebarDTO setWeightUnit(WeightUnits weightUnit) {
-        this.weightUnit = weightUnit;
         return this;
     }
 }
