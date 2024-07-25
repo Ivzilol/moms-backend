@@ -18,9 +18,6 @@ values  (1, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'INSULATION', '2024-07-
         (7, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'GALVANIZED_SHEET', '2024-07-05 14:58:04.000000', 'Sample order description', 22, 'CREATED', 'https://test.dropbox.com', 2),
         (8, '2024-09-05 14:57:57.000000', 'test@abv.bg', 'PANELS', '2024-07-05 14:58:04.000000', 'Sample order description', 8, 'CREATED', 'https://test.dropbox.com', 2);
 
-insert into services (id, description, quantity, specification_file_url, order_id)
-values  (1, 'Армировка на стени', 10, null, 5),
-        (2, 'Къртене', 5, null, 5);
 
 insert into transports (id, description, quantity, specification_file_url, truck, max_length_in_centimeters, weight_in_kg, order_id)
 values  (1, 'Камион за превоз на материали', 5, null, null, 5000, 9800, 6),
@@ -110,4 +107,35 @@ values  (1, null, 'sample rebar description', 'APPROVED', 528, 'https://sampleUR
         (4, 'Ще дойдат другата седмица', 'sample rebar description', 'NOT_APPROVED', 935, 'https://sampleURL.com', '450 CM', '0.395 T', 4),
         (5, 'Ще дойдат другата седмица', 'sample rebar description', 'NOT_APPROVED', 440, 'https://sampleURL.com', '150 CM', '1.208 T', 4);
 
+insert into services (id, admin_note, description, material_status, quantity, specification_file_url, order_id)
+values  (1, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, 'https://www.dropbox.com', 5),
+        (2, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, 'https://www.dropbox.com', 5),
+        (3, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, 'https://www.dropbox.com', 5),
+        (4, null, 'Къртене', 'APPROVED', 5, 'https://www.dropbox.com', 5),
+        (5, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, 'https://www.dropbox.com', 5),
+        (6, null, 'Къртене', 'APPROVED', 5, 'https://www.dropbox.com', 5),
+        (7, null, 'Армировка на стени', 'APPROVED', 10, 'https://www.dropbox.com', 5),
+        (8, null, 'Къртене', 'APPROVED', 5, 'https://www.dropbox.com', 5),
+        (9, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, 'https://www.dropbox.com', 5),
+        (10, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, 'https://www.dropbox.com', 5),
+        (11, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, 'https://www.dropbox.com', 5),
+        (12, null, 'Къртене', 'APPROVED', 5, 'https://www.dropbox.com', 5),
+        (13, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, 'https://www.dropbox.com', 5),
+        (14, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, 'https://www.dropbox.com', 5),
+        (15, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, 'https://www.dropbox.com', 5),
+        (16, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, null, 5),
+        (17, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, null, 5),
+        (18, null, 'Къртене', 'APPROVED', 5, null, 5),
+        (19, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, null, 5),
+        (20, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, null, 5),
+        (21, null, 'Къртене', 'APPROVED', 5, null, 5),
+        (22, null, 'Къртене', 'APPROVED', 5, null, 5),
+        (23, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, null, 5),
+        (24, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, null, 5),
+        (25, 'Няма да може да бъде изпълнена', 'Къртене', 'NOT_APPROVED', 5, null, 5),
+        (26, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, null, 5),
+        (27, null, 'Армировка на стени', 'APPROVED', 10, null, 5),
+        (28, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, null, 5),
+        (29, null, 'Къртене', 'APPROVED', 5, null, 5),
+        (30, 'Няма да може да бъде изпълнена', 'Армировка на стени', 'NOT_APPROVED', 10, null, 5);
 
