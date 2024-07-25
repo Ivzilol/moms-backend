@@ -7,6 +7,8 @@ import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
 import bg.mck.ordercommandservice.repository.ConstructionSiteRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class ConstructionSiteService {
     private final ConstructionSiteRepository constructionSiteRepository;
     private final ConstructionSiteMapper constructionSiteMapper;
+    private final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
     public ConstructionSiteService(ConstructionSiteRepository constructionSiteRepository, ConstructionSiteMapper constructionSiteMapper) {
         this.constructionSiteRepository = constructionSiteRepository;
@@ -63,8 +66,10 @@ public class ConstructionSiteService {
         }
 
         ConstructionSiteEntity savedConstructionSite = constructionSiteRepository.save(constructionSiteEntity);
-        return constructionSiteMapper.toDTO(savedConstructionSite);
-    }
 
+        ConstructionSiteDTO newConstrictionSite = constructionSiteMapper.toDTO(savedConstructionSite);
+        LOGGER.info("Construction site with id: {} name: {} and number: {} created successfully", newConstrictionSite.getId(), newConstrictionSite.getName(), newConstrictionSite.getConstructionNumber());
+        return newConstrictionSite;
+    }
 }
 

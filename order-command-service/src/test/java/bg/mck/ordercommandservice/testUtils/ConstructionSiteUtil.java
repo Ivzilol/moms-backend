@@ -17,4 +17,12 @@ public class ConstructionSiteUtil {
         constructionSiteEntity.setName("Site Name");
         return constructionSiteEntity;
     }
+
+    public static ConstructionSiteEntity createConstructionSiteEntityWithID() {
+        ConstructionSiteEntity constructionSiteEntity = new ConstructionSiteEntity();
+        constructionSiteEntity.setId(1L);
+        constructionSiteEntity.setConstructionNumber("1234");
+        constructionSiteEntity.setName("Site Name");
+        return constructionSiteEntity;
+    }
 }

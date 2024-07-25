@@ -1,8 +1,8 @@
 package bg.mck.ordercommandservice.event;
 
 public class ServiceEvent {
-    private Long id;
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;

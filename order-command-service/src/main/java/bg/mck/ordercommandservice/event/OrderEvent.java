@@ -1,6 +1,5 @@
 package bg.mck.ordercommandservice.event;
 
-
 public class OrderEvent<T extends BaseEvent> {
 
     private OrderEventType eventType;
