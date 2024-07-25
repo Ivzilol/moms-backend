@@ -1,16 +1,25 @@
 package bg.mck.orderqueryservice.dto;
 
+
+import bg.mck.orderqueryservice.entity.enums.OrderStatus;
+
 public class CreateOrderDTO {
+    private final OrderStatus orderStatus;
     private final Long orderId;
     private final Integer orderNumber;
     private final String constructionSiteNumber;
     private final String constructionSiteName;
 
     private CreateOrderDTO(Builder builder) {
+        this.orderStatus = builder.orderStatus;
         this.orderId = builder.orderId;
         this.orderNumber = builder.orderNumber;
         this.constructionSiteNumber = builder.constructionSiteNumber;
         this.constructionSiteName = builder.constructionSiteName;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
     public Long getOrderId() {
@@ -30,12 +39,18 @@ public class CreateOrderDTO {
     }
 
     public static class Builder {
+        private OrderStatus orderStatus;
         private Long orderId;
         private Integer orderNumber;
         private String constructionSiteNumber;
         private String constructionSiteName;
 
         public Builder() {
+        }
+
+        public Builder orderStatus(OrderStatus orderStatus) {
+            this.orderStatus = orderStatus;
+            return this;
         }
 
         public Builder orderId(Long orderId) {
@@ -66,6 +81,7 @@ public class CreateOrderDTO {
     @Override
     public String toString() {
         return "CreateOrderDTO{" +
+                "orderStatus=" + orderStatus +
                 "orderId=" + orderId +
                 ", orderNumber=" + orderNumber +
                 ", constructionSiteNumber='" + constructionSiteNumber + '\'' +

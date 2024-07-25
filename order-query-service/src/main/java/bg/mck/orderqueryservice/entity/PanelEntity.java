@@ -1,82 +1,36 @@
 package bg.mck.orderqueryservice.entity;
 
+import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("panels")
-public class PanelEntity {
+public class PanelEntity extends BaseMaterialEntity {
 
-    private String id;
-    private Double quantity;
-    private String description;
-    private String specificationFileUrl;
     private String type;
     private String color;
-    @Field("length_in_centimeters")
-    private Double length;
-    @Field("width_in_centimeters")
-    private Double width;
-    @Field("total_thickness_in_mm")
-    private Double totalThickness;
-    @Field("front_sheet_thickness_in_mm")
-    private Double frontSheetThickness;
-    @Field("back_sheet_thickness_in_mm")
-    private Double backSheetThickness;
+    private String length;
+    private String width;
+    private String totalThickness;
+    private String frontSheetThickness;
+    private String backSheetThickness;
 
 
     public PanelEntity() {
 
     }
 
-
-    public PanelEntity(String id, Double quantity, String description, String specificationFileUrl, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness) {
-        this.id = id;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
+    public PanelEntity(String type) {
         this.type = type;
-        this.color = color;
-        this.length = length;
-        this.width = width;
-        this.totalThickness = totalThickness;
-        this.frontSheetThickness = frontSheetThickness;
-        this.backSheetThickness = backSheetThickness;
     }
 
-    public String getId() {
-        return id;
+    public PanelEntity(String id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
     }
 
-    public PanelEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public PanelEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public PanelEntity setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public PanelEntity setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
-        return this;
+    public PanelEntity(Double quantity, String note, String specificationFileUrl, String type) {
+        super(quantity, note, specificationFileUrl);
+        this.type = type;
     }
 
     public String getType() {
@@ -97,47 +51,47 @@ public class PanelEntity {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public PanelEntity setLength(Double length) {
+    public PanelEntity setLength(String length) {
         this.length = length;
         return this;
     }
 
-    public Double getWidth() {
+    public String getWidth() {
         return width;
     }
 
-    public PanelEntity setWidth(Double width) {
+    public PanelEntity setWidth(String width) {
         this.width = width;
         return this;
     }
 
-    public Double getTotalThickness() {
+    public String getTotalThickness() {
         return totalThickness;
     }
 
-    public PanelEntity setTotalThickness(Double totalThickness) {
+    public PanelEntity setTotalThickness(String totalThickness) {
         this.totalThickness = totalThickness;
         return this;
     }
 
-    public Double getFrontSheetThickness() {
+    public String getFrontSheetThickness() {
         return frontSheetThickness;
     }
 
-    public PanelEntity setFrontSheetThickness(Double frontSheetThickness) {
+    public PanelEntity setFrontSheetThickness(String frontSheetThickness) {
         this.frontSheetThickness = frontSheetThickness;
         return this;
     }
 
-    public Double getBackSheetThickness() {
+    public String getBackSheetThickness() {
         return backSheetThickness;
     }
 
-    public PanelEntity setBackSheetThickness(Double backSheetThickness) {
+    public PanelEntity setBackSheetThickness(String backSheetThickness) {
         this.backSheetThickness = backSheetThickness;
         return this;
     }

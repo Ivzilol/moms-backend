@@ -1,24 +1,23 @@
 package bg.mck.orderqueryservice.events;
 
-public class PanelEvent extends BaseEvent{
-    private Long id;
+public class PanelEvent {
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
     private String type;
     private String color;
-    private Double length;
-    private Double width;
-    private Double totalThickness;
-    private Double FrontSheetThickness;
-    private Double BackSheetThickness;
+    private String length;
+    private String width;
+    private String totalThickness;
+    private String frontSheetThickness;
+    private String backSheetThickness;
 
     public PanelEvent() {
     }
 
-    public PanelEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness) {
+    public PanelEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String color, String length, String width, String totalThickness, String frontSheetThickness, String backSheetThickness) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -28,8 +27,8 @@ public class PanelEvent extends BaseEvent{
         this.length = length;
         this.width = width;
         this.totalThickness = totalThickness;
-        FrontSheetThickness = frontSheetThickness;
-        BackSheetThickness = backSheetThickness;
+        this.frontSheetThickness = frontSheetThickness;
+        this.backSheetThickness = backSheetThickness;
     }
 
     public Long getId() {
@@ -86,48 +85,48 @@ public class PanelEvent extends BaseEvent{
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public PanelEvent setLength(Double length) {
+    public PanelEvent setLength(String length) {
         this.length = length;
         return this;
     }
 
-    public Double getWidth() {
+    public String getWidth() {
         return width;
     }
 
-    public PanelEvent setWidth(Double width) {
+    public PanelEvent setWidth(String width) {
         this.width = width;
         return this;
     }
 
-    public Double getTotalThickness() {
+    public String getTotalThickness() {
         return totalThickness;
     }
 
-    public PanelEvent setTotalThickness(Double totalThickness) {
+    public PanelEvent setTotalThickness(String totalThickness) {
         this.totalThickness = totalThickness;
         return this;
     }
 
-    public Double getFrontSheetThickness() {
-        return FrontSheetThickness;
+    public String getFrontSheetThickness() {
+        return frontSheetThickness;
     }
 
-    public PanelEvent setFrontSheetThickness(Double frontSheetThickness) {
-        FrontSheetThickness = frontSheetThickness;
+    public PanelEvent setFrontSheetThickness(String frontSheetThickness) {
+        this.frontSheetThickness = frontSheetThickness;
         return this;
     }
 
-    public Double getBackSheetThickness() {
-        return BackSheetThickness;
+    public String getBackSheetThickness() {
+        return backSheetThickness;
     }
 
-    public PanelEvent setBackSheetThickness(Double backSheetThickness) {
-        BackSheetThickness = backSheetThickness;
+    public PanelEvent setBackSheetThickness(String backSheetThickness) {
+        this.backSheetThickness = backSheetThickness;
         return this;
     }
 }

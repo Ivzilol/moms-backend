@@ -2,50 +2,94 @@ package bg.mck.orderqueryservice.entity;
 
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.entity.enums.OrderStatus;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Document("orders")
-public class OrderEntity {
+public class OrderEntity extends BaseEntity {
 
-    private String id;
+    @NotNull
     private String email;
+
+    @Field(name = "order_number")
+    @Indexed(unique = true)
     private Integer orderNumber;
+
+    @Field(name = "order_description")
+    @Size(max = 10000)
     private String orderDescription;
+
+
+    @Field(name = "order_date")
     private ZonedDateTime orderDate;
+
+
+    private String specificationFileUrl;
+
+    @Future(message = "Delivery date must be in the future.")
+    @Field(name = "delivery_date")
+    @NotNull
     private ZonedDateTime deliveryDate;
+
     private MaterialType materialType;
+
+    @Field(name = "order_status")
+    @NotNull
     private OrderStatus orderStatus;
+
+    @DBRef
     private ConstructionSiteEntity constructionSite;
 
+    @DBRef
     private Set<FastenerEntity> fasteners;
+
+    @DBRef
     private Set<GalvanisedSheetEntity> galvanisedSheets;
+
+    @DBRef
     private Set<InsulationEntity> insulation;
+
+    @DBRef
     private Set<MetalEntity> metals;
+
+    @DBRef
     private Set<PanelEntity> panels;
+
+    @DBRef
     private Set<RebarEntity> rebars;
+
+    @DBRef
     private Set<SetEntity> sets;
+
+    @DBRef
     private Set<UnspecifiedEntity> unspecified;
+
+    @DBRef
     private Set<ServiceEntity> services;
+
+    @DBRef
     private Set<TransportEntity> transports;
 
 
     public OrderEntity() {
     }
 
-    public OrderEntity(String id, String email, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
-        this.id = id;
+    public OrderEntity(String id, String email, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, String specificationFileUrl, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+        super(id);
         this.email = email;
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
+        this.specificationFileUrl = specificationFileUrl;
         this.deliveryDate = deliveryDate;
         this.materialType = materialType;
         this.orderStatus = orderStatus;
@@ -62,12 +106,12 @@ public class OrderEntity {
         this.transports = transports;
     }
 
-    public String getId() {
-        return id;
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
     }
 
-    public OrderEntity setId(String id) {
-        this.id = id;
+    public OrderEntity setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
         return this;
     }
 
@@ -75,8 +119,8 @@ public class OrderEntity {
         return email;
     }
 
-    public OrderEntity setEmail(String email) {
-        this.email = email;
+    public OrderEntity setEmail(String username) {
+        this.email = username;
         return this;
     }
 
@@ -113,15 +157,6 @@ public class OrderEntity {
 
     public OrderEntity setDeliveryDate(ZonedDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
-        return this;
-    }
-
-    public MaterialType getMaterialType() {
-        return materialType;
-    }
-
-    public OrderEntity setMaterialType(MaterialType materialType) {
-        this.materialType = materialType;
         return this;
     }
 
@@ -230,6 +265,15 @@ public class OrderEntity {
 
     public OrderEntity setTransports(Set<TransportEntity> transports) {
         this.transports = transports;
+        return this;
+    }
+
+    public MaterialType getMaterialType() {
+        return materialType;
+    }
+
+    public OrderEntity setMaterialType(MaterialType materialType) {
+        this.materialType = materialType;
         return this;
     }
 }

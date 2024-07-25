@@ -1,23 +1,31 @@
 package bg.mck.orderqueryservice.dto;
 
+import jakarta.validation.constraints.DecimalMin;
+
 public class BaseDTO {
 
     private Long id;
 
+    @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
 
     private String description;
 
     private String specificationFileUrl;
 
+    private String adminNote;
+    private String materialStatus;
+
     public BaseDTO() {
     }
 
-    public BaseDTO(Long id, Double quantity, String description, String specificationFileUrl) {
+    public BaseDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {
@@ -26,6 +34,24 @@ public class BaseDTO {
 
     public BaseDTO setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public BaseDTO setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public String getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public BaseDTO setMaterialStatus(String materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 

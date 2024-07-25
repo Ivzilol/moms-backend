@@ -1,48 +1,35 @@
 package bg.mck.orderqueryservice.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("fastener")
-public class FastenerEntity {
-
-    private String id;
+public class FastenerEntity extends BaseMaterialEntity {
     private String type;
     private String diameter;
-
-    @Field("length_in_mm")
-    private Double length;
+    private String length;
     private String model;
     private String clazz;
-
-    private Double quantity;
-    private String description;
-    private String specificationFileUrl;
-
 
     public FastenerEntity() {
     }
 
-
-    public FastenerEntity(String id, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
+    public FastenerEntity(Double quantity, String note, String specificationFileUrl, String type, String diameter, String length, String model, String clazz) {
+        super(quantity, note, specificationFileUrl);
         this.type = type;
         this.diameter = diameter;
         this.length = length;
         this.model = model;
         this.clazz = clazz;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public FastenerEntity setId(String id) {
-        this.id = id;
-        return this;
+    public FastenerEntity(String type, String description, String diameter, String length, String model, String clazz) {
+        this.type = type;
+        this.diameter = diameter;
+        this.length = length;
+        this.model = model;
+        this.clazz = clazz;
     }
 
     public String getType() {
@@ -63,11 +50,11 @@ public class FastenerEntity {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public FastenerEntity setLength(Double length) {
+    public FastenerEntity setLength(String length) {
         this.length = length;
         return this;
     }
@@ -90,30 +77,4 @@ public class FastenerEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public FastenerEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public FastenerEntity setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public FastenerEntity setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
 }
