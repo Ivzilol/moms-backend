@@ -2,6 +2,7 @@ package bg.mck.entity.materialEntity;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "metals")
@@ -10,6 +11,7 @@ public class MetalEntity extends BaseMaterialEntity{
 
 
     //description
+    @Indexed
     private String name;
 
     private Double totalWeight;
