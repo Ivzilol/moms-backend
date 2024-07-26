@@ -1,32 +1,32 @@
 package bg.mck.ordercommandservice.entity;
 
-import jakarta.persistence.Column;
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "sets")
 public class SetEntity extends BaseMaterialEntity {
 
-    @DecimalMin(value = "0.0", message = "GalvanisedSheetThickness must be positive")
-    @Column(name = "galvanised_sheet_thickness_in_mm")
-    private Double galvanisedSheetThickness;
-
+    private String galvanisedSheetThickness;
     private String color;
-
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
-    @Column(name = "max_length_in_centimeters")
     private String maxLength;
 
     public SetEntity() {
     }
 
-    public Double getGalvanisedSheetThickness() {
+    public SetEntity(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String galvanisedSheetThickness, String color, String maxLength) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        this.galvanisedSheetThickness = galvanisedSheetThickness;
+        this.color = color;
+        this.maxLength = maxLength;
+    }
+
+    public String getGalvanisedSheetThickness() {
         return galvanisedSheetThickness;
     }
 
-    public SetEntity setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+    public SetEntity setGalvanisedSheetThickness(String galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
         return this;
     }

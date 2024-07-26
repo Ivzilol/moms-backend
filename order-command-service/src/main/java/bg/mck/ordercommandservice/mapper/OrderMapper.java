@@ -6,7 +6,17 @@ import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.event.CreateOrderEvent;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {
+        FastenerMapper.class,
+        GalvanisedSheetMapper.class,
+        InsulationMapper.class,
+        MetalMapper.class,
+        PanelMapper.class,
+        RebarMapper.class,
+        ServiceMapper.class,
+        SetMapper.class,
+        TransportMapper.class,
+        UnspecifiedMapper.class})
 public interface OrderMapper {
 
     OrderDTO toOrderDTO(OrderEntity order);

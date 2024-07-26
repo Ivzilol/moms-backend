@@ -1,20 +1,19 @@
 package bg.mck.ordercommandservice.event;
 
 public class TransportEvent {
-    private Long id;
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
-    private Double maxLength;
-    private Double weight;
+    private String maxLength;
+    private String weight;
     private String truck;
 
     public TransportEvent() {
     }
 
-    public TransportEvent(Long id, Double quantity, String description, String specificationFileUrl, Double maxLength, Double weight, String truck) {
+    public TransportEvent(Long id, Double quantity, String description, String specificationFileUrl, String maxLength, String weight, String truck) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -60,20 +59,20 @@ public class TransportEvent {
         return this;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public TransportEvent setMaxLength(Double maxLength) {
+    public TransportEvent setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public TransportEvent setWeight(Double weight) {
+    public TransportEvent setWeight(String weight) {
         this.weight = weight;
         return this;
     }

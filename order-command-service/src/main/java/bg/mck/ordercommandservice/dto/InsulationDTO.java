@@ -1,22 +1,24 @@
 package bg.mck.ordercommandservice.dto;
 
-
-import jakarta.validation.constraints.DecimalMin;
+import bg.mck.ordercommandservice.entity.enums.LengthUnits;
+import jakarta.validation.constraints.Pattern;
 
 public class InsulationDTO extends BaseDTO{
 
     private String type;
 
-    @DecimalMin(value = "0.0", message = "Thickness must be greater than 0")
-    private Double thickness;
-
+    @Pattern(regexp = "^[^-].*", message = "Thickness must be positive")
+    private String thickness;
+    private LengthUnits thicknessUnit;
 
     public InsulationDTO() {
     }
 
-    public InsulationDTO(String type, Double thickness) {
+    public InsulationDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String thickness, LengthUnits thicknessUnit) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.thickness = thickness;
+        this.thicknessUnit = thicknessUnit;
     }
 
     public String getType() {
@@ -28,12 +30,21 @@ public class InsulationDTO extends BaseDTO{
         return this;
     }
 
-    public Double getThickness() {
+    public @Pattern(regexp = "^[^-].*", message = "Thickness must be positive") String getThickness() {
         return thickness;
     }
 
-    public InsulationDTO setThickness(Double thickness) {
+    public InsulationDTO setThickness(@Pattern(regexp = "^[^-].*", message = "Thickness must be positive") String thickness) {
         this.thickness = thickness;
+        return this;
+    }
+
+    public LengthUnits getThicknessUnit() {
+        return thicknessUnit;
+    }
+
+    public InsulationDTO setThicknessUnit(LengthUnits thicknessUnit) {
+        this.thicknessUnit = thicknessUnit;
         return this;
     }
 }

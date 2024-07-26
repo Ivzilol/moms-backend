@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.exceptionHandling;
 
+import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
 import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.exception.ErrorMapper;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
@@ -19,12 +20,22 @@ public class OrderExceptionHandler {
 
     @ExceptionHandler(ConstructionSiteNotFoundException.class)
     public ResponseEntity<String> handleConstructionSiteNotFoundException(ConstructionSiteNotFoundException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<String> handleOrderNotFoundException(OrderNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ConstructionSiteAlreadyExists.class)
+    public ResponseEntity<String> handleConstructionSiteAlreadyExists(ConstructionSiteAlreadyExists e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 
