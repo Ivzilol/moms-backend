@@ -1,10 +1,6 @@
 package bg.mck.orderqueryservice.dto;
 
-import jakarta.validation.constraints.NotNull;
-
 public class ConstructionSiteDTO {
-
-    private String id;
 
     private String name;
 
@@ -13,19 +9,9 @@ public class ConstructionSiteDTO {
     public ConstructionSiteDTO() {
     }
 
-    public ConstructionSiteDTO(String id, String name, String constructionNumber) {
-        this.id = id;
+    public ConstructionSiteDTO(String name, String constructionNumber) {
         this.name = name;
         this.constructionNumber = constructionNumber;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public ConstructionSiteDTO setId(String id) {
-        this.id = id;
-        return this;
     }
 
     public String getName() {
