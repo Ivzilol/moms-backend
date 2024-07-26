@@ -1,43 +1,63 @@
 package bg.mck.orderqueryservice.dto;
 
-import org.springframework.data.mongodb.core.mapping.Field;
+import bg.mck.orderqueryservice.entity.enums.LengthUnits;
+import bg.mck.orderqueryservice.entity.enums.WeightUnits;
 
 public class TransportDTO extends BaseDTO {
 
+    private String maxLength;
+    private LengthUnits maxLengthUnit;
 
-    @Field(name = "max_length_in_centimeters")
-    private Double maxLength;
-
-    @Field(name = "weight_in_kg")
-    private Double weight;
+    private String weight;
+    private WeightUnits weightUnit;
 
     private String truck;
 
     public TransportDTO() {
     }
 
-    public TransportDTO(Long id, Double quantity, String description, String specificationFileUrl, Double maxLength, Double weight, String truck) {
-        super(id, quantity, description, specificationFileUrl);
+    public TransportDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
         this.weight = weight;
+        this.weightUnit = weightUnit;
         this.truck = truck;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public TransportDTO setMaxLength(Double maxLength) {
+    public TransportDTO setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public TransportDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public String getWeight() {
         return weight;
     }
 
-    public TransportDTO setWeight(Double weight) {
+    public TransportDTO setWeight(String weight) {
         this.weight = weight;
+        return this;
+    }
+
+    public WeightUnits getWeightUnit() {
+        return weightUnit;
+    }
+
+    public TransportDTO setWeightUnit(WeightUnits weightUnit) {
+        this.weightUnit = weightUnit;
         return this;
     }
 

@@ -29,15 +29,11 @@ public class OrderService {
 
     public List<OrderDTO> getAllOrders() {
         try {
-            return redisService.getCachedObjects()
-                    .stream()
-                    .map(orderMapper::fromOrderEntityToDTO)
-                    .collect(Collectors.toList());
+            return redisService.getCachedObjects();
         } catch (Exception e) {
             return orderRepository.findAll()
-                    .stream()
-                    .map(orderMapper::fromOrderEntityToDTO)
-                    .collect(Collectors.toList());
+                .stream().map(orderMapper::fromOrderEntityToDTO)
+                .collect(Collectors.toList());
         }
     }
 
@@ -52,9 +48,9 @@ public class OrderService {
 
     public OrderDTO getOrderById(Long id) {
         String orderId = String.valueOf(id);
-        OrderEntity orderEntity = redisService.getCachedObjectById(id);
-        if (orderEntity != null) {
-            return orderMapper.fromOrderEntityToDTO(orderEntity);
+        OrderDTO orderDTO = redisService.getCachedObjectById(id);
+        if (orderDTO != null) {
+            return orderDTO;
         } else {
             throw new OrderNotFoundException("Order with id " + orderId + " not found");
         }

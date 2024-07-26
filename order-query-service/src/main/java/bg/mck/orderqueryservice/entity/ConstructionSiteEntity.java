@@ -1,13 +1,17 @@
 package bg.mck.orderqueryservice.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("construction_sites")
-public class ConstructionSiteEntity {
+public class ConstructionSiteEntity extends BaseEntity {
 
-    private String id;
-
+    @Field(name = "construction_number")
     private String constructionNumber;
+    @Field(name = "construction_name")
     private String name;
 
     public ConstructionSiteEntity() {
@@ -22,23 +26,13 @@ public class ConstructionSiteEntity {
         return constructionNumber;
     }
 
-    public String getId() {
-        return id;
+    public ConstructionSiteEntity setConstructionNumber(String constructionNumber) {
+        this.constructionNumber = constructionNumber;
+        return this;
     }
 
     public String getName() {
         return name;
-    }
-
-
-    public ConstructionSiteEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
-
-    public ConstructionSiteEntity setConstructionNumber(String constructionNumber) {
-        this.constructionNumber = constructionNumber;
-        return this;
     }
 
     public ConstructionSiteEntity setName(String name) {
@@ -47,16 +41,10 @@ public class ConstructionSiteEntity {
     }
 
     public static class Builder {
-        private String id;
         private String constructionNumber;
         private String name;
 
         public Builder() {
-        }
-
-        public Builder id(String id) {
-            this.id = id;
-            return this;
         }
 
         public Builder constructionNumber(String constructionNumber) {
@@ -78,3 +66,4 @@ public class ConstructionSiteEntity {
         return new Builder();
     }
 }
+

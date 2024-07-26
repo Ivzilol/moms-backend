@@ -1,41 +1,32 @@
 package bg.mck.orderqueryservice.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("galvanised_sheets")
-public class GalvanisedSheetEntity {
+public class GalvanisedSheetEntity extends BaseMaterialEntity {
 
-    private String id;
     private String type;
-    private Double maxLength;
-    private Double area;
 
-    private Double quantity;
-    private String description;
-    private String specificationFileUrl;
+    @Field(name = "max_length")
+    private String maxLength;
+
+    @Field(name = "area")
+    private String area;
 
 
     public GalvanisedSheetEntity() {
     }
 
-
-    public GalvanisedSheetEntity(String id, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
+    public GalvanisedSheetEntity(Double quantity, String note, String specificationFileUrl, String type, String maxLength, String area) {
+        super(quantity, note, specificationFileUrl);
         this.type = type;
         this.maxLength = maxLength;
         this.area = area;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public GalvanisedSheetEntity setId(String id) {
-        this.id = id;
-        return this;
     }
 
     public String getType() {
@@ -47,48 +38,21 @@ public class GalvanisedSheetEntity {
         return this;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public GalvanisedSheetEntity setMaxLength(Double maxLength) {
+    public GalvanisedSheetEntity setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getArea() {
+    public String getArea() {
         return area;
     }
 
-    public GalvanisedSheetEntity setArea(Double area) {
+    public GalvanisedSheetEntity setArea(String area) {
         this.area = area;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public GalvanisedSheetEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public GalvanisedSheetEntity setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public GalvanisedSheetEntity setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
         return this;
     }
 }

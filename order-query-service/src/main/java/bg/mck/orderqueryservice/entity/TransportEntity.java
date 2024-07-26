@@ -1,94 +1,49 @@
 package bg.mck.orderqueryservice.entity;
 
+import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("transports")
-public class TransportEntity {
-    private String id;
-    private Double quantity;
-    private String description;
-    private String specificationFileUrl;
-    @Field("max_length_in_centimeters")
-    private Double maxLength;
-    @Field("weight_in_kg")
-    private Double weight;
-    private String Truck;
+public class TransportEntity extends BaseMaterialEntity {
 
+    private String maxLength;
+    private String weight;
+    private String truck;
 
     public TransportEntity() {
     }
 
-    public TransportEntity(String id, Double quantity, String description, String specificationFileUrl, Double maxLength, Double weight, String truck) {
-        this.id = id;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
+    public TransportEntity(String id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String maxLength, String weight, String truck) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.maxLength = maxLength;
         this.weight = weight;
-        Truck = truck;
+        this.truck = truck;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public TransportEntity setId(String id) {
-        this.id = id;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public TransportEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public TransportEntity setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public TransportEntity setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
-
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public TransportEntity setMaxLength(Double maxLength) {
+    public TransportEntity setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public TransportEntity setWeight(Double weight) {
+    public TransportEntity setWeight(String weight) {
         this.weight = weight;
         return this;
     }
 
     public String getTruck() {
-        return Truck;
+        return truck;
     }
 
     public TransportEntity setTruck(String truck) {
-        Truck = truck;
+        this.truck = truck;
         return this;
     }
 }

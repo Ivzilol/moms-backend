@@ -1,7 +1,6 @@
 package bg.mck.orderqueryservice.mapper;
 
-import bg.mck.orderqueryservice.dto.OrderDTO;
-import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
+import bg.mck.orderqueryservice.dto.*;
 import bg.mck.orderqueryservice.entity.*;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.events.*;
@@ -161,6 +160,59 @@ public interface OrderMapper {
     TransportEntity toTransportEntity(TransportEvent event);
 
     OrderDTO fromOrderEntityToDTO(OrderEntity orderEntity);
+
+    @Mapping(target = "length", expression = "java(fastenerEntity.getLength() != null ? fastenerEntity.getLength().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "lengthUnit", expression = "java(fastenerEntity.getLength() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(fastenerEntity.getLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    FastenerDTO fromFastenerEntityToDTO(FastenerEntity fastenerEntity);
+
+
+    @Mapping(target = "maxLength", expression = "java(galvanisedSheetEntity.getMaxLength() != null ? galvanisedSheetEntity.getMaxLength().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "maxLengthUnit", expression = "java(galvanisedSheetEntity.getMaxLength() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(galvanisedSheetEntity.getMaxLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "area", expression = "java(galvanisedSheetEntity.getArea() != null ? galvanisedSheetEntity.getArea().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "areaUnit", expression = "java(galvanisedSheetEntity.getArea() != null ? bg.mck.orderqueryservice.entity.enums.AreaUnits.valueOf(galvanisedSheetEntity.getArea().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    GalvanisedSheetDTO fromGalvanisedSheetEntityToDTO(GalvanisedSheetEntity galvanisedSheetEntity);
+
+    @Mapping(target = "thickness", expression = "java(insulationEntity.getThickness() != null ? insulationEntity.getThickness().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "thicknessUnit", expression = "java(insulationEntity.getThickness() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(insulationEntity.getThickness().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    InsulationDTO fromInsulationEntityToDTO(InsulationEntity insulationEntity);
+
+    @Mapping(target = "totalWeight", expression = "java(metalEntity.getTotalWeight() != null ? metalEntity.getTotalWeight().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "totalWeightUnit", expression = "java(metalEntity.getTotalWeight() != null ? bg.mck.orderqueryservice.entity.enums.WeightUnits.valueOf(metalEntity.getTotalWeight().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    MetalDTO fromMetalEntityToDTO(MetalEntity metalEntity);
+
+    @Mapping(target = "length", expression = "java(panelEntity.getLength() != null ? panelEntity.getLength().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "lengthUnit", expression = "java(panelEntity.getLength() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(panelEntity.getLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "width", expression = "java(panelEntity.getWidth() != null ? panelEntity.getWidth().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "widthUnit", expression = "java(panelEntity.getWidth() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(panelEntity.getWidth().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "totalThickness", expression = "java(panelEntity.getTotalThickness() != null ? panelEntity.getTotalThickness().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "totalThicknessUnit", expression = "java(panelEntity.getTotalThickness() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(panelEntity.getTotalThickness().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "frontSheetThickness", expression = "java(panelEntity.getFrontSheetThickness() != null ? panelEntity.getFrontSheetThickness().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "frontSheetThicknessUnit", expression = "java(panelEntity.getFrontSheetThickness() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(panelEntity.getFrontSheetThickness().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "backSheetThickness", expression = "java(panelEntity.getBackSheetThickness() != null ? panelEntity.getBackSheetThickness().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "backSheetThicknessUnit", expression = "java(panelEntity.getBackSheetThickness() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(panelEntity.getBackSheetThickness().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    PanelDTO fromPanelEntityToDTO(PanelEntity panelEntity);
+
+    @Mapping(target = "maxLength", expression = "java(rebarEntity.getMaxLength() != null ? rebarEntity.getMaxLength().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "maxLengthUnit", expression = "java(rebarEntity.getMaxLength() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(rebarEntity.getMaxLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "weight", expression = "java(rebarEntity.getWeight() != null ? rebarEntity.getWeight().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "weightUnit", expression = "java(rebarEntity.getWeight() != null ? bg.mck.orderqueryservice.entity.enums.WeightUnits.valueOf(rebarEntity.getWeight().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    RebarDTO fromRebarEntityToDTO(RebarEntity rebarEntity);
+
+    @Mapping(target = "galvanisedSheetThickness", expression = "java(setEntity.getGalvanisedSheetThickness() != null ? setEntity.getGalvanisedSheetThickness().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "galvanisedSheetThicknessUnit", expression = "java(setEntity.getGalvanisedSheetThickness() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(setEntity.getGalvanisedSheetThickness().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "maxLength", expression = "java(setEntity.getMaxLength() != null ? setEntity.getMaxLength().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "maxLengthUnit", expression = "java(setEntity.getMaxLength() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(setEntity.getMaxLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    SetDTO fromSetEntityToDTO(SetEntity setEntity);
+
+    UnspecifiedDTO fromUnspecifiedEntityToDTO(UnspecifiedEntity unspecifiedEntity);
+
+    ServiceDTO fromServiceEntityToDTO(ServiceEntity serviceEntity);
+
+    @Mapping(target = "maxLength", expression = "java(transportEntity.getMaxLength() != null ? transportEntity.getMaxLength().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "maxLengthUnit", expression = "java(transportEntity.getMaxLength() != null ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(transportEntity.getMaxLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "weight", expression = "java(transportEntity.getWeight() != null ? transportEntity.getWeight().split(\"\\\\s+\")[0] : null)")
+    @Mapping(target = "weightUnit", expression = "java(transportEntity.getWeight() != null ? bg.mck.orderqueryservice.entity.enums.WeightUnits.valueOf(transportEntity.getWeight().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    TransportDTO fromTransportEntityToDTO(TransportEntity transportEntity);
 
     void toUpdateFasterEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget FastenerEntity fastenerEntity);
 
