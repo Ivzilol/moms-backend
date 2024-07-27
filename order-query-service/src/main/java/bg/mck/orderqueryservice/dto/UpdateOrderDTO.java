@@ -8,11 +8,9 @@ public class UpdateOrderDTO {
     private String name;
     private String description;
     private String diameter;
-
     private Double length;
     private String model;
     private String clazz;
-
     private Double quantity;
     private String note;
     private String specificationFileUrl;
@@ -20,33 +18,27 @@ public class UpdateOrderDTO {
     private String number;
     private String type;
     private Double width;
-
     private Double area;
     private String color;
-
     private Double thickness;
-
 
     private Double frontSheetThickness;
 
     private Double backSheetThickness;
     private Double thermalPerformance;
     private Double density;
-
     private Double totalThickness;
     private Double sheetThickness;
     private Integer positionNumber;
     private String steel;
-
     private Double weight;
-
     private Double maxLength;
-
 
     private Double totalWeight;
 
-
     private Double galvanisedSheetThickness;
+
+    private String truck;
 
     public String getId() {
         return id;
@@ -294,5 +286,13 @@ public class UpdateOrderDTO {
 
     public void setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
+    }
+
+    public String getTruck() {
+        return truck;
+    }
+
+    public void setTruck(String truck) {
+        this.truck = truck;
     }
 }

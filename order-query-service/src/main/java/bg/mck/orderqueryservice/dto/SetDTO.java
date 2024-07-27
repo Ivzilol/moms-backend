@@ -1,32 +1,44 @@
 package bg.mck.orderqueryservice.dto;
 
-import org.springframework.data.mongodb.core.mapping.Field;
+import bg.mck.orderqueryservice.entity.enums.LengthUnits;
 
 public class SetDTO extends BaseDTO {
 
-    @Field(name = "galvanised_sheet_thickness_in_mm")
-    private Double galvanisedSheetThickness;
+    private String galvanisedSheetThickness;
+    private LengthUnits galvanisedSheetThicknessUnit;
 
     private String color;
 
-    @Field(name = "max_length_in_centimeters")
     private String maxLength;
+    private LengthUnits maxLengthUnit;
 
     public SetDTO() {
     }
 
-    public SetDTO(Double galvanisedSheetThickness, String color, String maxLength) {
+    public SetDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String galvanisedSheetThickness, LengthUnits galvanisedSheetThicknessUnit, String color, String maxLength, LengthUnits maxLengthUnit) {
+        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
         this.galvanisedSheetThickness = galvanisedSheetThickness;
+        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
         this.color = color;
         this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
     }
 
-    public Double getGalvanisedSheetThickness() {
+    public String getGalvanisedSheetThickness() {
         return galvanisedSheetThickness;
     }
 
-    public SetDTO setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+    public SetDTO setGalvanisedSheetThickness(String galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getGalvanisedSheetThicknessUnit() {
+        return galvanisedSheetThicknessUnit;
+    }
+
+    public SetDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
+        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
         return this;
     }
 
@@ -45,6 +57,15 @@ public class SetDTO extends BaseDTO {
 
     public SetDTO setMaxLength(String maxLength) {
         this.maxLength = maxLength;
+        return this;
+    }
+
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public SetDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
         return this;
     }
 }

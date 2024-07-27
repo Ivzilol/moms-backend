@@ -2,8 +2,6 @@ package bg.mck.orderqueryservice.dto;
 
 public class ConstructionSiteDTO {
 
-    private Long id;
-
     private String name;
 
     private String constructionNumber;
@@ -11,19 +9,9 @@ public class ConstructionSiteDTO {
     public ConstructionSiteDTO() {
     }
 
-    public ConstructionSiteDTO(Long id, String name, String constructionNumber) {
-        this.id = id;
+    public ConstructionSiteDTO(String name, String constructionNumber) {
         this.name = name;
         this.constructionNumber = constructionNumber;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public ConstructionSiteDTO setId(Long id) {
-        this.id = id;
-        return this;
     }
 
     public String getName() {

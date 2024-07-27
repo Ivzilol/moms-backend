@@ -1,20 +1,19 @@
 package bg.mck.orderqueryservice.events;
 
-public class SetEvent extends BaseEvent{
-    private Long id;
+public class SetEvent {
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-
-    private Double galvanisedSheetThickness;
+    private String galvanisedSheetThickness;
     private String color;
     private String maxLength;
 
     public SetEvent() {
     }
 
-    public SetEvent(Long id, Double quantity, String description, String specificationFileUrl, Double galvanisedSheetThickness, String color, String maxLength) {
+    public SetEvent(Long id, Double quantity, String description, String specificationFileUrl, String galvanisedSheetThickness, String color, String maxLength) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -60,11 +59,11 @@ public class SetEvent extends BaseEvent{
         return this;
     }
 
-    public Double getGalvanisedSheetThickness() {
+    public String getGalvanisedSheetThickness() {
         return galvanisedSheetThickness;
     }
 
-    public SetEvent setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+    public SetEvent setGalvanisedSheetThickness(String galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
         return this;
     }

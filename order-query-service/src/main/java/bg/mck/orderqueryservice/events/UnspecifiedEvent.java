@@ -1,8 +1,8 @@
 package bg.mck.orderqueryservice.events;
 
-public class UnspecifiedEvent extends BaseEvent{
-    private Long id;
+public class UnspecifiedEvent {
 
+    private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;

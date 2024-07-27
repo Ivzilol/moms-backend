@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class OrderAdvice {
 
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGlobalException(Exception e, HttpServletResponse response) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> handleGlobalException(Exception e, HttpServletResponse response) {
+//        return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
+//    }
 
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<String> handleOrderNotFoundException(OrderNotFoundException ex, HttpServletResponse response) {

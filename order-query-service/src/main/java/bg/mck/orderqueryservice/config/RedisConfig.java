@@ -1,6 +1,6 @@
 package bg.mck.orderqueryservice.config;
 
-import bg.mck.orderqueryservice.entity.OrderEntity;
+import bg.mck.orderqueryservice.dto.OrderDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +15,8 @@ public class RedisConfig {
 
 
     @Bean
-    public RedisTemplate<String, OrderEntity> redisTemplate(RedisConnectionFactory redisConnectionFactory, ObjectMapper objectMapper) {
-        RedisTemplate<String, OrderEntity> template = new RedisTemplate<>();
+    public RedisTemplate<String, OrderDTO> redisTemplate(RedisConnectionFactory redisConnectionFactory, ObjectMapper objectMapper) {
+        RedisTemplate<String, OrderDTO> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
 
         // Use StringRedisSerializer for the key
