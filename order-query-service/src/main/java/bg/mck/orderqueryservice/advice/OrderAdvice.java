@@ -17,7 +17,7 @@ public class OrderAdvice {
 //    }
 
     @ExceptionHandler(OrderNotFoundException.class)
-    public ResponseEntity<?> handleOrderNotFoundException(OrderNotFoundException ex) {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<String> handleOrderNotFoundException(OrderNotFoundException ex, HttpServletResponse response) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
     }
 }
