@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,7 +26,8 @@ public class ZonedDateTimeDeserializer implements JsonDeserializer<ZonedDateTime
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             // If it fails, fall back to parsing as ISO date-time string
             try {
-                return ZonedDateTime.parse(dateTimeString, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+                long timestamp = json.getAsLong();
+                return ZonedDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());
             } catch (DateTimeParseException ex) {
                 throw new JsonParseException("Unable to parse ZonedDateTime", ex);
             }
