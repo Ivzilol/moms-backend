@@ -2,23 +2,26 @@ package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class PanelUpdateEvent extends BaseMaterialEvent {
+public class UpdateInsulationEvent extends BaseMaterialEvent {
 
-    public PanelUpdateEvent() {
+    public UpdateInsulationEvent() {
     }
 
-    public PanelUpdateEvent(Long materialId, EventType eventType) {
+    public UpdateInsulationEvent(Long materialId, EventType eventType) {
         super(materialId, eventType);
     }
+
     private String category;
     private String name;
     private String materialType;
     private String type;
     private String color;
-    private Double length;
-    private Double width;
-    private Double totalThickness;
-    private Double sheetThickness;
+    private String length;
+    private String width;
+    private Double thickness;
+    private Double thermalPerformance;
+    private Double density;
+
     private Double quantity;
     private String note;
     private String specificationFileUrl;
@@ -27,7 +30,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return materialType;
     }
 
-    public PanelUpdateEvent setMaterialType(String materialType) {
+    public UpdateInsulationEvent setMaterialType(String materialType) {
         this.materialType = materialType;
         return this;
     }
@@ -36,7 +39,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return type;
     }
 
-    public PanelUpdateEvent setType(String type) {
+    public UpdateInsulationEvent setType(String type) {
         this.type = type;
         return this;
     }
@@ -45,44 +48,53 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return color;
     }
 
-    public PanelUpdateEvent setColor(String color) {
+    public UpdateInsulationEvent setColor(String color) {
         this.color = color;
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public PanelUpdateEvent setLength(Double length) {
+    public UpdateInsulationEvent setLength(String length) {
         this.length = length;
         return this;
     }
 
-    public Double getWidth() {
+    public String getWidth() {
         return width;
     }
 
-    public PanelUpdateEvent setWidth(Double width) {
+    public UpdateInsulationEvent setWidth(String width) {
         this.width = width;
         return this;
     }
 
-    public Double getTotalThickness() {
-        return totalThickness;
+    public Double getThickness() {
+        return thickness;
     }
 
-    public PanelUpdateEvent setTotalThickness(Double totalThickness) {
-        this.totalThickness = totalThickness;
+    public UpdateInsulationEvent setThickness(Double thickness) {
+        this.thickness = thickness;
         return this;
     }
 
-    public Double getSheetThickness() {
-        return sheetThickness;
+    public Double getThermalPerformance() {
+        return thermalPerformance;
     }
 
-    public PanelUpdateEvent setSheetThickness(Double sheetThickness) {
-        this.sheetThickness = sheetThickness;
+    public UpdateInsulationEvent setThermalPerformance(Double thermalPerformance) {
+        this.thermalPerformance = thermalPerformance;
+        return this;
+    }
+
+    public Double getDensity() {
+        return density;
+    }
+
+    public UpdateInsulationEvent setDensity(Double density) {
+        this.density = density;
         return this;
     }
 
@@ -90,7 +102,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return quantity;
     }
 
-    public PanelUpdateEvent setQuantity(Double quantity) {
+    public UpdateInsulationEvent setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -99,7 +111,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return note;
     }
 
-    public PanelUpdateEvent setNote(String note) {
+    public UpdateInsulationEvent setNote(String note) {
         this.note = note;
         return this;
     }
@@ -108,7 +120,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return specificationFileUrl;
     }
 
-    public PanelUpdateEvent setSpecificationFileUrl(String specificationFileUrl) {
+    public UpdateInsulationEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }
@@ -117,7 +129,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return category;
     }
 
-    public PanelUpdateEvent setCategory(String category) {
+    public UpdateInsulationEvent setCategory(String category) {
         this.category = category;
         return this;
     }
@@ -126,7 +138,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return name;
     }
 
-    public PanelUpdateEvent setName(String name) {
+    public UpdateInsulationEvent setName(String name) {
         this.name = name;
         return this;
     }

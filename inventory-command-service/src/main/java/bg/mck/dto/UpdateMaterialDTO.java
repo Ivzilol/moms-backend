@@ -1,11 +1,7 @@
 package bg.mck.dto;
 
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
-
 public class UpdateMaterialDTO {
-
     private String name;
     private String type;
     private String diameter;

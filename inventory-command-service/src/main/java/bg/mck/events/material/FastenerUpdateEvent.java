@@ -1,21 +1,18 @@
 package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
-import jakarta.persistence.Column;
 
 public class FastenerUpdateEvent extends BaseMaterialEvent {
 
     private String category;
     private String materialType;
     private String name;
-    @Column(columnDefinition="TEXT")
     private String description;
     private String diameter;
     private Double length;
     private String model;
     private String clazz;
     private Double quantity;
-    @Column(columnDefinition="TEXT")
     private String note;
     private String specificationFileUrl;
 

@@ -1,7 +1,6 @@
 package bg.mck.dto;
 
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
 
 public class UnspecifiedUpdateDTO {
