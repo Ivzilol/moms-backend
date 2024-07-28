@@ -87,4 +87,26 @@ public class OrderController {
 
         return ResponseEntity.ok(orderService.updateOrder(order, email, files));
     }
+
+    @PatchMapping(value = "/delete-order/{orderId}")
+    public ResponseEntity<OrderConfirmationDTO> deleteOrder(@PathVariable Long orderId,
+                                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+
+        token = token.substring(7);
+        String email = restTemplate
+                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
+
+        return ResponseEntity.ok(orderService.deleteOrder(orderId, email));
+    }
+
+    @PatchMapping(value = "/restore-order/{orderId}")
+    public ResponseEntity<OrderConfirmationDTO> restoreOrder(@PathVariable Long orderId,
+                                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+
+        token = token.substring(7);
+        String email = restTemplate
+                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
+
+        return ResponseEntity.ok(orderService.restoreOrder(orderId, email));
+    }
 }

@@ -205,4 +205,26 @@ public class OrderService {
 
         orderQueryServiceClient.sendEvent(orderEvent, orderEvent.getEventType().toString());
     }
+
+    public OrderConfirmationDTO deleteOrder(Long order, String email) {
+        OrderEntity orderEntity = orderRepository.findById(order)
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + order + " not found"));
+        orderEntity.setOrderStatus(OrderStatus.CANCELLED)
+                .setEmail(email);
+        orderRepository.save(orderEntity);
+        LOGGER.info("Order with id {} cancelled successfully", orderEntity.getId());
+
+        return createOrderEvent(orderEntity);
+    }
+
+    public OrderConfirmationDTO restoreOrder(Long orderId, String email) {
+        OrderEntity orderEntity = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + orderId + " not found"));
+        orderEntity.setOrderStatus(OrderStatus.PENDING)
+                .setEmail(email);
+        orderRepository.save(orderEntity);
+        LOGGER.info("Order with id {} restored successfully", orderEntity.getId());
+
+        return createOrderEvent(orderEntity);
+    }
 }
