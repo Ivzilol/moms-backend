@@ -12,6 +12,7 @@ public class InsulationUpdateEvent extends BaseMaterialEvent {
     }
 
     private String category;
+    private String name;
     private String materialType;
     private String type;
     private String color;
@@ -130,6 +131,15 @@ public class InsulationUpdateEvent extends BaseMaterialEvent {
 
     public InsulationUpdateEvent setCategory(String category) {
         this.category = category;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public InsulationUpdateEvent setName(String name) {
+        this.name = name;
         return this;
     }
 }

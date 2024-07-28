@@ -13,6 +13,7 @@ public class UpdateFastenerEvent extends BaseMaterialEvent {
     private Double quantity;
     private String type;
     private String specificationFileUrl;
+    private String category;
 
     public UpdateFastenerEvent() {
     }
@@ -108,6 +109,15 @@ public class UpdateFastenerEvent extends BaseMaterialEvent {
 
     public UpdateFastenerEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public UpdateFastenerEvent setCategory(String category) {
+        this.category = category;
         return this;
     }
 }

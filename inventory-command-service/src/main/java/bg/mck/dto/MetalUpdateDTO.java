@@ -1,11 +1,8 @@
 package bg.mck.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotEmpty;
 
 public class MetalUpdateDTO {
-
     private String name;
     @DecimalMin(value = "0.0", message = "Weight must be positive")
     private Double totalWeight;

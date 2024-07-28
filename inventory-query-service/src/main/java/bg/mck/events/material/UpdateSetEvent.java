@@ -2,12 +2,12 @@ package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class SetUpdateEvent extends BaseMaterialEvent {
+public class UpdateSetEvent extends BaseMaterialEvent {
 
-    public SetUpdateEvent() {
+    public UpdateSetEvent() {
     }
 
-    public SetUpdateEvent(Long materialId, EventType eventType) {
+    public UpdateSetEvent(Long materialId, EventType eventType) {
         super(materialId, eventType);
     }
     private String category;
@@ -22,7 +22,7 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return materialType;
     }
 
-    public SetUpdateEvent setMaterialType(String materialType) {
+    public UpdateSetEvent setMaterialType(String materialType) {
         this.materialType = materialType;
         return this;
     }
@@ -31,7 +31,7 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return description;
     }
 
-    public SetUpdateEvent setDescription(String description) {
+    public UpdateSetEvent setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -40,7 +40,7 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return quantity;
     }
 
-    public SetUpdateEvent setQuantity(Double quantity) {
+    public UpdateSetEvent setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -49,7 +49,7 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return note;
     }
 
-    public SetUpdateEvent setNote(String note) {
+    public UpdateSetEvent setNote(String note) {
         this.note = note;
         return this;
     }
@@ -58,7 +58,7 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return specificationFileUrl;
     }
 
-    public SetUpdateEvent setSpecificationFileUrl(String specificationFileUrl) {
+    public UpdateSetEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }
@@ -67,7 +67,7 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return category;
     }
 
-    public SetUpdateEvent setCategory(String category) {
+    public UpdateSetEvent setCategory(String category) {
         this.category = category;
         return this;
     }
@@ -76,7 +76,7 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return name;
     }
 
-    public SetUpdateEvent setName(String name) {
+    public UpdateSetEvent setName(String name) {
         this.name = name;
         return this;
     }

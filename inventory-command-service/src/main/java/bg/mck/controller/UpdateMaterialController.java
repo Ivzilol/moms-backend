@@ -3,10 +3,16 @@ package bg.mck.controller;
 import bg.mck.dto.UpdateMaterialDTO;
 import bg.mck.enums.MaterialType;
 import bg.mck.service.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/${APPLICATION_VERSION}/admin/inventory/command")
 public class UpdateMaterialController {
 
     private final FastenersUpdateService fastenersUpdateService;
@@ -28,7 +34,12 @@ public class UpdateMaterialController {
         this.unspecifiedUpdateService = unspecifiedUpdateService;
         this.metalUpdateService = metalUpdateService;
     }
-
+    @Operation(summary = "Update Material")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated material"),
+            @ApiResponse(responseCode = "404", description = "Invalid material ID or material type.",
+                    content = @Content(mediaType = "text/plain"))
+    })
     @PatchMapping("/update/{materialType}/{id}")
     public ResponseEntity<Void> updateMaterial(@PathVariable String materialType,
                                                @PathVariable Long id,
@@ -49,6 +60,8 @@ public class UpdateMaterialController {
             unspecifiedUpdateService.updateUnspecified(id,updateMaterialDTO);
         } else if (materialType.equalsIgnoreCase(MaterialType.METAL.name())) {
             metalUpdateService.updateMetal(id,updateMaterialDTO);
+        } else {
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().build();
     }

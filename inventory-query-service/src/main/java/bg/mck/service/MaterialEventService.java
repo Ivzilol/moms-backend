@@ -7,6 +7,7 @@ import bg.mck.events.material.*;
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InvalidEventTypeException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
+import bg.mck.mapper.InventoryQueryUpdateMapper;
 import bg.mck.repository.material.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -35,10 +36,12 @@ public class MaterialEventService {
     private final MaterialDeleteService materialDeleteService;
     private final MaterialRedisService materialRedisService;
     private final MaterialRegisterService materialRegisterService;
+    private final InventoryQueryUpdateMapper inventoryQueryUpdateMapper;
+
 
     public MaterialEventService(EventMaterialRepository eventMaterialRepository, FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository,
                                 PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, MetalRepository metalRepository,
-                                ObjectMapper objectMapper, MaterialDeleteService materialDeleteService, MaterialRedisService materialRedisService, MaterialRegisterService materialRegisterService) {
+                                ObjectMapper objectMapper, MaterialDeleteService materialDeleteService, MaterialRedisService materialRedisService, MaterialRegisterService materialRegisterService, InventoryQueryUpdateMapper inventoryQueryUpdateMapper) {
         this.eventMaterialRepository = eventMaterialRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
@@ -52,6 +55,7 @@ public class MaterialEventService {
         this.materialDeleteService = materialDeleteService;
         this.materialRedisService = materialRedisService;
         this.materialRegisterService = materialRegisterService;
+        this.inventoryQueryUpdateMapper = inventoryQueryUpdateMapper;
     }
 
     public void processMaterialEvent(String data, String eventType, String materialType) throws
@@ -155,38 +159,88 @@ public class MaterialEventService {
     }
 
     private void applyMetalEvent(MaterialEvent<? extends BaseMaterialEvent> event, MetalEntity metalEntity) {
+        BaseMaterialEvent baseEvent = event.getEvent();
+        if (baseEvent instanceof UpdateMetalEvent updateEvent) {
+            inventoryQueryUpdateMapper.mapUpdateMetalEventToMetalEntity(updateEvent,metalEntity);
+        } else if (baseEvent instanceof RegisterMetalEvent registerEvent) {
 
+        } else if (baseEvent instanceof MaterialDeletedEvent deletedEvent) {
+
+        }
 
     }
 
     private void applyUnspecifiedEvent(MaterialEvent<? extends BaseMaterialEvent> event, UnspecifiedEntity unspecifiedEntity) {
+        BaseMaterialEvent baseEvent = event.getEvent();
+        if (baseEvent instanceof UpdateUnspecifiedEvent updateEvent) {
+            inventoryQueryUpdateMapper.mapUpdateUnspecifiedEventToUnspecifiedEntity(updateEvent,unspecifiedEntity);
+        } else if (baseEvent instanceof RegisterUnspecifiedEvent registerEvent) {
 
+        } else if (baseEvent instanceof MaterialDeletedEvent deletedEvent) {
+
+        }
     }
 
     private void applySetEvent(MaterialEvent<? extends BaseMaterialEvent> event, SetEntity setEntity) {
+        BaseMaterialEvent baseEvent = event.getEvent();
+        if (baseEvent instanceof UpdateSetEvent updateEvent) {
+            inventoryQueryUpdateMapper.mapUpdateSetEventToSetEntity(updateEvent,setEntity);
+        } else if (baseEvent instanceof RegisterSetEvent registerEvent) {
 
+        } else if (baseEvent instanceof MaterialDeletedEvent deletedEvent) {
+
+        }
     }
 
     private void applyRebarEvent(MaterialEvent<? extends BaseMaterialEvent> event, RebarEntity rebarEntity) {
+        BaseMaterialEvent baseEvent = event.getEvent();
+        if (baseEvent instanceof UpdateRebarEvent updateEvent) {
+            inventoryQueryUpdateMapper.mapUpdateRebarEventToRebarEntity(updateEvent,rebarEntity);
+        } else if (baseEvent instanceof RegisterRebarEvent registerEvent) {
 
+        } else if (baseEvent instanceof MaterialDeletedEvent deletedEvent) {
+
+        }
     }
 
     private void applyPanelEvents(MaterialEvent<? extends BaseMaterialEvent> event, PanelEntity panelEntity) {
+        BaseMaterialEvent baseEvent = event.getEvent();
+        if (baseEvent instanceof UpdatePanelEvent updateEvent) {
+            inventoryQueryUpdateMapper.mapUpdatePanelEventToPanelEntity(updateEvent,panelEntity);
+        } else if (baseEvent instanceof RegisterPanelEvent registerEvent) {
 
+        } else if (baseEvent instanceof MaterialDeletedEvent deletedEvent) {
+
+        }
     }
 
     private void applyInsulationEvent(MaterialEvent<? extends BaseMaterialEvent> event, InsulationEntity insulationEntity) {
+        BaseMaterialEvent baseEvent = event.getEvent();
+        if (baseEvent instanceof UpdateInsulationEvent updateEvent) {
+            inventoryQueryUpdateMapper.mapUpdateInsulationEventToInsulationEntity(updateEvent,insulationEntity);
+        } else if (baseEvent instanceof RegisterInsulationEvent registerEvent) {
 
+        } else if (baseEvent instanceof MaterialDeletedEvent deletedEvent) {
+
+        }
     }
 
     private void applyGalvanisedSheetEvent(MaterialEvent<? extends BaseMaterialEvent> event, GalvanisedSheetEntity galvanisedSheetEntity) {
+        BaseMaterialEvent baseEvent = event.getEvent();
+        if (baseEvent instanceof UpdateGalvanizedSheetEvent updateEvent) {
+            inventoryQueryUpdateMapper.mapUpdateGalvanizedSheetEventToGalvanizedSheetEntity(updateEvent,galvanisedSheetEntity);
+        } else if (baseEvent instanceof RegisterGalvanizedEvent registerEvent) {
 
+        } else if (baseEvent instanceof MaterialDeletedEvent deletedEvent) {
+
+        }
     }
 
 
     private void applyFastenerEvent(MaterialEvent<? extends BaseMaterialEvent> materialEvent, FastenerEntity entity) {
         BaseMaterialEvent event = materialEvent.getEvent();
-        if (event instanceof UpdateFastenerEvent) {
+        if (event instanceof UpdateFastenerEvent updateEvent) {
+            inventoryQueryUpdateMapper.mapFastenerUpdateEventToFastenerEntity(updateEvent,entity);
         } else if (event instanceof RegisterFastenerEvent registerEvent) {
 
         } else if (event instanceof MaterialDeletedEvent deletedEvent) {
@@ -302,18 +356,120 @@ public class MaterialEventService {
     }
 
     private void updateEvent(String data, String materialType) throws JsonProcessingException {
-        //TODO:
-        if (materialType.equals(String.valueOf(MaterialType.FASTENERS))) {
-            MaterialEvent<UpdateFastenerEvent> materialEvent =
-                    objectMapper.readValue(data, new TypeReference<>() {
-                    });
-            String materialId = materialEvent.getEvent().getMaterialId().toString();
-            doesItemExist(materialId, materialType);
-            saveEvent(materialEvent);
-            evictCache(materialType, materialEvent.getEvent().getName());
-
-            reconstructMaterialEntity(materialId, materialType, FastenerEntity.class);
+        if (materialType.equals(MaterialType.FASTENERS.name())) {
+            updateFastenerEntity(data, materialType);
+        } else if (materialType.equals(MaterialType.GALVANIZED_SHEET.name())) {
+            updateGalvanizedSheetEntity(data, materialType);
+        } else if (materialType.equals(MaterialType.SET.name())) {
+            updateSetEntity(data, materialType);
+        } else if (materialType.equals(MaterialType.METAL.name())) {
+            updateMetalEntity(data, materialType);
+        } else if (materialType.equals(MaterialType.INSULATION.name())) {
+            updateInsulationEntity(data, materialType);
+        } else if (materialType.equals(MaterialType.PANELS.name())) {
+            updatePanelEntity(data, materialType);
+        } else if (materialType.equals(MaterialType.REBAR.name())) {
+            updateRebarEntity(data, materialType);
+        } else if (materialType.equals(MaterialType.UNSPECIFIED.name())) {
+            updateUnspecifiedEntity(data, materialType);
         }
+
+        }
+
+    private void updateUnspecifiedEntity(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<UpdateUnspecifiedEvent> materialEvent =
+                objectMapper.readValue(data, new TypeReference<>() {
+                });
+
+        String materialId = materialEvent.getEvent().getMaterialId().toString();
+        doesItemExist(materialId, materialType);
+        saveEvent(materialEvent);
+        evictCache(materialType, materialEvent.getEvent().getName());
+        reconstructMaterialEntity(materialId, materialType, UnspecifiedEntity.class);
+    }
+
+    private void updateRebarEntity(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<UpdateRebarEvent> materialEvent =
+                objectMapper.readValue(data, new TypeReference<>() {
+                });
+
+        String materialId = materialEvent.getEvent().getMaterialId().toString();
+        doesItemExist(materialId, materialType);
+        saveEvent(materialEvent);
+        evictCache(materialType, materialEvent.getEvent().getName());
+        reconstructMaterialEntity(materialId, materialType, RebarEntity.class);
+    }
+
+    private void updatePanelEntity(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<UpdatePanelEvent> materialEvent =
+                objectMapper.readValue(data, new TypeReference<>() {
+                });
+
+        String materialId = materialEvent.getEvent().getMaterialId().toString();
+        doesItemExist(materialId, materialType);
+        saveEvent(materialEvent);
+        evictCache(materialType, materialEvent.getEvent().getName());
+        reconstructMaterialEntity(materialId, materialType, PanelEntity.class);
+    }
+
+    private void updateInsulationEntity(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<UpdateInsulationEvent> materialEvent =
+                objectMapper.readValue(data, new TypeReference<>() {
+                });
+
+        String materialId = materialEvent.getEvent().getMaterialId().toString();
+        doesItemExist(materialId, materialType);
+        saveEvent(materialEvent);
+        evictCache(materialType, materialEvent.getEvent().getName());
+        reconstructMaterialEntity(materialId, materialType, InsulationEntity.class);
+    }
+
+    private void updateMetalEntity(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<UpdateMetalEvent> materialEvent =
+                objectMapper.readValue(data, new TypeReference<>() {
+                });
+
+        String materialId = materialEvent.getEvent().getMaterialId().toString();
+        doesItemExist(materialId, materialType);
+        saveEvent(materialEvent);
+        evictCache(materialType, materialEvent.getEvent().getName());
+        reconstructMaterialEntity(materialId, materialType, MetalEntity.class);
+    }
+
+    private void updateSetEntity(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<UpdateSetEvent> materialEvent =
+                objectMapper.readValue(data, new TypeReference<>() {
+                });
+
+        String materialId = materialEvent.getEvent().getMaterialId().toString();
+        doesItemExist(materialId, materialType);
+        saveEvent(materialEvent);
+        evictCache(materialType, materialEvent.getEvent().getName());
+        reconstructMaterialEntity(materialId, materialType, SetEntity.class);
+    }
+
+    private void updateGalvanizedSheetEntity(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<UpdateGalvanizedSheetEvent> materialEvent =
+                objectMapper.readValue(data, new TypeReference<>() {
+                });
+
+        String materialId = materialEvent.getEvent().getMaterialId().toString();
+        doesItemExist(materialId, materialType);
+        saveEvent(materialEvent);
+        evictCache(materialType, materialEvent.getEvent().getName());
+        reconstructMaterialEntity(materialId, materialType, GalvanisedSheetEntity.class);
+    }
+
+    private void updateFastenerEntity(String data, String materialType) throws JsonProcessingException {
+        MaterialEvent<UpdateFastenerEvent> materialEvent =
+                objectMapper.readValue(data, new TypeReference<>() {
+                });
+        String materialId = materialEvent.getEvent().getMaterialId().toString();
+        doesItemExist(materialId, materialType);
+        saveEvent(materialEvent);
+        evictCache(materialType, materialEvent.getEvent().getName());
+
+        reconstructMaterialEntity(materialId, materialType, FastenerEntity.class);
     }
 
     private void deleteEvent(String data, String materialType) throws JsonProcessingException {

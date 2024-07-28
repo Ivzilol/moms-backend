@@ -13,6 +13,7 @@ public class UnspecifiedUpdateEvent extends BaseMaterialEvent {
 
 
     private String category;
+    private String name;
     private String materialType;
     private String description;
     private Double quantity;
@@ -70,6 +71,15 @@ public class UnspecifiedUpdateEvent extends BaseMaterialEvent {
 
     public UnspecifiedUpdateEvent setCategory(String category) {
         this.category = category;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public UnspecifiedUpdateEvent setName(String name) {
+        this.name = name;
         return this;
     }
 }

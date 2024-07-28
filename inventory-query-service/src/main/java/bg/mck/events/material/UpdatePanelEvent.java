@@ -2,12 +2,12 @@ package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class PanelUpdateEvent extends BaseMaterialEvent {
+public class UpdatePanelEvent extends BaseMaterialEvent {
 
-    public PanelUpdateEvent() {
+    public UpdatePanelEvent() {
     }
 
-    public PanelUpdateEvent(Long materialId, EventType eventType) {
+    public UpdatePanelEvent(Long materialId, EventType eventType) {
         super(materialId, eventType);
     }
     private String category;
@@ -27,7 +27,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return materialType;
     }
 
-    public PanelUpdateEvent setMaterialType(String materialType) {
+    public UpdatePanelEvent setMaterialType(String materialType) {
         this.materialType = materialType;
         return this;
     }
@@ -36,7 +36,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return type;
     }
 
-    public PanelUpdateEvent setType(String type) {
+    public UpdatePanelEvent setType(String type) {
         this.type = type;
         return this;
     }
@@ -45,7 +45,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return color;
     }
 
-    public PanelUpdateEvent setColor(String color) {
+    public UpdatePanelEvent setColor(String color) {
         this.color = color;
         return this;
     }
@@ -54,7 +54,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return length;
     }
 
-    public PanelUpdateEvent setLength(Double length) {
+    public UpdatePanelEvent setLength(Double length) {
         this.length = length;
         return this;
     }
@@ -63,7 +63,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return width;
     }
 
-    public PanelUpdateEvent setWidth(Double width) {
+    public UpdatePanelEvent setWidth(Double width) {
         this.width = width;
         return this;
     }
@@ -72,7 +72,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return totalThickness;
     }
 
-    public PanelUpdateEvent setTotalThickness(Double totalThickness) {
+    public UpdatePanelEvent setTotalThickness(Double totalThickness) {
         this.totalThickness = totalThickness;
         return this;
     }
@@ -81,7 +81,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return sheetThickness;
     }
 
-    public PanelUpdateEvent setSheetThickness(Double sheetThickness) {
+    public UpdatePanelEvent setSheetThickness(Double sheetThickness) {
         this.sheetThickness = sheetThickness;
         return this;
     }
@@ -90,7 +90,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return quantity;
     }
 
-    public PanelUpdateEvent setQuantity(Double quantity) {
+    public UpdatePanelEvent setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -99,7 +99,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return note;
     }
 
-    public PanelUpdateEvent setNote(String note) {
+    public UpdatePanelEvent setNote(String note) {
         this.note = note;
         return this;
     }
@@ -108,7 +108,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return specificationFileUrl;
     }
 
-    public PanelUpdateEvent setSpecificationFileUrl(String specificationFileUrl) {
+    public UpdatePanelEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }
@@ -117,7 +117,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return category;
     }
 
-    public PanelUpdateEvent setCategory(String category) {
+    public UpdatePanelEvent setCategory(String category) {
         this.category = category;
         return this;
     }
@@ -126,7 +126,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return name;
     }
 
-    public PanelUpdateEvent setName(String name) {
+    public UpdatePanelEvent setName(String name) {
         this.name = name;
         return this;
     }

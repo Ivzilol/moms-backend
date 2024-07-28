@@ -2,7 +2,7 @@ package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
+public class UpdateGalvanizedSheetEvent extends BaseMaterialEvent {
     private String category;
     private String name;
     private String materialType;
@@ -17,10 +17,10 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
     private String note;
     private String specificationFileUrl;
 
-    public GalvanizedSheetUpdateEvent() {
+    public UpdateGalvanizedSheetEvent() {
     }
 
-    public GalvanizedSheetUpdateEvent(Long materialId, EventType eventType) {
+    public UpdateGalvanizedSheetEvent(Long materialId, EventType eventType) {
         super(materialId, eventType);
     }
 
@@ -29,7 +29,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return materialType;
     }
 
-    public GalvanizedSheetUpdateEvent setMaterialType(String materialType) {
+    public UpdateGalvanizedSheetEvent setMaterialType(String materialType) {
         this.materialType = materialType;
         return this;
     }
@@ -38,7 +38,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return marking;
     }
 
-    public GalvanizedSheetUpdateEvent setMarking(String marking) {
+    public UpdateGalvanizedSheetEvent setMarking(String marking) {
         this.marking = marking;
         return this;
     }
@@ -47,7 +47,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return number;
     }
 
-    public GalvanizedSheetUpdateEvent setNumber(String number) {
+    public UpdateGalvanizedSheetEvent setNumber(String number) {
         this.number = number;
         return this;
     }
@@ -56,7 +56,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return type;
     }
 
-    public GalvanizedSheetUpdateEvent setType(String type) {
+    public UpdateGalvanizedSheetEvent setType(String type) {
         this.type = type;
         return this;
     }
@@ -65,7 +65,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return length;
     }
 
-    public GalvanizedSheetUpdateEvent setLength(Double length) {
+    public UpdateGalvanizedSheetEvent setLength(Double length) {
         this.length = length;
         return this;
     }
@@ -74,7 +74,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return width;
     }
 
-    public GalvanizedSheetUpdateEvent setWidth(Double width) {
+    public UpdateGalvanizedSheetEvent setWidth(Double width) {
         this.width = width;
         return this;
     }
@@ -83,7 +83,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return area;
     }
 
-    public GalvanizedSheetUpdateEvent setArea(Double area) {
+    public UpdateGalvanizedSheetEvent setArea(Double area) {
         this.area = area;
         return this;
     }
@@ -92,7 +92,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return quantity;
     }
 
-    public GalvanizedSheetUpdateEvent setQuantity(Double quantity) {
+    public UpdateGalvanizedSheetEvent setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -101,7 +101,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return note;
     }
 
-    public GalvanizedSheetUpdateEvent setNote(String note) {
+    public UpdateGalvanizedSheetEvent setNote(String note) {
         this.note = note;
         return this;
     }
@@ -110,7 +110,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return specificationFileUrl;
     }
 
-    public GalvanizedSheetUpdateEvent setSpecificationFileUrl(String specificationFileUrl) {
+    public UpdateGalvanizedSheetEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }
@@ -119,7 +119,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return category;
     }
 
-    public GalvanizedSheetUpdateEvent setCategory(String category) {
+    public UpdateGalvanizedSheetEvent setCategory(String category) {
         this.category = category;
         return this;
     }
@@ -128,7 +128,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return name;
     }
 
-    public GalvanizedSheetUpdateEvent setName(String name) {
+    public UpdateGalvanizedSheetEvent setName(String name) {
         this.name = name;
         return this;
     }

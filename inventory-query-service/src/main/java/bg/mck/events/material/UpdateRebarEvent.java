@@ -2,12 +2,12 @@ package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
 
-public class RebarUpdateEvent extends BaseMaterialEvent {
+public class UpdateRebarEvent extends BaseMaterialEvent {
 
-    public RebarUpdateEvent() {
+    public UpdateRebarEvent() {
     }
 
-    public RebarUpdateEvent(Long materialId, EventType eventType) {
+    public UpdateRebarEvent(Long materialId, EventType eventType) {
         super(materialId, eventType);
     }
     private String category;
@@ -29,7 +29,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return positionNumber;
     }
 
-    public RebarUpdateEvent setPositionNumber(Integer positionNumber) {
+    public UpdateRebarEvent setPositionNumber(Integer positionNumber) {
         this.positionNumber = positionNumber;
         return this;
     }
@@ -38,7 +38,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return type;
     }
 
-    public RebarUpdateEvent setType(String type) {
+    public UpdateRebarEvent setType(String type) {
         this.type = type;
         return this;
     }
@@ -47,7 +47,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return steel;
     }
 
-    public RebarUpdateEvent setSteel(String steel) {
+    public UpdateRebarEvent setSteel(String steel) {
         this.steel = steel;
         return this;
     }
@@ -56,7 +56,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return diameter;
     }
 
-    public RebarUpdateEvent setDiameter(Double diameter) {
+    public UpdateRebarEvent setDiameter(Double diameter) {
         this.diameter = diameter;
         return this;
     }
@@ -65,7 +65,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return length;
     }
 
-    public RebarUpdateEvent setLength(Double length) {
+    public UpdateRebarEvent setLength(Double length) {
         this.length = length;
         return this;
     }
@@ -74,7 +74,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return weight;
     }
 
-    public RebarUpdateEvent setWeight(Double weight) {
+    public UpdateRebarEvent setWeight(Double weight) {
         this.weight = weight;
         return this;
     }
@@ -83,7 +83,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return quantity;
     }
 
-    public RebarUpdateEvent setQuantity(Double quantity) {
+    public UpdateRebarEvent setQuantity(Double quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -92,7 +92,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return note;
     }
 
-    public RebarUpdateEvent setNote(String note) {
+    public UpdateRebarEvent setNote(String note) {
         this.note = note;
         return this;
     }
@@ -101,7 +101,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return specificationFileUrl;
     }
 
-    public RebarUpdateEvent setSpecificationFileUrl(String specificationFileUrl) {
+    public UpdateRebarEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }
@@ -110,7 +110,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return materialType;
     }
 
-    public RebarUpdateEvent setMaterialType(String materialType) {
+    public UpdateRebarEvent setMaterialType(String materialType) {
         this.materialType = materialType;
         return this;
     }
@@ -119,7 +119,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return category;
     }
 
-    public RebarUpdateEvent setCategory(String category) {
+    public UpdateRebarEvent setCategory(String category) {
         this.category = category;
         return this;
     }
@@ -128,7 +128,7 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return name;
     }
 
-    public RebarUpdateEvent setName(String name) {
+    public UpdateRebarEvent setName(String name) {
         this.name = name;
         return this;
     }
