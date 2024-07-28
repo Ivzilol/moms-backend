@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.ServiceDTO;
 import bg.mck.ordercommandservice.entity.ServiceEntity;
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import bg.mck.ordercommandservice.mapper.ServiceMapper;
 import bg.mck.ordercommandservice.repository.ServiceRepository;
 import bg.mck.ordercommandservice.exception.ServiceNotFoundException;
@@ -30,5 +31,14 @@ public class ServiceService {
 
     public ServiceEntity saveService(ServiceDTO service) {
         return serviceRepository.save(serviceMapper.toServiceEntity(service));
+    }
+
+    public void cancelService(Long id) {
+        Optional<ServiceEntity> serviceById = serviceRepository.findById(id);
+        if (serviceById.isEmpty()) {
+            throw new IllegalArgumentException("Service with id " + id + " not found");
+        }
+        serviceById.get().setMaterialStatus(MaterialStatus.CANCELED);
+        serviceRepository.save(serviceById.get());
     }
 }
