@@ -2,9 +2,12 @@ package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.FastenerDTO;
 import bg.mck.ordercommandservice.entity.FastenerEntity;
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import bg.mck.ordercommandservice.mapper.FastenerMapper;
 import bg.mck.ordercommandservice.repository.FastenerRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class FastenerService {
@@ -27,4 +30,12 @@ public class FastenerService {
     }
 
 
+    public void cancelFastener(Long id) {
+        Optional<FastenerEntity> fastenerEntity = fastenerRepository.findById(id);
+        if (fastenerEntity.isEmpty()) {
+            throw new RuntimeException("Fastener with id " + id + " not found");
+        }
+        fastenerEntity.get().setMaterialStatus(MaterialStatus.CANCELED);
+        fastenerRepository.save(fastenerEntity.get());
+    }
 }

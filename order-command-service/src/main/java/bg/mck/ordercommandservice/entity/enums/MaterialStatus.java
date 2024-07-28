@@ -4,4 +4,5 @@ public enum MaterialStatus {
     APPROVED,
     NOT_APPROVED,
     PENDING,
+    CANCELED
 }

@@ -47,8 +47,9 @@ public class OrderService {
     private final SetMapper setMapper;
     private final TransportMapper transportMapper;
     private final UnspecifiedMapper unspecifiedMapper;
+    private final MaterialService materialService;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
         this.orderMapper = orderMapper;
@@ -63,6 +64,7 @@ public class OrderService {
         this.setMapper = setMapper;
         this.transportMapper = transportMapper;
         this.unspecifiedMapper = unspecifiedMapper;
+        this.materialService = materialService;
     }
 
 
@@ -197,7 +199,7 @@ public class OrderService {
 
         CreateOrderEvent<E> createOrderEvent = orderMapper.toEvent(orderEntity);
         createOrderEvent.setOrderId(orderEntity.getId());
-        createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
+        createOrderEvent.setEventType(orderEvent.getEventType());
         createOrderEvent.setEventTime(LocalDateTime.now());
         createOrderEvent.setMaterials(materialEvents);
         createOrderEvent.setEmail(orderEntity.getEmail());
@@ -224,6 +226,17 @@ public class OrderService {
                 .setEmail(email);
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} restored successfully", orderEntity.getId());
+
+        return createOrderEvent(orderEntity);
+    }
+
+    public OrderConfirmationDTO deleteMaterial(Long orderId, Long materialId, String email) {
+        OrderEntity orderEntity = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + orderId + " not found"));
+
+        materialService.deleteMaterial(materialId, orderEntity.getMaterialType().toString());
+
+        LOGGER.info("Material with id {} deleted from order with id {}", materialId, orderId);
 
         return createOrderEvent(orderEntity);
     }
