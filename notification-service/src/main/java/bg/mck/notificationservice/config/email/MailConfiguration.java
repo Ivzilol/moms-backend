@@ -18,23 +18,19 @@ public class MailConfiguration {
     public JavaMailSender javaMailSender() {
 
 
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(mailProperties.getHost());
+        mailSender.setPort(mailProperties.getPort());
+        mailSender.setUsername(mailProperties.getUsername());
+        mailSender.setPassword(mailProperties.getPassword());
 
-        javaMailSender.setHost(mailProperties.getHost());
-        javaMailSender.setPort(mailProperties.getPort());
-        javaMailSender.setUsername(mailProperties.getUsername());
-        javaMailSender.setPassword(mailProperties.getPassword());
-        javaMailSender.setDefaultEncoding("UTF-8");
-        javaMailSender.setProtocol(mailProperties.getProtocol());
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "false");
+        props.put("mail.smtp.ssl.enable", "true");
+        props.put("mail.smtp.ssl.trust", mailProperties.getHost());
 
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "false"); // SSL/TLS
-        properties.put("mail.smtp.ssl.enable", "true"); // SSL/TLS
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.socketFactory.port", "465");
-        properties.put("mail.smtp.port", "465");
-        javaMailSender.setJavaMailProperties(properties);
-        return new JavaMailSenderImpl();
+        return mailSender;
     }
 }

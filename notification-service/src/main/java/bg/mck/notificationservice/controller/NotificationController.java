@@ -1,10 +1,11 @@
 package bg.mck.notificationservice.controller;
 
-import bg.mck.notificationservice.dto.OrderDTO;
 import bg.mck.notificationservice.service.MailService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSendException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,5 +23,10 @@ public class NotificationController {
     public ResponseEntity<?> sendNotification(@RequestBody String order) throws JsonProcessingException, MessagingException {
         mailService.sendMessage(order);
         return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(MailSendException.class)
+    public ResponseEntity<?> handleMailSendException(MailSendException ex) {
+        return ResponseEntity.badRequest().body("Invalid email address\n" + ex.getMessage());
     }
 }

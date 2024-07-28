@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class MailService {
 
     private final JavaMailSender mailSender;
     private final ObjectMapper objectMapper;
+    @Value("${spring.mail.username}")
+    private String from;
 
     public MailService(JavaMailSender mailSender, ObjectMapper objectMapper) {
         this.mailSender = mailSender;
@@ -73,7 +76,7 @@ public class MailService {
         String orderStatusText = isNewOrder ? "създадена" : "променена";
 
         String message = getMessage(orderStatusText, orderNumber, orderDate, deliveryDate, constructionSiteName, constructionSiteNumber, orderStatus, specificationFileUrl, materialsHtml);
-        sendMail(email, "Вашата поръчка е" + orderStatusText, message);
+        sendMail(email, "Вашата поръчка е " + orderStatusText, message);
 
     }
 
@@ -81,6 +84,7 @@ public class MailService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
 
+        messageHelper.setFrom(from);
         messageHelper.setTo(email);
         messageHelper.setSubject(subject);
         messageHelper.setText(message, true);
