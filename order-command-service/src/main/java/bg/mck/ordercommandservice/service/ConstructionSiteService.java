@@ -71,5 +71,10 @@ public class ConstructionSiteService {
         LOGGER.info("Construction site with id: {} name: {} and number: {} created successfully", newConstrictionSite.getId(), newConstrictionSite.getName(), newConstrictionSite.getConstructionNumber());
         return newConstrictionSite;
     }
+
+    public ConstructionSiteEntity getConstructionSiteByName(String name) {
+        return constructionSiteRepository.findByName(name)
+                .orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site with name " + name + " not found"));
+    }
 }
 

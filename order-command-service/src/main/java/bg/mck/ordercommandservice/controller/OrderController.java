@@ -1,6 +1,6 @@
 package bg.mck.ordercommandservice.controller;
 
-import bg.mck.ordercommandservice.dto.CreateOrderDTO;
+import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.service.OrderService;
@@ -45,13 +45,13 @@ public class OrderController {
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order created successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CreateOrderDTO.class))})
+                            schema = @Schema(implementation = OrderConfirmationDTO.class))})
     }
     )
     @PostMapping(value = "/create-order", consumes = {"multipart/form-data" })
-    public ResponseEntity<CreateOrderDTO> createOrder(@RequestPart(value = "order") @Valid OrderDTO order,
-                                                      @RequestPart(value = "files", required = false) List<MultipartFile> files,
-                                                      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<OrderConfirmationDTO> createOrder(@RequestPart(value = "order") @Valid OrderDTO order,
+                                                            @RequestPart(value = "files", required = false) List<MultipartFile> files,
+                                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
         token = token.substring(7);
         String email = restTemplate
@@ -67,13 +67,24 @@ public class OrderController {
                             schema = @Schema(implementation = UpdateOrderDTO.class))})
     }
     )
-    @PatchMapping("/update-order")
-    public ResponseEntity<?> updateOrder(@Valid @RequestBody UpdateOrderDTO updateOrderDTO,
-                                         @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+//    @PatchMapping("/update-order")
+//    public ResponseEntity<?> updateOrder(@Valid @RequestBody UpdateOrderDTO updateOrderDTO,
+//                                         @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+//        token = token.substring(7);
+//        String email = restTemplate
+//                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
+//        this.updateOrderService.updateOrder(updateOrderDTO, email);
+//        return ResponseEntity.ok().build();
+//    }
+    @PatchMapping(value = "/update-order", consumes = {"multipart/form-data" })
+    public ResponseEntity<OrderConfirmationDTO> updateOrder(@RequestPart(value = "order") @Valid OrderDTO order,
+                                                            @RequestPart(value = "files", required = false) List<MultipartFile> files,
+                                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+
         token = token.substring(7);
         String email = restTemplate
                 .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
-        this.updateOrderService.updateOrder(updateOrderDTO, email);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok(orderService.updateOrder(order, email, files));
     }
 }
