@@ -51,7 +51,8 @@ public class ConstructionSiteService {
     }
 
     public ConstructionSiteDTO getConstructionSiteByName(String constructionSiteName) {
-        return constructionSiteRepository.findByName(constructionSiteName).map(constructionSiteMapper::toDto).orElse(null);
+        return constructionSiteRepository.findByName(constructionSiteName).map(constructionSiteMapper::toDto).orElseThrow(() ->
+                new ConstructionSiteNotFoundException("Construction site not found"));
     }
 
     public ConstructionSiteDTO getConstructionSiteById(String constructionSiteId) {
