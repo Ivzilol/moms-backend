@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.dto.TransportDTO;
 import bg.mck.ordercommandservice.entity.TransportEntity;
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import bg.mck.ordercommandservice.mapper.TransportMapper;
 import bg.mck.ordercommandservice.repository.TransportRepository;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,14 @@ public class TransportService {
 
     public TransportEntity saveTransport(TransportDTO transport) {
         return transportRepository.save(transportMapper.toTransportEntity(transport));
+    }
+
+    public void cancelTransport(Long id) {
+        Optional<TransportEntity> transportById = transportRepository.findById(id);
+        if (transportById.isEmpty()) {
+            throw new IllegalArgumentException("Transport with id " + id + " not found");
+        }
+        transportById.get().setMaterialStatus(MaterialStatus.CANCELED);
+        transportRepository.save(transportById.get());
     }
 }

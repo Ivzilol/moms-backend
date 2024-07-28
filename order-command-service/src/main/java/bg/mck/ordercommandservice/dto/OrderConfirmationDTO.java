@@ -2,14 +2,14 @@ package bg.mck.ordercommandservice.dto;
 
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 
-public class CreateOrderDTO {
+public class OrderConfirmationDTO {
     private final OrderStatus orderStatus;
     private final Long orderId;
     private final Integer orderNumber;
     private final String constructionSiteNumber;
     private final String constructionSiteName;
 
-    private CreateOrderDTO(Builder builder) {
+    private OrderConfirmationDTO(Builder builder) {
         this.orderStatus = builder.orderStatus;
         this.orderId = builder.orderId;
         this.orderNumber = builder.orderNumber;
@@ -72,8 +72,8 @@ public class CreateOrderDTO {
             return this;
         }
 
-        public CreateOrderDTO build() {
-            return new CreateOrderDTO(this);
+        public OrderConfirmationDTO build() {
+            return new OrderConfirmationDTO(this);
         }
     }
 

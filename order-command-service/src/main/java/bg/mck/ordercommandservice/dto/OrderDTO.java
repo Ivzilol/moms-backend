@@ -13,6 +13,7 @@ import java.util.Set;
 public class OrderDTO {
 
     private Long id;
+    private Integer orderNumber;
 
     @Size(min = 10, message = "Order description must be at least 10 characters long.")
     private String orderDescription;
@@ -46,8 +47,9 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(Long id, String specificationFileUrl,String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<@Valid FastenerDTO> fasteners, Set<@Valid GalvanisedSheetDTO> galvanisedSheets, Set<@Valid InsulationDTO> insulation, Set<@Valid MetalDTO> metals, Set<@Valid PanelDTO> panels, Set<@Valid RebarDTO> rebars, Set<@Valid SetDTO> sets, Set<@Valid UnspecifiedDTO> unspecified, Set<@Valid ServiceDTO> services, Set<@Valid TransportDTO> transports) {
+    public OrderDTO(Long id, Integer orderNumber, String specificationFileUrl,String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<@Valid FastenerDTO> fasteners, Set<@Valid GalvanisedSheetDTO> galvanisedSheets, Set<@Valid InsulationDTO> insulation, Set<@Valid MetalDTO> metals, Set<@Valid PanelDTO> panels, Set<@Valid RebarDTO> rebars, Set<@Valid SetDTO> sets, Set<@Valid UnspecifiedDTO> unspecified, Set<@Valid ServiceDTO> services, Set<@Valid TransportDTO> transports) {
         this.id = id;
+        this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
@@ -73,6 +75,15 @@ public class OrderDTO {
 
     public OrderDTO setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public OrderDTO setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
         return this;
     }
 
