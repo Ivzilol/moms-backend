@@ -1,15 +1,15 @@
 package bg.mck.ordercommandservice.event;
 
-public class eventData<T extends BaseEvent> {
+public class EventData<T extends BaseEvent> {
 
     private EventType eventType;
 
     private T event;
 
-    public eventData() {
+    public EventData() {
     }
 
-    public eventData(EventType eventType, T event) {
+    public EventData(EventType eventType, T event) {
         this.eventType = eventType;
         this.event = event;
     }
@@ -18,7 +18,7 @@ public class eventData<T extends BaseEvent> {
         return eventType;
     }
 
-    public eventData<T> setEventType(EventType eventType) {
+    public EventData<T> setEventType(EventType eventType) {
         this.eventType = eventType;
         return this;
     }
@@ -27,7 +27,7 @@ public class eventData<T extends BaseEvent> {
         return event;
     }
 
-    public eventData<T> setEvent(T event) {
+    public EventData<T> setEvent(T event) {
         this.event = event;
         return this;
     }

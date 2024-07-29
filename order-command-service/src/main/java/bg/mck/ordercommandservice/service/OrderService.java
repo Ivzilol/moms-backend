@@ -221,7 +221,7 @@ public class OrderService {
                 .map(mapper)
                 .collect(Collectors.toSet());
 
-        eventData<CreateOrderEvent<E>> orderEvent = new eventData<>();
+        EventData<CreateOrderEvent<E>> orderEvent = new EventData<>();
 
         if (orderEntity.getOrderStatus() == OrderStatus.PENDING)
             orderEvent.setEventType(EventType.ORDER_CREATED);

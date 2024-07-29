@@ -31,9 +31,9 @@ public class ConstructionSiteController {
         return ResponseEntity.ok(constructionSiteService.createConstructionSite(constructionSiteDTO));
     }
 
+    @Operation(summary = "Update construction site")
     @PatchMapping("/update-construction-site")
     public ResponseEntity<?> updateConstructionSite(@RequestBody @Valid ConstructionSiteDTO constructionSiteDTO) {
-//        return ResponseEntity.ok(constructionSiteService.updateConstructionSite(constructionSiteDTO));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(constructionSiteService.updateConstructionSite(constructionSiteDTO));
     }
 }

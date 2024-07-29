@@ -4,9 +4,8 @@ import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.event.ConstructionSiteEvent;
-import bg.mck.ordercommandservice.event.CreateOrderEvent;
 import bg.mck.ordercommandservice.event.EventType;
-import bg.mck.ordercommandservice.event.eventData;
+import bg.mck.ordercommandservice.event.EventData;
 import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
 import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
@@ -16,10 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 public class ConstructionSiteService {
+
     private final ConstructionSiteRepository constructionSiteRepository;
     private final ConstructionSiteMapper constructionSiteMapper;
     private final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
@@ -60,6 +61,20 @@ public class ConstructionSiteService {
     public ConstructionSiteDTO createConstructionSite(ConstructionSiteDTO constructionSiteDTO) {
         ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntity(constructionSiteDTO);
 
+        checkIfExistsByNameAndNumber(constructionSiteEntity);
+
+        ConstructionSiteEntity savedConstructionSite = constructionSiteRepository.save(constructionSiteEntity);
+
+        ConstructionSiteDTO newConstrictionSite = constructionSiteMapper.toDTO(savedConstructionSite);
+        LOGGER.info("Construction site with id: {} name: {} and number: {} created successfully", newConstrictionSite.getId(), newConstrictionSite.getName(), newConstrictionSite.getConstructionNumber());
+
+        boolean isUpdate = false;
+        EventData<ConstructionSiteEvent> constructionSiteEvent = createConstructionSiteEvent(savedConstructionSite, isUpdate);
+        sendConstructionSiteEvent(constructionSiteEvent);
+        return newConstrictionSite;
+    }
+
+    private void checkIfExistsByNameAndNumber(ConstructionSiteEntity constructionSiteEntity) {
         String name = constructionSiteEntity.getName();
         Optional<ConstructionSiteEntity> constructionSiteByName = constructionSiteRepository.findByName(name);
         if (constructionSiteByName.isPresent()) {
@@ -71,15 +86,6 @@ public class ConstructionSiteService {
         if (constructionSiteByNumber.isPresent()) {
             throw new ConstructionSiteAlreadyExists("Construction site with number " + constructionNumber + " already exists");
         }
-
-        ConstructionSiteEntity savedConstructionSite = constructionSiteRepository.save(constructionSiteEntity);
-
-        ConstructionSiteDTO newConstrictionSite = constructionSiteMapper.toDTO(savedConstructionSite);
-        LOGGER.info("Construction site with id: {} name: {} and number: {} created successfully", newConstrictionSite.getId(), newConstrictionSite.getName(), newConstrictionSite.getConstructionNumber());
-
-        eventData<ConstructionSiteEvent> constructionSiteEvent = createConstructionSiteEvent(savedConstructionSite);
-        sendConstructionSiteEvent(constructionSiteEvent);
-        return newConstrictionSite;
     }
 
 
@@ -88,19 +94,48 @@ public class ConstructionSiteService {
                 .orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site with name " + name + " not found"));
     }
 
-    private eventData<ConstructionSiteEvent> createConstructionSiteEvent(ConstructionSiteEntity savedConstructionSite) {
-        ConstructionSiteEvent constructionSiteEvent = constructionSiteMapper.toEvent(savedConstructionSite);
-        constructionSiteEvent.setEventTime(constructionSiteEvent.getEventTime());
-        constructionSiteEvent.setEventType(EventType.CONSTRUCTION_SITE_CREATED);
-        eventData<ConstructionSiteEvent> eventData = new eventData<>();
-        eventData.setEventType(EventType.CONSTRUCTION_SITE_CREATED);
-        eventData.setEvent(constructionSiteEvent);
-        LOGGER.info("Construction site event created successfully");
-        return eventData;
+    private void sendConstructionSiteEvent(EventData<ConstructionSiteEvent> constructionSiteEvent) {
+        orderQueryServiceClient.sendConstructionSiteEvent(constructionSiteEvent, constructionSiteEvent.getEventType().toString());
     }
 
-    private void sendConstructionSiteEvent(eventData<ConstructionSiteEvent> constructionSiteEvent) {
-        orderQueryServiceClient.sendConstructionSiteEvent(constructionSiteEvent, constructionSiteEvent.getEventType().toString());
+    public ConstructionSiteDTO updateConstructionSite(ConstructionSiteDTO constructionSiteDTO) {
+        ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntity(constructionSiteDTO);
+        constructionSiteEntity.setId(constructionSiteDTO.getId());
+
+        checkIfExistsById(constructionSiteEntity);
+        checkIfExistsByNameAndNumber(constructionSiteEntity);
+
+        ConstructionSiteEntity updatedConstructionSite = constructionSiteRepository.save(constructionSiteEntity);
+        ConstructionSiteDTO updatedConstructionSiteDTO = constructionSiteMapper.toDTO(updatedConstructionSite);
+        LOGGER.info("Construction site with id: {} updated successfully", updatedConstructionSiteDTO.getId());
+
+        boolean isUpdate = true;
+        EventData<ConstructionSiteEvent> constructionSiteEvent = createConstructionSiteEvent(updatedConstructionSite, isUpdate);
+        sendConstructionSiteEvent(constructionSiteEvent);
+        return updatedConstructionSiteDTO;
+    }
+
+    private void checkIfExistsById(ConstructionSiteEntity constructionSiteEntity) {
+        if (!constructionSiteRepository.existsById(constructionSiteEntity.getId())) {
+            throw new ConstructionSiteNotFoundException("Construction site with id " + constructionSiteEntity.getId() + " not found");
+        }
+    }
+
+    private EventData<ConstructionSiteEvent> createConstructionSiteEvent(ConstructionSiteEntity savedConstructionSite, boolean isUpdate) {
+        ConstructionSiteEvent constructionSiteEvent = constructionSiteMapper.toEvent(savedConstructionSite);
+        constructionSiteEvent.setEventTime(LocalDateTime.now());
+        constructionSiteEvent.setEventType(EventType.CONSTRUCTION_SITE_CREATED);
+
+        EventData<ConstructionSiteEvent> eventData = new EventData<>();
+        eventData.setEventType(EventType.CONSTRUCTION_SITE_CREATED);
+        eventData.setEvent(constructionSiteEvent);
+
+        if (isUpdate) {
+            constructionSiteEvent.setEventType(EventType.CONSTRUCTION_SITE_UPDATED);
+            eventData.setEventType(EventType.CONSTRUCTION_SITE_UPDATED);
+        }
+
+        return eventData;
     }
 }
 
