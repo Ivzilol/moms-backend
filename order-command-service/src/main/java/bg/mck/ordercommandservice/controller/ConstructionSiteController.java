@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/${APPLICATION_VERSION}/admin/order/command")
@@ -32,5 +29,11 @@ public class ConstructionSiteController {
     @PostMapping("/create-construction-site")
     public ResponseEntity<?> createConstructionSite(@RequestBody @Valid ConstructionSiteDTO constructionSiteDTO) {
         return ResponseEntity.ok(constructionSiteService.createConstructionSite(constructionSiteDTO));
+    }
+
+    @PatchMapping("/update-construction-site")
+    public ResponseEntity<?> updateConstructionSite(@RequestBody @Valid ConstructionSiteDTO constructionSiteDTO) {
+//        return ResponseEntity.ok(constructionSiteService.updateConstructionSite(constructionSiteDTO));
+        return ResponseEntity.ok().build();
     }
 }

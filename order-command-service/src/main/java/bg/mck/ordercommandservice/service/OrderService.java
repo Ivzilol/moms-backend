@@ -221,12 +221,12 @@ public class OrderService {
                 .map(mapper)
                 .collect(Collectors.toSet());
 
-        OrderEvent<CreateOrderEvent<E>> orderEvent = new OrderEvent<>();
+        eventData<CreateOrderEvent<E>> orderEvent = new eventData<>();
 
         if (orderEntity.getOrderStatus() == OrderStatus.PENDING)
-            orderEvent.setEventType(OrderEventType.ORDER_CREATED);
+            orderEvent.setEventType(EventType.ORDER_CREATED);
         else {
-            orderEvent.setEventType(OrderEventType.ORDER_UPDATED);
+            orderEvent.setEventType(EventType.ORDER_UPDATED);
         }
 
         CreateOrderEvent<E> createOrderEvent = orderMapper.toEvent(orderEntity);

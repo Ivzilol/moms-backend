@@ -1,7 +1,12 @@
 package bg.mck.ordercommandservice.service;
 
+import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
+import bg.mck.ordercommandservice.event.ConstructionSiteEvent;
+import bg.mck.ordercommandservice.event.CreateOrderEvent;
+import bg.mck.ordercommandservice.event.EventType;
+import bg.mck.ordercommandservice.event.eventData;
 import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
 import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
@@ -18,10 +23,12 @@ public class ConstructionSiteService {
     private final ConstructionSiteRepository constructionSiteRepository;
     private final ConstructionSiteMapper constructionSiteMapper;
     private final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
+    private final OrderQueryServiceClient orderQueryServiceClient;
 
-    public ConstructionSiteService(ConstructionSiteRepository constructionSiteRepository, ConstructionSiteMapper constructionSiteMapper) {
+    public ConstructionSiteService(ConstructionSiteRepository constructionSiteRepository, ConstructionSiteMapper constructionSiteMapper, OrderQueryServiceClient orderQueryServiceClient) {
         this.constructionSiteRepository = constructionSiteRepository;
         this.constructionSiteMapper = constructionSiteMapper;
+        this.orderQueryServiceClient = orderQueryServiceClient;
     }
 
     public ConstructionSiteDTO getConstructionSite(Long id) {
@@ -69,12 +76,31 @@ public class ConstructionSiteService {
 
         ConstructionSiteDTO newConstrictionSite = constructionSiteMapper.toDTO(savedConstructionSite);
         LOGGER.info("Construction site with id: {} name: {} and number: {} created successfully", newConstrictionSite.getId(), newConstrictionSite.getName(), newConstrictionSite.getConstructionNumber());
+
+        eventData<ConstructionSiteEvent> constructionSiteEvent = createConstructionSiteEvent(savedConstructionSite);
+        sendConstructionSiteEvent(constructionSiteEvent);
         return newConstrictionSite;
     }
+
 
     public ConstructionSiteEntity getConstructionSiteByName(String name) {
         return constructionSiteRepository.findByName(name)
                 .orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site with name " + name + " not found"));
+    }
+
+    private eventData<ConstructionSiteEvent> createConstructionSiteEvent(ConstructionSiteEntity savedConstructionSite) {
+        ConstructionSiteEvent constructionSiteEvent = constructionSiteMapper.toEvent(savedConstructionSite);
+        constructionSiteEvent.setEventTime(constructionSiteEvent.getEventTime());
+        constructionSiteEvent.setEventType(EventType.CONSTRUCTION_SITE_CREATED);
+        eventData<ConstructionSiteEvent> eventData = new eventData<>();
+        eventData.setEventType(EventType.CONSTRUCTION_SITE_CREATED);
+        eventData.setEvent(constructionSiteEvent);
+        LOGGER.info("Construction site event created successfully");
+        return eventData;
+    }
+
+    private void sendConstructionSiteEvent(eventData<ConstructionSiteEvent> constructionSiteEvent) {
+        orderQueryServiceClient.sendConstructionSiteEvent(constructionSiteEvent, constructionSiteEvent.getEventType().toString());
     }
 }
 
