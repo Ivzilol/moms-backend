@@ -38,7 +38,7 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(String id, String specificationFileUrl,String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<FastenerDTO> fasteners, Set<GalvanisedSheetDTO> galvanisedSheets, Set<InsulationDTO> insulation, Set<MetalDTO> metals, Set<PanelDTO> panels, Set<RebarDTO> rebars, Set<SetDTO> sets, Set<UnspecifiedDTO> unspecified, Set<ServiceDTO> services, Set<TransportDTO> transports) {
+    public OrderDTO(String id, String specificationFileUrl, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<FastenerDTO> fasteners, Set<GalvanisedSheetDTO> galvanisedSheets, Set<InsulationDTO> insulation, Set<MetalDTO> metals, Set<PanelDTO> panels, Set<RebarDTO> rebars, Set<SetDTO> sets, Set<UnspecifiedDTO> unspecified, Set<ServiceDTO> services, Set<TransportDTO> transports) {
         this.id = id;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
@@ -219,5 +219,29 @@ public class OrderDTO {
     public OrderDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id='" + id + '\'' +
+                ", orderDescription='" + orderDescription + '\'' +
+                ", orderDate=" + orderDate +
+                ", deliveryDate=" + deliveryDate +
+                ", constructionSite=" + constructionSite +
+                ", orderStatus=" + orderStatus +
+                ", materialType=" + materialType +
+                ", specificationFileUrl='" + specificationFileUrl + '\'' +
+                ", fasteners=" + fasteners +
+                ", galvanisedSheets=" + galvanisedSheets +
+                ", insulation=" + insulation +
+                ", metals=" + metals +
+                ", panels=" + panels +
+                ", rebars=" + rebars +
+                ", sets=" + sets +
+                ", unspecified=" + unspecified +
+                ", services=" + services +
+                ", transports=" + transports +
+                '}';
     }
 }

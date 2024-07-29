@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
@@ -22,11 +23,12 @@ public class RedisConfig {
         // Use StringRedisSerializer for the key
         template.setKeySerializer(new StringRedisSerializer());
 
-        // Configure the custom ObjectMapper
         objectMapper.registerModule(new JavaTimeModule());
-        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
 
-        // Use GenericJackson2JsonRedisSerializer for the value
+//        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+
+        Jackson2JsonRedisSerializer<OrderDTO> serializer = new Jackson2JsonRedisSerializer<>(objectMapper,OrderDTO.class);
+
         template.setValueSerializer(serializer);
         template.setHashKeySerializer(serializer);
         template.setHashValueSerializer(serializer);
