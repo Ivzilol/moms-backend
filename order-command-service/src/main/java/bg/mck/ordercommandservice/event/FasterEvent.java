@@ -1,5 +1,7 @@
 package bg.mck.ordercommandservice.event;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+
 public class FasterEvent {
 
     private Long id;
@@ -11,6 +13,8 @@ public class FasterEvent {
     private String length;
     private String model;
     private String clazz;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public FasterEvent() {
     }
@@ -21,6 +25,24 @@ public class FasterEvent {
 
     public FasterEvent setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public FasterEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public FasterEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 

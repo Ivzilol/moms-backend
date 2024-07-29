@@ -1,5 +1,7 @@
 package bg.mck.ordercommandservice.event;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+
 public class TransportEvent {
 
     private Long id;
@@ -9,6 +11,8 @@ public class TransportEvent {
     private String maxLength;
     private String weight;
     private String truck;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public TransportEvent() {
     }
@@ -29,6 +33,24 @@ public class TransportEvent {
 
     public TransportEvent setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public TransportEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public TransportEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 

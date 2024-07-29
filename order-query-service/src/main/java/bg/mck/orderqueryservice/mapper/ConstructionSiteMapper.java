@@ -8,4 +8,6 @@ import org.mapstruct.Mapper;
 public interface ConstructionSiteMapper {
 
     ConstructionSiteEntity toEntity(ConstructionSiteDTO constructionSiteDTO);
+
+    ConstructionSiteDTO toDto(ConstructionSiteEntity constructionSiteEntity);
 }

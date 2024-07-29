@@ -1,6 +1,5 @@
 package bg.mck.orderqueryservice.service;
 
-import bg.mck.orderqueryservice.dto.UpdateOrderDTO;
 import bg.mck.orderqueryservice.entity.*;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.entity.enums.OrderStatus;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class EventService {
@@ -75,7 +72,7 @@ public class EventService {
 
     private void processEntity(OrderEntity orderEntity) {
         orderService.saveOrder(orderEntity);
-        redisService.cacheObject(orderMapper.fromOrderEntityToDTO(orderEntity));
+        redisService.cacheOrder(orderMapper.fromOrderEntityToDTO(orderEntity));
     }
 
     private <T extends BaseEvent> void saveEvent(OrderEvent<T> orderEvent) {
