@@ -119,7 +119,7 @@ public class OrderService {
         ConstructionSiteEntity constructionSiteByName =
                 constructionSiteService.getConstructionSiteByName(order.getConstructionSite().getName());
 
-        orderEntity.setOrderStatus(OrderStatus.UPDATED)
+        orderEntity
                 .setEmail(email)
                 .setConstructionSite(constructionSiteByName);
 

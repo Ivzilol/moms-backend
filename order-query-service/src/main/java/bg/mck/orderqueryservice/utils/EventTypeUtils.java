@@ -58,6 +58,33 @@ public class EventTypeUtils {
                     }
                 }
         );
+        this.typeEvents.put("ORDER_UPDATED",
+                new HashMap<>() {
+                    {
+                        put("FASTENERS",
+                                new TypeToken<OrderEvent<CreateOrderEvent<FasterEvent>>>() {}.getType());
+                        put("GALVANIZED_SHEET",
+                                new TypeToken<OrderEvent<CreateOrderEvent<GalvanisedSheetEvent>>>() {}.getType());
+                        put("INSULATION",
+                                new TypeToken<OrderEvent<CreateOrderEvent<InsulationEvent>>>() {}.getType());
+                        put("METAL",
+                                new TypeToken<OrderEvent<CreateOrderEvent<MetalEvent>>>() {}.getType());
+                        put("PANELS",
+                                new TypeToken<OrderEvent<CreateOrderEvent<PanelEvent>>>() {}.getType());
+                        put("REBAR",
+                                new TypeToken<OrderEvent<CreateOrderEvent<RebarEvent>>>() {}.getType());
+                        put("SET",
+
+                                new TypeToken<OrderEvent<CreateOrderEvent<SetEvent>>>() {}.getType());
+                        put("UNSPECIFIED",
+                                new TypeToken<OrderEvent<CreateOrderEvent<UnspecifiedEvent>>>() {}.getType());
+                        put("SERVICE",
+                                new TypeToken<OrderEvent<CreateOrderEvent<ServiceEvent>>>() {}.getType());
+                        put("TRANSPORT",
+                                new TypeToken<OrderEvent<CreateOrderEvent<TransportEvent>>>() {}.getType());
+                    }
+                }
+        );
     }
 
     public Map<String, Map<String, Type>> getTypeEvents() {
