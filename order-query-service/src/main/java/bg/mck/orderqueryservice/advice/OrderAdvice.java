@@ -1,5 +1,6 @@
 package bg.mck.orderqueryservice.advice;
 
+import bg.mck.orderqueryservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.orderqueryservice.exception.OrderNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatusCode;
@@ -18,6 +19,11 @@ public class OrderAdvice {
 
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<String> handleOrderNotFoundException(OrderNotFoundException ex, HttpServletResponse response) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
+    }
+
+    @ExceptionHandler(ConstructionSiteNotFoundException.class)
+    public ResponseEntity<String> handleConstructionSiteNotFoundException(ConstructionSiteNotFoundException ex, HttpServletResponse response) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
     }
 }

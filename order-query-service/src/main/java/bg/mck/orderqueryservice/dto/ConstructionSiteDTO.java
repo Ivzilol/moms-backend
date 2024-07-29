@@ -2,6 +2,8 @@ package bg.mck.orderqueryservice.dto;
 
 public class ConstructionSiteDTO {
 
+    private String id;
+
     private String name;
 
     private String constructionNumber;
@@ -9,7 +11,7 @@ public class ConstructionSiteDTO {
     public ConstructionSiteDTO() {
     }
 
-    public ConstructionSiteDTO(String name, String constructionNumber) {
+    public ConstructionSiteDTO(String id, String name, String constructionNumber) {
         this.name = name;
         this.constructionNumber = constructionNumber;
     }
@@ -29,6 +31,15 @@ public class ConstructionSiteDTO {
 
     public ConstructionSiteDTO setConstructionNumber(String constructionNumber) {
         this.constructionNumber = constructionNumber;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ConstructionSiteDTO setId(String id) {
+        this.id = id;
         return this;
     }
 }
