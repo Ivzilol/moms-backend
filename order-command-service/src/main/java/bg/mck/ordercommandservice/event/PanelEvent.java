@@ -1,5 +1,7 @@
 package bg.mck.ordercommandservice.event;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+
 public class PanelEvent {
 
     private Long id;
@@ -13,6 +15,8 @@ public class PanelEvent {
     private String totalThickness;
     private String frontSheetThickness;
     private String backSheetThickness;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public PanelEvent() {
     }
@@ -37,6 +41,24 @@ public class PanelEvent {
 
     public PanelEvent setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public PanelEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public PanelEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 

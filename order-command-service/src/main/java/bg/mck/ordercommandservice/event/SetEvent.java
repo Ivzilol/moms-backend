@@ -1,5 +1,7 @@
 package bg.mck.ordercommandservice.event;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+
 public class SetEvent {
 
     private Long id;
@@ -9,6 +11,8 @@ public class SetEvent {
     private String galvanisedSheetThickness;
     private String color;
     private String maxLength;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public SetEvent() {
     }
@@ -29,6 +33,24 @@ public class SetEvent {
 
     public SetEvent setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public SetEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public SetEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 

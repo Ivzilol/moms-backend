@@ -93,12 +93,10 @@ public class OrderService {
         ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
 
-        ZoneId z = ZoneId.of("Europe/Sofia");
-
         orderEntity.setEmail(email)
                 .setOrderNumber(lastOrderNumber.orElse(0) + 1)
                 .setOrderStatus(OrderStatus.PENDING)
-                .setOrderDate(ZonedDateTime.now(z).plusHours(3)) //FIXME: find a better way to set the time and timezone
+                .setOrderDate(ZonedDateTime.now(ZoneId.of("Europe/Sofia")).plusHours(3)) //FIXME: find a better way to set the time and timezone
                 .setConstructionSite(constructionSiteByNumberAndName);
 
         orderRepository.save(orderEntity);
@@ -134,6 +132,40 @@ public class OrderService {
 
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} updated successfully", orderEntity.getId());
+
+        return createOrderEvent(orderEntity);
+    }
+
+
+    public OrderConfirmationDTO deleteOrder(Long order, String email) {
+        OrderEntity orderEntity = orderRepository.findById(order)
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + order + " not found"));
+        orderEntity.setOrderStatus(OrderStatus.CANCELLED)
+                .setEmail(email);
+        orderRepository.save(orderEntity);
+        LOGGER.info("Order with id {} cancelled successfully", orderEntity.getId());
+
+        return createOrderEvent(orderEntity);
+    }
+
+    public OrderConfirmationDTO restoreOrder(Long orderId, String email) {
+        OrderEntity orderEntity = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + orderId + " not found"));
+        orderEntity.setOrderStatus(OrderStatus.PENDING)
+                .setEmail(email);
+        orderRepository.save(orderEntity);
+        LOGGER.info("Order with id {} restored successfully", orderEntity.getId());
+
+        return createOrderEvent(orderEntity);
+    }
+
+    public OrderConfirmationDTO deleteMaterial(Long orderId, Long materialId, String email) {
+        OrderEntity orderEntity = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + orderId + " not found"));
+
+        materialService.deleteMaterial(materialId, orderEntity.getMaterialType().toString());
+
+        LOGGER.info("Material with id {} deleted from order with id {}", materialId, orderId);
 
         return createOrderEvent(orderEntity);
     }
@@ -206,38 +238,5 @@ public class OrderService {
         orderEvent.setEvent(createOrderEvent);
 
         orderQueryServiceClient.sendEvent(orderEvent, orderEvent.getEventType().toString());
-    }
-
-    public OrderConfirmationDTO deleteOrder(Long order, String email) {
-        OrderEntity orderEntity = orderRepository.findById(order)
-                .orElseThrow(() -> new OrderNotFoundException("Order with id " + order + " not found"));
-        orderEntity.setOrderStatus(OrderStatus.CANCELLED)
-                .setEmail(email);
-        orderRepository.save(orderEntity);
-        LOGGER.info("Order with id {} cancelled successfully", orderEntity.getId());
-
-        return createOrderEvent(orderEntity);
-    }
-
-    public OrderConfirmationDTO restoreOrder(Long orderId, String email) {
-        OrderEntity orderEntity = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("Order with id " + orderId + " not found"));
-        orderEntity.setOrderStatus(OrderStatus.PENDING)
-                .setEmail(email);
-        orderRepository.save(orderEntity);
-        LOGGER.info("Order with id {} restored successfully", orderEntity.getId());
-
-        return createOrderEvent(orderEntity);
-    }
-
-    public OrderConfirmationDTO deleteMaterial(Long orderId, Long materialId, String email) {
-        OrderEntity orderEntity = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("Order with id " + orderId + " not found"));
-
-        materialService.deleteMaterial(materialId, orderEntity.getMaterialType().toString());
-
-        LOGGER.info("Material with id {} deleted from order with id {}", materialId, orderId);
-
-        return createOrderEvent(orderEntity);
     }
 }
