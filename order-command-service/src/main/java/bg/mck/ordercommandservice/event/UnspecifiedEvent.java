@@ -1,11 +1,15 @@
 package bg.mck.ordercommandservice.event;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+
 public class UnspecifiedEvent {
 
     private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public UnspecifiedEvent() {
     }
@@ -23,6 +27,24 @@ public class UnspecifiedEvent {
 
     public UnspecifiedEvent setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public UnspecifiedEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public UnspecifiedEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 

@@ -1,5 +1,7 @@
 package bg.mck.ordercommandservice.event;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+
 public class MetalEvent {
 
     private Long id;
@@ -7,6 +9,8 @@ public class MetalEvent {
     private String description;
     private String specificationFileUrl;
     private String totalWeight;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public MetalEvent() {
     }
@@ -34,6 +38,24 @@ public class MetalEvent {
 
     public MetalEvent setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public MetalEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public MetalEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 
