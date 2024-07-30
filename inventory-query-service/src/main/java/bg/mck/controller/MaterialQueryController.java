@@ -61,7 +61,12 @@ public class MaterialQueryController {
         return ResponseEntity.ok(materialDTOs);
     }
 
-
+    @Operation(summary = "Retrieve all materials by given their category and part of the name", description = "Fetches detailed information of all materials given their category and part of the name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Materials details successfully retrieved",
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MaterialDTO.class)))),
+            @ApiResponse(responseCode = "400", description = "Invalid Category")
+    })
     @GetMapping("/search")
     public ResponseEntity<?> getMaterialByPartOfName(@RequestParam("category") String category,
                                                      @RequestParam("materialName") String materialName) {
