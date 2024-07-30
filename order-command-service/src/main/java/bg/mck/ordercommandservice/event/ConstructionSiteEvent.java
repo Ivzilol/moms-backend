@@ -10,8 +10,8 @@ public class ConstructionSiteEvent extends BaseEvent {
     public ConstructionSiteEvent() {
     }
 
-    public ConstructionSiteEvent(Long orderId, EventType eventType, LocalDateTime eventTime, Long id, String constructionNumber, String name) {
-        super(orderId, eventType, eventTime);
+    public ConstructionSiteEvent(EventType eventType, LocalDateTime eventTime, Long id, String constructionNumber, String name) {
+        super(eventType, eventTime);
         this.id = id;
         this.constructionNumber = constructionNumber;
         this.name = name;
