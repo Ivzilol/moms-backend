@@ -4,6 +4,7 @@ import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
+import bg.mck.ordercommandservice.event.ConstructionSiteEvent;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -12,4 +13,6 @@ public interface ConstructionSiteMapper {
     ConstructionSiteDTO toDTO(ConstructionSiteEntity constructionSiteEntity);
 
     ConstructionSiteEntity toEntity(ConstructionSiteDTO constructionSiteDTO);
+
+    ConstructionSiteEvent toEvent(ConstructionSiteEntity constructionSiteEntity);
 }

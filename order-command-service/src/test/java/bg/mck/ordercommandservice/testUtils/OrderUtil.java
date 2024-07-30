@@ -1,7 +1,6 @@
 package bg.mck.ordercommandservice.testUtils;
 
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
-import bg.mck.ordercommandservice.dto.FastenerDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
@@ -9,8 +8,7 @@ import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import bg.mck.ordercommandservice.event.CreateOrderEvent;
 import bg.mck.ordercommandservice.event.FasterEvent;
-import bg.mck.ordercommandservice.event.OrderEvent;
-import bg.mck.ordercommandservice.event.OrderEventType;
+import bg.mck.ordercommandservice.event.EventType;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -65,7 +63,7 @@ public class OrderUtil {
                         .setType(fastenerEntity.getType()))
                 .collect(Collectors.toSet());
         createOrderEvent.setOrderId(1L)
-                .setEventType(OrderEventType.ORDER_CREATED)
+                .setEventType(EventType.ORDER_CREATED)
                 .setEventTime(LocalDateTime.now());
         createOrderEvent.setEmail(orderEntity.getEmail())
                 .setOrderNumber(orderEntity.getOrderNumber())

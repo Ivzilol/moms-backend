@@ -4,7 +4,7 @@ import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.entity.*;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
-import bg.mck.ordercommandservice.event.OrderEventType;
+import bg.mck.ordercommandservice.event.EventType;
 import bg.mck.ordercommandservice.mapper.*;
 import bg.mck.ordercommandservice.repository.*;
 import org.springframework.stereotype.Service;
@@ -171,7 +171,7 @@ public class UpdateOrderService {
 
     private void sendEvent(UpdateOrderDTO updateOrderDTO) {
         try {
-            orderQueryServiceClient.sendUpdateEvent(updateOrderDTO, String.valueOf(OrderEventType.ORDER_UPDATED));
+            orderQueryServiceClient.sendUpdateEvent(updateOrderDTO, String.valueOf(EventType.ORDER_UPDATED));
         } catch (Exception e) {
             throw new RuntimeException("Failed to update order in external service", e);
         }
