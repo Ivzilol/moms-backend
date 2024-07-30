@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,7 +58,7 @@ public class EventService {
         OrderEvent<CreateOrderEvent<T>> orderEvent = gson.fromJson(data, eventTypeToken);
         OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
         orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-        orderEntity.setOrderStatus(OrderStatus.PENDING);
+        orderEntity.setOrderStatus(OrderStatus.CREATED);
         saveEvent(orderEvent);
         processEntity(orderEntity);
     }

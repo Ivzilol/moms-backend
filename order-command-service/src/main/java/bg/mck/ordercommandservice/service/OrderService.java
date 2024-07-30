@@ -95,7 +95,7 @@ public class OrderService {
 
         orderEntity.setEmail(email)
                 .setOrderNumber(lastOrderNumber.orElse(0) + 1)
-                .setOrderStatus(OrderStatus.PENDING)
+                .setOrderStatus(OrderStatus.CREATED)
                 .setOrderDate(ZonedDateTime.now(ZoneId.of("Europe/Sofia")).plusHours(3)) //FIXME: find a better way to set the time and timezone
                 .setConstructionSite(constructionSiteByNumberAndName);
 
@@ -223,11 +223,7 @@ public class OrderService {
 
         EventData<CreateOrderEvent<E>> orderEvent = new EventData<>();
 
-        if (orderEntity.getOrderStatus() == OrderStatus.PENDING)
-            orderEvent.setEventType(EventType.ORDER_CREATED);
-        else {
-            orderEvent.setEventType(EventType.ORDER_UPDATED);
-        }
+        orderEvent.setEventType(orderEntity.getOrderStatus() != OrderStatus.CREATED ? EventType.ORDER_UPDATED : EventType.ORDER_CREATED);
 
         CreateOrderEvent<E> createOrderEvent = orderMapper.toEvent(orderEntity);
         createOrderEvent.setOrderId(orderEntity.getId());
