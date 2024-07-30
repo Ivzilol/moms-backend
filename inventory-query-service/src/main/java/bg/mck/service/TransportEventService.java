@@ -1,15 +1,10 @@
 package bg.mck.service;
 
+import bg.mck.entity.transportEntity.TransportEntity;
 import bg.mck.enums.EventType;
-import bg.mck.events.service.BaseServiceEvent;
-import bg.mck.events.service.ServiceEvent;
-import bg.mck.events.transport.BaseTransportEvent;
-import bg.mck.events.transport.TransportDeletedEvent;
-import bg.mck.events.transport.TransportEvent;
+import bg.mck.events.transport.*;
 import bg.mck.exceptions.InvalidEventTypeException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
-import bg.mck.repository.service.EventServiceRepository;
-import bg.mck.repository.service.ServiceRepository;
 import bg.mck.repository.transport.EventTransportRepository;
 import bg.mck.repository.transport.TransportRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,6 +12,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TransportEventService {
@@ -36,6 +33,23 @@ public class TransportEventService {
         this.transportDeleteService = transportDeleteService;
     }
 
+    public TransportEntity reconstructTransportEntity(String id) {
+        doesTransportExist(id);
+        List<TransportEvent<? extends BaseTransportEvent>> events = eventTransportRepository
+                .findTransportEventsByEventTransportIdOrderByEventLocalDateTimeAsc(id);
+
+        TransportEntity transportEntity = new TransportEntity();
+        transportEntity.setId(id);
+
+        for (var event : events) {
+            applyEvent(event, transportEntity);
+        }
+
+        transportRepository.save(transportEntity);
+        redisService.cacheObject(transportEntity);
+
+        return transportEntity;
+    }
 
     public void processTransportEvent(String data, String eventType) throws JsonProcessingException {
         if (eventType.equals(EventType.ItemRegistered.name())) {
@@ -57,6 +71,19 @@ public class TransportEventService {
             throw new InvalidEventTypeException("Invalid event type: " + eventType);
         }
 
+    }
+
+    private void applyEvent(TransportEvent<? extends BaseTransportEvent> transportEvent, TransportEntity transportEntity) {
+        BaseTransportEvent event = transportEvent.getEvent();
+
+        //TODO: implement the logic in the if-else condition
+        if (event instanceof TransportUpdateEvent updateEvent) {
+
+        } else if (event instanceof TransportRegisteredEvent registerEvent) {
+
+        } else if (event instanceof TransportDeletedEvent deleteEvent) {
+
+        }
     }
 
     private void doesTransportExist(String transportId) {

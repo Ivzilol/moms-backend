@@ -1,23 +1,19 @@
 package bg.mck.service;
 
+import bg.mck.entity.constructions.ConstructionSiteEntity;
 import bg.mck.enums.EventType;
-import bg.mck.events.construction.BaseConstructionEvent;
-import bg.mck.events.construction.ConstructionDeletedEvent;
-import bg.mck.events.construction.ConstructionEvent;
-import bg.mck.events.service.BaseServiceEvent;
-import bg.mck.events.service.ServiceDeletedEvent;
-import bg.mck.events.service.ServiceEvent;
+import bg.mck.events.construction.*;
 import bg.mck.exceptions.InvalidEventTypeException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.repository.constructionSite.ConstructionSiteRepository;
 import bg.mck.repository.constructionSite.EventConstructionSiteRepository;
-import bg.mck.repository.transport.EventTransportRepository;
-import bg.mck.repository.transport.TransportRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ConstructionSiteEventService {
@@ -37,6 +33,23 @@ public class ConstructionSiteEventService {
         this.constructionDeleteService = constructionDeleteService;
     }
 
+    public ConstructionSiteEntity reconstructConstructionEntity(String id) {
+        doesConstructionSiteExist(id);
+        List<ConstructionEvent<? extends BaseConstructionEvent>> events = eventConstructionRepository
+                .findConstructionEventByEventConstructionIdOrderByEventLocalDateTimeAsc(id);
+
+        ConstructionSiteEntity constructionEntity = new ConstructionSiteEntity();
+        constructionEntity.setId(id);
+
+        for (var event : events) {
+            applyEvent(event, constructionEntity);
+        }
+
+        constructionRepository.save(constructionEntity);
+        redisService.cacheObject(constructionEntity);
+
+        return constructionEntity;
+    }
 
     public void processConstructionEvent(String data, String eventType) throws JsonProcessingException {
         if (eventType.equals(EventType.ItemRegistered.name())) {
@@ -58,6 +71,19 @@ public class ConstructionSiteEventService {
             throw new InvalidEventTypeException("Invalid event type: " + eventType);
         }
 
+    }
+
+    private void applyEvent(ConstructionEvent<? extends BaseConstructionEvent> constructionEvent, ConstructionSiteEntity constructionSiteEntity) {
+        BaseConstructionEvent event = constructionEvent.getEvent();
+
+        //TODO: implement the logic in the if-else condition
+        if (event instanceof ConstructionUpdateEvent updateEvent) {
+
+        } else if (event instanceof ConstructionRegisteredEvent registerEvent) {
+
+        } else if (event instanceof ConstructionDeletedEvent deleteEvent) {
+
+        }
     }
 
     private void doesConstructionSiteExist(String serviceId) {

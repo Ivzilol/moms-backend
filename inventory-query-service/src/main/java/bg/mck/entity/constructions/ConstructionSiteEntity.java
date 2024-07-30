@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "construction_sites")
 public class ConstructionSiteEntity {
 
-    private Long id;
+    private String id;
 
     private String constructionNumber;
 
@@ -16,17 +16,17 @@ public class ConstructionSiteEntity {
     public ConstructionSiteEntity() {
     }
 
-    public ConstructionSiteEntity(Long id, String constructionNumber, String name) {
+    public ConstructionSiteEntity(String id, String constructionNumber, String name) {
         this.id = id;
         this.constructionNumber = constructionNumber;
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
