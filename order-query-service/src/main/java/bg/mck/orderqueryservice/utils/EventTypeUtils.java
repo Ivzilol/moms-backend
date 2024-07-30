@@ -16,7 +16,7 @@ public class EventTypeUtils {
     private Map<String, Map<String, Type>> typeEvents;
     private Map<String, Method> orderMethodProcessors;
     private Map<String, Method> constructionMethodProcessors;
-    private Map<String, Type> typeOrderEvents = new HashMap<String, Type>() {
+    private final Map<String, Type> typeOrderEvents = new HashMap<String, Type>() {
         {
             put("FASTENERS",
                     new TypeToken<OrderEvent<CreateOrderEvent<FasterEvent>>>() {

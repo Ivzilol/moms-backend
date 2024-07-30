@@ -4,7 +4,6 @@ import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
 import bg.mck.ordercommandservice.service.OrderService;
-import bg.mck.ordercommandservice.service.UpdateOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,12 +27,10 @@ public class OrderController {
     private String APPLICATION_VERSION;
     private final OrderService orderService;
     private final RestTemplate restTemplate;
-    private final UpdateOrderService updateOrderService;
 
-    public OrderController(OrderService orderService, RestTemplate restTemplate, UpdateOrderService updateOrderService) {
+    public OrderController(OrderService orderService, RestTemplate restTemplate) {
         this.orderService = orderService;
         this.restTemplate = restTemplate;
-        this.updateOrderService = updateOrderService;
     }
 
     @GetMapping("/get-order/{id}")

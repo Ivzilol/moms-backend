@@ -1,12 +1,19 @@
 package bg.mck.orderqueryservice.service;
 
+import bg.mck.orderqueryservice.client.NotificationServiceClient;
+import bg.mck.orderqueryservice.dto.EmailDTO;
 import bg.mck.orderqueryservice.dto.OrderDTO;
-import bg.mck.orderqueryservice.entity.*;
+import bg.mck.orderqueryservice.entity.ConstructionSiteEntity;
+import bg.mck.orderqueryservice.entity.OrderEntity;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.entity.enums.OrderStatus;
-import bg.mck.orderqueryservice.events.*;
+import bg.mck.orderqueryservice.events.BaseEvent;
+import bg.mck.orderqueryservice.events.ConstructionSiteEvent;
+import bg.mck.orderqueryservice.events.CreateOrderEvent;
+import bg.mck.orderqueryservice.events.OrderEvent;
 import bg.mck.orderqueryservice.exception.OrderNotFoundException;
 import bg.mck.orderqueryservice.mapper.ConstructionSiteMapper;
+import bg.mck.orderqueryservice.mapper.MailMapper;
 import bg.mck.orderqueryservice.mapper.OrderMapper;
 import bg.mck.orderqueryservice.repository.EventRepository;
 import bg.mck.orderqueryservice.repository.OrderRepository;
@@ -33,8 +40,10 @@ public class EventService {
     private final OrderRepository orderRepository;
     private final ConstructionSiteMapper constructionSiteMapper;
     private final ConstructionSiteService constructionSiteService;
+    private final NotificationServiceClient notificationServiceClient;
+    private final MailMapper mailMapper;
 
-    public EventService(EventRepository eventRepository, RedisService redisService, OrderMapper orderMapper, EventTypeUtils eventTypeUtils, Gson gson, OrderService orderService, OrderRepository orderRepository, ConstructionSiteMapper constructionSiteMapper, ConstructionSiteService constructionSiteService) throws NoSuchMethodException {
+    public EventService(EventRepository eventRepository, RedisService redisService, OrderMapper orderMapper, EventTypeUtils eventTypeUtils, Gson gson, OrderService orderService, OrderRepository orderRepository, ConstructionSiteMapper constructionSiteMapper, ConstructionSiteService constructionSiteService, NotificationServiceClient notificationServiceClient, MailMapper mailMapper) throws NoSuchMethodException {
         this.eventRepository = eventRepository;
         this.redisService = redisService;
         this.orderMapper = orderMapper;
@@ -44,6 +53,8 @@ public class EventService {
         this.orderRepository = orderRepository;
         this.constructionSiteMapper = constructionSiteMapper;
         this.constructionSiteService = constructionSiteService;
+        this.notificationServiceClient = notificationServiceClient;
+        this.mailMapper = mailMapper;
     }
 
 
@@ -61,6 +72,7 @@ public class EventService {
         orderEntity.setOrderStatus(OrderStatus.CREATED);
         saveEvent(orderEvent);
         processEntity(orderEntity);
+        sendEmail(orderEvent, true);
     }
 
     private <T extends BaseEvent> void processUpdateEvent(String data, String eventType, String materialType) throws JsonProcessingException {
@@ -76,6 +88,7 @@ public class EventService {
 
         saveEvent(orderEvent);
         processEntity(newOrderEntity);
+        sendEmail(orderEvent, false);
     }
 
     private void processEntity(OrderEntity orderEntity) {
@@ -97,7 +110,7 @@ public class EventService {
 
     @Transactional
     public void processConstructionSiteEvent(String data, String eventType) throws InvocationTargetException, IllegalAccessException {
-        this.eventTypeUtils.getConstructionMethodProcessors().get(eventType).invoke(this, data, eventType);
+        this.eventTypeUtils.getConstructionMethodProcessors().get(eventType).invoke(this, data);
     }
 
     private void processCreateConstructionSite(String data) {
@@ -117,5 +130,11 @@ public class EventService {
         OrderEvent<ConstructionSiteEvent> constructionEvent = gson.fromJson(data, eventTypeToken);
         ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntityFromEvent(constructionEvent.getEvent());
         constructionSiteService.updateConstructionSite(constructionSiteEntity);
+    }
+
+    private <T extends BaseEvent> void sendEmail(OrderEvent<CreateOrderEvent<T>> orderEvent, boolean newOrder) {
+        EmailDTO emailDTO = mailMapper.toEmailDTO(orderEvent.getEvent());
+        emailDTO.setNewOrder(newOrder);
+        notificationServiceClient.sendNotification(emailDTO);
     }
 }
