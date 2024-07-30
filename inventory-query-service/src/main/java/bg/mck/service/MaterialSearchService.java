@@ -2,6 +2,7 @@ package bg.mck.service;
 
 import bg.mck.dto.MaterialDTO;
 import bg.mck.enums.MaterialType;
+import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.repository.material.*;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
@@ -59,7 +60,9 @@ public class MaterialSearchService {
             return this.setRepository.findByPartOfName(regex, sort);
         } else if (category.equals(String.valueOf(MaterialType.UNSPECIFIED))) {
             return this.unspecifiedRepository.findByPartOfName(regex, sort);
+        } else {
+            throw new InvalidCategoryException("Unhandled category type: " + category);
         }
-        return null;
+
     }
 }

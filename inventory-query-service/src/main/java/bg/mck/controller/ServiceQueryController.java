@@ -56,6 +56,11 @@ public class ServiceQueryController {
     }
 
 
+    @Operation(summary = "Retrieve all services given their part of the name", description = "Fetches detailed information of all services given their part of the name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Services details successfully retrieved",
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ServiceDTO.class)))),
+    })
     @GetMapping("/search")
     public ResponseEntity<List<ServiceDTO>> getServiceByPartOfName(@RequestParam("serviceName") String serviceName) {
         List<ServiceDTO> serviceDTOs = this.serviceQueryService.findServiceByName(serviceName);
