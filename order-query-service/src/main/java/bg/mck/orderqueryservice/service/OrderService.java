@@ -60,6 +60,6 @@ public class OrderService {
         return orderRepository
                 .findByOrderNumber(number)
                 .map(orderMapper::fromOrderEntityToDTO)
-                .orElseThrow(() -> new OrderNotFoundException("Order with id " + number + " not found"));
+                .orElseThrow(() -> new OrderNotFoundException("Order with number " + number + " not found"));
     }
 }
