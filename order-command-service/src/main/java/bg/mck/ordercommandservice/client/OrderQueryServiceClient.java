@@ -11,9 +11,6 @@ public interface OrderQueryServiceClient {
     @PostMapping("/orders/event")
     void sendEvent(@RequestBody EventData data, @RequestHeader("Event-Type") String eventType);
 
-    @PostMapping("/orders/event/update")
-    void sendUpdateEvent(@RequestBody UpdateOrderDTO updateOrderDTO, @RequestHeader("Event-Type") String eventType);
-
     @PostMapping("/construction-sites/event")
     void sendConstructionSiteEvent(@RequestBody EventData data, @RequestHeader("Event-Type") String eventType);
 }

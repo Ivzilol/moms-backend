@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.InvocationTargetException;
 
 @RestController
-@RequestMapping("/orders/event")
 public class EventController {
 
     private final EventService eventService;
@@ -18,9 +17,15 @@ public class EventController {
     }
 
 
-    @PostMapping
+    @PostMapping("/orders/event")
     public ResponseEntity<Void> sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType) throws JsonProcessingException, InvocationTargetException, IllegalAccessException {
         eventService.processOrderEvent(data, eventType);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/construction-sites/event")
+    void sendConstructionSiteEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType) throws InvocationTargetException, IllegalAccessException {
+        eventService.processConstructionSiteEvent(data, eventType);
+    }
+
 }
