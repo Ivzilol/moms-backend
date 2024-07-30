@@ -33,3 +33,11 @@ build/
 .vscode/
 
 .env/
+
+### Redis ###
+/redis_data/
+appendonlydir
+.redis.aof.1.base.rdb
+.redis.aof.1.incr.aof
+.redis.aof.manifest
+.dump.rdb
