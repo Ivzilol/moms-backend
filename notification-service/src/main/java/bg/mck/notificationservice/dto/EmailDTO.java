@@ -3,7 +3,7 @@ package bg.mck.notificationservice.dto;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
-public class OrderDTO {
+public class EmailDTO {
 
 
     private String orderDescription;
@@ -30,7 +30,7 @@ public class OrderDTO {
 
     private String email;
 
-    public OrderDTO(String orderNumber, String specificationFileUrl, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, String constructionSite, String constructionSiteNumber, String orderStatus, String materialType, Set<Object> materials, boolean isNewOrder, String email) {
+    public EmailDTO(String orderNumber, String specificationFileUrl, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, String constructionSite, String constructionSiteNumber, String orderStatus, String materialType, Set<Object> materials, boolean isNewOrder, String email) {
         this.orderNumber = orderNumber;
         this.orderDescription = orderDescription;
         this.orderDate = orderDate;
@@ -49,7 +49,7 @@ public class OrderDTO {
         return orderNumber;
     }
 
-    public OrderDTO setOrderNumber(String orderNumber) {
+    public EmailDTO setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
         return this;
     }
@@ -58,7 +58,7 @@ public class OrderDTO {
         return orderDescription;
     }
 
-    public OrderDTO setOrderDescription(String orderDescription) {
+    public EmailDTO setOrderDescription(String orderDescription) {
         this.orderDescription = orderDescription;
         return this;
     }
@@ -67,7 +67,7 @@ public class OrderDTO {
         return orderDate;
     }
 
-    public OrderDTO setOrderDate(ZonedDateTime orderDate) {
+    public EmailDTO setOrderDate(ZonedDateTime orderDate) {
         this.orderDate = orderDate;
         return this;
     }
@@ -76,7 +76,7 @@ public class OrderDTO {
         return deliveryDate;
     }
 
-    public OrderDTO setDeliveryDate(ZonedDateTime deliveryDate) {
+    public EmailDTO setDeliveryDate(ZonedDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
         return this;
     }
@@ -85,7 +85,7 @@ public class OrderDTO {
         return specificationFileUrl;
     }
 
-    public OrderDTO setSpecificationFileUrl(String specificationFileUrl) {
+    public EmailDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
         return this;
     }
@@ -98,12 +98,12 @@ public class OrderDTO {
         return constructionSiteNumber;
     }
 
-    public OrderDTO setConstructionSiteNumber(String constructionSiteNumber) {
+    public EmailDTO setConstructionSiteNumber(String constructionSiteNumber) {
         this.constructionSiteNumber = constructionSiteNumber;
         return this;
     }
 
-    public OrderDTO setConstructionSiteName(String constructionSiteName) {
+    public EmailDTO setConstructionSiteName(String constructionSiteName) {
         this.constructionSiteName = constructionSiteName;
         return this;
     }
@@ -112,7 +112,7 @@ public class OrderDTO {
         return orderStatus;
     }
 
-    public OrderDTO setOrderStatus(String orderStatus) {
+    public EmailDTO setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
         return this;
     }
@@ -121,7 +121,7 @@ public class OrderDTO {
         return materialType;
     }
 
-    public OrderDTO setMaterialType(String materialType) {
+    public EmailDTO setMaterialType(String materialType) {
         this.materialType = materialType;
         return this;
     }
@@ -130,7 +130,7 @@ public class OrderDTO {
         return materials;
     }
 
-    public OrderDTO setMaterials(Set<Object> materials) {
+    public EmailDTO setMaterials(Set<Object> materials) {
         this.materials = materials;
         return this;
     }
@@ -139,7 +139,7 @@ public class OrderDTO {
         return isNewOrder;
     }
 
-    public OrderDTO setNewOrder(boolean newOrder) {
+    public EmailDTO setNewOrder(boolean newOrder) {
         isNewOrder = newOrder;
         return this;
     }
@@ -148,7 +148,7 @@ public class OrderDTO {
         return email;
     }
 
-    public OrderDTO setEmail(String email) {
+    public EmailDTO setEmail(String email) {
         this.email = email;
         return this;
     }

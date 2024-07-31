@@ -27,6 +27,7 @@ public interface OrderMapper {
     @Mapping(target = "unspecified", expression = "java(mapUnspecified(event.getMaterials(), event.getMaterialType()))")
     @Mapping(target = "services", expression = "java(mapServices(event.getMaterials(), event.getMaterialType()))")
     @Mapping(target = "transports", expression = "java(mapTransports(event.getMaterials(), event.getMaterialType()))")
+    @Mapping(target = "id", source = "orderId")
     OrderEntity toOrderEntity(CreateOrderEvent<?> event);
 
     default Set<FastenerEntity> mapFasteners(Set<?> materials, MaterialType materialType) {

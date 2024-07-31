@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class CreateOrderEvent<T> extends BaseEvent {
 
+    private Long orderId;
     private String email;
     private Integer orderNumber;
     private String orderDescription;
@@ -20,8 +21,6 @@ public class CreateOrderEvent<T> extends BaseEvent {
 
     private Set<T> materials;
 
-    public CreateOrderEvent() {
-    }
 
     public String getEmail() {
         return email;
@@ -101,6 +100,15 @@ public class CreateOrderEvent<T> extends BaseEvent {
 
     public CreateOrderEvent<T> setMaterials(Set<T> materials) {
         this.materials = materials;
+        return this;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public CreateOrderEvent<T> setOrderId(Long orderId) {
+        this.orderId = orderId;
         return this;
     }
 }

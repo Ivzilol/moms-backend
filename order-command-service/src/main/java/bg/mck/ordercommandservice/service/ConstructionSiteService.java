@@ -14,6 +14,7 @@ import bg.mck.ordercommandservice.repository.ConstructionSiteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -58,6 +59,7 @@ public class ConstructionSiteService {
         throw new ConstructionSiteNotFoundException("Construction site with number " + constructionNumber + " and name " + name + " not found");
     }
 
+    @Transactional
     public ConstructionSiteDTO createConstructionSite(ConstructionSiteDTO constructionSiteDTO) {
         ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntity(constructionSiteDTO);
 
@@ -98,6 +100,7 @@ public class ConstructionSiteService {
         orderQueryServiceClient.sendConstructionSiteEvent(constructionSiteEvent, constructionSiteEvent.getEventType().toString());
     }
 
+    @Transactional
     public ConstructionSiteDTO updateConstructionSite(ConstructionSiteDTO constructionSiteDTO) {
         ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntity(constructionSiteDTO);
         constructionSiteEntity.setId(constructionSiteDTO.getId());

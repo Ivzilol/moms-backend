@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,27 +27,7 @@ public class ConstructionSiteService {
         this.constructionSiteMapper = constructionSiteMapper;
     }
 
-    public void createConstructionSite(String data) {
-        ConstructionSiteEntity constructionSiteEntity = mapConstructionSite(data);
-        saveConstructionSite(constructionSiteEntity);
-    }
-
-
-
-    public void updateConstructionSite(String data) {
-        ConstructionSiteEntity newEntity = mapConstructionSite(data);
-        constructionSiteRepository.findById(newEntity.getId()).ifPresent(entity -> {
-            entity.setName(newEntity.getName());
-            entity.setConstructionNumber(newEntity.getConstructionNumber());
-            saveConstructionSite(entity);
-        });
-    }
-
-    private ConstructionSiteEntity mapConstructionSite(String data) {
-        return gson.fromJson(data, ConstructionSiteEntity.class);
-    }
-
-    private void saveConstructionSite(ConstructionSiteEntity constructionSiteEntity) {
+    public void saveConstructionSite(ConstructionSiteEntity constructionSiteEntity) {
         constructionSiteRepository.save(constructionSiteEntity);
     }
 
@@ -62,5 +43,11 @@ public class ConstructionSiteService {
 
     public List<ConstructionSiteDTO> getAllConstructionSites() {
         return constructionSiteRepository.findAll().stream().map(constructionSiteMapper::toDto).collect(Collectors.toList());
+    }
+
+    public void updateConstructionSite(ConstructionSiteEntity constructionSiteEntity) {
+        ConstructionSiteEntity oldEntity = this.constructionSiteRepository.findById(constructionSiteEntity.getId()).orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site not found"));
+        oldEntity = constructionSiteEntity;
+        this.constructionSiteRepository.save(oldEntity);
     }
 }
