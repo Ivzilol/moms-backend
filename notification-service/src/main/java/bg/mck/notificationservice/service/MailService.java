@@ -40,7 +40,7 @@ public class MailService {
         String constructionSiteName = rootNode.path("constructionSiteName").asText();
         String constructionSiteNumber = rootNode.path("constructionSiteNumber").asText();
         String specificationFileUrl = rootNode.path("specificationFileUrl").asText();
-        boolean isNewOrder = rootNode.path("isNewOrder").asBoolean();
+        boolean isNewOrder = rootNode.path("newOrder").asBoolean();
         JsonNode materialsNode = rootNode.path("materials");
 
         Set<String> columnNames = new HashSet<>();

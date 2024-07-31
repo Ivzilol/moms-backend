@@ -21,10 +21,13 @@ public class OrderDTO {
 
     private OrderStatus orderStatus;
 
-    private MaterialType materialType;
-    private String specificationFileUrl;
+    private Integer orderNumber;
 
+    private MaterialType materialType;
+
+    private String specificationFileUrl;
     private Set<FastenerDTO> fasteners;
+
     private Set<GalvanisedSheetDTO> galvanisedSheets;
     private Set<InsulationDTO> insulation;
     private Set<MetalDTO> metals;
@@ -34,7 +37,6 @@ public class OrderDTO {
     private Set<UnspecifiedDTO> unspecified;
     private Set<ServiceDTO> services;
     private Set<TransportDTO> transports;
-
     public OrderDTO() {
     }
 
@@ -209,6 +211,15 @@ public class OrderDTO {
 
     public OrderDTO setTransports(Set<@Valid TransportDTO> transports) {
         this.transports = transports;
+        return this;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public OrderDTO setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
         return this;
     }
 
