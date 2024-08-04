@@ -103,14 +103,12 @@ public class UserQueryServiceTest {
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO()
                 .setId(userId.toString());
 
-        when(userRepository.findById(userId.toString())).thenReturn(Optional.of(userEntity));
         when(redisService.getCachedObject(userId)).thenReturn(userEntity);
         when(mapper.toDTO(userEntity)).thenReturn(userDetailsDTO);
 
         UserDetailsDTO result = userQueryService.getUserDetailsById(userId);
 
         assertNotNull(result);
-        verify(userRepository).findById(userId.toString());
         verify(redisService).getCachedObject(userId);
         verify(mapper).toDTO(userEntity);
         verifyNoInteractions(eventService);

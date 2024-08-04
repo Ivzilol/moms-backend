@@ -24,20 +24,22 @@ public class ServiceEventService {
     private final ServiceRepository serviceRepository;
     private final ServiceRedisService redisService;
     private final ServiceDeleteService serviceDeleteService;
+    private final ServiceRegisterService serviceRegisterService;
 
 
-    public ServiceEventService(ObjectMapper objectMapper, EventServiceRepository eventServiceRepository, ServiceRepository serviceRepository, ServiceRedisService redisService, ServiceDeleteService serviceDeleteService) {
+    public ServiceEventService(ObjectMapper objectMapper, EventServiceRepository eventServiceRepository, ServiceRepository serviceRepository, ServiceRedisService redisService, ServiceDeleteService serviceDeleteService, ServiceRegisterService serviceRegisterService) {
         this.objectMapper = objectMapper;
         this.eventServiceRepository = eventServiceRepository;
         this.serviceRepository = serviceRepository;
         this.redisService = redisService;
         this.serviceDeleteService = serviceDeleteService;
+        this.serviceRegisterService = serviceRegisterService;
     }
 
     public ServiceEntity reconstructServiceEntity(String id) {
         doesServiceExist(id);
-        List<ServiceEvent<? extends BaseServiceEvent>> events = eventServiceRepository
-                .findServiceEventsByEventServiceIdOrderByEventLocalDateTimeAsc(id);
+        List<BaseServiceEvent> events = eventServiceRepository
+                .findServiceEventsByServiceIdOrderByLocalDateTimeAsc(id);
 
         ServiceEntity serviceEntity = new ServiceEntity();
         serviceEntity.setId(id);
@@ -54,15 +56,19 @@ public class ServiceEventService {
 
     public void processServiceEvent(String data, String eventType) throws JsonProcessingException {
         if (eventType.equals(EventType.ItemRegistered.name())) {
+            ServiceRegisteredEvent event = objectMapper.readValue(data, ServiceRegisteredEvent.class);
+
+            saveEvent(event);
+            evictCache(event.getName());
+            serviceRegisterService.processingRegisterService(event);
 
         } else if (eventType.equals(EventType.ItemDeleted.name())) {
-            ServiceEvent<ServiceDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
-            });
+           ServiceDeletedEvent event = objectMapper.readValue(data, ServiceDeletedEvent.class);
 
-            String serviceId = event.getEvent().getServiceId();
+            String serviceId = event.getServiceId();
             doesServiceExist(serviceId);
             saveEvent(event);
-            evictCache(event.getEvent().getName());
+            evictCache(event.getName());
 
             serviceDeleteService.deleteServiceById(serviceId);
             redisService.clearCacheForObject(serviceId);
@@ -74,8 +80,8 @@ public class ServiceEventService {
 
     }
 
-    private void applyEvent(ServiceEvent<? extends BaseServiceEvent> serviceEvent, ServiceEntity serviceEntity) {
-        BaseServiceEvent event = serviceEvent.getEvent();
+    private void applyEvent(BaseServiceEvent event, ServiceEntity serviceEntity) {
+
 
         //TODO: implement the logic in the if-else condition
         if (event instanceof ServiceUpdatedEvent updateEvent) {
@@ -94,7 +100,7 @@ public class ServiceEventService {
         }
     }
 
-    private <T extends BaseServiceEvent> ServiceEvent<T> saveEvent(ServiceEvent<T> serviceEvent) {
+    private BaseServiceEvent saveEvent(BaseServiceEvent serviceEvent) {
         return eventServiceRepository.save(serviceEvent);
     }
 

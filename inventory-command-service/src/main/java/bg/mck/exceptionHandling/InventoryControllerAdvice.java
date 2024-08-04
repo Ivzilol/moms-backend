@@ -1,6 +1,7 @@
 package bg.mck.exceptionHandling;
 
 
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import feign.FeignException;
@@ -64,6 +65,11 @@ public class InventoryControllerAdvice {
     @ExceptionHandler(InventoryItemNotFoundException.class)
     public ResponseEntity<String> handleInventoryItemNotFoundException(InventoryItemNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicatedInventoryItemException.class)
+    public ResponseEntity<String> handleDuplicatedInventoryItemException(DuplicatedInventoryItemException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
 

@@ -30,9 +30,9 @@ public class ServiceDeleteService {
         serviceRepository.deleteById(id);
 
         ServiceDeletedEvent event = new ServiceDeletedEvent(id, EventType.ItemDeleted, name);
-        ServiceEvent<ServiceDeletedEvent> serviceEvent = EventCreationHelper.toServiceEvent(event);
+//        ServiceEvent<ServiceDeletedEvent> serviceEvent = EventCreationHelper.toServiceEvent(event);
 
-        inventoryQueryClient.sendServiceEvent(serviceEvent, EventType.ItemDeleted.name());
+        inventoryQueryClient.sendServiceEvent(event, EventType.ItemDeleted.name());
     }
 
     private ServiceEntity findById(Long id) {

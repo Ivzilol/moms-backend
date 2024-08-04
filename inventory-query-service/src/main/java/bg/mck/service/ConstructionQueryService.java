@@ -15,11 +15,11 @@ import java.util.List;
 public class ConstructionQueryService {
 
    private final ConstructionSiteRepository constructionRepository;
-   private final ConstructionSiteEventService constructionEventService;
+   private final ConstructionEventService constructionEventService;
    private final ConstructionRedisService redisService;
    private final ConstructionSiteMapper constructionMapper;
 
-    public ConstructionQueryService(ConstructionSiteRepository constructionRepository, ConstructionSiteEventService constructionEventService, ConstructionRedisService redisService, ConstructionSiteMapper constructionMapper) {
+    public ConstructionQueryService(ConstructionSiteRepository constructionRepository, ConstructionEventService constructionEventService, ConstructionRedisService redisService, ConstructionSiteMapper constructionMapper) {
         this.constructionRepository = constructionRepository;
         this.constructionEventService = constructionEventService;
         this.redisService = redisService;

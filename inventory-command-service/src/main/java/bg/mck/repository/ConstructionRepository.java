@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConstructionRepository extends JpaRepository<ConstructionSiteEntity, Long> {
+
+    ConstructionSiteEntity findByName(String name);
 }
