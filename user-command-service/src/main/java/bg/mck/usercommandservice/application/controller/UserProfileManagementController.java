@@ -2,7 +2,6 @@ package bg.mck.usercommandservice.application.controller;
 
 import bg.mck.usercommandservice.application.dto.UserStatusDTO;
 import bg.mck.usercommandservice.application.service.UserProfileManagementService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EventConstructionSiteRepository extends MongoRepository<ConstructionEvent<? extends BaseConstructionEvent>, String> {
+public interface EventConstructionSiteRepository extends MongoRepository<BaseConstructionEvent, String> {
 
-    List<ConstructionEvent<? extends BaseConstructionEvent>> findConstructionEventByEventConstructionIdOrderByEventLocalDateTimeAsc(String eventConstructionId);
+    List<BaseConstructionEvent> findConstructionEventByConstructionIdOrderByLocalDateTimeAsc(String eventConstructionId);
 }

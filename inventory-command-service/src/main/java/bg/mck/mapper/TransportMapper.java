@@ -1,11 +1,11 @@
 package bg.mck.mapper;
 
-import bg.mck.dto.CreateServiceDTO;
-import bg.mck.entity.serviceEntity.ServiceEntity;
+import bg.mck.dto.CreateTransportDTO;
+import bg.mck.entity.transportEntity.TransportEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface ServiceMapper {
+public interface TransportMapper {
 
-    ServiceEntity mapCreateServiceDtoToServiceEntity(CreateServiceDTO createServiceDTO);
+    TransportEntity mapCreateTransportDtoToTransportEntity(CreateTransportDTO createTransportDTO);
 }

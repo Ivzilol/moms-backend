@@ -32,9 +32,8 @@ public class TransportDeleteService {
         transportRepository.deleteById(id);
 
         TransportDeletedEvent event = new TransportDeletedEvent(id, EventType.ItemDeleted, name);
-        TransportEvent<TransportDeletedEvent> transportEvent = EventCreationHelper.toTransportEvent(event);
 
-        inventoryQueryClient.sendTransportEvent(transportEvent, EventType.ItemDeleted.name());
+        inventoryQueryClient.sendTransportEvent(event, EventType.ItemDeleted.name());
     }
 
     private TransportEntity findById(Long id) {

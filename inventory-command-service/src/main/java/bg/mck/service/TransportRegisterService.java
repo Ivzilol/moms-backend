@@ -1,50 +1,54 @@
 package bg.mck.service;
 
 import bg.mck.client.InventoryQueryServiceClient;
-import bg.mck.dto.CreateServiceDTO;
-import bg.mck.entity.serviceEntity.ServiceEntity;
+import bg.mck.dto.CreateTransportDTO;
+import bg.mck.entity.transportEntity.TransportEntity;
 import bg.mck.enums.EventType;
-import bg.mck.events.service.ServiceRegisteredEvent;
+import bg.mck.events.transport.TransportRegisteredEvent;
 import bg.mck.exceptions.DuplicatedInventoryItemException;
-import bg.mck.mapper.ServiceMapper;
-import bg.mck.repository.ServiceRepository;
+import bg.mck.mapper.TransportMapper;
+import bg.mck.repository.TransportRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ServiceRegisterService {
+public class TransportRegisterService {
 
-    private final ServiceRepository serviceRepository;
-    private final ServiceMapper serviceMapper;
+    private final TransportRepository transportRepository;
+    private final TransportMapper transportMapper;
     private final InventoryQueryServiceClient inventoryQueryClient;
 
-    public ServiceRegisterService(ServiceRepository serviceRepository, ServiceMapper serviceMapper, InventoryQueryServiceClient inventoryQueryClient) {
-        this.serviceRepository = serviceRepository;
-        this.serviceMapper = serviceMapper;
+    public TransportRegisterService(TransportRepository transportRepository, TransportMapper transportMapper, InventoryQueryServiceClient inventoryQueryClient) {
+        this.transportRepository = transportRepository;
+        this.transportMapper = transportMapper;
         this.inventoryQueryClient = inventoryQueryClient;
     }
 
-    public void registerService(CreateServiceDTO createServiceDTO) {
-        checkIfDuplicated(createServiceDTO.getName());
 
-        ServiceEntity entity = serviceMapper.mapCreateServiceDtoToServiceEntity(createServiceDTO);
-        ServiceEntity savedEntity = serviceRepository.save(entity);
+    public void registerTransport(CreateTransportDTO createTransportDTO) {
+        checkIfDuplicated(createTransportDTO.getName());
 
-        ServiceRegisteredEvent event = new ServiceRegisteredEvent(
+        TransportEntity entity = transportMapper.mapCreateTransportDtoToTransportEntity(createTransportDTO);
+        TransportEntity savedEntity = transportRepository.save(entity);
+
+        TransportRegisteredEvent event = new TransportRegisteredEvent(
                 savedEntity.getId(),
                 EventType.ItemRegistered,
                 savedEntity.getName(),
+                savedEntity.getMaxLength(),
+                savedEntity.getWeight(),
+                savedEntity.getTruck(),
                 savedEntity.getQuantity(),
                 savedEntity.getDescription(),
                 savedEntity.getSpecificationFileUrl()
         );
 
-      inventoryQueryClient.sendServiceEvent(event, EventType.ItemRegistered.name());
+      inventoryQueryClient.sendTransportEvent(event, EventType.ItemRegistered.name());
 
     }
 
     private void checkIfDuplicated(String name) {
-        if (serviceRepository.findByName(name) != null) {
-            throw new DuplicatedInventoryItemException("Duplicated service with name: " + name);
+        if (transportRepository.findByName(name) != null) {
+            throw new DuplicatedInventoryItemException("Duplicated transport with name: " + name);
         }
     }
 }
