@@ -1,12 +1,8 @@
 package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
-import bg.mck.ordercommandservice.dto.FastenerDTO;
-import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
-import bg.mck.ordercommandservice.dto.OrderDTO;
-import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
-import bg.mck.ordercommandservice.entity.FastenerEntity;
-import bg.mck.ordercommandservice.entity.OrderEntity;
+import bg.mck.ordercommandservice.dto.*;
+import bg.mck.ordercommandservice.entity.*;
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import bg.mck.ordercommandservice.event.*;
@@ -185,40 +181,47 @@ public class OrderService {
     private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order) {
         switch (order.getMaterialType()) {
             case FASTENERS:
-                updateMaterialStatusFasteners(orderEntity, order);
+                updateMaterialStatus(orderEntity.getFasteners(), order.getFasteners());
                 break;
             case GALVANIZED_SHEET:
+                updateMaterialStatus(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets());
                 break;
             case INSULATION:
+                updateMaterialStatus(orderEntity.getInsulation(), order.getInsulation());
                 break;
             case METAL:
+                updateMaterialStatus(orderEntity.getMetals(), order.getMetals());
                 break;
             case PANELS:
+                updateMaterialStatus(orderEntity.getPanels(), order.getPanels());
                 break;
             case REBAR:
+                updateMaterialStatus(orderEntity.getRebars(), order.getRebars());
                 break;
             case SERVICE:
+                updateMaterialStatus(orderEntity.getServices(), order.getServices());
                 break;
             case SET:
+                updateMaterialStatus(orderEntity.getSets(), order.getSets());
                 break;
             case TRANSPORT:
+                updateMaterialStatus(orderEntity.getTransports(), order.getTransports());
                 break;
             case UNSPECIFIED:
+                updateMaterialStatus(orderEntity.getUnspecified(), order.getUnspecified());
                 break;
         }
     }
 
-    private static void updateMaterialStatusFasteners(OrderEntity orderEntity, OrderDTO order) {
-        orderEntity.getFasteners()
-                .forEach(fastener -> {
-                    Set<FastenerDTO> fastenersDTO = order.getFasteners();
-                    fastenersDTO.forEach(fastenerDTO -> {
-                        if (fastener.getId().equals(fastenerDTO.getId())) {
-                            fastener.setAdminNote(fastenerDTO.getAdminNote())
-                                    .setMaterialStatus(Enum.valueOf(MaterialStatus.class, fastenerDTO.getMaterialStatus()));
-                        }
-                    });
-                });
+    private void updateMaterialStatus(Set<? extends BaseMaterialEntity> materials, Set<? extends BaseDTO> materialsDTO) {
+        materials.forEach(material -> {
+            materialsDTO.forEach(materialDTO -> {
+                if (material.getId().equals(materialDTO.getId())) {
+                    material.setAdminNote(materialDTO.getAdminNote())
+                            .setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
+                }
+            });
+        });
     }
 
     private List<String> uploadFiles(List<MultipartFile> files) {
