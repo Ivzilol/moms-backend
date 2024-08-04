@@ -1,10 +1,13 @@
 package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
+import bg.mck.ordercommandservice.dto.FastenerDTO;
 import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
+import bg.mck.ordercommandservice.entity.FastenerEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import bg.mck.ordercommandservice.event.*;
 import bg.mck.ordercommandservice.mapper.*;
@@ -168,6 +171,54 @@ public class OrderService {
         LOGGER.info("Material with id {} deleted from order with id {}", materialId, orderId);
 
         return createOrderEvent(orderEntity);
+    }
+
+    public OrderConfirmationDTO updateOrderStatus(OrderDTO order) {
+        OrderEntity orderEntity = orderRepository.findById(order.getId())
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + order.getId() + " not found"));
+        orderEntity.setOrderStatus(order.getOrderStatus());
+        updateMaterialStatus(orderEntity, order);
+        orderRepository.save(orderEntity);
+        return null;
+    }
+
+    private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order) {
+        switch (order.getMaterialType()) {
+            case FASTENERS:
+                updateMaterialStatusFasteners(orderEntity, order);
+                break;
+            case GALVANIZED_SHEET:
+                break;
+            case INSULATION:
+                break;
+            case METAL:
+                break;
+            case PANELS:
+                break;
+            case REBAR:
+                break;
+            case SERVICE:
+                break;
+            case SET:
+                break;
+            case TRANSPORT:
+                break;
+            case UNSPECIFIED:
+                break;
+        }
+    }
+
+    private static void updateMaterialStatusFasteners(OrderEntity orderEntity, OrderDTO order) {
+        orderEntity.getFasteners()
+                .forEach(fastener -> {
+                    Set<FastenerDTO> fastenersDTO = order.getFasteners();
+                    fastenersDTO.forEach(fastenerDTO -> {
+                        if (fastener.getId().equals(fastenerDTO.getId())) {
+                            fastener.setAdminNote(fastenerDTO.getAdminNote())
+                                    .setMaterialStatus(Enum.valueOf(MaterialStatus.class, fastenerDTO.getMaterialStatus()));
+                        }
+                    });
+                });
     }
 
     private List<String> uploadFiles(List<MultipartFile> files) {
