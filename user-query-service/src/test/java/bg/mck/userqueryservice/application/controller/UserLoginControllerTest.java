@@ -58,7 +58,7 @@ class UserLoginControllerTest {
 
         String loginJson = mapper.writeValueAsString(loginDTO);
 
-        mockMvc.perform(post("/v1/user/query/login")
+        mockMvc.perform(post("/v1/user/user/query/login")
                         .contentType("application/json")
                         .content(loginJson))
                 .andExpect(status().isUnauthorized())

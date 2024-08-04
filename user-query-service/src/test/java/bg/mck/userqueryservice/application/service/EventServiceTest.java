@@ -65,20 +65,24 @@ public class EventServiceTest {
     public void testReconstructUserEntity_ShouldReturnUserEntity() {
         List<UserEvent<? extends BaseEvent>> userEvents = initUserEvents();
 
+        UserEntity user = new UserEntity();
+        user.setId("1");
+
         when(eventRepository.findByEventUserIdOrderByEventLocalDateTimeAsc(1L))
                 .thenReturn(userEvents);
 
         doNothing().when(redisService).cacheObject(any(UserEntity.class));
 
+        when(userRepository.findById("1")).thenReturn(Optional.of(user));
         UserEntity userEntity = eventService.reconstructUserEntity(1L);
 
         verify(userRepository).save(userEntity);
         verify(redisService).cacheObject(userEntity);
 
         assertEquals("1", userEntity.getId());
-        assertEquals("newName", userEntity.getFirstName());
-        assertEquals("newLastName", userEntity.getLastName());
-        assertEquals("00000000", userEntity.getPhoneNumber());
+        assertEquals("John", userEntity.getFirstName());
+        assertEquals("Doe", userEntity.getLastName());
+        assertEquals("1234567890", userEntity.getPhoneNumber());
         assertTrue(userEntity.isActive());
         assertEquals(Set.of("user"), userEntity.getRoles());
         assertTrue(BCrypt.checkpw("newPassword", userEntity.getPassword()));
@@ -88,14 +92,12 @@ public class EventServiceTest {
 
     @Test
     public void testProcessUserEvent_UserProfileUpdatedEvent() throws Exception {
-        ProfileUpdatedEvent profileUpdatedEvent = new ProfileUpdatedEvent();
+        ProfileStatusUpdatedEvent profileUpdatedEvent = new ProfileStatusUpdatedEvent();
         profileUpdatedEvent.setUserId(1L);
-        profileUpdatedEvent.setFirstName("name");
-        profileUpdatedEvent.setLastName("name");
-        profileUpdatedEvent.setPhoneNumber("00000000");
+        profileUpdatedEvent.setActive(true);
         profileUpdatedEvent.setLocalDateTime(LocalDateTime.now());
 
-        UserEvent<ProfileUpdatedEvent> userEvent = new UserEvent<>();
+        UserEvent<ProfileStatusUpdatedEvent> userEvent = new UserEvent<>();
         userEvent.setEvent(profileUpdatedEvent);
         userEvent.setEventType(EventType.UserProfileUpdated);
         userEvent.setId("2");
@@ -105,13 +107,13 @@ public class EventServiceTest {
         when(objectMapper.readValue(anyString(), any(TypeReference.class))).thenReturn(userEvent);
         when(userRepository.findById(anyString())).thenReturn(Optional.of(new UserEntity()));
 
-        ArgumentCaptor<UserEvent<ProfileUpdatedEvent>> eventCaptor = ArgumentCaptor.forClass(UserEvent.class);
+        ArgumentCaptor<UserEvent<ProfileStatusUpdatedEvent>> eventCaptor = ArgumentCaptor.forClass(UserEvent.class);
 
         eventService.processUserEvent(data, EventType.UserProfileUpdated.name());
 
         verify(eventService).reconstructUserEntity(anyLong());
         verify(eventRepository).save(eventCaptor.capture());
-        UserEvent<ProfileUpdatedEvent> savedEvent = eventCaptor.getValue();
+        UserEvent<ProfileStatusUpdatedEvent> savedEvent = eventCaptor.getValue();
 
         assertEquals(userEvent, savedEvent);
     }
@@ -231,14 +233,12 @@ public class EventServiceTest {
         userEvent1.setEventType(EventType.UserRegistered);
         userEvent1.setId("1");
 
-        ProfileUpdatedEvent profileUpdatedEvent = new ProfileUpdatedEvent();
+        ProfileStatusUpdatedEvent profileUpdatedEvent = new ProfileStatusUpdatedEvent();
         profileUpdatedEvent.setUserId(1L);
-        profileUpdatedEvent.setFirstName("newName");
-        profileUpdatedEvent.setLastName("newLastName");
-        profileUpdatedEvent.setPhoneNumber("00000000");
+        profileUpdatedEvent.setActive(true);
         profileUpdatedEvent.setLocalDateTime(LocalDateTime.now());
 
-        UserEvent<ProfileUpdatedEvent> userEvent2 = new UserEvent<>();
+        UserEvent<ProfileStatusUpdatedEvent> userEvent2 = new UserEvent<>();
         userEvent2.setEvent(profileUpdatedEvent);
         userEvent2.setEventType(EventType.UserProfileUpdated);
         userEvent2.setId("2");

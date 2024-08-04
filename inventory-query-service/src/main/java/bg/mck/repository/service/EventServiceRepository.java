@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EventServiceRepository extends MongoRepository<ServiceEvent<? extends BaseServiceEvent>, String> {
+public interface EventServiceRepository extends MongoRepository<BaseServiceEvent, String> {
 
 
-    List<ServiceEvent<? extends BaseServiceEvent>> findServiceEventsByEventServiceIdOrderByEventLocalDateTimeAsc(String eventServiceId);
+    List<BaseServiceEvent> findServiceEventsByServiceIdOrderByLocalDateTimeAsc(String eventServiceId);
 
 }

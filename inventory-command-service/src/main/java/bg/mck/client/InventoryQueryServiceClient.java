@@ -21,7 +21,7 @@ public interface InventoryQueryServiceClient {
                                                          @RequestHeader("Material-Type") String materialType);
 
     @PostMapping("/inventory/services/events")
-    <T extends BaseServiceEvent> void sendServiceEvent(@RequestBody ServiceEvent<T> data, @RequestHeader("Event-Type") String eventType);
+    void sendServiceEvent(@RequestBody BaseServiceEvent data, @RequestHeader("Event-Type") String eventType);
 
     @PostMapping("/inventory/transports/events")
     <T extends BaseTransportEvent> void sendTransportEvent(@RequestBody TransportEvent<T> data, @RequestHeader("Event-Type") String eventType);
