@@ -10,7 +10,7 @@ public class ConstructionRegisteredEvent extends BaseConstructionEvent {
     public ConstructionRegisteredEvent() {
     }
 
-    public ConstructionRegisteredEvent(String constructionId, EventType eventType, String constructionNumber, String name) {
+    public ConstructionRegisteredEvent(Long constructionId, EventType eventType, String constructionNumber, String name) {
         super(constructionId, eventType);
         this.constructionNumber = constructionNumber;
         this.name = name;

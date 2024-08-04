@@ -1,7 +1,6 @@
 package bg.mck.controller;
 
-import bg.mck.service.ConstructionSiteEventService;
-import bg.mck.service.ServiceEventService;
+import bg.mck.service.ConstructionEventService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ConstructionSiteEventController {
 
-    private final ConstructionSiteEventService constructionEventService;
+    private final ConstructionEventService constructionEventService;
 
-    public ConstructionSiteEventController(ConstructionSiteEventService constructionEventService) {
+    public ConstructionSiteEventController(ConstructionEventService constructionEventService) {
         this.constructionEventService = constructionEventService;
     }
 

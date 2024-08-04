@@ -93,7 +93,7 @@ class UserQueryControllerTest {
     public void testGetUserDetailsById_ShouldReturnUserDetails() throws Exception {
 
         mockMvc
-                .perform(get("/" + ApplicationConstants.APPLICATION_VERSION + "/user/users/" + user.getId()))
+                .perform(get("/" + ApplicationConstants.APPLICATION_VERSION + "/user/user/query/user/" + user.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(user.getId())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())))

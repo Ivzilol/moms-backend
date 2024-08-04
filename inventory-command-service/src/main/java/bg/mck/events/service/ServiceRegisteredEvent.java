@@ -10,10 +10,9 @@ public class ServiceRegisteredEvent extends BaseServiceEvent{
     private String specificationFileUrl;
 
     public ServiceRegisteredEvent() {
-
     }
 
-    public ServiceRegisteredEvent(String serviceId, EventType eventType, String name, Double quantity, String description, String specificationFileUrl) {
+    public ServiceRegisteredEvent(Long serviceId, EventType eventType, String name, Double quantity, String description, String specificationFileUrl) {
         super(serviceId, eventType);
         this.name = name;
         this.quantity = quantity;

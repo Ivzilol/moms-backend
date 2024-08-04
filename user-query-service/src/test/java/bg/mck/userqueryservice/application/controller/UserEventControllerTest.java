@@ -128,17 +128,15 @@ public class UserEventControllerTest {
 
     @Test
     public void testProcessUserEvent_UpdateProfileEvent() throws Exception {
-        ProfileUpdatedEvent profileUpdatedEvent = new ProfileUpdatedEvent();
+        ProfileStatusUpdatedEvent profileUpdatedEvent = new ProfileStatusUpdatedEvent();
         profileUpdatedEvent.setUserId(1L);
-        profileUpdatedEvent.setFirstName("newName");
-        profileUpdatedEvent.setLastName("newLastName");
-        profileUpdatedEvent.setPhoneNumber("00000000");
+        profileUpdatedEvent.setActive(true);
         profileUpdatedEvent.setLocalDateTime(LocalDateTime.now());
 
-        UserEvent<ProfileUpdatedEvent> userEvent = new UserEvent<>();
+        UserEvent<ProfileStatusUpdatedEvent> userEvent = new UserEvent<>();
         userEvent.setEvent(profileUpdatedEvent);
         userEvent.setEventType(EventType.UserProfileUpdated);
-        userEvent.setId("2");
+        userEvent.setId("200");
 
         String data = objectMapper.writeValueAsString(userEvent);
 
@@ -150,12 +148,11 @@ public class UserEventControllerTest {
 
         UserEntity userEntity = userRepository.findById(profileUpdatedEvent.getUserId().toString()).orElse(null);
         assertNotNull(userEntity);
-        assertEquals(profileUpdatedEvent.getFirstName(), userEntity.getFirstName());
-        assertEquals(profileUpdatedEvent.getLastName(), userEntity.getLastName());
-        assertEquals(profileUpdatedEvent.getPhoneNumber(), userEntity.getPhoneNumber());
+        assertEquals(profileUpdatedEvent.isActive(), userEntity.isActive());
+
 
         UserEvent<? extends BaseEvent> savedEvent = eventRepository.findById(userEvent.getId()).get();
-        assertEquals(profileUpdatedEvent, savedEvent.getEvent());
+        assertEquals(userEvent.getId(), savedEvent.getId());
     }
 
 

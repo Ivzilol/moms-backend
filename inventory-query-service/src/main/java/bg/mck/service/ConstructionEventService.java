@@ -8,7 +8,6 @@ import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.repository.constructionSite.ConstructionSiteRepository;
 import bg.mck.repository.constructionSite.EventConstructionSiteRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ConstructionSiteEventService {
+public class ConstructionEventService {
 
 
     private final ObjectMapper objectMapper;
@@ -24,19 +23,21 @@ public class ConstructionSiteEventService {
     private final ConstructionSiteRepository constructionRepository;
     private final ConstructionRedisService redisService;
     private final ConstructionDeleteService constructionDeleteService;
+    private final ConstructionRegisterService constructionRegisterService;
 
-    public ConstructionSiteEventService(ObjectMapper objectMapper, EventConstructionSiteRepository eventConstructionRepository, ConstructionSiteRepository constructionRepository, ConstructionRedisService redisService, ConstructionDeleteService constructionDeleteService) {
+    public ConstructionEventService(ObjectMapper objectMapper, EventConstructionSiteRepository eventConstructionRepository, ConstructionSiteRepository constructionRepository, ConstructionRedisService redisService, ConstructionDeleteService constructionDeleteService, ConstructionRegisterService constructionRegisterService) {
         this.objectMapper = objectMapper;
         this.eventConstructionRepository = eventConstructionRepository;
         this.constructionRepository = constructionRepository;
         this.redisService = redisService;
         this.constructionDeleteService = constructionDeleteService;
+        this.constructionRegisterService = constructionRegisterService;
     }
 
     public ConstructionSiteEntity reconstructConstructionEntity(String id) {
         doesConstructionSiteExist(id);
-        List<ConstructionEvent<? extends BaseConstructionEvent>> events = eventConstructionRepository
-                .findConstructionEventByEventConstructionIdOrderByEventLocalDateTimeAsc(id);
+        List<BaseConstructionEvent> events = eventConstructionRepository
+                .findConstructionEventByConstructionIdOrderByLocalDateTimeAsc(id);
 
         ConstructionSiteEntity constructionEntity = new ConstructionSiteEntity();
         constructionEntity.setId(id);
@@ -53,15 +54,19 @@ public class ConstructionSiteEventService {
 
     public void processConstructionEvent(String data, String eventType) throws JsonProcessingException {
         if (eventType.equals(EventType.ItemRegistered.name())) {
+            ConstructionRegisteredEvent event = objectMapper.readValue(data, ConstructionRegisteredEvent.class);
 
+            saveEvent(event);
+            evictCache(event.getName());
+
+            constructionRegisterService.processingRegisterConstruction(event);
         } else if (eventType.equals(EventType.ItemDeleted.name())) {
-            ConstructionEvent<ConstructionDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
-            });
+            ConstructionDeletedEvent event = objectMapper.readValue(data, ConstructionDeletedEvent.class);
 
-            String constructionId = event.getEvent().getConstructionId();
+            String constructionId = event.getConstructionId();
             doesConstructionSiteExist(constructionId);
             saveEvent(event);
-            evictCache(event.getEvent().getName());
+            evictCache(event.getName());
 
             constructionDeleteService.deleteConstructionSiteById(constructionId);
             redisService.clearCacheForObject(constructionId);
@@ -73,8 +78,7 @@ public class ConstructionSiteEventService {
 
     }
 
-    private void applyEvent(ConstructionEvent<? extends BaseConstructionEvent> constructionEvent, ConstructionSiteEntity constructionSiteEntity) {
-        BaseConstructionEvent event = constructionEvent.getEvent();
+    private void applyEvent(BaseConstructionEvent event, ConstructionSiteEntity constructionSiteEntity) {
 
         //TODO: implement the logic in the if-else condition
         if (event instanceof ConstructionUpdateEvent updateEvent) {
@@ -93,7 +97,7 @@ public class ConstructionSiteEventService {
         }
     }
 
-    private <T extends BaseConstructionEvent> ConstructionEvent<T> saveEvent(ConstructionEvent<T> constructionEvent) {
+    private BaseConstructionEvent saveEvent(BaseConstructionEvent constructionEvent) {
         return eventConstructionRepository.save(constructionEvent);
     }
 

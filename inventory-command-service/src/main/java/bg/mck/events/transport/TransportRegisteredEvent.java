@@ -3,7 +3,6 @@ package bg.mck.events.transport;
 import bg.mck.enums.EventType;
 
 public class TransportRegisteredEvent extends BaseTransportEvent{
-
     private String name;
     private Double maxLength;
     private Double weight;
@@ -13,10 +12,9 @@ public class TransportRegisteredEvent extends BaseTransportEvent{
     private String specificationFileUrl;
 
     public TransportRegisteredEvent() {
-
     }
 
-    public TransportRegisteredEvent(String transportId, EventType eventType, String name, Double maxLength, Double weight, String truck, Double quantity, String description, String specificationFileUrl) {
+    public TransportRegisteredEvent(Long transportId, EventType eventType, String name, Double maxLength, Double weight, String truck, Double quantity, String description, String specificationFileUrl) {
         super(transportId, eventType);
         this.name = name;
         this.maxLength = maxLength;
