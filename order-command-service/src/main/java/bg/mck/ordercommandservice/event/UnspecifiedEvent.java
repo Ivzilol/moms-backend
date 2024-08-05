@@ -14,11 +14,13 @@ public class UnspecifiedEvent {
     public UnspecifiedEvent() {
     }
 
-    public UnspecifiedEvent(Long id, Double quantity, String description, String specificationFileUrl) {
+    public UnspecifiedEvent(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {

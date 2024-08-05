@@ -16,13 +16,15 @@ public class InsulationEvent {
     public InsulationEvent() {
     }
 
-    public InsulationEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String thickness) {
+    public InsulationEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String thickness, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.type = type;
         this.thickness = thickness;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {
