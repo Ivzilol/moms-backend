@@ -3,7 +3,9 @@ package bg.mck.service;
 import bg.mck.entity.transportEntity.TransportEntity;
 import bg.mck.events.transport.TransportRegisteredEvent;
 import bg.mck.repository.transport.TransportRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TransportRegisterService {
 
     private final TransportRepository transportRepository;
