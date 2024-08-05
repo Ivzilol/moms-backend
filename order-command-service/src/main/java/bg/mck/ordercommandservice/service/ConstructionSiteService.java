@@ -52,9 +52,9 @@ public class ConstructionSiteService {
     public ConstructionSiteEntity getConstructionSiteByNumberAndName(ConstructionSiteDTO constructionSite) {
         String constructionNumber = constructionSite.getConstructionNumber();
         String name = constructionSite.getName();
-        Optional<ConstructionSiteEntity> constructionSiteByNumberAndName = constructionSiteRepository.findByConstructionNumberAndName(constructionNumber, name);
-        if (constructionSiteByNumberAndName.isPresent()) {
-            return constructionSiteByNumberAndName.get();
+        Optional<ConstructionSiteEntity> constructionSiteByName = constructionSiteRepository.findByName(name);
+        if (constructionSiteByName.isPresent()) {
+            return constructionSiteByName.get();
         }
         throw new ConstructionSiteNotFoundException("Construction site with number " + constructionNumber + " and name " + name + " not found");
     }
