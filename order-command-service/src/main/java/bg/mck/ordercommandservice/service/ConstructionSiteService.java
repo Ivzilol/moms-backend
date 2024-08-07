@@ -102,11 +102,13 @@ public class ConstructionSiteService {
 
     @Transactional
     public ConstructionSiteDTO updateConstructionSite(ConstructionSiteDTO constructionSiteDTO) {
-        ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntity(constructionSiteDTO);
-        constructionSiteEntity.setId(constructionSiteDTO.getId());
+        checkIfExistsByNameAndNumber(constructionSiteDTO);
 
-        checkIfExistsById(constructionSiteEntity);
-        checkIfExistsByNameAndNumber(constructionSiteEntity);
+        ConstructionSiteEntity constructionSiteEntity = constructionSiteRepository.findById(constructionSiteDTO.getId())
+                .orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site with id " + constructionSiteDTO.getId() + " not found"));
+        
+        constructionSiteEntity.setName(constructionSiteDTO.getName());
+        constructionSiteEntity.setConstructionNumber(constructionSiteDTO.getConstructionNumber());
 
         ConstructionSiteEntity updatedConstructionSite = constructionSiteRepository.save(constructionSiteEntity);
         ConstructionSiteDTO updatedConstructionSiteDTO = constructionSiteMapper.toDTO(updatedConstructionSite);
@@ -116,6 +118,29 @@ public class ConstructionSiteService {
         EventData<ConstructionSiteEvent> constructionSiteEvent = createConstructionSiteEvent(updatedConstructionSite, isUpdate);
         sendConstructionSiteEvent(constructionSiteEvent);
         return updatedConstructionSiteDTO;
+    }
+
+    private void checkIfExistsByNameAndNumber(ConstructionSiteDTO constructionSiteDTO) {
+        String name = constructionSiteDTO.getName();
+        String constructionNumber = constructionSiteDTO.getConstructionNumber();
+        constructionSiteRepository.findByConstructionNumberAndName(constructionNumber, name)
+                .ifPresent(constructionSite -> {
+                    throw new ConstructionSiteAlreadyExists("Construction site with number " + constructionSiteDTO.getConstructionNumber() + " and name " + constructionSiteDTO.getName() + " already exists");
+                });
+        checkIfExistsByName(name);
+        checkIfExistsByNumber(constructionNumber);
+    }
+
+    private void checkIfExistsByNumber(String constructionNumber) {
+        if (constructionSiteRepository.findByConstructionNumber(constructionNumber).isPresent()) {
+            throw new ConstructionSiteAlreadyExists("Construction site with number " + constructionNumber + " already exists");
+        }
+    }
+
+    private void checkIfExistsByName(String name) {
+        if (constructionSiteRepository.findByName(name).isPresent()) {
+            throw new ConstructionSiteAlreadyExists("Construction site with name " + name + " already exists");
+        }
     }
 
     private void checkIfExistsById(ConstructionSiteEntity constructionSiteEntity) {
