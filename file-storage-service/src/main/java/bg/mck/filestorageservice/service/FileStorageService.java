@@ -10,10 +10,13 @@ import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 @Service
 public class FileStorageService {
@@ -35,10 +38,13 @@ public class FileStorageService {
         return id.toString();
     }
 
-    public GridFsResource getFileById(String id) {
-//        GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
-        File file = new File(id);
-        return gridFsTemplate.getResource(file.toString());
+    public Optional<GridFsResource> getFileById(String id) {
+        GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id)));
+        if (file != null) {
+            GridFsResource resource = gridFsTemplate.getResource(file);
+            return Optional.of(resource);
+        }
+        return Optional.empty();
     }
 }
 
