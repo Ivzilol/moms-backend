@@ -13,13 +13,16 @@ import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,6 +35,8 @@ public class OrderService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
+    @Value("${APPLICATION_VERSION}")
+    private String APPLICATION_VERSION;
     private final OrderRepository orderRepository;
     private final ConstructionSiteService constructionSiteService;
     private final OrderMapper orderMapper;
@@ -47,8 +52,9 @@ public class OrderService {
     private final TransportMapper transportMapper;
     private final UnspecifiedMapper unspecifiedMapper;
     private final MaterialService materialService;
+    private final RestTemplate restTemplate;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService, RestTemplate restTemplate) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
         this.orderMapper = orderMapper;
@@ -64,6 +70,7 @@ public class OrderService {
         this.transportMapper = transportMapper;
         this.unspecifiedMapper = unspecifiedMapper;
         this.materialService = materialService;
+        this.restTemplate = restTemplate;
     }
 
 
@@ -228,7 +235,22 @@ public class OrderService {
         if (files == null || files.isEmpty()) {
             return null;
         }
-        //TODO: implement file upload
+//        List<String> filesUrl = new ArrayList<>();
+//                files.forEach(file -> {
+//
+//                    try {
+//                        String fileUrl = restTemplate
+//                                .getForObject("http://file-storage-service/"
+//                                        + APPLICATION_VERSION
+//                                        + "/user/files/upload", String.class);
+//
+//                        filesUrl.add(fileUrl);
+//                    } catch (Exception e) {
+//                        LOGGER.error("Error uploading file: {}", e.getMessage());
+//                        throw new RuntimeException("Error uploading file: " + e.getMessage());
+//                    }
+//                }); ;
+//        return filesUrl;
         return null;
     }
 
