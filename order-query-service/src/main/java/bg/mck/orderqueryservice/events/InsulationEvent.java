@@ -1,5 +1,7 @@
 package bg.mck.orderqueryservice.events;
 
+import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
+
 public class InsulationEvent {
 
     private Long id;
@@ -8,6 +10,8 @@ public class InsulationEvent {
     private String specificationFileUrl;
     private String type;
     private String thickness;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public InsulationEvent() {
     }
@@ -27,6 +31,24 @@ public class InsulationEvent {
 
     public InsulationEvent setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public InsulationEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public InsulationEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 

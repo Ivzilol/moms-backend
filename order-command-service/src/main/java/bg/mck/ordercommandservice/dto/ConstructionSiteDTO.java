@@ -9,7 +9,7 @@ public class ConstructionSiteDTO {
     @NotNull(message = "Construction site name must not be empty.")
     private String name;
 
-    @NotNull(message = "Construction site number must not be empty.")
+//    @NotNull(message = "Construction site number must not be empty.")
     private String constructionNumber;
 
     public ConstructionSiteDTO() {

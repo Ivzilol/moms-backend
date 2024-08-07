@@ -1,10 +1,9 @@
 package bg.mck.ordercommandservice.service;
 
 import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
-import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
-import bg.mck.ordercommandservice.dto.OrderDTO;
-import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
-import bg.mck.ordercommandservice.entity.OrderEntity;
+import bg.mck.ordercommandservice.dto.*;
+import bg.mck.ordercommandservice.entity.*;
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import bg.mck.ordercommandservice.event.*;
 import bg.mck.ordercommandservice.mapper.*;
@@ -14,13 +13,16 @@ import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -33,6 +35,8 @@ public class OrderService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
 
+    @Value("${APPLICATION_VERSION}")
+    private String APPLICATION_VERSION;
     private final OrderRepository orderRepository;
     private final ConstructionSiteService constructionSiteService;
     private final OrderMapper orderMapper;
@@ -48,8 +52,9 @@ public class OrderService {
     private final TransportMapper transportMapper;
     private final UnspecifiedMapper unspecifiedMapper;
     private final MaterialService materialService;
+    private final RestTemplate restTemplate;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService, RestTemplate restTemplate) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
         this.orderMapper = orderMapper;
@@ -65,6 +70,7 @@ public class OrderService {
         this.transportMapper = transportMapper;
         this.unspecifiedMapper = unspecifiedMapper;
         this.materialService = materialService;
+        this.restTemplate = restTemplate;
     }
 
 
@@ -170,11 +176,81 @@ public class OrderService {
         return createOrderEvent(orderEntity);
     }
 
+    public OrderConfirmationDTO updateOrderStatus(OrderDTO order) {
+        OrderEntity orderEntity = orderRepository.findById(order.getId())
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + order.getId() + " not found"));
+        orderEntity.setOrderStatus(order.getOrderStatus());
+        updateMaterialStatus(orderEntity, order);
+        orderRepository.save(orderEntity);
+        return createOrderEvent(orderEntity);
+    }
+
+    private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order) {
+        switch (order.getMaterialType()) {
+            case FASTENERS:
+                updateMaterialStatus(orderEntity.getFasteners(), order.getFasteners());
+                break;
+            case GALVANIZED_SHEET:
+                updateMaterialStatus(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets());
+                break;
+            case INSULATION:
+                updateMaterialStatus(orderEntity.getInsulation(), order.getInsulation());
+                break;
+            case METAL:
+                updateMaterialStatus(orderEntity.getMetals(), order.getMetals());
+                break;
+            case PANELS:
+                updateMaterialStatus(orderEntity.getPanels(), order.getPanels());
+                break;
+            case REBAR:
+                updateMaterialStatus(orderEntity.getRebars(), order.getRebars());
+                break;
+            case SERVICE:
+                updateMaterialStatus(orderEntity.getServices(), order.getServices());
+                break;
+            case SET:
+                updateMaterialStatus(orderEntity.getSets(), order.getSets());
+                break;
+            case TRANSPORT:
+                updateMaterialStatus(orderEntity.getTransports(), order.getTransports());
+                break;
+            case UNSPECIFIED:
+                updateMaterialStatus(orderEntity.getUnspecified(), order.getUnspecified());
+                break;
+        }
+    }
+
+    private void updateMaterialStatus(Set<? extends BaseMaterialEntity> materials, Set<? extends BaseDTO> materialsDTO) {
+        materials.forEach(material -> {
+            materialsDTO.forEach(materialDTO -> {
+                if (material.getId().equals(materialDTO.getId())) {
+                    material.setAdminNote(materialDTO.getAdminNote())
+                            .setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
+                }
+            });
+        });
+    }
+
     private List<String> uploadFiles(List<MultipartFile> files) {
         if (files == null || files.isEmpty()) {
             return null;
         }
-        //TODO: implement file upload
+//        List<String> filesUrl = new ArrayList<>();
+//                files.forEach(file -> {
+//
+//                    try {
+//                        String fileUrl = restTemplate
+//                                .getForObject("http://file-storage-service/"
+//                                        + APPLICATION_VERSION
+//                                        + "/user/files/upload", String.class);
+//
+//                        filesUrl.add(fileUrl);
+//                    } catch (Exception e) {
+//                        LOGGER.error("Error uploading file: {}", e.getMessage());
+//                        throw new RuntimeException("Error uploading file: " + e.getMessage());
+//                    }
+//                }); ;
+//        return filesUrl;
         return null;
     }
 

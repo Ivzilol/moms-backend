@@ -1,0 +1,36 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: file-storage-service
+  config:
+    import: optional:configserver:http://localhost:8888/,optional:file:./application-env.properties
+  data:
+    mongodb:
+      uri: mongodb://your_username:your_password@localhost:27020/file_storage_db?authSource=admin
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+        web:
+          client:
+            RestTemplate: DEBUG
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+APPLICATION_VERSION: V1

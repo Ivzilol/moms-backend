@@ -19,6 +19,20 @@ public class FasterEvent {
     public FasterEvent() {
     }
 
+    public FasterEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String diameter, String length, String model, String clazz, String adminNote, MaterialStatus materialStatus) {
+        this.id = id;
+        this.quantity = quantity;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+        this.type = type;
+        this.diameter = diameter;
+        this.length = length;
+        this.model = model;
+        this.clazz = clazz;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
+    }
+
     public Long getId() {
         return id;
     }
