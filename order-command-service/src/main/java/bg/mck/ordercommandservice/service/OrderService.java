@@ -182,7 +182,7 @@ public class OrderService {
         orderEntity.setOrderStatus(order.getOrderStatus());
         updateMaterialStatus(orderEntity, order);
         orderRepository.save(orderEntity);
-        return null;
+        return createOrderEvent(orderEntity);
     }
 
     private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order) {
