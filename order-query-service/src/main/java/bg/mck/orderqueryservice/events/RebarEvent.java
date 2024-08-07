@@ -1,5 +1,7 @@
 package bg.mck.orderqueryservice.events;
 
+import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
+
 public class RebarEvent {
 
     private Long id;
@@ -8,6 +10,8 @@ public class RebarEvent {
     private String specificationFileUrl;
     private String maxLength;
     private String weight;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public RebarEvent() {
     }
@@ -36,6 +40,24 @@ public class RebarEvent {
 
     public RebarEvent setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public RebarEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public RebarEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 
