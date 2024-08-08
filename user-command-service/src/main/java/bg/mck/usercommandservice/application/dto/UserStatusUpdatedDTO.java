@@ -2,7 +2,7 @@ package bg.mck.usercommandservice.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserStatusDTO {
+public class UserStatusUpdatedDTO {
 
     @JsonProperty("isActive")
     private boolean isActive;
@@ -11,7 +11,7 @@ public class UserStatusDTO {
         return isActive;
     }
 
-    public UserStatusDTO setActive(boolean active) {
+    public UserStatusUpdatedDTO setActive(boolean active) {
         isActive = active;
         return this;
     }

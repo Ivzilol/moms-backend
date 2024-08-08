@@ -2,15 +2,13 @@ package bg.mck.usercommandservice.application.dto;
 
 
 import bg.mck.usercommandservice.application.enums.AuthorityEnum;
-import bg.mck.usercommandservice.application.validation.annotation.UniqueEmail;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
-public class UserDetailsDTO {
+public class UserUpdatedDTO {
 
-    @UniqueEmail
     @Email(message = "Email should be valid")
     @NotEmpty(message = "Email cannot be empty")
     private String email;
@@ -32,7 +30,7 @@ public class UserDetailsDTO {
         return firstName;
     }
 
-    public UserDetailsDTO setFirstName(@NotEmpty(message = "First Name cannot be empty") String firstName) {
+    public UserUpdatedDTO setFirstName(@NotEmpty(message = "First Name cannot be empty") String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -41,7 +39,7 @@ public class UserDetailsDTO {
         return lastName;
     }
 
-    public UserDetailsDTO setLastName(@NotEmpty(message = "Last Name cannot be empty") String lastName) {
+    public UserUpdatedDTO setLastName(@NotEmpty(message = "Last Name cannot be empty") String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -50,7 +48,7 @@ public class UserDetailsDTO {
         return phoneNumber;
     }
 
-    public UserDetailsDTO setPhoneNumber(@NotEmpty(message = "Phone Number cannot be empty") String phoneNumber) {
+    public UserUpdatedDTO setPhoneNumber(@NotEmpty(message = "Phone Number cannot be empty") String phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
@@ -59,7 +57,7 @@ public class UserDetailsDTO {
         return email;
     }
 
-    public UserDetailsDTO setEmail(@Email(message = "Email should be valid") @NotEmpty(message = "Email cannot be empty") String email) {
+    public UserUpdatedDTO setEmail(@Email(message = "Email should be valid") @NotEmpty(message = "Email cannot be empty") String email) {
         this.email = email;
         return this;
     }
@@ -69,7 +67,7 @@ public class UserDetailsDTO {
         return role;
     }
 
-    public UserDetailsDTO setRole(AuthorityEnum role) {
+    public UserUpdatedDTO setRole(AuthorityEnum role) {
         this.role = role;
         return this;
     }

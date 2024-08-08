@@ -1,9 +1,8 @@
 package bg.mck.usercommandservice.application.service;
 
 import bg.mck.usercommandservice.application.client.UserQueryServiceClient;
-import bg.mck.usercommandservice.application.dto.UserCredentialsDTO;
-import bg.mck.usercommandservice.application.dto.UserDetailsDTO;
-import bg.mck.usercommandservice.application.dto.UserStatusDTO;
+import bg.mck.usercommandservice.application.dto.UserUpdatedDTO;
+import bg.mck.usercommandservice.application.dto.UserStatusUpdatedDTO;
 import bg.mck.usercommandservice.application.entity.Authority;
 import bg.mck.usercommandservice.application.entity.UserEntity;
 import bg.mck.usercommandservice.application.enums.AuthorityEnum;
@@ -11,7 +10,6 @@ import bg.mck.usercommandservice.application.enums.EventType;
 import bg.mck.usercommandservice.application.events.ProfileStatusUpdatedEvent;
 import bg.mck.usercommandservice.application.events.ProfileUpdatedEvent;
 import bg.mck.usercommandservice.application.events.UserEvent;
-import bg.mck.usercommandservice.application.exceptions.InvalidPasswordException;
 import bg.mck.usercommandservice.application.exceptions.UserNotFoundException;
 import bg.mck.usercommandservice.application.repository.AuthorityRepository;
 import bg.mck.usercommandservice.application.repository.UserRepository;
@@ -42,7 +40,7 @@ public class UserProfileManagementService {
         this.authorityRepository = authorityRepository;
     }
 
-    public void updateUserStatus(Long id, UserStatusDTO dto) {
+    public void updateUserStatus(Long id, UserStatusUpdatedDTO dto) {
         UserEntity userEntity = userRepository
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with ID: " + id + " not found."));
@@ -64,7 +62,7 @@ public class UserProfileManagementService {
         }
     }
 
-    public void updateUserProfile(Long id, UserDetailsDTO dto) {
+    public void updateUserProfile(Long id, UserUpdatedDTO dto) {
         UserEntity userEntity = userRepository
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with ID: " + id + " not found."));
