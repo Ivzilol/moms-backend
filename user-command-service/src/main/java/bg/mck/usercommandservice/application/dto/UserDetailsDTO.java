@@ -1,12 +1,17 @@
 package bg.mck.usercommandservice.application.dto;
 
 
+import bg.mck.usercommandservice.application.validation.annotation.UniqueEmail;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 public class UserDetailsDTO {
 
-    @NotEmpty(message = "Password cannot be empty")
-    private String password;
+    @UniqueEmail
+    @Email(message = "Email should be valid")
+    @NotEmpty(message = "Email cannot be empty")
+    private String email;
 
     @NotEmpty(message = "First Name cannot be empty")
     private String firstName;
@@ -17,15 +22,6 @@ public class UserDetailsDTO {
     @NotEmpty(message = "Phone Number cannot be empty")
     private String phoneNumber;
 
-
-    public @NotEmpty(message = "Password cannot be empty") String getPassword() {
-        return password;
-    }
-
-    public UserDetailsDTO setPassword(@NotEmpty(message = "Password cannot be empty") String password) {
-        this.password = password;
-        return this;
-    }
 
     public @NotEmpty(message = "First Name cannot be empty") String getFirstName() {
         return firstName;
@@ -51,6 +47,15 @@ public class UserDetailsDTO {
 
     public UserDetailsDTO setPhoneNumber(@NotEmpty(message = "Phone Number cannot be empty") String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    public @Email(message = "Email should be valid") @NotEmpty(message = "Email cannot be empty") String getEmail() {
+        return email;
+    }
+
+    public UserDetailsDTO setEmail(@Email(message = "Email should be valid") @NotEmpty(message = "Email cannot be empty") String email) {
+        this.email = email;
         return this;
     }
 }
