@@ -1,8 +1,9 @@
-package bg.mck.usercommandservice.application.events;
+package bg.mck.userqueryservice.application.events;
 
 
-import bg.mck.usercommandservice.application.enums.EventType;
+import bg.mck.userqueryservice.application.enums.EventType;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class ProfileUpdatedEvent extends BaseEvent {
@@ -16,8 +17,8 @@ public class ProfileUpdatedEvent extends BaseEvent {
     public ProfileUpdatedEvent() {
     }
 
-    public ProfileUpdatedEvent(EventType eventType, Long userId, String email, String firstName, String lastName, String phoneNumber, Set<String> roles) {
-        super(eventType, userId);
+    public ProfileUpdatedEvent(EventType eventType, Long userId, LocalDateTime localDateTime, String email, String firstName, String lastName, String phoneNumber, Set<String> roles) {
+        super(eventType, userId, localDateTime);
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,6 +53,15 @@ public class ProfileUpdatedEvent extends BaseEvent {
         return this;
     }
 
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public ProfileUpdatedEvent setRoles(Set<String> roles) {
+        this.roles = roles;
+        return this;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -61,12 +71,5 @@ public class ProfileUpdatedEvent extends BaseEvent {
         return this;
     }
 
-    public Set<String> getRoles() {
-        return roles;
-    }
 
-    public ProfileUpdatedEvent setRoles(Set<String> roles) {
-        this.roles = roles;
-        return this;
-    }
 }

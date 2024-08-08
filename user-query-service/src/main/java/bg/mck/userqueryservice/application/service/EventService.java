@@ -62,7 +62,12 @@ public class EventService {
             saveEvent(userEvent);
             reconstructUserEntity(userEvent.getEvent().getUserId());
         } else  if (eventType.equals(EventType.UserProfileUpdated.name())) {
+            UserEvent<ProfileUpdatedEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
+            });
 
+            doesUserExist(userEvent.getEvent().getUserId());
+            saveEvent(userEvent);
+            reconstructUserEntity(userEvent.getEvent().getUserId());
         } else if (eventType.equals(EventType.UserRegistered.name())) {
 
             UserEvent<RegisteredUserEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
@@ -94,6 +99,13 @@ public class EventService {
 
         if (event instanceof ProfileStatusUpdatedEvent updateEvent) {
             userEntity.setActive(updateEvent.isActive());
+
+        } else if (event instanceof ProfileUpdatedEvent updateEvent) {
+            userEntity.setEmail(updateEvent.getEmail());
+            userEntity.setFirstName(updateEvent.getFirstName());
+            userEntity.setLastName(updateEvent.getLastName());
+            userEntity.setRoles(updateEvent.getRoles());
+            userEntity.setPhoneNumber(updateEvent.getPhoneNumber());
 
         } else if (event instanceof RegisteredUserEvent registerEvent) {
             userEntity.setId(String.valueOf(registerEvent.getUserId()));

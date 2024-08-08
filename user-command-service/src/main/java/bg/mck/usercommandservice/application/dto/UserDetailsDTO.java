@@ -1,8 +1,10 @@
 package bg.mck.usercommandservice.application.dto;
 
 
+import bg.mck.usercommandservice.application.enums.AuthorityEnum;
 import bg.mck.usercommandservice.application.validation.annotation.UniqueEmail;
-import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -21,6 +23,9 @@ public class UserDetailsDTO {
 
     @NotEmpty(message = "Phone Number cannot be empty")
     private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    private AuthorityEnum role;
 
 
     public @NotEmpty(message = "First Name cannot be empty") String getFirstName() {
@@ -56,6 +61,16 @@ public class UserDetailsDTO {
 
     public UserDetailsDTO setEmail(@Email(message = "Email should be valid") @NotEmpty(message = "Email cannot be empty") String email) {
         this.email = email;
+        return this;
+    }
+
+
+    public AuthorityEnum getRole() {
+        return role;
+    }
+
+    public UserDetailsDTO setRole(AuthorityEnum role) {
+        this.role = role;
         return this;
     }
 }
