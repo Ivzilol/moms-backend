@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.testUtils;
 
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
+import bg.mck.ordercommandservice.event.ConstructionSiteEvent;
 
 public class ConstructionSiteUtil {
     public static ConstructionSiteDTO createConstructionSiteDTO() {
@@ -24,5 +25,12 @@ public class ConstructionSiteUtil {
         constructionSiteEntity.setConstructionNumber("1234");
         constructionSiteEntity.setName("Site Name");
         return constructionSiteEntity;
+    }
+
+    public static ConstructionSiteEvent createConstructionSiteEvent() {
+        ConstructionSiteEvent constructionSiteEvent = new ConstructionSiteEvent();
+        constructionSiteEvent.setConstructionNumber("1234");
+        constructionSiteEvent.setName("Site Name");
+        return constructionSiteEvent;
     }
 }

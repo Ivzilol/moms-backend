@@ -4,11 +4,9 @@ import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,11 +30,12 @@ class ConstructionSiteControllerTest {
         constructionSiteDTO = new ConstructionSiteDTO();
         constructionSiteDTO.setConstructionNumber("12345");
         constructionSiteDTO.setName("New Site");
+        constructionSiteDTO.setId(null);
     }
 
     @Test
     void testCreateConstructionSite() throws Exception {
-        mockMvc.perform(post("/v1/admin/order/command/create-construction-site")
+        mockMvc.perform(post("/V1/admin/order/command/create-construction-site")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(constructionSiteDTO)))
                 .andExpect(status().isOk())
@@ -46,14 +45,13 @@ class ConstructionSiteControllerTest {
 
     @Test
     void testCreateConstructionSiteAlreadyExists() throws Exception {
-        // First creation should succeed
-        mockMvc.perform(post("/${APPLICATION_VERSION}/admin/order/command/create-construction-site")
+
+        mockMvc.perform(post("/V1/admin/order/command/create-construction-site")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(constructionSiteDTO)))
                 .andExpect(status().isOk());
 
-        // Second creation with the same data should fail
-        mockMvc.perform(post("/v1/admin/order/command/create-construction-site")
+        mockMvc.perform(post("/V1/admin/order/command/create-construction-site")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(constructionSiteDTO)))
                 .andExpect(status().isConflict());

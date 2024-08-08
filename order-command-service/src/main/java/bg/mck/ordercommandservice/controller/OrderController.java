@@ -28,6 +28,7 @@ public class OrderController {
     private final OrderService orderService;
     private final RestTemplate restTemplate;
 
+
     public OrderController(OrderService orderService, RestTemplate restTemplate) {
         this.orderService = orderService;
         this.restTemplate = restTemplate;
@@ -55,10 +56,10 @@ public class OrderController {
     }
 
 
-    @Operation(summary = "Update order")
+    @Operation(summary = "Update order from user account")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order update successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
-                    content = {@Content(mediaType = "application/json",
+                    content = {@Content(mediaType = "multipart/form-data",
                             schema = @Schema(implementation = UpdateOrderDTO.class))})
     }
     )
@@ -82,7 +83,7 @@ public class OrderController {
     }
 
 
-    @Operation(summary = "Restore order")
+    @Operation(summary = "Restore order") //TODO: remove this feature
     @PatchMapping(value = "/restore-order/{orderId}")
     public ResponseEntity<OrderConfirmationDTO> restoreOrder(@PathVariable Long orderId,
                                                              @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {

@@ -17,7 +17,7 @@ public class TransportEvent {
     public TransportEvent() {
     }
 
-    public TransportEvent(Long id, Double quantity, String description, String specificationFileUrl, String maxLength, String weight, String truck) {
+    public TransportEvent(Long id, Double quantity, String description, String specificationFileUrl, String maxLength, String weight, String truck, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -25,6 +25,8 @@ public class TransportEvent {
         this.maxLength = maxLength;
         this.weight = weight;
         this.truck = truck;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {

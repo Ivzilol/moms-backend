@@ -56,7 +56,7 @@ class FastenerMapperTest {
         assertEquals(fastenerEntity.getQuantity(), result.getQuantity());
         assertEquals(fastenerEntity.getSpecificationFileUrl(), result.getSpecificationFileUrl());
         assertEquals(fastenerEntity.getDiameter(), result.getDiameter());
-        assertEquals(fastenerEntity.getLength(), result.getLength());
+        assertEquals(fastenerEntity.getLength().split(" ")[0], result.getLength());
         assertEquals(fastenerEntity.getModel(), result.getModel());
         assertEquals(fastenerEntity.getType(), result.getType());
         assertEquals(fastenerEntity.getClazz(), result.getClazz());

@@ -18,7 +18,7 @@ public class MaterialUtil {
                 .setSpecificationFileUrl("https://fastener.com");
         fastenerDTO.setClazz("10.9")
                 .setDiameter("M12")
-//                .setLength(55.0)
+                .setLength("55.0 MM")
                 .setModel("DIN 976")
                 .setType("Болт М12х55");
         return fastenerDTO;
@@ -33,7 +33,7 @@ public class MaterialUtil {
                 .setId(++idGenerator);
         fastenerEntity.setType("Болт М12х55")
                 .setDiameter("M12")
-//                .setLength(55.0)
+                .setLength("55.0 MM")
                 .setModel("DIN 976")
                 .setClazz("10.9");
         return fastenerEntity;

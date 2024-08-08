@@ -1,11 +1,15 @@
 package bg.mck.orderqueryservice.events;
 
+import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
+
 public class ServiceEvent {
 
     private Long id;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
+    private String adminNote;
+    private MaterialStatus materialStatus;
 
     public ServiceEvent() {
     }
@@ -32,6 +36,24 @@ public class ServiceEvent {
 
     public ServiceEvent setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public ServiceEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public ServiceEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 
