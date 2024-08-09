@@ -418,7 +418,7 @@ public class MaterialRegisterService {
         return Optional.of(new PanelEntity())
                 .map(panelEntity -> {
                     panelEntity.setName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength()
-                     + " " + createMaterialDTO.getTotalThickness());
+                            + " " + createMaterialDTO.getTotalThickness());
                     panelEntity.setType(createMaterialDTO.getType());
                     panelEntity.setColor(createMaterialDTO.getColor());
                     panelEntity.setLength(createMaterialDTO.getLength());
@@ -484,39 +484,39 @@ public class MaterialRegisterService {
         if (createMaterialDTO.getMaterialType().equals(MaterialType.FASTENERS)) {
             FastenerEntity byName = this.fastenerRepository.findByName(createMaterialDTO.getType() + " " +
                     createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength());
-            return byName.getName() != null;
+            return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.GALVANIZED_SHEET)) {
             GalvanisedSheetEntity byName = this.galvanisedSheetRepository.findByName(createMaterialDTO.getType());
-            return byName.getName() != null;
+            return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.INSULATION)) {
             InsulationEntity byName = this.insulationRepository.findByName(createMaterialDTO.getType() + " "
                     + createMaterialDTO.getThickness());
-            return byName.getName() != null;
+            return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.METAL)) {
             MetalEntity byName = this.metalRepository.findByName(createMaterialDTO.getDescription());
-            return byName.getName() != null;
+            return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.PANELS)) {
             PanelEntity byName = this.panelRepository.findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength()
                     + " " + createMaterialDTO.getTotalThickness());
-            return byName.getName() != null;
+            return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.REBAR)) {
             RebarEntity byName = this.rebarRepository.findByName(createMaterialDTO.getDescription());
-            return byName.getName() != null;
+            return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.SET)) {
             SetEntity byName = this.setRepository.findByName(createMaterialDTO.getGalvanisedSheetThickness() + " " +
                     createMaterialDTO.getColor());
-            return byName.getName() != null;
+            return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.UNSPECIFIED)) {
             UnspecifiedEntity byName = this.unspecifiedRepository
                     .findByName(createMaterialDTO.getDescription());
-            return byName.getName() != null;
+            return byName != null;
         }
         return false;
     }
