@@ -14,11 +14,14 @@ import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.http.HttpClient;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -52,7 +55,7 @@ public class OrderService {
     private final TransportMapper transportMapper;
     private final UnspecifiedMapper unspecifiedMapper;
     private final MaterialService materialService;
-    private final RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService, RestTemplate restTemplate) {
         this.orderRepository = orderRepository;
@@ -88,12 +91,9 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<MultipartFile> files) {
+    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<String> fileUrls) {
 
-        //TODO: implement file upload
-        List<String> filesUrl = uploadFiles(files);
-        //TODO: implement matching files to materials
-        matchFilesToMaterials(order, filesUrl);
+        matchFilesToMaterials(order, fileUrls);
 
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
@@ -235,23 +235,25 @@ public class OrderService {
         if (files == null || files.isEmpty()) {
             return null;
         }
-//        List<String> filesUrl = new ArrayList<>();
-//                files.forEach(file -> {
-//
-//                    try {
-//                        String fileUrl = restTemplate
-//                                .getForObject("http://file-storage-service/"
-//                                        + APPLICATION_VERSION
-//                                        + "/user/files/upload", String.class);
-//
-//                        filesUrl.add(fileUrl);
-//                    } catch (Exception e) {
-//                        LOGGER.error("Error uploading file: {}", e.getMessage());
-//                        throw new RuntimeException("Error uploading file: " + e.getMessage());
-//                    }
-//                }); ;
-//        return filesUrl;
-        return null;
+        List<String> filesUrl = new ArrayList<>();
+        files.forEach(file -> {
+
+            String fileStorageServiceUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/"
+                            + APPLICATION_VERSION)
+                    .path("/files/upload")
+                    .toUriString();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+            HttpEntity<MultipartFile> requestEntity = new HttpEntity<>(file, headers);
+
+            ResponseEntity<String> response = restTemplate.postForEntity(fileStorageServiceUrl, requestEntity, String.class);
+
+            String fileUrl = response.getBody();
+        });
+        return filesUrl;
     }
 
 

@@ -27,7 +27,7 @@ public class FileStorageController {
     }
 
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
-    public ResponseEntity<String> uploadFile(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@RequestPart("files") MultipartFile file) {
         try {
             String fileId = fileStorageService.storeFile(file);
 
@@ -36,7 +36,8 @@ public class FileStorageController {
                     .path(fileId)
                     .toUriString();
 
-            return ResponseEntity.ok(fileUrl);
+            ResponseEntity<String> ok = ResponseEntity.ok(fileUrl);
+            return ok;
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading file: " + e.getMessage());
         }
