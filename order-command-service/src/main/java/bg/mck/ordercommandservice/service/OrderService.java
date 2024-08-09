@@ -91,7 +91,7 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<String> fileUrls) {
+    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<FileDTO> fileUrls) {
 
         matchFilesToMaterials(order, fileUrls);
 
@@ -114,12 +114,12 @@ public class OrderService {
     @Transactional
     public OrderConfirmationDTO updateOrder(OrderDTO order, String email, List<MultipartFile> files) {
 
-        if (!files.isEmpty()) {
-            //TODO: implement file upload
-            List<String> filesUrl = uploadFiles(files);
-            //TODO: implement matching files to materials
-            matchFilesToMaterials(order, filesUrl);
-        }
+//        if (!files.isEmpty()) {
+//            //TODO: implement file upload
+//            List<String> filesUrl = uploadFiles(files);
+//            //TODO: implement matching files to materials
+//            matchFilesToMaterials(order, filesUrl);
+//        }
 
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByName =
@@ -257,7 +257,7 @@ public class OrderService {
     }
 
 
-    private static void matchFilesToMaterials(OrderDTO order, List<String> filesUrl) {
+    private static void matchFilesToMaterials(OrderDTO order, List<FileDTO> filesUrl) {
         if (filesUrl == null || filesUrl.isEmpty()) {
             return;
         }

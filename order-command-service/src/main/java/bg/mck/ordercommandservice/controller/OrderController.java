@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.controller;
 
+import bg.mck.ordercommandservice.dto.FileDTO;
 import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
@@ -62,21 +63,7 @@ public class OrderController {
                                                             @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws IOException {
         String email = extractEmailFromToken(token);
 
-//        for (MultipartFile file : files) {
-//            String fileStorageServiceUrl = "http://file-storage-service/" + APPLICATION_VERSION + "/user/files/upload";
-//
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-//            headers.setBearerAuth(token);
-//
-//            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
-//            formData.add("files", file);
-//            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, headers);
-//
-//            restTemplate.postForEntity(fileStorageServiceUrl, requestEntity, String.class);
-//
-//        }
-        List<String> fileUrls = new ArrayList<>();
+        List<FileDTO> fileUrls = new ArrayList<>();
 
         for (MultipartFile multipartFile : files) {
             File file = convertMultipartFileToFile(multipartFile);
@@ -87,22 +74,18 @@ public class OrderController {
             formData.add("order", order);
             formData.add("files", fileResource);
 
-
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+            headers.set(HttpHeaders.AUTHORIZATION, token);
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, headers);
 
-
             String fileStorageServiceUrl = "http://file-storage-service/" + APPLICATION_VERSION + "/user/files/upload";
 
-
-            ResponseEntity<String> response = restTemplate.exchange(fileStorageServiceUrl, HttpMethod.POST, requestEntity, String.class);
+            ResponseEntity<FileDTO> response = restTemplate.exchange(fileStorageServiceUrl, HttpMethod.POST, requestEntity, FileDTO.class);
 
             fileUrls.add(response.getBody());
         }
-
         return ResponseEntity.ok(orderService.createOrder(order, email, fileUrls));
     }
 

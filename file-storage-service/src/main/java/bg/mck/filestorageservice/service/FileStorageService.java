@@ -1,5 +1,6 @@
 package bg.mck.filestorageservice.service;
 
+import bg.mck.filestorageservice.dto.FileDTO;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -28,14 +31,26 @@ public class FileStorageService {
         this.gridFsTemplate = gridFsTemplate;
     }
 
-    public String storeFile(MultipartFile file) throws IOException {
+    public FileDTO storeFile(MultipartFile file, String email) throws IOException {
         DBObject metaData = new BasicDBObject();
         metaData.put("fileName", file.getOriginalFilename());
         metaData.put("contentType", file.getContentType());
 
         ObjectId id = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), file.getContentType(), metaData);
 
-        return id.toString();
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/user/files/")
+                .path(file.getOriginalFilename() + "/")
+                .path(id.toString())
+                .toUriString();
+
+        return new FileDTO.Builder()
+                .withId(id.toString())
+                .withFileName(file.getOriginalFilename())
+                .withFileUrl(fileDownloadUri)
+                .withUploaderEmail(email)
+                .withUploadTime(LocalDateTime.now())
+                .build();
     }
 
     public Optional<GridFsResource> getFileById(String id) {
