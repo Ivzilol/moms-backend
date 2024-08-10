@@ -45,8 +45,8 @@ public class FileStorageController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getFile(@PathVariable String id) {
+    @GetMapping("/{fileName}/{id}")
+    public ResponseEntity<?> getFile(@PathVariable String fileName, @PathVariable String id) {
         Optional<GridFsResource> resourceOptional = fileStorageService.getFileById(id);
         if (resourceOptional.isPresent()) {
             GridFsResource resource = resourceOptional.get();
