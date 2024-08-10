@@ -1,6 +1,7 @@
 package bg.mck.filestorageservice.service;
 
 import bg.mck.filestorageservice.dto.FileDTO;
+import bg.mck.filestorageservice.exceptions.FileMatcherNotFoundException;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -29,7 +30,7 @@ import java.util.regex.Pattern;
 @Service
 public class FileStorageService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(FileStorageService.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(FileStorageService.class);
 
     @Value("${APPLICATION_VERSION}")
     private String APPLICATION_VERSION;
@@ -48,7 +49,6 @@ public class FileStorageService {
 
         ObjectId id = gridFsTemplate.store(file.getInputStream(), fileNameWithoutPattern, file.getContentType(), metaData);
 
-
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/" + APPLICATION_VERSION)
                 .path("/user/files/")
@@ -59,7 +59,7 @@ public class FileStorageService {
         return new FileDTO.Builder()
                 .withId(id.toString())
                 .withFileName(fileNameWithoutPattern)
-                .withFileMatcher(fileMatchingPattern)
+                .withFileMatcher(fileMatchingPattern.substring(1))
                 .withFileUrl(fileDownloadUri)
                 .withUploaderEmail(email)
                 .withUploadTime(LocalDateTime.now())
@@ -76,7 +76,7 @@ public class FileStorageService {
     }
 
     private static String getFileMatchingPattern(String fileName) {
-        String pattern = "(\\d{3})(?=\\.[^\\.]+$)";
+        String pattern = "(_\\d{3})(?=\\.[^\\.]+$)";
 
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(fileName);
@@ -84,7 +84,8 @@ public class FileStorageService {
         if (m.find()) {
             return m.group(1);
         } else {
-            return null;
+            LOGGER.info("The file has no matching pattern");
+            throw new FileMatcherNotFoundException("The file has no matching pattern");
         }
     }
 
