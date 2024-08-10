@@ -226,8 +226,8 @@ public class OrderService {
 
         for (FileDTO fileDTO : filesUrl) {
 
-            if (fileDTO.getFileMatcher() == null) {
-                throw new FileMatcherNotFoundException("The file " + fileDTO.getFileName() + " has no matching pattern");
+            if (fileDTO == null) {
+                throw new FileMatcherNotFoundException("The file has no matching pattern");
             }
 
             if (fileDTO.getFileMatcher().equals("000")) {
