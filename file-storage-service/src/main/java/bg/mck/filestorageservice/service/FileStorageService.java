@@ -59,7 +59,7 @@ public class FileStorageService {
         return new FileDTO.Builder()
                 .withId(id.toString())
                 .withFileName(fileNameWithoutPattern)
-                .withFileMatcher(fileMatchingPattern.substring(1))
+                .withFileMatcher(fileMatchingPattern)
                 .withFileUrl(fileDownloadUri)
                 .withUploaderEmail(email)
                 .withUploadTime(LocalDateTime.now())
@@ -76,30 +76,34 @@ public class FileStorageService {
     }
 
     private static String getFileMatchingPattern(String fileName) {
-        String pattern = "(_\\d{3})(?=\\.[^\\.]+$)";
+
+        String pattern = "^\\d{3}(?=__)";
 
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(fileName);
 
         if (m.find()) {
-            return m.group(1);
+            String group = m.group(0);
+            return group;
         } else {
-            LOGGER.info("The file has no matching pattern");
+            LOGGER.info("The file " + fileName + " has no matching pattern");
             throw new FileMatcherNotFoundException("The file has no matching pattern");
         }
+//        return fileName.substring(0, 3);
     }
 
     public static String removeFileMatchingPattern(String fileName) {
-        String pattern = "(_\\d{3})(?=\\.[^\\.]+$)";
-
-        Pattern r = Pattern.compile(pattern);
-        Matcher m = r.matcher(fileName);
-
-        if (m.find()) {
-            return fileName.replaceFirst(pattern, "");
-        } else {
-            return fileName;
-        }
+//        String pattern = "^\\d{3}(?=__)";
+//
+//        Pattern r = Pattern.compile(pattern);
+//        Matcher m = r.matcher(fileName);
+//
+//        if (m.find()) {
+//            return fileName.replaceFirst(pattern, "");
+//        } else {
+//            return fileName;
+//        }
+        return fileName.substring(5);
     }
 }
 
