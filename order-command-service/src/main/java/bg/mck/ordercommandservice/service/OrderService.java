@@ -7,6 +7,7 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import bg.mck.ordercommandservice.event.*;
+import bg.mck.ordercommandservice.exception.FileMatcherNotFoundException;
 import bg.mck.ordercommandservice.mapper.*;
 import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
@@ -224,6 +225,11 @@ public class OrderService {
         }
 
         for (FileDTO fileDTO : filesUrl) {
+
+            if (fileDTO.getFileMatcher() == null) {
+                throw new FileMatcherNotFoundException("The file " + fileDTO.getFileName() + " has no matching pattern");
+            }
+
             if (fileDTO.getFileMatcher().equals("000")) {
                 order.setSpecificationFileUrl(fileDTO.getFileUrl());
                 continue;
@@ -248,7 +254,6 @@ public class OrderService {
 
         BaseDTO baseDTO = (BaseDTO) currentMaterials.get(Integer.parseInt(fileDTO.getFileMatcher()) - 1);
         baseDTO.setSpecificationFileUrl(fileDTO.getFileUrl());
-
     }
 
     private OrderConfirmationDTO createOrderEvent(OrderEntity orderEntity) {
