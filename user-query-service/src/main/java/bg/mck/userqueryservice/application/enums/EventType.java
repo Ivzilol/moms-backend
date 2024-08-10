@@ -1,5 +1,5 @@
 package bg.mck.userqueryservice.application.enums;
 
 public enum EventType {
-    UserRegistered, UserProfileUpdated, UserPasswordUpdated, UserDeleted
+    UserRegistered, UserProfileUpdated, UserPasswordUpdated, UserDeleted, UserStatusUpdated
 }
