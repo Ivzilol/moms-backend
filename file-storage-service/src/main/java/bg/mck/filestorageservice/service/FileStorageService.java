@@ -6,6 +6,7 @@ import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -24,7 +25,8 @@ import java.util.Optional;
 @Service
 public class FileStorageService {
 
-
+    @Value("${APPLICATION_VERSION}")
+    private String APPLICATION_VERSION;
     private final GridFsTemplate gridFsTemplate;
 
     public FileStorageService(GridFsTemplate gridFsTemplate) {
@@ -39,6 +41,7 @@ public class FileStorageService {
         ObjectId id = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(), file.getContentType(), metaData);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/" + APPLICATION_VERSION)
                 .path("/user/files/")
                 .path(file.getOriginalFilename() + "/")
                 .path(id.toString())
