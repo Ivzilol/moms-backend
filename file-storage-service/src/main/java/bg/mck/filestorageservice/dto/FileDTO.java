@@ -12,6 +12,7 @@ public class FileDTO {
     private final String fileUrl;
     private final String uploaderEmail;
     private final LocalDateTime uploadTime;
+    private final String fileMatcher;
 
     private FileDTO(Builder builder) {
         this.id = builder.id;
@@ -19,6 +20,7 @@ public class FileDTO {
         this.fileUrl = builder.fileUrl;
         this.uploaderEmail = builder.uploaderEmail;
         this.uploadTime = builder.uploadTime;
+        this.fileMatcher = builder.fileMatcher;
     }
 
     public String getId() {
@@ -41,12 +43,17 @@ public class FileDTO {
         return uploadTime;
     }
 
+    public String getFileMatcher() {
+        return fileMatcher;
+    }
+
     public static class Builder {
         private String id;
         private String fileName;
         private String fileUrl;
         private String uploaderEmail;
         private LocalDateTime uploadTime;
+        private String fileMatcher;
 
         public Builder withId(String id) {
             this.id = id;
@@ -70,6 +77,11 @@ public class FileDTO {
 
         public Builder withUploadTime(LocalDateTime uploadTime) {
             this.uploadTime = uploadTime;
+            return this;
+        }
+
+        public Builder withFileMatcher(String fileMatcher) {
+            this.fileMatcher = fileMatcher;
             return this;
         }
 

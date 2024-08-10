@@ -9,16 +9,18 @@ public class FileDTO {
     private String fileUrl;
     private String uploaderEmail;
     private LocalDateTime uploadTime;
+    private String fileMatcher;
 
     public FileDTO() {
     }
 
-    public FileDTO(String id, String fileName, String fileUrl, String uploaderEmail, LocalDateTime uploadTime) {
+    public FileDTO(String id, String fileName, String fileUrl, String uploaderEmail, LocalDateTime uploadTime, String fileMatcher) {
         this.id = id;
         this.fileName = fileName;
         this.fileUrl = fileUrl;
         this.uploaderEmail = uploaderEmail;
         this.uploadTime = uploadTime;
+        this.fileMatcher = fileMatcher;
     }
 
     public String getId() {
@@ -63,6 +65,15 @@ public class FileDTO {
 
     public FileDTO setUploadTime(LocalDateTime uploadTime) {
         this.uploadTime = uploadTime;
+        return this;
+    }
+
+    public String getFileMatcher() {
+        return fileMatcher;
+    }
+
+    public FileDTO setFileMatcher(String fileMatcher) {
+        this.fileMatcher = fileMatcher;
         return this;
     }
 }

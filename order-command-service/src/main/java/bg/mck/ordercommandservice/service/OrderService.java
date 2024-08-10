@@ -223,10 +223,8 @@ public class OrderService {
             return;
         }
 
-
         for (FileDTO fileDTO : filesUrl) {
-            String fileMatchingPattern = getFileMatchingPattern(fileDTO.getFileName());
-            if (fileMatchingPattern.equals("000")) {
+            if (fileDTO.getFileMatcher().equals("000")) {
                 order.setSpecificationFileUrl(fileDTO.getFileUrl());
                 continue;
             }
@@ -248,40 +246,9 @@ public class OrderService {
 
     private static void addFileUrlToMaterial(List<?> currentMaterials, FileDTO fileDTO) {
 
-        String fileMatchingPattern = getFileMatchingPattern(fileDTO.getFileName());
-
-        BaseDTO baseDTO = (BaseDTO) currentMaterials.get(Integer.parseInt(fileMatchingPattern) - 1);
+        BaseDTO baseDTO = (BaseDTO) currentMaterials.get(Integer.parseInt(fileDTO.getFileMatcher()) - 1);
         baseDTO.setSpecificationFileUrl(fileDTO.getFileUrl());
 
-    }
-
-    private static String getFileMatchingPattern(String fileName) {
-        String pattern = "(\\d{3})(?=\\.[^\\.]+$)";
-
-        Pattern r = Pattern.compile(pattern);
-        Matcher m = r.matcher(fileName);
-
-        if (m.find()) {
-            return m.group(1);
-        } else {
-            return null;
-        }
-    }
-
-    private static List<?> getMaterialSet(OrderDTO order) {
-        return switch (order.getMaterialType()) {
-            case FASTENERS -> order.getFasteners();
-            case GALVANIZED_SHEET -> order.getGalvanisedSheets();
-            case INSULATION -> order.getInsulation();
-            case METAL -> order.getMetals();
-            case PANELS -> order.getPanels();
-            case REBAR -> order.getRebars();
-            case SERVICE -> order.getServices();
-            case SET -> order.getSets();
-            case TRANSPORT -> order.getTransports();
-            case UNSPECIFIED -> order.getUnspecified();
-            default -> throw new IllegalArgumentException("Material type not found");
-        };
     }
 
     private OrderConfirmationDTO createOrderEvent(OrderEntity orderEntity) {
