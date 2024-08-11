@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.controller;
 
+import bg.mck.ordercommandservice.dto.FileDTO;
 import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
@@ -11,12 +12,22 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpMethod;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -49,10 +60,41 @@ public class OrderController {
     @PostMapping(value = "/create-order", consumes = {"multipart/form-data"})
     public ResponseEntity<OrderConfirmationDTO> createOrder(@RequestPart(value = "order") @Valid OrderDTO order,
                                                             @RequestPart(value = "files", required = false) List<MultipartFile> files,
-                                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+                                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws IOException {
         String email = extractEmailFromToken(token);
 
-        return ResponseEntity.ok(orderService.createOrder(order, email, files));
+        List<FileDTO> fileUrls = new ArrayList<>();
+
+        for (MultipartFile multipartFile : files) {
+            File file = convertMultipartFileToFile(multipartFile);
+
+            FileSystemResource fileResource = new FileSystemResource(file);
+
+            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+            formData.add("order", order);
+            formData.add("files", fileResource);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+            headers.set(HttpHeaders.AUTHORIZATION, token);
+
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, headers);
+
+            String fileStorageServiceUrl = "http://file-storage-service/" + APPLICATION_VERSION + "/user/files/upload";
+
+            ResponseEntity<FileDTO> response = restTemplate.exchange(fileStorageServiceUrl, HttpMethod.POST, requestEntity, FileDTO.class);
+
+            fileUrls.add(response.getBody());
+        }
+        return ResponseEntity.ok(orderService.createOrder(order, email, fileUrls));
+    }
+
+    private static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException, IOException {
+        File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + multipartFile.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+        return convFile;
     }
 
 

@@ -18,6 +18,7 @@ public class CreateOrderEvent<T> extends BaseEvent {
     private MaterialType materialType;
     private OrderStatus orderStatus;
     private ConstructionSiteEntity constructionSite;
+    private String specificationFileUrl;
 
     private Set<T> Materials;
 
@@ -30,6 +31,15 @@ public class CreateOrderEvent<T> extends BaseEvent {
 
     public CreateOrderEvent<T> setOrderId(Long orderId) {
         this.orderId = orderId;
+        return this;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public CreateOrderEvent<T> setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
         return this;
     }
 
