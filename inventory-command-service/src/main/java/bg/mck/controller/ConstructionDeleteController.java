@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/user/inventory/command")
+@RequestMapping("/${APPLICATION_VERSION}/user/inventory/command/constructions")
 public class ConstructionDeleteController {
 
     private final ConstructionDeleteService constructionDeleteService;
@@ -25,7 +25,7 @@ public class ConstructionDeleteController {
             @ApiResponse(responseCode = "404", description = "Invalid construction site ID",
                     content = @Content(mediaType = "text/plain"))
     })
-    @DeleteMapping("/construction/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteConstructionSiteById(@PathVariable Long id) {
         constructionDeleteService.deleteConstructionSiteById(id);
         return ResponseEntity.noContent().build();

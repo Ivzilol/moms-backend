@@ -4,24 +4,27 @@ package bg.mck.userqueryservice.application.events;
 import bg.mck.userqueryservice.application.enums.EventType;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.Set;
 
 public class ProfileUpdatedEvent extends BaseEvent {
 
+    private String email;
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private Set<String> roles;
 
     public ProfileUpdatedEvent() {
     }
 
-    public ProfileUpdatedEvent(EventType eventType, Long userId, LocalDateTime localDateTime, String firstName, String lastName, String phoneNumber) {
+    public ProfileUpdatedEvent(EventType eventType, Long userId, LocalDateTime localDateTime, String email, String firstName, String lastName, String phoneNumber, Set<String> roles) {
         super(eventType, userId, localDateTime);
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.roles = roles;
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -50,16 +53,23 @@ public class ProfileUpdatedEvent extends BaseEvent {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProfileUpdatedEvent that = (ProfileUpdatedEvent) o;
-        return Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber);
+    public Set<String> getRoles() {
+        return roles;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, phoneNumber);
+    public ProfileUpdatedEvent setRoles(Set<String> roles) {
+        this.roles = roles;
+        return this;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public ProfileUpdatedEvent setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+
 }

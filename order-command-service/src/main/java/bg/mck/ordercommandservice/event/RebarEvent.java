@@ -16,13 +16,15 @@ public class RebarEvent {
     public RebarEvent() {
     }
 
-    public RebarEvent(Long id, Double quantity, String description, String specificationFileUrl, String maxLength, String weight) {
+    public RebarEvent(Long id, Double quantity, String description, String specificationFileUrl, String maxLength, String weight, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.maxLength = maxLength;
         this.weight = weight;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {

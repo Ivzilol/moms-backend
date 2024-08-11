@@ -15,12 +15,14 @@ public class MetalEvent {
     public MetalEvent() {
     }
 
-    public MetalEvent(Long id, Double quantity, String description, String specificationFileUrl, String totalWeight) {
+    public MetalEvent(Long id, Double quantity, String description, String specificationFileUrl, String totalWeight, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.totalWeight = totalWeight;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {

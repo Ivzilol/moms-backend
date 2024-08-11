@@ -3,23 +3,27 @@ package bg.mck.usercommandservice.application.events;
 
 import bg.mck.usercommandservice.application.enums.EventType;
 
+import java.util.Set;
 
 public class ProfileUpdatedEvent extends BaseEvent {
 
+    private String email;
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private Set<String> roles;
 
     public ProfileUpdatedEvent() {
     }
 
-    public ProfileUpdatedEvent(EventType eventType, Long userId, String firstName, String lastName, String phoneNumber) {
+    public ProfileUpdatedEvent(EventType eventType, Long userId, String email, String firstName, String lastName, String phoneNumber, Set<String> roles) {
         super(eventType, userId);
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.roles = roles;
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -48,4 +52,21 @@ public class ProfileUpdatedEvent extends BaseEvent {
         return this;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public ProfileUpdatedEvent setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public ProfileUpdatedEvent setRoles(Set<String> roles) {
+        this.roles = roles;
+        return this;
+    }
 }

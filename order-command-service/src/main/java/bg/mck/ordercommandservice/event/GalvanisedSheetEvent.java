@@ -17,7 +17,7 @@ public class GalvanisedSheetEvent {
     public GalvanisedSheetEvent() {
     }
 
-    public GalvanisedSheetEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String maxLength, String area) {
+    public GalvanisedSheetEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String maxLength, String area, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -25,6 +25,8 @@ public class GalvanisedSheetEvent {
         this.type = type;
         this.maxLength = maxLength;
         this.area = area;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {
@@ -42,24 +44,6 @@ public class GalvanisedSheetEvent {
 
     public GalvanisedSheetEvent setQuantity(Double quantity) {
         this.quantity = quantity;
-        return this;
-    }
-
-    public String getAdminNote() {
-        return adminNote;
-    }
-
-    public GalvanisedSheetEvent setAdminNote(String adminNote) {
-        this.adminNote = adminNote;
-        return this;
-    }
-
-    public MaterialStatus getMaterialStatus() {
-        return materialStatus;
-    }
-
-    public GalvanisedSheetEvent setMaterialStatus(MaterialStatus materialStatus) {
-        this.materialStatus = materialStatus;
         return this;
     }
 
@@ -105,6 +89,24 @@ public class GalvanisedSheetEvent {
 
     public GalvanisedSheetEvent setArea(String area) {
         this.area = area;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public GalvanisedSheetEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public GalvanisedSheetEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 }

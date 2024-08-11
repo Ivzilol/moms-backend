@@ -21,13 +21,13 @@ public interface InventoryQueryServiceClient {
                                                          @RequestHeader("Material-Type") String materialType);
 
     @PostMapping("/inventory/services/events")
-    <T extends BaseServiceEvent> void sendServiceEvent(@RequestBody ServiceEvent<T> data, @RequestHeader("Event-Type") String eventType);
+    void sendServiceEvent(@RequestBody BaseServiceEvent data, @RequestHeader("Event-Type") String eventType);
 
     @PostMapping("/inventory/transports/events")
-    <T extends BaseTransportEvent> void sendTransportEvent(@RequestBody TransportEvent<T> data, @RequestHeader("Event-Type") String eventType);
+     void sendTransportEvent(@RequestBody BaseTransportEvent data, @RequestHeader("Event-Type") String eventType);
 
     @PostMapping("/inventory/constructions/events")
-    <T extends BaseConstructionEvent> void sendConstructionEvent(@RequestBody ConstructionEvent<T> data, @RequestHeader("Event-Type") String eventType);
+    void sendConstructionEvent(@RequestBody BaseConstructionEvent data, @RequestHeader("Event-Type") String eventType);
 
     @GetMapping("/inventory/items/{id}")
     InventoryItemDetailsDTO getInventoryItemById(@PathVariable("id") Long id);

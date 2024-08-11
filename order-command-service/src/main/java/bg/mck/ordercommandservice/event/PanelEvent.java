@@ -21,7 +21,7 @@ public class PanelEvent {
     public PanelEvent() {
     }
 
-    public PanelEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String color, String length, String width, String totalThickness, String frontSheetThickness, String backSheetThickness) {
+    public PanelEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String color, String length, String width, String totalThickness, String frontSheetThickness, String backSheetThickness, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -33,6 +33,8 @@ public class PanelEvent {
         this.totalThickness = totalThickness;
         this.frontSheetThickness = frontSheetThickness;
         this.backSheetThickness = backSheetThickness;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {

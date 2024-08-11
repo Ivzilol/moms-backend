@@ -24,19 +24,21 @@ public class TransportEventService {
     private final TransportRepository transportRepository;
     private final TransportRedisService redisService;
     private final TransportDeleteService transportDeleteService;
+    private final TransportRegisterService transportRegisterService;
 
-    public TransportEventService(ObjectMapper objectMapper, EventTransportRepository eventTransportRepository, TransportRepository transportRepository, TransportRedisService redisService, TransportDeleteService transportDeleteService) {
+    public TransportEventService(ObjectMapper objectMapper, EventTransportRepository eventTransportRepository, TransportRepository transportRepository, TransportRedisService redisService, TransportDeleteService transportDeleteService, TransportRegisterService transportRegisterService) {
         this.objectMapper = objectMapper;
         this.eventTransportRepository = eventTransportRepository;
         this.transportRepository = transportRepository;
         this.redisService = redisService;
         this.transportDeleteService = transportDeleteService;
+        this.transportRegisterService = transportRegisterService;
     }
 
     public TransportEntity reconstructTransportEntity(String id) {
         doesTransportExist(id);
-        List<TransportEvent<? extends BaseTransportEvent>> events = eventTransportRepository
-                .findTransportEventsByEventTransportIdOrderByEventLocalDateTimeAsc(id);
+        List<BaseTransportEvent> events = eventTransportRepository
+                .findTransportEventsByTransportIdOrderByLocalDateTimeAsc(id);
 
         TransportEntity transportEntity = new TransportEntity();
         transportEntity.setId(id);
@@ -53,15 +55,19 @@ public class TransportEventService {
 
     public void processTransportEvent(String data, String eventType) throws JsonProcessingException {
         if (eventType.equals(EventType.ItemRegistered.name())) {
+            TransportRegisteredEvent event = objectMapper.readValue(data, TransportRegisteredEvent.class);
 
+            saveEvent(event);
+            evictCache(event.getName());
+
+            transportRegisterService.processingRegisterTransport(event);
         } else if (eventType.equals(EventType.ItemDeleted.name())) {
-            TransportEvent<TransportDeletedEvent> event = objectMapper.readValue(data, new TypeReference<>() {
-            });
+            TransportDeletedEvent event = objectMapper.readValue(data, TransportDeletedEvent.class);
 
-            String transportId = event.getEvent().getTransportId();
+            String transportId = event.getTransportId();
             doesTransportExist(transportId);
             saveEvent(event);
-            evictCache(event.getEvent().getName());
+            evictCache(event.getName());
 
             transportDeleteService.deleteTransportById(transportId);
             redisService.clearCacheForObject(transportId);
@@ -73,8 +79,8 @@ public class TransportEventService {
 
     }
 
-    private void applyEvent(TransportEvent<? extends BaseTransportEvent> transportEvent, TransportEntity transportEntity) {
-        BaseTransportEvent event = transportEvent.getEvent();
+    private void applyEvent(BaseTransportEvent event, TransportEntity transportEntity) {
+
 
         //TODO: implement the logic in the if-else condition
         if (event instanceof TransportUpdateEvent updateEvent) {
@@ -93,7 +99,7 @@ public class TransportEventService {
         }
     }
 
-    private <T extends BaseTransportEvent> TransportEvent<T> saveEvent(TransportEvent<T> transportEvent) {
+    private BaseTransportEvent saveEvent(BaseTransportEvent transportEvent) {
         return eventTransportRepository.save(transportEvent);
     }
 

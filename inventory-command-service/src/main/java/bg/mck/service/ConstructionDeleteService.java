@@ -32,9 +32,8 @@ public class ConstructionDeleteService {
         constructionRepository.deleteById(id);
 
         ConstructionDeletedEvent event = new ConstructionDeletedEvent(id, EventType.ItemDeleted, name);
-        ConstructionEvent<ConstructionDeletedEvent> constructionEvent = EventCreationHelper.toConstructionEvent(event);
 
-        inventoryQueryClient.sendConstructionEvent(constructionEvent, EventType.ItemDeleted.name());
+        inventoryQueryClient.sendConstructionEvent(event, EventType.ItemDeleted.name());
     }
 
     private ConstructionSiteEntity findById(Long id) {

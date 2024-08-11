@@ -1,8 +1,11 @@
 package bg.mck.ordercommandservice.service;
 
 
+import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
+import bg.mck.ordercommandservice.event.ConstructionSiteEvent;
+import bg.mck.ordercommandservice.event.EventData;
 import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
 import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
@@ -29,35 +32,36 @@ public class ConstructionSiteServiceTest {
     private ConstructionSiteService constructionSiteService;
     @Mock
     private ConstructionSiteMapper constructionSiteMapper;
+    @Mock
+    private OrderQueryServiceClient orderQueryServiceClient;
 
     private ConstructionSiteDTO constructionSiteDTO;
     private ConstructionSiteEntity constructionSiteEntity;
+    private ConstructionSiteEvent constructionSiteEvent;
 
     @BeforeEach
     public void setUp() {
         constructionSiteDTO = ConstructionSiteUtil.createConstructionSiteDTO();
         constructionSiteEntity = ConstructionSiteUtil.createConstructionSiteEntity();
+        constructionSiteEvent = ConstructionSiteUtil.createConstructionSiteEvent();
     }
 
     @Test
     void test_GetConstructionSite_ByNumberAndName_Found() {
-        when(constructionSiteRepository.findByConstructionNumberAndName(anyString(), anyString()))
-                .thenReturn(Optional.of(constructionSiteEntity));
+        when(constructionSiteRepository.findByName(anyString())).thenReturn(Optional.of(constructionSiteEntity));
 
-        ConstructionSiteEntity result = constructionSiteService.getConstructionSiteByNumberAndName(constructionSiteDTO);
+        ConstructionSiteEntity result = constructionSiteService.getConstructionSiteByName(constructionSiteDTO.getName());
 
         assertNotNull(result);
         assertEquals("1234", result.getConstructionNumber());
         assertEquals("Site Name", result.getName());
 
         verify(constructionSiteRepository, times(1))
-                .findByConstructionNumberAndName("1234", "Site Name");
+                .findByName("Site Name");
     }
 
     @Test
     void test_GetConstructionSite_ByNumberAndName_NotFound() {
-        when(constructionSiteRepository.findByConstructionNumberAndName(anyString(), anyString()))
-                .thenReturn(Optional.empty());
 
         ConstructionSiteNotFoundException exception = assertThrows(
                 ConstructionSiteNotFoundException.class,
@@ -66,8 +70,7 @@ public class ConstructionSiteServiceTest {
 
         assertEquals("Construction site with number 1234 and name Site Name not found", exception.getMessage());
 
-        verify(constructionSiteRepository, times(1))
-                .findByConstructionNumberAndName("1234", "Site Name");
+        verify(constructionSiteRepository, times(1)).findByName("Site Name");
     }
 
     @Test
@@ -77,6 +80,10 @@ public class ConstructionSiteServiceTest {
         when(constructionSiteRepository.findByConstructionNumber(anyString())).thenReturn(Optional.empty());
         when(constructionSiteRepository.save(any(ConstructionSiteEntity.class))).thenReturn(constructionSiteEntity);
         when(constructionSiteMapper.toDTO(constructionSiteEntity)).thenReturn(constructionSiteDTO);
+        when(constructionSiteMapper.toEvent(constructionSiteEntity)).thenReturn(constructionSiteEvent);
+
+//        when(constructionSiteMapper.toEvent(constructionSiteEntity)).thenReturn(constructionSiteEvent);
+        doNothing().when(orderQueryServiceClient).sendConstructionSiteEvent(any(EventData.class), anyString());
 
         ConstructionSiteDTO result = constructionSiteService.createConstructionSite(constructionSiteDTO);
 
@@ -87,6 +94,9 @@ public class ConstructionSiteServiceTest {
         verify(constructionSiteRepository, times(1)).findByName("Site Name");
         verify(constructionSiteRepository, times(1)).findByConstructionNumber("1234");
         verify(constructionSiteRepository, times(1)).save(constructionSiteEntity);
+
+        verify(orderQueryServiceClient, times(1)).sendConstructionSiteEvent(any(EventData.class), anyString());
+
     }
 
     @Test
