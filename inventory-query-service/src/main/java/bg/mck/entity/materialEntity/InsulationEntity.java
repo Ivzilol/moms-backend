@@ -1,83 +1,192 @@
 package bg.mck.entity.materialEntity;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
+import bg.mck.enums.LengthUnits;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "insulation")
-public class InsulationEntity extends BaseMaterialEntity{
+import java.util.Objects;
 
+@Document(collection = "insulation")
+public class InsulationEntity extends BaseMaterialEntity {
 
     @Indexed
     private String name;
-
     private String type;
-    private Double thickness;
+    private String thickness;
+    private LengthUnits thicknessUnit;
     private Double quantity;
-
     private String description;
-
     private String specificationFileUrl;
 
+    // Default constructor
     public InsulationEntity() {
     }
 
-    public InsulationEntity(String id, String name, String type, Double thickness, Double quantity, String description, String specificationFileUrl) {
-        super(id);
-        this.name = name;
-        this.type = type;
-        this.thickness = thickness;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
+    // Constructor accepting Builder
+    private InsulationEntity(Builder builder) {
+        this.name = builder.name;
+        this.type = builder.type;
+        this.thickness = builder.thickness;
+        this.thicknessUnit = builder.thicknessUnit;
+        this.quantity = builder.quantity;
+        this.description = builder.description;
+        this.specificationFileUrl = builder.specificationFileUrl;
     }
 
+    // Copy constructor
+    public InsulationEntity(InsulationEntity other) {
+        this.name = other.name;
+        this.type = other.type;
+        this.thickness = other.thickness;
+        this.thicknessUnit = other.thicknessUnit;
+        this.quantity = other.quantity;
+        this.description = other.description;
+        this.specificationFileUrl = other.specificationFileUrl;
+    }
+
+    // Getters and setters with method chaining
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public InsulationEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public InsulationEntity setType(String type) {
         this.type = type;
+        return this;
     }
 
-    public Double getThickness() {
+    public String getThickness() {
         return thickness;
     }
 
-    public void setThickness(Double thickness) {
+    public InsulationEntity setThickness(String thickness) {
         this.thickness = thickness;
+        return this;
+    }
+
+    public LengthUnits getThicknessUnit() {
+        return thicknessUnit;
+    }
+
+    public InsulationEntity setThicknessUnit(LengthUnits thicknessUnit) {
+        this.thicknessUnit = thicknessUnit;
+        return this;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public InsulationEntity setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public InsulationEntity setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public void setSpecificationFileUrl(String specificationFileUrl) {
+    public InsulationEntity setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InsulationEntity that = (InsulationEntity) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(thickness, that.thickness) &&
+                thicknessUnit == that.thicknessUnit &&
+                Objects.equals(quantity, that.quantity) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(specificationFileUrl, that.specificationFileUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type, thickness, thicknessUnit, quantity, description, specificationFileUrl);
+    }
+
+    @Override
+    public String toString() {
+        return "InsulationEntity{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", thickness='" + thickness + '\'' +
+                ", thicknessUnit=" + thicknessUnit +
+                ", quantity=" + quantity +
+                ", description='" + description + '\'' +
+                ", specificationFileUrl='" + specificationFileUrl + '\'' +
+                '}';
+    }
+
+    // Builder pattern implementation
+    public static class Builder {
+        private String name;
+        private String type;
+        private String thickness;
+        private LengthUnits thicknessUnit;
+        private Double quantity;
+        private String description;
+        private String specificationFileUrl;
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setType(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder setThickness(String thickness) {
+            this.thickness = thickness;
+            return this;
+        }
+
+        public Builder setThicknessUnit(LengthUnits thicknessUnit) {
+            this.thicknessUnit = thicknessUnit;
+            return this;
+        }
+
+        public Builder setQuantity(Double quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setSpecificationFileUrl(String specificationFileUrl) {
+            this.specificationFileUrl = specificationFileUrl;
+            return this;
+        }
+
+        public InsulationEntity build() {
+            return new InsulationEntity(this);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.LengthUnits;
 
 public class FastenerUpdateEvent extends BaseMaterialEvent {
 
@@ -9,7 +10,8 @@ public class FastenerUpdateEvent extends BaseMaterialEvent {
     private String name;
     private String description;
     private String diameter;
-    private Double length;
+    private String length;
+    private LengthUnits lengthUnit;
     private String model;
     private String clazz;
     private Double quantity;
@@ -19,8 +21,18 @@ public class FastenerUpdateEvent extends BaseMaterialEvent {
     public FastenerUpdateEvent() {
     }
 
+
     public FastenerUpdateEvent(Long materialId, EventType eventType) {
         super(materialId, eventType);
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public FastenerUpdateEvent setCategory(String category) {
+        this.category = category;
+        return this;
     }
 
     public String getMaterialType() {
@@ -59,12 +71,21 @@ public class FastenerUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public FastenerUpdateEvent setLength(Double length) {
+    public FastenerUpdateEvent setLength(String length) {
         this.length = length;
+        return this;
+    }
+
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public FastenerUpdateEvent setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
         return this;
     }
 
@@ -110,15 +131,6 @@ public class FastenerUpdateEvent extends BaseMaterialEvent {
 
     public FastenerUpdateEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public FastenerUpdateEvent setCategory(String category) {
-        this.category = category;
         return this;
     }
 }

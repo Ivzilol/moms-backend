@@ -1,5 +1,7 @@
 package bg.mck.dto;
 
+import bg.mck.enums.LengthUnits;
+
 public class PanelsDTO implements MaterialDTO{
 
     private String id;
@@ -10,15 +12,20 @@ public class PanelsDTO implements MaterialDTO{
 
     private String color;
 
-    private Double length;
+    private String length;
+    private LengthUnits lengthUnit;
 
-    private Double width;
+    private String width;
+    private LengthUnits widthUnit;
 
-    private Double totalThickness;
+    private String totalThickness;
+    private LengthUnits totalThicknessUnit;
 
-    private Double frontSheetThickness;
+    private String frontSheetThickness;
+    private LengthUnits frontSheetThicknessUnit;
 
-    private Double backSheetThickness;
+    private String backSheetThickness;
+    private LengthUnits backSheetThicknessUnit;
 
     private Double quantity;
 
@@ -26,23 +33,6 @@ public class PanelsDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
-    public PanelsDTO() {
-    }
-
-    public PanelsDTO(String id, String name, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.color = color;
-        this.length = length;
-        this.width = width;
-        this.totalThickness = totalThickness;
-        this.frontSheetThickness = frontSheetThickness;
-        this.backSheetThickness = backSheetThickness;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
 
     public String getId() {
         return id;
@@ -76,43 +66,43 @@ public class PanelsDTO implements MaterialDTO{
         this.color = color;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(Double length) {
+    public void setLength(String length) {
         this.length = length;
     }
 
-    public Double getWidth() {
+    public String getWidth() {
         return width;
     }
 
-    public void setWidth(Double width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
-    public Double getTotalThickness() {
+    public String getTotalThickness() {
         return totalThickness;
     }
 
-    public void setTotalThickness(Double totalThickness) {
+    public void setTotalThickness(String totalThickness) {
         this.totalThickness = totalThickness;
     }
 
-    public Double getFrontSheetThickness() {
+    public String getFrontSheetThickness() {
         return frontSheetThickness;
     }
 
-    public void setFrontSheetThickness(Double frontSheetThickness) {
+    public void setFrontSheetThickness(String frontSheetThickness) {
         this.frontSheetThickness = frontSheetThickness;
     }
 
-    public Double getBackSheetThickness() {
+    public String getBackSheetThickness() {
         return backSheetThickness;
     }
 
-    public void setBackSheetThickness(Double backSheetThickness) {
+    public void setBackSheetThickness(String backSheetThickness) {
         this.backSheetThickness = backSheetThickness;
     }
 
@@ -138,5 +128,50 @@ public class PanelsDTO implements MaterialDTO{
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public LengthUnits getWidthUnit() {
+        return widthUnit;
+    }
+
+    public PanelsDTO setWidthUnit(LengthUnits widthUnit) {
+        this.widthUnit = widthUnit;
+        return this;
+    }
+
+    public LengthUnits getFrontSheetThicknessUnit() {
+        return frontSheetThicknessUnit;
+    }
+
+    public PanelsDTO setFrontSheetThicknessUnit(LengthUnits frontSheetThicknessUnit) {
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        return this;
+    }
+
+    public LengthUnits getTotalThicknessUnit() {
+        return totalThicknessUnit;
+    }
+
+    public PanelsDTO setTotalThicknessUnit(LengthUnits totalThicknessUnit) {
+        this.totalThicknessUnit = totalThicknessUnit;
+        return this;
+    }
+
+    public LengthUnits getBackSheetThicknessUnit() {
+        return backSheetThicknessUnit;
+    }
+
+    public PanelsDTO setBackSheetThicknessUnit(LengthUnits backSheetThicknessUnit) {
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
+        return this;
+    }
+
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public PanelsDTO setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
+        return this;
     }
 }

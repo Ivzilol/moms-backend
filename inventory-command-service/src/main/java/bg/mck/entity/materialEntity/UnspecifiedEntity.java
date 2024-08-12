@@ -4,6 +4,8 @@ import bg.mck.entity.categoryEntity.CategoryEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "unspecified")
 public class UnspecifiedEntity {
@@ -12,8 +14,7 @@ public class UnspecifiedEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //description
-   private String name;
+    private String name;
 
     @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
@@ -21,69 +22,161 @@ public class UnspecifiedEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-
     private String specificationFileUrl;
 
-   @ManyToOne
-   private CategoryEntity category;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CategoryEntity category;
 
+    // Default constructor
     public UnspecifiedEntity() {
     }
 
-    public UnspecifiedEntity(Long id, String name, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
-        this.id = id;
-        this.name = name;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-        this.category = category;
+    // Constructor accepting Builder
+    private UnspecifiedEntity(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.quantity = builder.quantity;
+        this.description = builder.description;
+        this.specificationFileUrl = builder.specificationFileUrl;
+        this.category = builder.category;
     }
 
+    // Copy constructor
+    public UnspecifiedEntity(UnspecifiedEntity other) {
+        this.id = other.id;
+        this.name = other.name;
+        this.quantity = other.quantity;
+        this.description = other.description;
+        this.specificationFileUrl = other.specificationFileUrl;
+        this.category = other.category;
+    }
+
+    // Getters and setters with method chaining
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public UnspecifiedEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public UnspecifiedEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public UnspecifiedEntity setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public UnspecifiedEntity setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public void setSpecificationFileUrl(String specificationFileUrl) {
+    public UnspecifiedEntity setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
     }
 
     public CategoryEntity getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryEntity category) {
+    public UnspecifiedEntity setCategory(CategoryEntity category) {
         this.category = category;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UnspecifiedEntity that = (UnspecifiedEntity) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(name, that.name)
+                && Objects.equals(quantity, that.quantity)
+                && Objects.equals(description, that.description)
+                && Objects.equals(specificationFileUrl, that.specificationFileUrl)
+                && Objects.equals(category, that.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, quantity, description, specificationFileUrl, category);
+    }
+
+    @Override
+    public String toString() {
+        return "UnspecifiedEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", description='" + description + '\'' +
+                ", specificationFileUrl='" + specificationFileUrl + '\'' +
+                ", category=" + category +
+                '}';
+    }
+
+    // Builder pattern implementation
+    public static class Builder {
+        private Long id;
+        private String name;
+        private Double quantity;
+        private String description;
+        private String specificationFileUrl;
+        private CategoryEntity category;
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setQuantity(Double quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setSpecificationFileUrl(String specificationFileUrl) {
+            this.specificationFileUrl = specificationFileUrl;
+            return this;
+        }
+
+        public Builder setCategory(CategoryEntity category) {
+            this.category = category;
+            return this;
+        }
+
+        public UnspecifiedEntity build() {
+            return new UnspecifiedEntity(this);
+        }
     }
 }

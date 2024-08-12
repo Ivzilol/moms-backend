@@ -1,30 +1,41 @@
 package bg.mck.dto;
 
 
+import bg.mck.enums.AreaUnits;
+import bg.mck.enums.LengthUnits;
+import bg.mck.enums.WeightUnits;
+
 public class UpdateMaterialDTO {
     private String name;
     private String type;
     private String diameter;
-    private Double length;
+    private String length;
+    private LengthUnits lengthUnit;
     private String model;
     private String clazz;
     private Double quantity;
     private String description;
     private String specificationFileUrl;
-    private Double maxLength;
-    private Double area;
-    private Double thickness;
-    private Double totalWeight;
-    private Double width;
-    private Double totalThickness;
-    private Double FrontSheetThickness;
-    private Double BackSheetThickness;
-    private Double MaxLength;
-    private Double galvanisedSheetThickness;
+    private String maxLength;
+    private LengthUnits maxLengthUnit;
+    private String area;
+    private AreaUnits areaUnit;
+    private String thickness;
+    private LengthUnits thicknessUnit;
+    private String totalWeight;
+    private WeightUnits totalWeightUnit;
+    private String width;
+    private LengthUnits widthUnit;
+    private String totalThickness;
+    private LengthUnits totalThicknessUnit;
+    private String FrontSheetThickness;
+    private LengthUnits frontSheetThicknessUnit;
+    private String BackSheetThickness;
+    private LengthUnits backSheetThicknessUnit;
+    private String galvanisedSheetThickness;
+    private LengthUnits galvanisedSheetThicknessUnit;
     private String color;
 
-    public UpdateMaterialDTO() {
-    }
 
     public String getName() {
         return name;
@@ -53,12 +64,21 @@ public class UpdateMaterialDTO {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public UpdateMaterialDTO setLength(Double length) {
+    public UpdateMaterialDTO setLength(String length) {
         this.length = length;
+        return this;
+    }
+
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public UpdateMaterialDTO setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
         return this;
     }
 
@@ -107,21 +127,165 @@ public class UpdateMaterialDTO {
         return this;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public UpdateMaterialDTO setMaxLength(Double maxLength) {
+    public UpdateMaterialDTO setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getGalvanisedSheetThickness() {
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public UpdateMaterialDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public UpdateMaterialDTO setArea(String area) {
+        this.area = area;
+        return this;
+    }
+
+    public AreaUnits getAreaUnit() {
+        return areaUnit;
+    }
+
+    public UpdateMaterialDTO setAreaUnit(AreaUnits areaUnit) {
+        this.areaUnit = areaUnit;
+        return this;
+    }
+
+    public String getThickness() {
+        return thickness;
+    }
+
+    public UpdateMaterialDTO setThickness(String thickness) {
+        this.thickness = thickness;
+        return this;
+    }
+
+    public LengthUnits getThicknessUnit() {
+        return thicknessUnit;
+    }
+
+    public UpdateMaterialDTO setThicknessUnit(LengthUnits thicknessUnit) {
+        this.thicknessUnit = thicknessUnit;
+        return this;
+    }
+
+    public String getTotalWeight() {
+        return totalWeight;
+    }
+
+    public UpdateMaterialDTO setTotalWeight(String totalWeight) {
+        this.totalWeight = totalWeight;
+        return this;
+    }
+
+    public WeightUnits getTotalWeightUnit() {
+        return totalWeightUnit;
+    }
+
+    public UpdateMaterialDTO setTotalWeightUnit(WeightUnits totalWeightUnit) {
+        this.totalWeightUnit = totalWeightUnit;
+        return this;
+    }
+
+    public String getWidth() {
+        return width;
+    }
+
+    public UpdateMaterialDTO setWidth(String width) {
+        this.width = width;
+        return this;
+    }
+
+    public LengthUnits getWidthUnit() {
+        return widthUnit;
+    }
+
+    public UpdateMaterialDTO setWidthUnit(LengthUnits widthUnit) {
+        this.widthUnit = widthUnit;
+        return this;
+    }
+
+    public String getTotalThickness() {
+        return totalThickness;
+    }
+
+    public UpdateMaterialDTO setTotalThickness(String totalThickness) {
+        this.totalThickness = totalThickness;
+        return this;
+    }
+
+    public LengthUnits getTotalThicknessUnit() {
+        return totalThicknessUnit;
+    }
+
+    public UpdateMaterialDTO setTotalThicknessUnit(LengthUnits totalThicknessUnit) {
+        this.totalThicknessUnit = totalThicknessUnit;
+        return this;
+    }
+
+    public String getFrontSheetThickness() {
+        return FrontSheetThickness;
+    }
+
+    public UpdateMaterialDTO setFrontSheetThickness(String frontSheetThickness) {
+        FrontSheetThickness = frontSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getFrontSheetThicknessUnit() {
+        return frontSheetThicknessUnit;
+    }
+
+    public UpdateMaterialDTO setFrontSheetThicknessUnit(LengthUnits frontSheetThicknessUnit) {
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        return this;
+    }
+
+    public String getBackSheetThickness() {
+        return BackSheetThickness;
+    }
+
+    public UpdateMaterialDTO setBackSheetThickness(String backSheetThickness) {
+        BackSheetThickness = backSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getBackSheetThicknessUnit() {
+        return backSheetThicknessUnit;
+    }
+
+    public UpdateMaterialDTO setBackSheetThicknessUnit(LengthUnits backSheetThicknessUnit) {
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
+        return this;
+    }
+
+    public String getGalvanisedSheetThickness() {
         return galvanisedSheetThickness;
     }
 
-    public UpdateMaterialDTO setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+    public UpdateMaterialDTO setGalvanisedSheetThickness(String galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getGalvanisedSheetThicknessUnit() {
+        return galvanisedSheetThicknessUnit;
+    }
+
+    public UpdateMaterialDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
+        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
         return this;
     }
 
@@ -131,69 +295,6 @@ public class UpdateMaterialDTO {
 
     public UpdateMaterialDTO setColor(String color) {
         this.color = color;
-        return this;
-    }
-
-    public Double getArea() {
-        return area;
-    }
-
-    public UpdateMaterialDTO setArea(Double area) {
-        this.area = area;
-        return this;
-    }
-
-    public Double getThickness() {
-        return thickness;
-    }
-
-    public UpdateMaterialDTO setThickness(Double thickness) {
-        this.thickness = thickness;
-        return this;
-    }
-
-    public Double getTotalWeight() {
-        return totalWeight;
-    }
-
-    public UpdateMaterialDTO setTotalWeight(Double totalWeight) {
-        this.totalWeight = totalWeight;
-        return this;
-    }
-
-    public Double getWidth() {
-        return width;
-    }
-
-    public UpdateMaterialDTO setWidth(Double width) {
-        this.width = width;
-        return this;
-    }
-
-    public Double getTotalThickness() {
-        return totalThickness;
-    }
-
-    public UpdateMaterialDTO setTotalThickness(Double totalThickness) {
-        this.totalThickness = totalThickness;
-        return this;
-    }
-
-    public Double getFrontSheetThickness() {
-        return FrontSheetThickness;
-    }
-
-    public UpdateMaterialDTO setFrontSheetThickness(Double frontSheetThickness) {
-        FrontSheetThickness = frontSheetThickness;
-        return this;
-    }
-
-    public Double getBackSheetThickness() {
-        return BackSheetThickness;
-    }
-
-    public UpdateMaterialDTO setBackSheetThickness(Double backSheetThickness) {
-        BackSheetThickness = backSheetThickness;
         return this;
     }
 }

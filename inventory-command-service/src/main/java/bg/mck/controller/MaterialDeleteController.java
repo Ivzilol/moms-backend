@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/user/inventory/command")
+@RequestMapping("/${APPLICATION_VERSION}/admin/inventory/command")
 public class MaterialDeleteController {
 
 

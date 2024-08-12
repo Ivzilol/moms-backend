@@ -1,13 +1,23 @@
 package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.WeightUnits;
 
 public class MetalUpdateEvent extends BaseMaterialEvent {
-    private String category;
     private String materialType;
+    private String category;
     private String name;
 
-    private Double totalWeight;
+    private String totalWeight;
+    private WeightUnits totalWeightUnit;
+
+    private Double quantity;
+
+    private String description;
+
+    private String specificationFileUrl;
+
+
     public MetalUpdateEvent() {
     }
 
@@ -24,6 +34,15 @@ public class MetalUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public MetalUpdateEvent setCategory(String category) {
+        this.category = category;
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -33,21 +52,48 @@ public class MetalUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getTotalWeight() {
+    public String getTotalWeight() {
         return totalWeight;
     }
 
-    public MetalUpdateEvent setTotalWeight(Double totalWeight) {
+    public MetalUpdateEvent setTotalWeight(String totalWeight) {
         this.totalWeight = totalWeight;
         return this;
     }
 
-    public String getCategory() {
-        return category;
+    public WeightUnits getTotalWeightUnit() {
+        return totalWeightUnit;
     }
 
-    public MetalUpdateEvent setCategory(String category) {
-        this.category = category;
+    public MetalUpdateEvent setTotalWeightUnit(WeightUnits totalWeightUnit) {
+        this.totalWeightUnit = totalWeightUnit;
+        return this;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public MetalUpdateEvent setQuantity(Double quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public MetalUpdateEvent setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public MetalUpdateEvent setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
         return this;
     }
 }

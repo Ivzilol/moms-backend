@@ -1,6 +1,7 @@
 package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.LengthUnits;
 
 public class RegisterInsulationEvent extends BaseMaterialEvent {
 
@@ -10,20 +11,21 @@ public class RegisterInsulationEvent extends BaseMaterialEvent {
 
     private String type;
 
-    private Double thickness;
-
+    private String thickness;
+    private LengthUnits thicknessUnit;
     private Double quantity;
 
     private String description;
 
     private String specificationFileUrl;
 
-    public RegisterInsulationEvent(Long materialId, EventType eventType, String category, String name, String type, Double thickness, Double quantity, String description, String specificationFileUrl) {
+    public RegisterInsulationEvent(Long materialId, EventType eventType, String category, String name, String type, String thickness, LengthUnits thicknessUnit, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.type = type;
         this.thickness = thickness;
+        this.thicknessUnit = thicknessUnit;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
@@ -57,11 +59,11 @@ public class RegisterInsulationEvent extends BaseMaterialEvent {
         this.type = type;
     }
 
-    public Double getThickness() {
+    public String getThickness() {
         return thickness;
     }
 
-    public void setThickness(Double thickness) {
+    public void setThickness(String thickness) {
         this.thickness = thickness;
     }
 
@@ -87,5 +89,14 @@ public class RegisterInsulationEvent extends BaseMaterialEvent {
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public LengthUnits getThicknessUnit() {
+        return thicknessUnit;
+    }
+
+    public RegisterInsulationEvent setThicknessUnit(LengthUnits thicknessUnit) {
+        this.thicknessUnit = thicknessUnit;
+        return this;
     }
 }
