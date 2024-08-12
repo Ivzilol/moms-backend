@@ -1,14 +1,19 @@
 package bg.mck.dto;
 
+import bg.mck.enums.LengthUnits;
+import bg.mck.enums.WeightUnits;
+
 public class RebarDTO implements MaterialDTO{
 
     private String id;
 
     private String name;
 
-    private Double maxLength;
+    private String maxLength;
+    private LengthUnits maxLengthUnit;
 
-    private Double weight;
+    private String weight;
+    private WeightUnits weightUnit;
 
     private Double quantity;
 
@@ -16,18 +21,7 @@ public class RebarDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
-    public RebarDTO() {
-    }
 
-    public RebarDTO(String id, String name, Double maxLength, Double weight, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
-        this.name = name;
-        this.maxLength = maxLength;
-        this.weight = weight;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
 
     public String getId() {
         return id;
@@ -45,19 +39,19 @@ public class RebarDTO implements MaterialDTO{
         this.name = name;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public void setMaxLength(Double maxLength) {
+    public void setMaxLength(String maxLength) {
         this.maxLength = maxLength;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
@@ -83,5 +77,23 @@ public class RebarDTO implements MaterialDTO{
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public WeightUnits getWeightUnit() {
+        return weightUnit;
+    }
+
+    public RebarDTO setWeightUnit(WeightUnits weightUnit) {
+        this.weightUnit = weightUnit;
+        return this;
+    }
+
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public RebarDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
     }
 }

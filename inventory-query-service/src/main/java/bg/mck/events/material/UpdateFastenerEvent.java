@@ -1,13 +1,15 @@
 package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.LengthUnits;
 
 public class UpdateFastenerEvent extends BaseMaterialEvent {
 
     private String name;
     private String description;
     private String diameter;
-    private Double length;
+    private String length;
+    private LengthUnits lengthUnit;
     private String model;
     private String clazz;
     private Double quantity;
@@ -18,17 +20,19 @@ public class UpdateFastenerEvent extends BaseMaterialEvent {
     public UpdateFastenerEvent() {
     }
 
-    public UpdateFastenerEvent(Long materialId, EventType eventType, String name, String description, String diameter, Double length, String model, String clazz, Double quantity, String type, String specificationFileUrl) {
+    public UpdateFastenerEvent(Long materialId, EventType eventType, String name, String description, String diameter, String length, LengthUnits lengthUnit, String model, String clazz, Double quantity, String type, String specificationFileUrl, String category) {
         super(materialId, eventType);
         this.name = name;
         this.description = description;
         this.diameter = diameter;
         this.length = length;
+        this.lengthUnit = lengthUnit;
         this.model = model;
         this.clazz = clazz;
         this.quantity = quantity;
         this.type = type;
         this.specificationFileUrl = specificationFileUrl;
+        this.category = category;
     }
 
     public String getName() {
@@ -58,12 +62,21 @@ public class UpdateFastenerEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public UpdateFastenerEvent setLength(Double length) {
+    public UpdateFastenerEvent setLength(String length) {
         this.length = length;
+        return this;
+    }
+
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public UpdateFastenerEvent setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
         return this;
     }
 

@@ -1,36 +1,27 @@
 package bg.mck.dto;
 
+import bg.mck.enums.LengthUnits;
+
 public class SetDTO implements MaterialDTO{
 
     private String id;
 
     private String name;
 
-    private Double galvanisedSheetThickness;
+    private String galvanisedSheetThickness;
+    private LengthUnits galvanisedSheetThicknessUnit;
 
     private String color;
 
     private String maxLength;
 
+    private LengthUnits maxLengthUnit;
     private Double quantity;
 
     private String description;
 
     private String specificationFileUrl;
 
-    public SetDTO() {
-    }
-
-    public SetDTO(String id, String name, Double galvanisedSheetThickness, String color, String maxLength, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
-        this.name = name;
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        this.color = color;
-        this.maxLength = maxLength;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
 
     public String getId() {
         return id;
@@ -48,11 +39,11 @@ public class SetDTO implements MaterialDTO{
         this.name = name;
     }
 
-    public Double getGalvanisedSheetThickness() {
+    public String getGalvanisedSheetThickness() {
         return galvanisedSheetThickness;
     }
 
-    public void setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+    public void setGalvanisedSheetThickness(String galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
     }
 
@@ -94,5 +85,23 @@ public class SetDTO implements MaterialDTO{
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public LengthUnits getGalvanisedSheetThicknessUnit() {
+        return galvanisedSheetThicknessUnit;
+    }
+
+    public SetDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
+        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
+        return this;
+    }
+
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public SetDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
     }
 }

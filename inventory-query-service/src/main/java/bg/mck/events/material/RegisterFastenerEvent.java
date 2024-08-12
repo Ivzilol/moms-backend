@@ -2,6 +2,7 @@ package bg.mck.events.material;
 
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.LengthUnits;
 
 
 public class RegisterFastenerEvent extends BaseMaterialEvent {
@@ -10,7 +11,8 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
     private String name;
     private String description;
     private String diameter;
-    private Double length;
+    private String length;
+    private LengthUnits lengthUnit;
     private String model;
     private String clazz;
     private Double quantity;
@@ -23,20 +25,20 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
     }
 
 
-    public RegisterFastenerEvent(Long materialId, EventType eventType, String category, String name, String type , String description, String diameter, Double length, String model, String clazz, Double quantity, String specificationFileUrl) {
+    public RegisterFastenerEvent(Long materialId, EventType eventType, String category, String name, String description, String diameter, String length, LengthUnits lengthUnit, String model, String clazz, Double quantity, String type, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
-        this.type = type;
         this.description = description;
         this.diameter = diameter;
         this.length = length;
+        this.lengthUnit = lengthUnit;
         this.model = model;
         this.clazz = clazz;
         this.quantity = quantity;
+        this.type = type;
         this.specificationFileUrl = specificationFileUrl;
     }
-
 
     public String getCategory() {
         return category;
@@ -70,11 +72,11 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
         this.diameter = diameter;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(Double length) {
+    public void setLength(String length) {
         this.length = length;
     }
 
@@ -116,5 +118,14 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public RegisterFastenerEvent setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
+        return this;
     }
 }

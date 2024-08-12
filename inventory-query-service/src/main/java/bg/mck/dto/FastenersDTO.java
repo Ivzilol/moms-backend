@@ -1,5 +1,7 @@
 package bg.mck.dto;
 
+import bg.mck.enums.LengthUnits;
+
 public class FastenersDTO implements MaterialDTO {
 
     private String id;
@@ -10,7 +12,9 @@ public class FastenersDTO implements MaterialDTO {
 
     private String diameter;
 
-    private Double length;
+    private String length;
+
+    private LengthUnits lengthUnit;
 
     private String model;
 
@@ -22,21 +26,7 @@ public class FastenersDTO implements MaterialDTO {
 
     private String specificationFileUrl;
 
-    public FastenersDTO() {
-    }
 
-    public FastenersDTO(String id, String name, String type, String diameter, Double length, String model, String clazz, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.diameter = diameter;
-        this.length = length;
-        this.model = model;
-        this.clazz = clazz;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
 
     public String getId() {
         return id;
@@ -70,11 +60,11 @@ public class FastenersDTO implements MaterialDTO {
         this.diameter = diameter;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(Double length) {
+    public void setLength(String length) {
         this.length = length;
     }
 
@@ -116,5 +106,14 @@ public class FastenersDTO implements MaterialDTO {
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public FastenersDTO setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
+        return this;
     }
 }

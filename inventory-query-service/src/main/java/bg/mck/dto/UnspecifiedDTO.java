@@ -12,16 +12,6 @@ public class UnspecifiedDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
-    public UnspecifiedDTO() {
-    }
-
-    public UnspecifiedDTO(String id, String name, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
-        this.name = name;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
 
     public String getId() {
         return id;

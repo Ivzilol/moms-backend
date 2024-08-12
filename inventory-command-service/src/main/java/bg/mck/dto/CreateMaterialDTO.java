@@ -1,9 +1,13 @@
 package bg.mck.dto;
 
 
+import bg.mck.enums.AreaUnits;
+import bg.mck.enums.LengthUnits;
 import bg.mck.enums.MaterialType;
+import bg.mck.enums.WeightUnits;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import static bg.mck.errors.ErrorsCreateMaterial.*;
 
@@ -14,8 +18,9 @@ public class CreateMaterialDTO {
     private String name;
     private String description;
     private String diameter;
-    @DecimalMin(value = "0.0", message = INVALID_LENGTH)
-    private Double length;
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    private String length;
+    private LengthUnits lengthUnit;
     private String model;
     private String clazz;
     @DecimalMin(value = "0.0", message = INVALID_QUANTITY)
@@ -25,35 +30,47 @@ public class CreateMaterialDTO {
     private String marking;
     private String number;
     private String type;
-    private Double width;
-    @DecimalMin(value = "0.0", inclusive = false, message = INVALID_AREA)
-    private Double area;
+    @Pattern(regexp = "^[^-].*", message = "Width must be positive")
+    private String width;
+    private LengthUnits widthUnit;
+    @Pattern(regexp = "^[^-].*", message = "Area must be positive")
+    private String area;
+    private AreaUnits areaUnit;
     private String color;
-    @DecimalMin(value = "0.0", message = INVALID_THICKNESS)
-    private Double thickness;
+    @Pattern(regexp = "^[^-].*", message = "Thickness must be positive")
+    private String thickness;
+    private LengthUnits thicknessUnit;
 
-    @DecimalMin(value = "0.0", message = INVALID_FRONT_THICKNESS)
-    private Double frontSheetThickness;
+    @Pattern(regexp = "^[^-].*", message = "FrontSheetThickness must be positive")
+    private String frontSheetThickness;
+    private LengthUnits frontSheetThicknessUnit;
 
-    @DecimalMin(value = "0.0", message = INVALID_BACK_THICKNESS)
-    private Double backSheetThickness;
+    @Pattern(regexp = "^[^-].*", message = "BackSheetThickness must be positive")
+    private String backSheetThickness;
+    private LengthUnits backSheetThicknessUnit;
     private Double thermalPerformance;
     private Double density;
-    @DecimalMin(value = "0.0", message = INVALID_THICKNESS)
-    private Double totalThickness;
+    @Pattern(regexp = "^[^-].*", message = "TotalThickness must be positive")
+    private String totalThickness;
+    private LengthUnits totalThicknessUnit;
     private Double sheetThickness;
     private Integer positionNumber;
     private String steel;
-    @DecimalMin(value = "0.0", message = INVALID_WIDTH)
-    private Double weight;
-    @DecimalMin(value = "0.0", inclusive = false, message = INVALID_MAX_LENGTH)
-    private Double maxLength;
+    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
+    private String weight;
+    private WeightUnits weightUnit;
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    private String maxLength;
+    private LengthUnits maxLengthUnit;
 
-    @DecimalMin(value = "0.0", message = INVALID_TOTAL_WEIGHT)
-    private Double totalWeight;
+    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
+    private String totalWeight;
+    private WeightUnits totalWeightUnit;
 
-    @DecimalMin(value = "0.0", message = INVALID_GALVANISE)
-    private Double galvanisedSheetThickness;
+    @Pattern(regexp = "^[^-].*", message = "GalvanisedSheetThickness must be positive")
+    private String galvanisedSheetThickness;
+    private LengthUnits galvanisedSheetThicknessUnit;
+
 
     public MaterialType getMaterialType() {
         return materialType;
@@ -63,11 +80,11 @@ public class CreateMaterialDTO {
         this.materialType = materialType;
     }
 
-    public Double getGalvanisedSheetThickness() {
+    public String getGalvanisedSheetThickness() {
         return galvanisedSheetThickness;
     }
 
-    public void setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+    public void setGalvanisedSheetThickness(String galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
     }
 
@@ -95,11 +112,11 @@ public class CreateMaterialDTO {
         this.diameter = diameter;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(Double length) {
+    public void setLength(String length) {
         this.length = length;
     }
 
@@ -167,19 +184,19 @@ public class CreateMaterialDTO {
         this.type = type;
     }
 
-    public Double getWidth() {
+    public String getWidth() {
         return width;
     }
 
-    public void setWidth(Double width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
-    public Double getArea() {
+    public String getArea() {
         return area;
     }
 
-    public void setArea(Double area) {
+    public void setArea(String area) {
         this.area = area;
     }
 
@@ -191,11 +208,11 @@ public class CreateMaterialDTO {
         this.color = color;
     }
 
-    public Double getThickness() {
+    public String getThickness() {
         return thickness;
     }
 
-    public void setThickness(Double thickness) {
+    public void setThickness(String thickness) {
         this.thickness = thickness;
     }
 
@@ -215,11 +232,11 @@ public class CreateMaterialDTO {
         this.density = density;
     }
 
-    public Double getTotalThickness() {
+    public String getTotalThickness() {
         return totalThickness;
     }
 
-    public void setTotalThickness(Double totalThickness) {
+    public void setTotalThickness(String totalThickness) {
         this.totalThickness = totalThickness;
     }
 
@@ -247,43 +264,143 @@ public class CreateMaterialDTO {
         this.steel = steel;
     }
 
-    public Double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public void setMaxLength(Double maxLength) {
+    public void setMaxLength(String maxLength) {
         this.maxLength = maxLength;
     }
 
-    public Double getTotalWeight() {
+    public String getTotalWeight() {
         return totalWeight;
     }
 
-    public void setTotalWeight(Double totalWeight) {
+    public void setTotalWeight(String totalWeight) {
         this.totalWeight = totalWeight;
     }
 
-    public Double getFrontSheetThickness() {
+    public String getFrontSheetThickness() {
         return frontSheetThickness;
     }
 
-    public void setFrontSheetThickness(Double frontSheetThickness) {
+    public void setFrontSheetThickness(String frontSheetThickness) {
         this.frontSheetThickness = frontSheetThickness;
     }
 
-    public Double getBackSheetThickness() {
+    public String getBackSheetThickness() {
         return backSheetThickness;
     }
 
-    public void setBackSheetThickness(Double backSheetThickness) {
+    public void setBackSheetThickness(String backSheetThickness) {
         this.backSheetThickness = backSheetThickness;
+    }
+
+
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public CreateMaterialDTO setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
+        return this;
+    }
+
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public CreateMaterialDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public AreaUnits getAreaUnit() {
+        return areaUnit;
+    }
+
+    public CreateMaterialDTO setAreaUnit(AreaUnits areaUnit) {
+        this.areaUnit = areaUnit;
+        return this;
+    }
+
+    public LengthUnits getThicknessUnit() {
+        return thicknessUnit;
+    }
+
+    public CreateMaterialDTO setThicknessUnit(LengthUnits thicknessUnit) {
+        this.thicknessUnit = thicknessUnit;
+        return this;
+    }
+
+    public WeightUnits getTotalWeightUnit() {
+        return totalWeightUnit;
+    }
+
+    public CreateMaterialDTO setTotalWeightUnit(WeightUnits totalWeightUnit) {
+        this.totalWeightUnit = totalWeightUnit;
+        return this;
+    }
+
+    public LengthUnits getWidthUnit() {
+        return widthUnit;
+    }
+
+    public CreateMaterialDTO setWidthUnit(LengthUnits widthUnit) {
+        this.widthUnit = widthUnit;
+        return this;
+    }
+
+    public LengthUnits getTotalThicknessUnit() {
+        return totalThicknessUnit;
+    }
+
+    public CreateMaterialDTO setTotalThicknessUnit(LengthUnits totalThicknessUnit) {
+        this.totalThicknessUnit = totalThicknessUnit;
+        return this;
+    }
+
+    public LengthUnits getFrontSheetThicknessUnit() {
+        return frontSheetThicknessUnit;
+    }
+
+    public CreateMaterialDTO setFrontSheetThicknessUnit(LengthUnits frontSheetThicknessUnit) {
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        return this;
+    }
+
+    public LengthUnits getBackSheetThicknessUnit() {
+        return backSheetThicknessUnit;
+    }
+
+    public CreateMaterialDTO setBackSheetThicknessUnit(LengthUnits backSheetThicknessUnit) {
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
+        return this;
+    }
+
+    public WeightUnits getWeightUnit() {
+        return weightUnit;
+    }
+
+    public CreateMaterialDTO setWeightUnit(WeightUnits weightUnit) {
+        this.weightUnit = weightUnit;
+        return this;
+    }
+
+    public LengthUnits getGalvanisedSheetThicknessUnit() {
+        return galvanisedSheetThicknessUnit;
+    }
+
+    public CreateMaterialDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
+        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
+        return this;
     }
 }

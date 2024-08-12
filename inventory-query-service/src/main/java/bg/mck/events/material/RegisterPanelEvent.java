@@ -1,6 +1,7 @@
 package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.LengthUnits;
 
 public class RegisterPanelEvent extends BaseMaterialEvent {
 
@@ -12,15 +13,20 @@ public class RegisterPanelEvent extends BaseMaterialEvent {
 
     private String color;
 
-    private Double length;
+    private String length;
+    private LengthUnits lengthUnit;
 
-    private Double width;
+    private String width;
+    private LengthUnits widthUnit;
 
-    private Double totalThickness;
+    private String totalThickness;
+    private LengthUnits totalThicknessUnit;
 
-    private Double FrontSheetThickness;
+    private String frontSheetThickness;
+    private LengthUnits frontSheetThicknessUnit;
 
-    private Double BackSheetThickness;
+    private String backSheetThickness;
+    private LengthUnits backSheetThicknessUnit;
 
     private Double quantity;
 
@@ -28,17 +34,22 @@ public class RegisterPanelEvent extends BaseMaterialEvent {
 
     private String specificationFileUrl;
 
-    public RegisterPanelEvent(Long materialId, EventType eventType, String category, String name, String type, String color, Double length, Double width, Double totalThickness, Double frontSheetThickness, Double backSheetThickness, Double quantity, String description, String specificationFileUrl) {
+    public RegisterPanelEvent(Long materialId, EventType eventType, String category, String name, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.type = type;
         this.color = color;
         this.length = length;
+        this.lengthUnit = lengthUnit;
         this.width = width;
+        this.widthUnit = widthUnit;
         this.totalThickness = totalThickness;
-        FrontSheetThickness = frontSheetThickness;
-        BackSheetThickness = backSheetThickness;
+        this.totalThicknessUnit = totalThicknessUnit;
+        this.frontSheetThickness = frontSheetThickness;
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        this.backSheetThickness = backSheetThickness;
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
@@ -52,95 +63,152 @@ public class RegisterPanelEvent extends BaseMaterialEvent {
         return category;
     }
 
-    public void setCategory(String category) {
+    public RegisterPanelEvent setCategory(String category) {
         this.category = category;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public RegisterPanelEvent setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public RegisterPanelEvent setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public RegisterPanelEvent setColor(String color) {
         this.color = color;
+        return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(Double length) {
+    public RegisterPanelEvent setLength(String length) {
         this.length = length;
+        return this;
     }
 
-    public Double getWidth() {
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public RegisterPanelEvent setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
+        return this;
+    }
+
+    public String getWidth() {
         return width;
     }
 
-    public void setWidth(Double width) {
+    public RegisterPanelEvent setWidth(String width) {
         this.width = width;
+        return this;
     }
 
-    public Double getTotalThickness() {
+    public LengthUnits getWidthUnit() {
+        return widthUnit;
+    }
+
+    public RegisterPanelEvent setWidthUnit(LengthUnits widthUnit) {
+        this.widthUnit = widthUnit;
+        return this;
+    }
+
+    public String getTotalThickness() {
         return totalThickness;
     }
 
-    public void setTotalThickness(Double totalThickness) {
+    public RegisterPanelEvent setTotalThickness(String totalThickness) {
         this.totalThickness = totalThickness;
+        return this;
     }
 
-    public Double getFrontSheetThickness() {
-        return FrontSheetThickness;
+    public LengthUnits getTotalThicknessUnit() {
+        return totalThicknessUnit;
     }
 
-    public void setFrontSheetThickness(Double frontSheetThickness) {
-        FrontSheetThickness = frontSheetThickness;
+    public RegisterPanelEvent setTotalThicknessUnit(LengthUnits totalThicknessUnit) {
+        this.totalThicknessUnit = totalThicknessUnit;
+        return this;
     }
 
-    public Double getBackSheetThickness() {
-        return BackSheetThickness;
+    public String getFrontSheetThickness() {
+        return frontSheetThickness;
     }
 
-    public void setBackSheetThickness(Double backSheetThickness) {
-        BackSheetThickness = backSheetThickness;
+    public RegisterPanelEvent setFrontSheetThickness(String frontSheetThickness) {
+        this.frontSheetThickness = frontSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getFrontSheetThicknessUnit() {
+        return frontSheetThicknessUnit;
+    }
+
+    public RegisterPanelEvent setFrontSheetThicknessUnit(LengthUnits frontSheetThicknessUnit) {
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        return this;
+    }
+
+    public String getBackSheetThickness() {
+        return backSheetThickness;
+    }
+
+    public RegisterPanelEvent setBackSheetThickness(String backSheetThickness) {
+        this.backSheetThickness = backSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getBackSheetThicknessUnit() {
+        return backSheetThicknessUnit;
+    }
+
+    public RegisterPanelEvent setBackSheetThicknessUnit(LengthUnits backSheetThicknessUnit) {
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
+        return this;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public RegisterPanelEvent setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public RegisterPanelEvent setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public void setSpecificationFileUrl(String specificationFileUrl) {
+    public RegisterPanelEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
     }
 }

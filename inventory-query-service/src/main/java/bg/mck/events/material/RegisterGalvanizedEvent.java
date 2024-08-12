@@ -1,6 +1,8 @@
 package bg.mck.events.material;
 
+import bg.mck.enums.AreaUnits;
 import bg.mck.enums.EventType;
+import bg.mck.enums.LengthUnits;
 
 public class RegisterGalvanizedEvent extends BaseMaterialEvent {
 
@@ -10,9 +12,13 @@ public class RegisterGalvanizedEvent extends BaseMaterialEvent {
 
     private String type;
 
-    private Double maxLength;
+    private String maxLength;
 
-    private Double area;
+    private LengthUnits maxLengthUnit;
+
+    private String area;
+
+    private AreaUnits areaUnit;
 
     private Double quantity;
 
@@ -24,13 +30,15 @@ public class RegisterGalvanizedEvent extends BaseMaterialEvent {
 
     }
 
-    public RegisterGalvanizedEvent(Long materialId, EventType eventType, String category, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl) {
+    public RegisterGalvanizedEvent(Long materialId, EventType eventType, String category, String name, String type, String maxLength, LengthUnits maxLengthUnit, String area, AreaUnits areaUnit, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.type = type;
         this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
         this.area = area;
+        this.areaUnit = areaUnit;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
@@ -40,63 +48,89 @@ public class RegisterGalvanizedEvent extends BaseMaterialEvent {
         return category;
     }
 
-    public void setCategory(String category) {
+    public RegisterGalvanizedEvent setCategory(String category) {
         this.category = category;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public RegisterGalvanizedEvent setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public RegisterGalvanizedEvent setType(String type) {
         this.type = type;
+        return this;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public void setMaxLength(Double maxLength) {
+    public RegisterGalvanizedEvent setMaxLength(String maxLength) {
         this.maxLength = maxLength;
+        return this;
     }
 
-    public Double getArea() {
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public RegisterGalvanizedEvent setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public String getArea() {
         return area;
     }
 
-    public void setArea(Double area) {
+    public RegisterGalvanizedEvent setArea(String area) {
         this.area = area;
+        return this;
+    }
+
+    public AreaUnits getAreaUnit() {
+        return areaUnit;
+    }
+
+    public RegisterGalvanizedEvent setAreaUnit(AreaUnits areaUnit) {
+        this.areaUnit = areaUnit;
+        return this;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public RegisterGalvanizedEvent setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public RegisterGalvanizedEvent setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public void setSpecificationFileUrl(String specificationFileUrl) {
+    public RegisterGalvanizedEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
     }
 }

@@ -1,6 +1,7 @@
 package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.WeightUnits;
 
 public class RegisterMetalEvent extends BaseMaterialEvent {
 
@@ -8,7 +9,8 @@ public class RegisterMetalEvent extends BaseMaterialEvent {
 
     private String name;
 
-    private Double totalWeight;
+    private String totalWeight;
+    private WeightUnits totalWeightUnit;
 
     private Double quantity;
 
@@ -16,11 +18,12 @@ public class RegisterMetalEvent extends BaseMaterialEvent {
 
     private String specificationFileUrl;
 
-    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl) {
+    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, String totalWeight, WeightUnits totalWeightUnit, Double quantity, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.totalWeight = totalWeight;
+        this.totalWeightUnit = totalWeightUnit;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
@@ -46,11 +49,11 @@ public class RegisterMetalEvent extends BaseMaterialEvent {
         this.name = name;
     }
 
-    public Double getTotalWeight() {
+    public String getTotalWeight() {
         return totalWeight;
     }
 
-    public void setTotalWeight(Double totalWeight) {
+    public void setTotalWeight(String totalWeight) {
         this.totalWeight = totalWeight;
     }
 
@@ -76,5 +79,14 @@ public class RegisterMetalEvent extends BaseMaterialEvent {
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public WeightUnits getTotalWeightUnit() {
+        return totalWeightUnit;
+    }
+
+    public RegisterMetalEvent setTotalWeightUnit(WeightUnits totalWeightUnit) {
+        this.totalWeightUnit = totalWeightUnit;
+        return this;
     }
 }

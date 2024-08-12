@@ -1,5 +1,7 @@
 package bg.mck.dto;
 
+import bg.mck.enums.LengthUnits;
+
 public class InsulationDTO implements MaterialDTO{
 
     private Long id;
@@ -8,7 +10,8 @@ public class InsulationDTO implements MaterialDTO{
 
     private String type;
 
-    private Double thickness;
+    private String thickness;
+    private LengthUnits thicknessUnit;
 
     private Double quantity;
 
@@ -16,18 +19,6 @@ public class InsulationDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
-    public InsulationDTO() {
-    }
-
-    public InsulationDTO(Long id, String name, String type, Double thickness, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.thickness = thickness;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
 
     public Long getId() {
         return id;
@@ -53,11 +44,11 @@ public class InsulationDTO implements MaterialDTO{
         this.type = type;
     }
 
-    public Double getThickness() {
+    public String getThickness() {
         return thickness;
     }
 
-    public void setThickness(Double thickness) {
+    public void setThickness(String thickness) {
         this.thickness = thickness;
     }
 
@@ -83,5 +74,14 @@ public class InsulationDTO implements MaterialDTO{
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public LengthUnits getThicknessUnit() {
+        return thicknessUnit;
+    }
+
+    public InsulationDTO setThicknessUnit(LengthUnits thicknessUnit) {
+        this.thicknessUnit = thicknessUnit;
+        return this;
     }
 }

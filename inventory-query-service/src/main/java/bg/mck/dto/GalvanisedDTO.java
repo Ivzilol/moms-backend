@@ -1,5 +1,8 @@
 package bg.mck.dto;
 
+import bg.mck.enums.AreaUnits;
+import bg.mck.enums.LengthUnits;
+
 public class GalvanisedDTO implements MaterialDTO{
 
     private Long id;
@@ -8,9 +11,13 @@ public class GalvanisedDTO implements MaterialDTO{
 
     private String type;
 
-    private Double maxLength;
+    private String maxLength;
 
-    private Double area;
+    private LengthUnits maxLengthUnit;
+
+    private String area;
+
+    private AreaUnits areaUnit;
 
     private Double quantity;
 
@@ -18,19 +25,7 @@ public class GalvanisedDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
-    public GalvanisedDTO() {
-    }
 
-    public GalvanisedDTO(Long id, String name, String type, Double maxLength, Double area, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.maxLength = maxLength;
-        this.area = area;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
 
     public Long getId() {
         return id;
@@ -56,19 +51,19 @@ public class GalvanisedDTO implements MaterialDTO{
         this.type = type;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public void setMaxLength(Double maxLength) {
+    public void setMaxLength(String maxLength) {
         this.maxLength = maxLength;
     }
 
-    public Double getArea() {
+    public String getArea() {
         return area;
     }
 
-    public void setArea(Double area) {
+    public void setArea(String area) {
         this.area = area;
     }
 
@@ -94,5 +89,23 @@ public class GalvanisedDTO implements MaterialDTO{
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public AreaUnits getAreaUnit() {
+        return areaUnit;
+    }
+
+    public GalvanisedDTO setAreaUnit(AreaUnits areaUnit) {
+        this.areaUnit = areaUnit;
+        return this;
+    }
+
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public GalvanisedDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
     }
 }

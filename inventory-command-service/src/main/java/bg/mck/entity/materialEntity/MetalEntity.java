@@ -1,23 +1,26 @@
 package bg.mck.entity.materialEntity;
 
 import bg.mck.entity.categoryEntity.CategoryEntity;
+import bg.mck.enums.WeightUnits;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 
-@Table
-@Entity(name = "metals")
+import java.util.Objects;
+
+@Entity
+@Table(name = "metals")
 public class MetalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //description
     private String name;
 
-    @DecimalMin(value = "0.0", message = "Weight must be positive")
-    @Column(name = "total_weight_in_kg")
-    private Double totalWeight;
+    private String totalWeight;
+
+    @Enumerated(EnumType.STRING)
+    private WeightUnits totalWeightUnit;
 
     @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
@@ -25,78 +28,199 @@ public class MetalEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-
     private String specificationFileUrl;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private CategoryEntity category;
 
+    // Default constructor
     public MetalEntity() {
     }
 
-    public MetalEntity(Long id, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl, CategoryEntity category) {
-        this.id = id;
-        this.name = name;
-        this.totalWeight = totalWeight;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-        this.category = category;
+    // Constructor accepting Builder
+    private MetalEntity(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.totalWeight = builder.totalWeight;
+        this.totalWeightUnit = builder.totalWeightUnit;
+        this.quantity = builder.quantity;
+        this.description = builder.description;
+        this.specificationFileUrl = builder.specificationFileUrl;
+        this.category = builder.category;
     }
 
+    // Copy constructor
+    public MetalEntity(MetalEntity other) {
+        this.id = other.id;
+        this.name = other.name;
+        this.totalWeight = other.totalWeight;
+        this.totalWeightUnit = other.totalWeightUnit;
+        this.quantity = other.quantity;
+        this.description = other.description;
+        this.specificationFileUrl = other.specificationFileUrl;
+        this.category = other.category;
+    }
+
+    // Getters and setters with method chaining
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public MetalEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public MetalEntity setName(String name) {
         this.name = name;
+        return this;
     }
 
-    public Double getTotalWeight() {
+    public String getTotalWeight() {
         return totalWeight;
     }
 
-    public void setTotalWeight(Double totalWeight) {
+    public MetalEntity setTotalWeight(String totalWeight) {
         this.totalWeight = totalWeight;
+        return this;
+    }
+
+    public WeightUnits getTotalWeightUnit() {
+        return totalWeightUnit;
+    }
+
+    public MetalEntity setTotalWeightUnit(WeightUnits totalWeightUnit) {
+        this.totalWeightUnit = totalWeightUnit;
+        return this;
     }
 
     public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public MetalEntity setQuantity(Double quantity) {
         this.quantity = quantity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public MetalEntity setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;
     }
 
-    public void setSpecificationFileUrl(String specificationFileUrl) {
+    public MetalEntity setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
     }
 
     public CategoryEntity getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryEntity category) {
+    public MetalEntity setCategory(CategoryEntity category) {
         this.category = category;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MetalEntity that = (MetalEntity) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(name, that.name)
+                && Objects.equals(totalWeight, that.totalWeight)
+                && totalWeightUnit == that.totalWeightUnit
+                && Objects.equals(quantity, that.quantity)
+                && Objects.equals(description, that.description)
+                && Objects.equals(specificationFileUrl, that.specificationFileUrl)
+                && Objects.equals(category, that.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, totalWeight, totalWeightUnit, quantity, description, specificationFileUrl, category);
+    }
+
+    @Override
+    public String toString() {
+        return "MetalEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", totalWeight='" + totalWeight + '\'' +
+                ", totalWeightUnit=" + totalWeightUnit +
+                ", quantity=" + quantity +
+                ", description='" + description + '\'' +
+                ", specificationFileUrl='" + specificationFileUrl + '\'' +
+                ", category=" + category +
+                '}';
+    }
+
+    // Builder pattern implementation
+    public static class Builder {
+        private Long id;
+        private String name;
+        private String totalWeight;
+        private WeightUnits totalWeightUnit;
+        private Double quantity;
+        private String description;
+        private String specificationFileUrl;
+        private CategoryEntity category;
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setTotalWeight(String totalWeight) {
+            this.totalWeight = totalWeight;
+            return this;
+        }
+
+        public Builder setTotalWeightUnit(WeightUnits totalWeightUnit) {
+            this.totalWeightUnit = totalWeightUnit;
+            return this;
+        }
+
+        public Builder setQuantity(Double quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setSpecificationFileUrl(String specificationFileUrl) {
+            this.specificationFileUrl = specificationFileUrl;
+            return this;
+        }
+
+        public Builder setCategory(CategoryEntity category) {
+            this.category = category;
+            return this;
+        }
+
+        public MetalEntity build() {
+            return new MetalEntity(this);
+        }
     }
 }

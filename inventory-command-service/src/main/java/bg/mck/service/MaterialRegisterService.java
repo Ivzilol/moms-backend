@@ -91,7 +91,7 @@ public class MaterialRegisterService {
             this.fastenerRepository.save(fastenerEntity);
             FastenerEntity createdFastener = this.fastenerRepository
                     .findByName(createMaterialDTO.getType() + " " +
-                            createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength());
+                            createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength() + " " + createMaterialDTO.getLengthUnit());
             Optional<CategoryEntity> byMaterialType = this.categoryRepository
                     .findByMaterialType(MaterialType.FASTENERS);
             String materialType = byMaterialType.get().getMaterialType().name();
@@ -139,8 +139,8 @@ public class MaterialRegisterService {
             PanelEntity panelEntity = mapPanelEntity(createMaterialDTO);
             this.panelRepository.save(panelEntity);
             PanelEntity createPanel = this.panelRepository
-                    .findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength()
-                            + " " + createMaterialDTO.getTotalThickness());
+                    .findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength() + " " + createMaterialDTO.getLengthUnit()
+                            + " " + createMaterialDTO.getTotalThickness() + " " + createMaterialDTO.getTotalThicknessUnit());
             Optional<CategoryEntity> byMaterialType = this.categoryRepository
                     .findByMaterialType(MaterialType.PANELS);
             String materialType = byMaterialType.get().getMaterialType().name();
@@ -164,7 +164,7 @@ public class MaterialRegisterService {
             SetEntity setEntity = mapSetEntity(createMaterialDTO);
             this.setRepository.save(setEntity);
             SetEntity createSet = this.setRepository
-                    .findByName(createMaterialDTO.getGalvanisedSheetThickness() + " " +
+                    .findByName(createMaterialDTO.getGalvanisedSheetThickness() + " " + createMaterialDTO.getGalvanisedSheetThicknessUnit() + " " +
                             createMaterialDTO.getColor());
 
             Optional<CategoryEntity> byMaterialType = this.categoryRepository
@@ -211,8 +211,10 @@ public class MaterialRegisterService {
                 materialType,
                 createSet.getName(),
                 createSet.getGalvanisedSheetThickness(),
+                createSet.getGalvanisedSheetThicknessUnit(),
                 createSet.getColor(),
                 createSet.getMaxLength(),
+                createSet.getMaxLengthUnit(),
                 createSet.getQuantity(),
                 createSet.getDescription(),
                 createSet.getSpecificationFileUrl()
@@ -231,7 +233,9 @@ public class MaterialRegisterService {
                 materialType,
                 createRebar.getName(),
                 createRebar.getMaxLength(),
+                createRebar.getMaxLengthUnit(),
                 createRebar.getWeight(),
+                createRebar.getWeightUnit(),
                 createRebar.getQuantity(),
                 createRebar.getDescription(),
                 createRebar.getSpecificationFileUrl()
@@ -252,10 +256,15 @@ public class MaterialRegisterService {
                 createPanel.getType(),
                 createPanel.getColor(),
                 createPanel.getLength(),
+                createPanel.getLengthUnit(),
                 createPanel.getWidth(),
+                createPanel.getWidthUnit(),
                 createPanel.getTotalThickness(),
+                createPanel.getTotalThicknessUnit(),
                 createPanel.getFrontSheetThickness(),
+                createPanel.getFrontSheetThicknessUnit(),
                 createPanel.getBackSheetThickness(),
+                createPanel.getBackSheetThicknessUnit(),
                 createPanel.getQuantity(),
                 createPanel.getDescription(),
                 createPanel.getSpecificationFileUrl()
@@ -275,6 +284,7 @@ public class MaterialRegisterService {
                 materialType,
                 createMetal.getName(),
                 createMetal.getTotalWeight(),
+                createMetal.getTotalWeightUnit(),
                 createMetal.getQuantity(),
                 createMetal.getDescription(),
                 createMetal.getSpecificationFileUrl()
@@ -294,6 +304,7 @@ public class MaterialRegisterService {
                 createInsulation.getName(),
                 createInsulation.getType(),
                 createInsulation.getThickness(),
+                createInsulation.getThicknessUnit(),
                 createInsulation.getQuantity(),
                 createInsulation.getDescription(),
                 createInsulation.getSpecificationFileUrl()
@@ -313,7 +324,9 @@ public class MaterialRegisterService {
                 createdGalvanized.getName(),
                 createdGalvanized.getType(),
                 createdGalvanized.getMaxLength(),
+                createdGalvanized.getMaxLengthUnit(),
                 createdGalvanized.getArea(),
+                createdGalvanized.getAreaUnit(),
                 createdGalvanized.getQuantity(),
                 createdGalvanized.getDescription(),
                 createdGalvanized.getSpecificationFileUrl()
@@ -330,13 +343,14 @@ public class MaterialRegisterService {
                 EventType.ItemRegistered,
                 materialType,
                 createdFastener.getName(),
-                createdFastener.getType(),
                 createdFastener.getDescription(),
                 createdFastener.getDiameter(),
                 createdFastener.getLength(),
+                createdFastener.getLengthUnit(),
                 createdFastener.getModel(),
                 createdFastener.getClazz(),
                 createdFastener.getQuantity(),
+                createdFastener.getType(),
                 createdFastener.getSpecificationFileUrl()
         );
 
@@ -352,9 +366,10 @@ public class MaterialRegisterService {
         return Optional.of(new InsulationEntity())
                 .map(insulationEntity -> {
                     insulationEntity.setName(createMaterialDTO.getType() + " "
-                            + createMaterialDTO.getThickness());
+                            + createMaterialDTO.getThickness() + " " + createMaterialDTO.getThicknessUnit());
                     insulationEntity.setType(createMaterialDTO.getType());
                     insulationEntity.setThickness(createMaterialDTO.getThickness());
+                    insulationEntity.setThicknessUnit(createMaterialDTO.getThicknessUnit());
                     insulationEntity.setQuantity(createMaterialDTO.getQuantity());
                     insulationEntity.setDescription(createMaterialDTO.getDescription());
                     insulationEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
@@ -370,7 +385,9 @@ public class MaterialRegisterService {
                     galvanisedEntity.setName(createMaterialDTO.getType());
                     galvanisedEntity.setType(createMaterialDTO.getType());
                     galvanisedEntity.setMaxLength(createMaterialDTO.getMaxLength());
+                    galvanisedEntity.setMaxLengthUnit(createMaterialDTO.getMaxLengthUnit());
                     galvanisedEntity.setArea(createMaterialDTO.getArea());
+                    galvanisedEntity.setAreaUnit(createMaterialDTO.getAreaUnit());
                     galvanisedEntity.setQuantity(createMaterialDTO.getQuantity());
                     galvanisedEntity.setDescription(createMaterialDTO.getDescription());
                     galvanisedEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
@@ -385,11 +402,12 @@ public class MaterialRegisterService {
         return Optional.of(new FastenerEntity())
                 .map(fastenerEntity -> {
                     fastenerEntity.setName(createMaterialDTO.getType() + " " +
-                            createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength());
+                            createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength() + " " + createMaterialDTO.getLengthUnit());
                     fastenerEntity.setType(createMaterialDTO.getType());
                     fastenerEntity.setDescription(createMaterialDTO.getDescription());
                     fastenerEntity.setDiameter(createMaterialDTO.getDiameter());
                     fastenerEntity.setLength(createMaterialDTO.getLength());
+                    fastenerEntity.setLengthUnit(createMaterialDTO.getLengthUnit());
                     fastenerEntity.setModel(createMaterialDTO.getModel());
                     fastenerEntity.setClazz(createMaterialDTO.getClazz());
                     fastenerEntity.setQuantity(createMaterialDTO.getQuantity());
@@ -405,6 +423,7 @@ public class MaterialRegisterService {
                 .map(metalEntity -> {
                     metalEntity.setName(createMaterialDTO.getDescription());
                     metalEntity.setTotalWeight(createMaterialDTO.getTotalWeight());
+                    metalEntity.setTotalWeightUnit(createMaterialDTO.getTotalWeightUnit());
                     metalEntity.setQuantity(createMaterialDTO.getQuantity());
                     metalEntity.setDescription(createMaterialDTO.getDescription());
                     metalEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
@@ -417,15 +436,20 @@ public class MaterialRegisterService {
     private PanelEntity mapPanelEntity(CreateMaterialDTO createMaterialDTO) {
         return Optional.of(new PanelEntity())
                 .map(panelEntity -> {
-                    panelEntity.setName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength()
-                            + " " + createMaterialDTO.getTotalThickness());
+                    panelEntity.setName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength() + " " + createMaterialDTO.getLengthUnit()
+                            + " " + createMaterialDTO.getTotalThickness() + " " + createMaterialDTO.getTotalThicknessUnit());
                     panelEntity.setType(createMaterialDTO.getType());
                     panelEntity.setColor(createMaterialDTO.getColor());
                     panelEntity.setLength(createMaterialDTO.getLength());
+                    panelEntity.setLengthUnit(createMaterialDTO.getLengthUnit());
                     panelEntity.setWidth(createMaterialDTO.getWidth());
+                    panelEntity.setWidthUnit(createMaterialDTO.getWidthUnit());
                     panelEntity.setTotalThickness(createMaterialDTO.getTotalThickness());
+                    panelEntity.setTotalThicknessUnit(createMaterialDTO.getTotalThicknessUnit());
                     panelEntity.setFrontSheetThickness(createMaterialDTO.getFrontSheetThickness());
+                    panelEntity.setFrontSheetThicknessUnit(createMaterialDTO.getFrontSheetThicknessUnit());
                     panelEntity.setBackSheetThickness(createMaterialDTO.getBackSheetThickness());
+                    panelEntity.setBackSheetThicknessUnit(createMaterialDTO.getBackSheetThicknessUnit());
                     panelEntity.setQuantity(createMaterialDTO.getQuantity());
                     panelEntity.setDescription(createMaterialDTO.getDescription());
                     panelEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
@@ -440,7 +464,9 @@ public class MaterialRegisterService {
                 .map(rebarEntity -> {
                     rebarEntity.setName(createMaterialDTO.getDescription());
                     rebarEntity.setMaxLength(createMaterialDTO.getMaxLength());
+                    rebarEntity.setMaxLengthUnit(createMaterialDTO.getMaxLengthUnit());
                     rebarEntity.setWeight(createMaterialDTO.getWeight());
+                    rebarEntity.setWeightUnit(createMaterialDTO.getWeightUnit());
                     rebarEntity.setQuantity(createMaterialDTO.getQuantity());
                     rebarEntity.setDescription(createMaterialDTO.getDescription());
                     rebarEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
@@ -453,11 +479,13 @@ public class MaterialRegisterService {
     private SetEntity mapSetEntity(CreateMaterialDTO createMaterialDTO) {
         return Optional.of(new SetEntity())
                 .map(setEntity -> {
-                    setEntity.setName(createMaterialDTO.getGalvanisedSheetThickness() + " " +
+                    setEntity.setName(createMaterialDTO.getGalvanisedSheetThickness() + " " + createMaterialDTO.getGalvanisedSheetThicknessUnit() + " " +
                             createMaterialDTO.getColor());
                     setEntity.setGalvanisedSheetThickness(createMaterialDTO.getGalvanisedSheetThickness());
+                    setEntity.setGalvanisedSheetThicknessUnit(createMaterialDTO.getGalvanisedSheetThicknessUnit());
                     setEntity.setColor(createMaterialDTO.getColor());
-                    setEntity.setMaxLength(String.valueOf(createMaterialDTO.getMaxLength()));
+                    setEntity.setMaxLength(createMaterialDTO.getMaxLength());
+                    setEntity.setMaxLengthUnit(createMaterialDTO.getMaxLengthUnit());
                     setEntity.setQuantity(createMaterialDTO.getQuantity());
                     setEntity.setDescription(createMaterialDTO.getDescription());
                     setEntity.setSpecificationFileUrl(createMaterialDTO.getSpecificationFileUrl());
