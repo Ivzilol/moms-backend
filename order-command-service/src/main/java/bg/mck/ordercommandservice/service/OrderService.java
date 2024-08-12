@@ -4,21 +4,27 @@ import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.*;
 import bg.mck.ordercommandservice.entity.*;
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import bg.mck.ordercommandservice.event.*;
+import bg.mck.ordercommandservice.exception.FileMatcherNotFoundException;
 import bg.mck.ordercommandservice.mapper.*;
 import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 
 
+import org.apache.kafka.common.protocol.types.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.http.HttpClient;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -27,6 +33,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -52,7 +60,7 @@ public class OrderService {
     private final TransportMapper transportMapper;
     private final UnspecifiedMapper unspecifiedMapper;
     private final MaterialService materialService;
-    private final RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService, RestTemplate restTemplate) {
         this.orderRepository = orderRepository;
@@ -88,12 +96,9 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<MultipartFile> files) {
+    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<FileDTO> fileUrls) {
 
-        //TODO: implement file upload
-        List<String> filesUrl = uploadFiles(files);
-        //TODO: implement matching files to materials
-        matchFilesToMaterials(order, filesUrl);
+        matchFilesToMaterials(order, fileUrls);
 
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
@@ -114,12 +119,12 @@ public class OrderService {
     @Transactional
     public OrderConfirmationDTO updateOrder(OrderDTO order, String email, List<MultipartFile> files) {
 
-        if (!files.isEmpty()) {
-            //TODO: implement file upload
-            List<String> filesUrl = uploadFiles(files);
-            //TODO: implement matching files to materials
-            matchFilesToMaterials(order, filesUrl);
-        }
+//        if (!files.isEmpty()) {
+//            //TODO: implement file upload
+//            List<String> filesUrl = uploadFiles(files);
+//            //TODO: implement matching files to materials
+//            matchFilesToMaterials(order, filesUrl);
+//        }
 
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByName =
@@ -187,79 +192,68 @@ public class OrderService {
 
     private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order) {
         switch (order.getMaterialType()) {
-            case FASTENERS:
-                updateMaterialStatus(orderEntity.getFasteners(), order.getFasteners());
-                break;
-            case GALVANIZED_SHEET:
-                updateMaterialStatus(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets());
-                break;
-            case INSULATION:
-                updateMaterialStatus(orderEntity.getInsulation(), order.getInsulation());
-                break;
-            case METAL:
-                updateMaterialStatus(orderEntity.getMetals(), order.getMetals());
-                break;
-            case PANELS:
-                updateMaterialStatus(orderEntity.getPanels(), order.getPanels());
-                break;
-            case REBAR:
-                updateMaterialStatus(orderEntity.getRebars(), order.getRebars());
-                break;
-            case SERVICE:
-                updateMaterialStatus(orderEntity.getServices(), order.getServices());
-                break;
-            case SET:
-                updateMaterialStatus(orderEntity.getSets(), order.getSets());
-                break;
-            case TRANSPORT:
-                updateMaterialStatus(orderEntity.getTransports(), order.getTransports());
-                break;
-            case UNSPECIFIED:
-                updateMaterialStatus(orderEntity.getUnspecified(), order.getUnspecified());
-                break;
+            case FASTENERS -> updateMaterialStatus(orderEntity.getFasteners(), order.getFasteners());
+            case GALVANIZED_SHEET ->
+                    updateMaterialStatus(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets());
+            case INSULATION -> updateMaterialStatus(orderEntity.getInsulation(), order.getInsulation());
+            case METAL -> updateMaterialStatus(orderEntity.getMetals(), order.getMetals());
+            case PANELS -> updateMaterialStatus(orderEntity.getPanels(), order.getPanels());
+            case REBAR -> updateMaterialStatus(orderEntity.getRebars(), order.getRebars());
+            case SERVICE -> updateMaterialStatus(orderEntity.getServices(), order.getServices());
+            case SET -> updateMaterialStatus(orderEntity.getSets(), order.getSets());
+            case TRANSPORT -> updateMaterialStatus(orderEntity.getTransports(), order.getTransports());
+            case UNSPECIFIED -> updateMaterialStatus(orderEntity.getUnspecified(), order.getUnspecified());
         }
     }
 
-    private void updateMaterialStatus(Set<? extends BaseMaterialEntity> materials, Set<? extends BaseDTO> materialsDTO) {
+    private void updateMaterialStatus(Set<? extends BaseMaterialEntity> materials, List<? extends BaseDTO> materialsDTO) {
         materials.forEach(material -> {
             materialsDTO.forEach(materialDTO -> {
                 if (material.getId().equals(materialDTO.getId())) {
-                    material.setAdminNote(materialDTO.getAdminNote())
-                            .setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
+                    material.setAdminNote(materialDTO.getAdminNote());
+                    if (materialDTO.getMaterialStatus() != null) {
+                        material.setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
+                    }
                 }
             });
         });
     }
 
-    private List<String> uploadFiles(List<MultipartFile> files) {
-        if (files == null || files.isEmpty()) {
-            return null;
-        }
-//        List<String> filesUrl = new ArrayList<>();
-//                files.forEach(file -> {
-//
-//                    try {
-//                        String fileUrl = restTemplate
-//                                .getForObject("http://file-storage-service/"
-//                                        + APPLICATION_VERSION
-//                                        + "/user/files/upload", String.class);
-//
-//                        filesUrl.add(fileUrl);
-//                    } catch (Exception e) {
-//                        LOGGER.error("Error uploading file: {}", e.getMessage());
-//                        throw new RuntimeException("Error uploading file: " + e.getMessage());
-//                    }
-//                }); ;
-//        return filesUrl;
-        return null;
-    }
-
-
-    private static void matchFilesToMaterials(OrderDTO order, List<String> filesUrl) {
+    private static void matchFilesToMaterials(OrderDTO order, List<FileDTO> filesUrl) {
         if (filesUrl == null || filesUrl.isEmpty()) {
             return;
         }
-        //TODO: implement matching files to materials
+
+        for (FileDTO fileDTO : filesUrl) {
+
+            if (fileDTO == null) {
+                throw new FileMatcherNotFoundException("The file has no matching pattern");
+            }
+
+            if (fileDTO.getFileMatcher().equals("000")) {
+                order.setSpecificationFileUrl(fileDTO.getFileUrl());
+                continue;
+            }
+
+            switch (order.getMaterialType()) {
+                case FASTENERS -> addFileUrlToMaterial(order.getFasteners(), fileDTO);
+                case GALVANIZED_SHEET -> addFileUrlToMaterial(order.getGalvanisedSheets(), fileDTO);
+                case INSULATION -> addFileUrlToMaterial(order.getInsulation(), fileDTO);
+                case METAL -> addFileUrlToMaterial(order.getMetals(), fileDTO);
+                case PANELS -> addFileUrlToMaterial(order.getPanels(), fileDTO);
+                case REBAR -> addFileUrlToMaterial(order.getRebars(), fileDTO);
+                case SERVICE -> addFileUrlToMaterial(order.getServices(), fileDTO);
+                case SET -> addFileUrlToMaterial(order.getSets(), fileDTO);
+                case TRANSPORT -> addFileUrlToMaterial(order.getTransports(), fileDTO);
+                case UNSPECIFIED -> addFileUrlToMaterial(order.getUnspecified(), fileDTO);
+            }
+        }
+    }
+
+    private static void addFileUrlToMaterial(List<?> currentMaterials, FileDTO fileDTO) {
+
+        BaseDTO baseDTO = (BaseDTO) currentMaterials.get(Integer.parseInt(fileDTO.getFileMatcher()) - 1);
+        baseDTO.setSpecificationFileUrl(fileDTO.getFileUrl());
     }
 
     private OrderConfirmationDTO createOrderEvent(OrderEntity orderEntity) {
