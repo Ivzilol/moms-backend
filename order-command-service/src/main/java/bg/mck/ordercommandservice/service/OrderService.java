@@ -13,28 +13,19 @@ import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 
 
-import org.apache.kafka.common.protocol.types.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.http.HttpClient;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -60,9 +51,11 @@ public class OrderService {
     private final TransportMapper transportMapper;
     private final UnspecifiedMapper unspecifiedMapper;
     private final MaterialService materialService;
+    private final InventoryService inventoryService;
+
     private RestTemplate restTemplate;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService, RestTemplate restTemplate) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService, InventoryService inventoryService, RestTemplate restTemplate) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
         this.orderMapper = orderMapper;
@@ -78,6 +71,7 @@ public class OrderService {
         this.transportMapper = transportMapper;
         this.unspecifiedMapper = unspecifiedMapper;
         this.materialService = materialService;
+        this.inventoryService = inventoryService;
         this.restTemplate = restTemplate;
     }
 
@@ -113,7 +107,27 @@ public class OrderService {
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());
 
+        sendMaterialsToInventory(order);
+
         return createOrderEvent(orderEntity);
+    }
+
+    private void sendMaterialsToInventory(OrderDTO orderDTO) {
+        Map<MaterialType, List<? extends BaseDTO>> materials = new HashMap<>();
+        switch (orderDTO.getMaterialType()) {
+            case FASTENERS -> materials.put(MaterialType.FASTENERS, orderDTO.getFasteners());
+            case GALVANIZED_SHEET -> materials.put(MaterialType.GALVANIZED_SHEET, orderDTO.getGalvanisedSheets());
+            case INSULATION -> materials.put(MaterialType.INSULATION, orderDTO.getInsulation());
+            case METAL -> materials.put(MaterialType.METAL, orderDTO.getMetals());
+            case PANELS -> materials.put(MaterialType.PANELS, orderDTO.getPanels());
+            case REBAR -> materials.put(MaterialType.REBAR, orderDTO.getRebars());
+            case SERVICE -> materials.put(MaterialType.SERVICE, orderDTO.getServices());
+            case SET -> materials.put(MaterialType.SET, orderDTO.getSets());
+            case TRANSPORT -> materials.put(MaterialType.TRANSPORT, orderDTO.getTransports());
+            case UNSPECIFIED -> materials.put(MaterialType.UNSPECIFIED, orderDTO.getUnspecified());
+        }
+
+        inventoryService.addMaterialsToInventory(materials);
     }
 
     @Transactional
