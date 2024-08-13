@@ -26,12 +26,12 @@ public class UserQueryService {
     }
 
     public UserDetailsDTO getUserDetailsById(Long id) {
-        UserEntity user =  getUserById(id);
+        UserEntity user = getUserById(id);
         return mapper.toDTO(user);
     }
 
     public UserCredentialsDTO getUserCredentialsById(Long id) {
-        UserEntity user =  getUserById(id);
+        UserEntity user = getUserById(id);
         return mapper.toUserCredentialsDTO(user);
     }
 
@@ -62,6 +62,14 @@ public class UserQueryService {
             throw new UserNotFoundException("No users in the base.");
         }
         return usersDtos;
+    }
+
+    public String getFullNameByEmail(String email) {
+        UserEntity user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException("User with email: " + email + " not found");
+        }
+        return user.getFirstName() + " " + user.getLastName();
     }
 }
 
