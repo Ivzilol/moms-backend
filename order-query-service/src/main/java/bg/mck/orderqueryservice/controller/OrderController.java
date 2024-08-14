@@ -38,7 +38,7 @@ public class OrderController {
             @ApiResponse(responseCode = "200", description = "Successfully retrieve all orders"),
 
     })
-    @GetMapping("admin/order/query/get-all")
+    @GetMapping("user/order/query/get-all")
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
@@ -75,7 +75,7 @@ public class OrderController {
     })
     @GetMapping("user/order/query/get-my-orders")
     public ResponseEntity<List<OrderDTO>> getMyOrders(@Parameter(description = "JWT token to authenticate the user", required = true)
-                                                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token ) {
+                                                      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
         token = token.substring(7);
         String email = restTemplate
