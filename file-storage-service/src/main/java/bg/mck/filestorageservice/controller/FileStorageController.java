@@ -39,7 +39,7 @@ public class FileStorageController {
 //        try {
 //            email = extractEmailFromToken(token); // FIXME: Add service to gateway
 //        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("There was a problem with the uploader email.");
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("There was a problem getting the uploader`s email.");
 //        }
 
         String email = "test@gmail.com";

@@ -195,36 +195,116 @@ public class OrderService {
         return createOrderEvent(orderEntity);
     }
 
-    public OrderConfirmationDTO updateOrderStatus(OrderDTO order) {
+    public OrderConfirmationDTO updateOrderStatus(OrderDTO order, String fullName) {
         OrderEntity orderEntity = orderRepository.findById(order.getId())
                 .orElseThrow(() -> new OrderNotFoundException("Order with id " + order.getId() + " not found"));
         orderEntity.setOrderStatus(order.getOrderStatus());
-        updateMaterialStatus(orderEntity, order);
+        updateMaterialStatus(orderEntity, order, fullName);
         orderRepository.save(orderEntity);
         return createOrderEvent(orderEntity);
     }
 
-    private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order) {
+    public Object addAnswerToAdminNote(OrderDTO order, String fullName) {
+        OrderEntity orderEntity = orderRepository.findById(order.getId())
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + order.getId() + " not found"));
+
+        addAnswerPerMaterial(orderEntity, order, fullName);
+        orderRepository.save(orderEntity);
+
+        return createOrderEvent(orderEntity);
+    }
+
+    private void addAnswerPerMaterial(OrderEntity orderEntity, OrderDTO order, String fullName) {
         switch (order.getMaterialType()) {
-            case FASTENERS -> updateMaterialStatus(orderEntity.getFasteners(), order.getFasteners());
+            case FASTENERS -> addAnswer(orderEntity.getFasteners(), order.getFasteners(), fullName);
             case GALVANIZED_SHEET ->
-                    updateMaterialStatus(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets());
-            case INSULATION -> updateMaterialStatus(orderEntity.getInsulation(), order.getInsulation());
-            case METAL -> updateMaterialStatus(orderEntity.getMetals(), order.getMetals());
-            case PANELS -> updateMaterialStatus(orderEntity.getPanels(), order.getPanels());
-            case REBAR -> updateMaterialStatus(orderEntity.getRebars(), order.getRebars());
-            case SERVICE -> updateMaterialStatus(orderEntity.getServices(), order.getServices());
-            case SET -> updateMaterialStatus(orderEntity.getSets(), order.getSets());
-            case TRANSPORT -> updateMaterialStatus(orderEntity.getTransports(), order.getTransports());
-            case UNSPECIFIED -> updateMaterialStatus(orderEntity.getUnspecified(), order.getUnspecified());
+                    addAnswer(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets(), fullName);
+            case INSULATION -> addAnswer(orderEntity.getInsulation(), order.getInsulation(), fullName);
+            case METAL -> addAnswer(orderEntity.getMetals(), order.getMetals(), fullName);
+            case PANELS -> addAnswer(orderEntity.getPanels(), order.getPanels(), fullName);
+            case REBAR -> addAnswer(orderEntity.getRebars(), order.getRebars(), fullName);
+            case SERVICE -> addAnswer(orderEntity.getServices(), order.getServices(), fullName);
+            case SET -> addAnswer(orderEntity.getSets(), order.getSets(), fullName);
+            case TRANSPORT -> addAnswer(orderEntity.getTransports(), order.getTransports(), fullName);
+            case UNSPECIFIED -> addAnswer(orderEntity.getUnspecified(), order.getUnspecified(), fullName);
         }
     }
 
-    private void updateMaterialStatus(Set<? extends BaseMaterialEntity> materials, List<? extends BaseDTO> materialsDTO) {
+    private void addAnswer(Set<? extends BaseMaterialEntity> materials, List<? extends BaseDTO> materialsDTO, String fullName) {
+        materials.forEach(material -> {
+            materialsDTO.forEach(materialDTO -> {
+                if (material.getId().equals(materialDTO.getId()) && materialDTO.getAdminNote() != null) {
+                    if (!materialDTO.getAdminNote().contains("##")){
+                        return;
+                    }
+                    String noteUntilNow = materialDTO.getAdminNote().split("##")[0];
+                    String newAnswer = materialDTO.getAdminNote().split("##")[1];
+                    LocalDateTime timeOfAnswer = LocalDateTime.now();
+                    StringBuilder sb = new StringBuilder(noteUntilNow)
+                            .append("\n")
+                            .append(timeOfAnswer)
+                            .append(" ")
+                            .append(fullName)
+                            .append(": ")
+                            .append(newAnswer);
+                    material.setAdminNote(sb.toString());
+                }
+            });
+        });
+    }
+
+    private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order, String fullName) {
+        switch (order.getMaterialType()) {
+            case FASTENERS -> updateMaterialStatus(orderEntity.getFasteners(), order.getFasteners(), fullName);
+            case GALVANIZED_SHEET ->
+                    updateMaterialStatus(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets(), fullName);
+            case INSULATION -> updateMaterialStatus(orderEntity.getInsulation(), order.getInsulation(), fullName);
+            case METAL -> updateMaterialStatus(orderEntity.getMetals(), order.getMetals(), fullName);
+            case PANELS -> updateMaterialStatus(orderEntity.getPanels(), order.getPanels(), fullName);
+            case REBAR -> updateMaterialStatus(orderEntity.getRebars(), order.getRebars(), fullName);
+            case SERVICE -> updateMaterialStatus(orderEntity.getServices(), order.getServices(), fullName);
+            case SET -> updateMaterialStatus(orderEntity.getSets(), order.getSets(), fullName);
+            case TRANSPORT -> updateMaterialStatus(orderEntity.getTransports(), order.getTransports(), fullName);
+            case UNSPECIFIED -> updateMaterialStatus(orderEntity.getUnspecified(), order.getUnspecified(), fullName);
+        }
+    }
+
+    private void updateMaterialStatus(Set<? extends BaseMaterialEntity> materials, List<? extends BaseDTO> materialsDTO, String fullName) {
         materials.forEach(material -> {
             materialsDTO.forEach(materialDTO -> {
                 if (material.getId().equals(materialDTO.getId())) {
-                    material.setAdminNote(materialDTO.getAdminNote());
+
+                    if (materialDTO.getAdminNote() == null){
+                        return;
+                    }
+
+                    if (!materialDTO.getAdminNote().contains("##")){
+                        return;
+                    }
+
+                    if (material.getAdminNote() != null) {
+                        String noteUntilNow = materialDTO.getAdminNote().split("##")[0];
+                        String newAnswer = materialDTO.getAdminNote().split("##")[1];
+                        LocalDateTime timeOfAnswer = LocalDateTime.now();
+                        StringBuilder sb = new StringBuilder(noteUntilNow)
+                                .append("\n")
+                                .append(timeOfAnswer)
+                                .append(" ")
+                                .append(fullName)
+                                .append(": ")
+                                .append(newAnswer);
+                        material.setAdminNote(sb.toString());
+                    } else {
+                        String noteUntilNow = materialDTO.getAdminNote().replace("##", "");
+                        LocalDateTime timeOfAnswer = LocalDateTime.now();
+                        StringBuilder sb = new StringBuilder()
+                                .append(timeOfAnswer)
+                                .append(" ")
+                                .append(fullName)
+                                .append(": ")
+                                .append(noteUntilNow);
+                        material.setAdminNote(sb.toString());
+                    }
                     if (materialDTO.getMaterialStatus() != null) {
                         material.setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
                     }
@@ -319,4 +399,6 @@ public class OrderService {
 
         orderQueryServiceClient.sendEvent(orderEvent, orderEvent.getEventType().toString());
     }
+
+
 }
