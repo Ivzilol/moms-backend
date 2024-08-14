@@ -30,7 +30,7 @@ public class AdminOrderController {
         this.restTemplate = restTemplate;
     }
 
-    @Operation(summary = "Update order from admin account")
+    @Operation(summary = "Update order status/add admin note from admin account")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order update successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
                     content = {@Content(mediaType = "multipart/form-data",
