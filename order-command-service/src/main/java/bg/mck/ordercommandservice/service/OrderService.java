@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -226,9 +227,11 @@ public class OrderService {
                     String noteUntilNow = materialDTO.getAdminNote().split("##")[0];
                     String newAnswer = materialDTO.getAdminNote().split("##")[1];
                     LocalDateTime timeOfAnswer = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    String formattedDateTime = timeOfAnswer.format(formatter);
                     StringBuilder sb = new StringBuilder(noteUntilNow)
                             .append("\n")
-                            .append(timeOfAnswer)
+                            .append(formattedDateTime)
                             .append(" ")
                             .append(fullName)
                             .append(": ")
@@ -272,9 +275,11 @@ public class OrderService {
                         String noteUntilNow = materialDTO.getAdminNote().split("##")[0];
                         String newAnswer = materialDTO.getAdminNote().split("##")[1];
                         LocalDateTime timeOfAnswer = LocalDateTime.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        String formattedDateTime = timeOfAnswer.format(formatter);
                         StringBuilder sb = new StringBuilder(noteUntilNow)
                                 .append("\n")
-                                .append(timeOfAnswer)
+                                .append(formattedDateTime)
                                 .append(" ")
                                 .append(fullName)
                                 .append(": ")
@@ -283,8 +288,10 @@ public class OrderService {
                     } else {
                         String noteUntilNow = materialDTO.getAdminNote().replace("##", "");
                         LocalDateTime timeOfAnswer = LocalDateTime.now();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        String formattedDateTime = timeOfAnswer.format(formatter);
                         StringBuilder sb = new StringBuilder()
-                                .append(timeOfAnswer)
+                                .append(formattedDateTime)
                                 .append(" ")
                                 .append(fullName)
                                 .append(": ")
