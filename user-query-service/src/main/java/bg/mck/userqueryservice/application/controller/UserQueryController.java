@@ -69,4 +69,20 @@ public class UserQueryController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @Operation(summary = "Retrieve User Full name by Email", description = "Fetches Full name information of a user given their email")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User full name successfully retrieved",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDetailsDTO.class))),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content(mediaType = "application/json"))
+    })
+    @GetMapping("/${APPLICATION_VERSION}/user/user/query/get-fullname/{email}")
+    public ResponseEntity<String> getFullNameByEmail(@PathVariable String email) {
+        String fullName = userQueryService.getFullNameByEmail(email);
+        if (fullName == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(fullName);
+    }
 }
