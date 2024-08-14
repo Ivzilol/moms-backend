@@ -33,13 +33,21 @@ public class OrderController {
         this.restTemplate = restTemplate;
     }
 
-    @Operation(summary = "Getting all orders")
+    @Operation(summary = "Getting all orders from admin account")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieve all orders"),
+    })
+    @GetMapping("admin/order/query/get-all")
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
+    }
 
+    @Operation(summary = "Getting all orders from user account")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieve all orders"),
     })
     @GetMapping("user/order/query/get-all")
-    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+    public ResponseEntity<List<OrderDTO>> getAllOrdersByUser() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
