@@ -42,7 +42,8 @@ class OrderServiceTest {
     private FastenerMapper fastenerMapper;
     @Mock
     private InventoryService inventoryService;
-
+    @Mock
+    private OrderEventService orderEventService;
     @InjectMocks
     private OrderService orderService;
 
@@ -66,6 +67,14 @@ class OrderServiceTest {
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
         when(orderRepository.findById(1L)).thenReturn(Optional.of(orderEntity));
 //        doNothing().when(orderService).sendMaterialsToInventory(any(OrderEntity.class));
+        doNothing().when(inventoryService).sendMaterialsToInventory(any(OrderDTO.class));
+        when(orderEventService.createOrderEvent(any(OrderEntity.class))).thenReturn(new OrderConfirmationDTO.Builder()
+                .orderStatus(OrderStatus.CREATED)
+                .orderId(1L)
+                .orderNumber(4)
+                .constructionSiteName("Site Name")
+                .constructionSiteNumber("1234")
+                .build());
     }
 
     @AfterEach
@@ -80,7 +89,6 @@ class OrderServiceTest {
         FastenerDTO fastener2 = MaterialUtil.createFastenerDTO();
 
         orderDTO.setFasteners(List.of(fastener1, fastener2));
-
 
         OrderConfirmationDTO expectedCreateOrderDTO = orderService.createOrder(orderDTO, "test@abv.bg", null);
         verify(orderRepository).save(orderEntity);

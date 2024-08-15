@@ -240,7 +240,7 @@ public class OrderService {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     String formattedDateTime = timeOfAnswer.format(formatter);
                     StringBuilder sb = new StringBuilder(noteUntilNow)
-                            .append("\n")
+                            .append("<br>")
                             .append(formattedDateTime)
                             .append(" ")
                             .append(fullName)
@@ -288,7 +288,7 @@ public class OrderService {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                         String formattedDateTime = timeOfAnswer.format(formatter);
                         StringBuilder sb = new StringBuilder(noteUntilNow)
-                                .append("\n")
+                                .append("<br>")
                                 .append(formattedDateTime)
                                 .append(" ")
                                 .append(fullName)
