@@ -1,5 +1,6 @@
 package bg.mck.notificationservice.service;
 
+import bg.mck.notificationservice.dto.ForgotPasswordEmailDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +23,9 @@ public class MailService {
     private final ObjectMapper objectMapper;
     @Value("${spring.mail.username}")
     private String from;
+
+    @Value("${email.resetlink}")
+    private String resetLink;
 
     public MailService(JavaMailSender mailSender, ObjectMapper objectMapper) {
         this.mailSender = mailSender;
@@ -133,5 +137,120 @@ public class MailService {
                 "    </div>" +
                 "</body>" +
                 "</html>";
+    }
+
+    public void sendResetPasswordMessage(ForgotPasswordEmailDTO dto) throws MessagingException {
+        String subject = "Password Reset Request";
+        String content = "<!DOCTYPE html>"
+                + "<html lang=\"en\">"
+                + "<head>"
+                + "    <meta charset=\"UTF-8\">"
+                + "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+                + "    <title>Password Reset Email</title>"
+                + "    <style>"
+                + "        body {"
+                + "            font-family: Arial, sans-serif;"
+                + "            color: #333;"
+                + "            background-color: #f4f4f4;"
+                + "            margin: 0;"
+                + "            padding: 0;"
+                + "        }"
+                + "        .container {"
+                + "            width: 100%;"
+                + "            max-width: 600px;"
+                + "            margin: 0 auto;"
+                + "            background-color: #ffffff;"
+                + "            border-radius: 8px;"
+                + "            overflow: hidden;"
+                + "            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);"
+                + "        }"
+                + "        .header {"
+                + "            background-color: #007bff;"
+                + "            color: #ffffff;"
+                + "            padding: 20px;"
+                + "            text-align: center;"
+                + "        }"
+                + "        .header h1 {"
+                + "            margin: 0;"
+                + "            font-size: 24px;"
+                + "        }"
+                + "        .content {"
+                + "            padding: 20px;"
+                + "        }"
+                + "        .content h2 {"
+                + "            font-size: 18px;"
+                + "            margin-top: 0;"
+                + "        }"
+                + "        .content p {"
+                + "            line-height: 1.6;"
+                + "        }"
+                + "        .button {"
+                + "            display: inline-block;"
+                + "            padding: 10px 20px;"
+                + "            font-size: 16px;"
+                + "            color: #ffffff;"
+                + "            background-color: #007bff;"
+                + "            text-decoration: none;"
+                + "            border-radius: 5px;"
+                + "            text-align: center;"
+                + "            margin-top: 20px;"
+                + "        }"
+                + "        .footer {"
+                + "            background-color: #f4f4f4;"
+                + "            text-align: center;"
+                + "            padding: 10px;"
+                + "            font-size: 14px;"
+                + "        }"
+                + "        .footer p {"
+                + "            margin: 0;"
+                + "        }"
+                + "        .token-info {"
+                + "            margin-top: 20px;"
+                + "            padding: 10px;"
+                + "            background-color: #f9f9f9;"
+                + "            border: 1px solid #ddd;"
+                + "            border-radius: 5px;"
+                + "        }"
+                + "        .token-info p {"
+                + "            margin: 0;"
+                + "            font-size: 16px;"
+                + "        }"
+                + "    </style>"
+                + "</head>"
+                + "<body>"
+                + "    <div class=\"container\">"
+                + "        <div class=\"header\">"
+                + "            <h1>Password Reset Request</h1>"
+                + "        </div>"
+                + "        <div class=\"content\">"
+                + "            <h2>Hello " + dto.getEmail().split("@")[0] + ",</h2>"
+                + "            <p>We received a request to reset your password. Please click the link below to create a new password:</p>"
+                + "            <div class=\"token-info\">"
+                + "                <p>Your password reset token is:</p>"
+                + "                  <br>"
+                + "                <p><strong>" + dto.getUuid() + "</strong></p>"
+                + "                  <br>"
+                + "                <p>Please copy this token and paste it into the designated field on the reset password page.</p>"
+                + "            </div>"
+                + "            <a href=\"" + resetLink + "\" class=\"button\">Reset Password</a>"
+                + "            <p>If you did not request this change, please ignore this email.</p>"
+                + "            <p>Best regards,<br>MCK Team</p>"
+                + "        </div>"
+                + "        <div class=\"footer\">"
+                + "            <p>&copy; " + java.time.Year.now().getValue() + " MCK. All rights reserved.</p>"
+                + "        </div>"
+                + "    </div>"
+                + "</body>"
+                + "</html>";
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
+
+        messageHelper.setFrom(from);
+        messageHelper.setTo(dto.getEmail());
+        messageHelper.setSubject(subject);
+        messageHelper.setText(content, true);
+
+        mailSender.send(mimeMessage);
     }
 }
