@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 @Component
 public class RouteValidator {
@@ -16,6 +17,8 @@ public class RouteValidator {
     public RouteValidator(@Value("${APPLICATION_VERSION}") String applicationVersion) {
         this.openApiEndPoints = List.of(
                 "/" + applicationVersion + "/user/user/query/login",
+                "/" + applicationVersion + "/user/user/command/reset-password",
+                "/" + applicationVersion + "/user/user/command/reset-password/update-password",
                 "/" + applicationVersion + "/authentication/validate",
                 "/" + applicationVersion + "/authentication/generate-token",
                 "/" + applicationVersion + "/authentication/getroles",

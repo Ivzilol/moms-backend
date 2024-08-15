@@ -1,8 +1,8 @@
 package bg.mck.usercommandservice.application.exceptionHandling;
 
 
-import bg.mck.usercommandservice.application.exceptions.InvalidPasswordException;
-import bg.mck.usercommandservice.application.exceptions.UserNotFoundException;
+import bg.mck.usercommandservice.application.dto.ResetPasswordDTO;
+import bg.mck.usercommandservice.application.exceptions.*;
 import feign.FeignException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -74,6 +74,21 @@ public class UserManagementControllerAdvice {
             return fullMessage.substring(lastColonIndex + 1).trim();
         }
         return "Requested resource not found.";
+    }
+
+    @ExceptionHandler(EmailNotFoundException.class)
+    public ResponseEntity<String> handleInvalidEmailException(EmailNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<String> handleInvalidTokenForResetPasswordException(InvalidTokenException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResetPasswordAlreadySendException.class)
+    public ResponseEntity<String> handleInvalidAlreadySendResetPasswordException(ResetPasswordAlreadySendException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
 

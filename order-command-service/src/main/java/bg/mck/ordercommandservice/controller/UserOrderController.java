@@ -17,34 +17,35 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/admin/order/command")
-public class AdminOrderController {
+@RequestMapping("/${APPLICATION_VERSION}/user/order/command")
+public class UserOrderController {
+
     @Value("${APPLICATION_VERSION}")
     private String APPLICATION_VERSION;
-    private final OrderService orderService;
     private final RestTemplate restTemplate;
+    private final OrderService orderService;
 
-
-    public AdminOrderController(OrderService orderService, RestTemplate restTemplate) {
-        this.orderService = orderService;
+    public UserOrderController(RestTemplate restTemplate, OrderService orderService) {
         this.restTemplate = restTemplate;
+        this.orderService = orderService;
     }
 
-    @Operation(summary = "Update order status/add admin note from admin account")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order update successfully"),
+
+    @Operation(summary = "Answer to admin note from user account")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Answer added successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
                     content = {@Content(mediaType = "multipart/form-data",
-                            schema = @Schema(implementation = UpdateOrderDTO.class))})
+                            schema = @Schema(implementation = OrderDTO.class))}),
     }
     )
-    @PatchMapping(value = "/update-order", consumes = {"multipart/form-data"})
-    public ResponseEntity<OrderConfirmationDTO> updateOrderStatus(@RequestPart(value = "order") @Valid OrderDTO order,
-                                                                  @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    @PatchMapping(value = "/answer-add", consumes = {"multipart/form-data"})
+    public ResponseEntity<?> getAnswerToAdminNote(@RequestPart(value = "order") @Valid OrderDTO order,
+                                                  @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
         String email = extractEmailFromToken(token);
         String fullName = getFullNameFromToken(email);
 
-        return ResponseEntity.ok(orderService.updateOrderStatus(order, fullName));
+        return ResponseEntity.ok(orderService.addAnswerToAdminNote(order, fullName));
     }
 
     private String getFullNameFromToken(String email) {
@@ -57,4 +58,6 @@ public class AdminOrderController {
         return restTemplate
                 .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
     }
+
+
 }
