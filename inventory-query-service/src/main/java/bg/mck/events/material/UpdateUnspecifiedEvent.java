@@ -17,7 +17,6 @@ public class UpdateUnspecifiedEvent extends BaseMaterialEvent {
     private String materialType;
     private String description;
     private Double quantity;
-    private String note;
     private String specificationFileUrl;
 
     public String getMaterialType() {
@@ -47,14 +46,6 @@ public class UpdateUnspecifiedEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public UpdateUnspecifiedEvent setNote(String note) {
-        this.note = note;
-        return this;
-    }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;

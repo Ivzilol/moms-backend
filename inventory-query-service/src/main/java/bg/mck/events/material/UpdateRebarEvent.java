@@ -1,6 +1,8 @@
 package bg.mck.events.material;
 
 import bg.mck.enums.EventType;
+import bg.mck.enums.LengthUnits;
+import bg.mck.enums.WeightUnits;
 
 public class UpdateRebarEvent extends BaseMaterialEvent {
 
@@ -14,106 +16,15 @@ public class UpdateRebarEvent extends BaseMaterialEvent {
 
     private String name;
     private String materialType;
-    private Integer positionNumber;
-    private String type;
-    private String steel;
-    private Double diameter;
-    private Double length;
-    private Double weight;
-
+    private String maxLength;
+    private LengthUnits maxLengthUnit;
+    private String weight;
+    private WeightUnits weightUnit;
     private Double quantity;
-    private String note;
+
+    private String description;
+
     private String specificationFileUrl;
-
-    public Integer getPositionNumber() {
-        return positionNumber;
-    }
-
-    public UpdateRebarEvent setPositionNumber(Integer positionNumber) {
-        this.positionNumber = positionNumber;
-        return this;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public UpdateRebarEvent setType(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public String getSteel() {
-        return steel;
-    }
-
-    public UpdateRebarEvent setSteel(String steel) {
-        this.steel = steel;
-        return this;
-    }
-
-    public Double getDiameter() {
-        return diameter;
-    }
-
-    public UpdateRebarEvent setDiameter(Double diameter) {
-        this.diameter = diameter;
-        return this;
-    }
-
-    public Double getLength() {
-        return length;
-    }
-
-    public UpdateRebarEvent setLength(Double length) {
-        this.length = length;
-        return this;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public UpdateRebarEvent setWeight(Double weight) {
-        this.weight = weight;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UpdateRebarEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public UpdateRebarEvent setNote(String note) {
-        this.note = note;
-        return this;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public UpdateRebarEvent setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
-
-    public String getMaterialType() {
-        return materialType;
-    }
-
-    public UpdateRebarEvent setMaterialType(String materialType) {
-        this.materialType = materialType;
-        return this;
-    }
 
     public String getCategory() {
         return category;
@@ -130,6 +41,78 @@ public class UpdateRebarEvent extends BaseMaterialEvent {
 
     public UpdateRebarEvent setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getMaterialType() {
+        return materialType;
+    }
+
+    public UpdateRebarEvent setMaterialType(String materialType) {
+        this.materialType = materialType;
+        return this;
+    }
+
+    public String getMaxLength() {
+        return maxLength;
+    }
+
+    public UpdateRebarEvent setMaxLength(String maxLength) {
+        this.maxLength = maxLength;
+        return this;
+    }
+
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public UpdateRebarEvent setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public UpdateRebarEvent setWeight(String weight) {
+        this.weight = weight;
+        return this;
+    }
+
+    public WeightUnits getWeightUnit() {
+        return weightUnit;
+    }
+
+    public UpdateRebarEvent setWeightUnit(WeightUnits weightUnit) {
+        this.weightUnit = weightUnit;
+        return this;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public UpdateRebarEvent setQuantity(Double quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public UpdateRebarEvent setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
+    }
+
+    public UpdateRebarEvent setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
         return this;
     }
 }

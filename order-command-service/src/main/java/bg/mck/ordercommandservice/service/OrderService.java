@@ -13,28 +13,19 @@ import bg.mck.ordercommandservice.repository.OrderRepository;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 
 
-import org.apache.kafka.common.protocol.types.Field;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.http.HttpClient;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -60,9 +51,11 @@ public class OrderService {
     private final TransportMapper transportMapper;
     private final UnspecifiedMapper unspecifiedMapper;
     private final MaterialService materialService;
+    private final InventoryService inventoryService;
+
     private RestTemplate restTemplate;
 
-    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService, RestTemplate restTemplate) {
+    public OrderService(OrderRepository orderRepository, ConstructionSiteService constructionSiteService, OrderMapper orderMapper, OrderQueryServiceClient orderQueryServiceClient, FastenerMapper fastenerMapper, GalvanisedSheetMapper galvanisedSheetMapper, InsulationMapper insulationMapper, MetalMapper metalMapper, PanelMapper panelMapper, RebarMapper rebarMapper, ServiceMapper serviceMapper, SetMapper setMapper, TransportMapper transportMapper, UnspecifiedMapper unspecifiedMapper, MaterialService materialService, InventoryService inventoryService, RestTemplate restTemplate) {
         this.orderRepository = orderRepository;
         this.constructionSiteService = constructionSiteService;
         this.orderMapper = orderMapper;
@@ -78,6 +71,7 @@ public class OrderService {
         this.transportMapper = transportMapper;
         this.unspecifiedMapper = unspecifiedMapper;
         this.materialService = materialService;
+        this.inventoryService = inventoryService;
         this.restTemplate = restTemplate;
     }
 
@@ -113,18 +107,31 @@ public class OrderService {
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} created successfully", orderEntity.getId());
 
+        sendMaterialsToInventory(order);
+
         return createOrderEvent(orderEntity);
+    }
+
+    private void sendMaterialsToInventory(OrderDTO orderDTO) {
+        Map<MaterialType, List<? extends BaseDTO>> materials = new HashMap<>();
+        switch (orderDTO.getMaterialType()) {
+            case FASTENERS -> materials.put(MaterialType.FASTENERS, orderDTO.getFasteners());
+            case GALVANIZED_SHEET -> materials.put(MaterialType.GALVANIZED_SHEET, orderDTO.getGalvanisedSheets());
+            case INSULATION -> materials.put(MaterialType.INSULATION, orderDTO.getInsulation());
+            case METAL -> materials.put(MaterialType.METAL, orderDTO.getMetals());
+            case PANELS -> materials.put(MaterialType.PANELS, orderDTO.getPanels());
+            case REBAR -> materials.put(MaterialType.REBAR, orderDTO.getRebars());
+            case SERVICE -> materials.put(MaterialType.SERVICE, orderDTO.getServices());
+            case SET -> materials.put(MaterialType.SET, orderDTO.getSets());
+            case TRANSPORT -> materials.put(MaterialType.TRANSPORT, orderDTO.getTransports());
+            case UNSPECIFIED -> materials.put(MaterialType.UNSPECIFIED, orderDTO.getUnspecified());
+        }
+
+        inventoryService.addMaterialsToInventory(materials);
     }
 
     @Transactional
     public OrderConfirmationDTO updateOrder(OrderDTO order, String email, List<MultipartFile> files) {
-
-//        if (!files.isEmpty()) {
-//            //TODO: implement file upload
-//            List<String> filesUrl = uploadFiles(files);
-//            //TODO: implement matching files to materials
-//            matchFilesToMaterials(order, filesUrl);
-//        }
 
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByName =
@@ -133,13 +140,6 @@ public class OrderService {
         orderEntity
                 .setEmail(email)
                 .setConstructionSite(constructionSiteByName);
-
-//        Set<FastenerEntity> fastenerEntities = new HashSet<>();
-//        order.getFasteners().forEach(fastener -> {
-//            FastenerEntity fastenerEntity = fastenerMapper.toEntity(fastener);
-//            fastenerEntities.add(fastenerEntity);
-//        });
-//        orderEntity.setFasteners(fastenerEntities);
 
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} updated successfully", orderEntity.getId());
@@ -181,36 +181,116 @@ public class OrderService {
         return createOrderEvent(orderEntity);
     }
 
-    public OrderConfirmationDTO updateOrderStatus(OrderDTO order) {
+    public OrderConfirmationDTO updateOrderStatus(OrderDTO order, String fullName) {
         OrderEntity orderEntity = orderRepository.findById(order.getId())
                 .orElseThrow(() -> new OrderNotFoundException("Order with id " + order.getId() + " not found"));
         orderEntity.setOrderStatus(order.getOrderStatus());
-        updateMaterialStatus(orderEntity, order);
+        updateMaterialStatus(orderEntity, order, fullName);
         orderRepository.save(orderEntity);
         return createOrderEvent(orderEntity);
     }
 
-    private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order) {
+    public Object addAnswerToAdminNote(OrderDTO order, String fullName) {
+        OrderEntity orderEntity = orderRepository.findById(order.getId())
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + order.getId() + " not found"));
+
+        addAnswerPerMaterial(orderEntity, order, fullName);
+        orderRepository.save(orderEntity);
+
+        return createOrderEvent(orderEntity);
+    }
+
+    private void addAnswerPerMaterial(OrderEntity orderEntity, OrderDTO order, String fullName) {
         switch (order.getMaterialType()) {
-            case FASTENERS -> updateMaterialStatus(orderEntity.getFasteners(), order.getFasteners());
+            case FASTENERS -> addAnswer(orderEntity.getFasteners(), order.getFasteners(), fullName);
             case GALVANIZED_SHEET ->
-                    updateMaterialStatus(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets());
-            case INSULATION -> updateMaterialStatus(orderEntity.getInsulation(), order.getInsulation());
-            case METAL -> updateMaterialStatus(orderEntity.getMetals(), order.getMetals());
-            case PANELS -> updateMaterialStatus(orderEntity.getPanels(), order.getPanels());
-            case REBAR -> updateMaterialStatus(orderEntity.getRebars(), order.getRebars());
-            case SERVICE -> updateMaterialStatus(orderEntity.getServices(), order.getServices());
-            case SET -> updateMaterialStatus(orderEntity.getSets(), order.getSets());
-            case TRANSPORT -> updateMaterialStatus(orderEntity.getTransports(), order.getTransports());
-            case UNSPECIFIED -> updateMaterialStatus(orderEntity.getUnspecified(), order.getUnspecified());
+                    addAnswer(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets(), fullName);
+            case INSULATION -> addAnswer(orderEntity.getInsulation(), order.getInsulation(), fullName);
+            case METAL -> addAnswer(orderEntity.getMetals(), order.getMetals(), fullName);
+            case PANELS -> addAnswer(orderEntity.getPanels(), order.getPanels(), fullName);
+            case REBAR -> addAnswer(orderEntity.getRebars(), order.getRebars(), fullName);
+            case SERVICE -> addAnswer(orderEntity.getServices(), order.getServices(), fullName);
+            case SET -> addAnswer(orderEntity.getSets(), order.getSets(), fullName);
+            case TRANSPORT -> addAnswer(orderEntity.getTransports(), order.getTransports(), fullName);
+            case UNSPECIFIED -> addAnswer(orderEntity.getUnspecified(), order.getUnspecified(), fullName);
         }
     }
 
-    private void updateMaterialStatus(Set<? extends BaseMaterialEntity> materials, List<? extends BaseDTO> materialsDTO) {
+    private void addAnswer(Set<? extends BaseMaterialEntity> materials, List<? extends BaseDTO> materialsDTO, String fullName) {
+        materials.forEach(material -> {
+            materialsDTO.forEach(materialDTO -> {
+                if (material.getId().equals(materialDTO.getId()) && materialDTO.getAdminNote() != null) {
+                    if (!materialDTO.getAdminNote().contains("##")){
+                        return;
+                    }
+                    String noteUntilNow = materialDTO.getAdminNote().split("##")[0];
+                    String newAnswer = materialDTO.getAdminNote().split("##")[1];
+                    LocalDateTime timeOfAnswer = LocalDateTime.now();
+                    StringBuilder sb = new StringBuilder(noteUntilNow)
+                            .append("\n")
+                            .append(timeOfAnswer)
+                            .append(" ")
+                            .append(fullName)
+                            .append(": ")
+                            .append(newAnswer);
+                    material.setAdminNote(sb.toString());
+                }
+            });
+        });
+    }
+
+    private void updateMaterialStatus(OrderEntity orderEntity, OrderDTO order, String fullName) {
+        switch (order.getMaterialType()) {
+            case FASTENERS -> updateMaterialStatus(orderEntity.getFasteners(), order.getFasteners(), fullName);
+            case GALVANIZED_SHEET ->
+                    updateMaterialStatus(orderEntity.getGalvanisedSheets(), order.getGalvanisedSheets(), fullName);
+            case INSULATION -> updateMaterialStatus(orderEntity.getInsulation(), order.getInsulation(), fullName);
+            case METAL -> updateMaterialStatus(orderEntity.getMetals(), order.getMetals(), fullName);
+            case PANELS -> updateMaterialStatus(orderEntity.getPanels(), order.getPanels(), fullName);
+            case REBAR -> updateMaterialStatus(orderEntity.getRebars(), order.getRebars(), fullName);
+            case SERVICE -> updateMaterialStatus(orderEntity.getServices(), order.getServices(), fullName);
+            case SET -> updateMaterialStatus(orderEntity.getSets(), order.getSets(), fullName);
+            case TRANSPORT -> updateMaterialStatus(orderEntity.getTransports(), order.getTransports(), fullName);
+            case UNSPECIFIED -> updateMaterialStatus(orderEntity.getUnspecified(), order.getUnspecified(), fullName);
+        }
+    }
+
+    private void updateMaterialStatus(Set<? extends BaseMaterialEntity> materials, List<? extends BaseDTO> materialsDTO, String fullName) {
         materials.forEach(material -> {
             materialsDTO.forEach(materialDTO -> {
                 if (material.getId().equals(materialDTO.getId())) {
-                    material.setAdminNote(materialDTO.getAdminNote());
+
+                    if (materialDTO.getAdminNote() == null){
+                        return;
+                    }
+
+                    if (!materialDTO.getAdminNote().contains("##")){
+                        return;
+                    }
+
+                    if (material.getAdminNote() != null) {
+                        String noteUntilNow = materialDTO.getAdminNote().split("##")[0];
+                        String newAnswer = materialDTO.getAdminNote().split("##")[1];
+                        LocalDateTime timeOfAnswer = LocalDateTime.now();
+                        StringBuilder sb = new StringBuilder(noteUntilNow)
+                                .append("\n")
+                                .append(timeOfAnswer)
+                                .append(" ")
+                                .append(fullName)
+                                .append(": ")
+                                .append(newAnswer);
+                        material.setAdminNote(sb.toString());
+                    } else {
+                        String noteUntilNow = materialDTO.getAdminNote().replace("##", "");
+                        LocalDateTime timeOfAnswer = LocalDateTime.now();
+                        StringBuilder sb = new StringBuilder()
+                                .append(timeOfAnswer)
+                                .append(" ")
+                                .append(fullName)
+                                .append(": ")
+                                .append(noteUntilNow);
+                        material.setAdminNote(sb.toString());
+                    }
                     if (materialDTO.getMaterialStatus() != null) {
                         material.setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
                     }
@@ -305,4 +385,6 @@ public class OrderService {
 
         orderQueryServiceClient.sendEvent(orderEvent, orderEvent.getEventType().toString());
     }
+
+
 }

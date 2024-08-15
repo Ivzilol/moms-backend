@@ -33,13 +33,21 @@ public class OrderController {
         this.restTemplate = restTemplate;
     }
 
-    @Operation(summary = "Getting all orders")
+    @Operation(summary = "Getting all orders from admin account")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieve all orders"),
-
     })
     @GetMapping("admin/order/query/get-all")
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
+    }
+
+    @Operation(summary = "Getting all orders from user account")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieve all orders"),
+    })
+    @GetMapping("user/order/query/get-all")
+    public ResponseEntity<List<OrderDTO>> getAllOrdersByUser() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
@@ -75,7 +83,7 @@ public class OrderController {
     })
     @GetMapping("user/order/query/get-my-orders")
     public ResponseEntity<List<OrderDTO>> getMyOrders(@Parameter(description = "JWT token to authenticate the user", required = true)
-                                                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token ) {
+                                                      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
         token = token.substring(7);
         String email = restTemplate

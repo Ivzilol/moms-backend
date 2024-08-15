@@ -1,12 +1,15 @@
 package bg.mck.dto;
 
+import bg.mck.enums.WeightUnits;
+
 public class MetalDTO implements MaterialDTO{
 
     private String id;
 
     private String name;
 
-    private Double totalWeight;
+    private String totalWeight;
+    private WeightUnits totalWeightUnit;
 
     private Double quantity;
 
@@ -14,17 +17,6 @@ public class MetalDTO implements MaterialDTO{
 
     private String specificationFileUrl;
 
-    public MetalDTO() {
-    }
-
-    public MetalDTO(String id, String name, Double totalWeight, Double quantity, String description, String specificationFileUrl) {
-        this.id = id;
-        this.name = name;
-        this.totalWeight = totalWeight;
-        this.quantity = quantity;
-        this.description = description;
-        this.specificationFileUrl = specificationFileUrl;
-    }
 
     public String getId() {
         return id;
@@ -42,11 +34,11 @@ public class MetalDTO implements MaterialDTO{
         this.name = name;
     }
 
-    public Double getTotalWeight() {
+    public String getTotalWeight() {
         return totalWeight;
     }
 
-    public void setTotalWeight(Double totalWeight) {
+    public void setTotalWeight(String totalWeight) {
         this.totalWeight = totalWeight;
     }
 
@@ -72,5 +64,14 @@ public class MetalDTO implements MaterialDTO{
 
     public void setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+    }
+
+    public WeightUnits getTotalWeightUnit() {
+        return totalWeightUnit;
+    }
+
+    public MetalDTO setTotalWeightUnit(WeightUnits totalWeightUnit) {
+        this.totalWeightUnit = totalWeightUnit;
+        return this;
     }
 }

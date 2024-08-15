@@ -56,6 +56,7 @@ public class MaterialRegisterService {
         fastenerEntity.setType(event.getType());
         fastenerEntity.setDiameter(event.getDiameter());
         fastenerEntity.setLength(event.getLength());
+        fastenerEntity.setLengthUnit(event.getLengthUnit());
         fastenerEntity.setModel(event.getModel());
         fastenerEntity.setClazz(event.getClazz());
         fastenerEntity.setQuantity(event.getQuantity());
@@ -89,7 +90,9 @@ public class MaterialRegisterService {
         galvanisedSheetEntity.setName(event.getName());
         galvanisedSheetEntity.setType(event.getType());
         galvanisedSheetEntity.setMaxLength(event.getMaxLength());
+        galvanisedSheetEntity.setMaxLengthUnit(event.getMaxLengthUnit());
         galvanisedSheetEntity.setArea(event.getArea());
+        galvanisedSheetEntity.setAreaUnit(event.getAreaUnit());
         galvanisedSheetEntity.setQuantity(event.getQuantity());
         galvanisedSheetEntity.setDescription(event.getDescription());
         galvanisedSheetEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
@@ -103,6 +106,7 @@ public class MaterialRegisterService {
         insulationEntity.setName(event.getName());
         insulationEntity.setType(event.getType());
         insulationEntity.setThickness(event.getThickness());
+        insulationEntity.setThicknessUnit(event.getThicknessUnit());
         insulationEntity.setQuantity(event.getQuantity());
         insulationEntity.setDescription(event.getDescription());
         insulationEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
@@ -115,6 +119,7 @@ public class MaterialRegisterService {
         metalEntity.setId(String.valueOf(event.getMaterialId()));
         metalEntity.setName(event.getName());
         metalEntity.setTotalWeight(event.getTotalWeight());
+        metalEntity.setTotalWeightUnit(event.getTotalWeightUnit());
         metalEntity.setQuantity(event.getQuantity());
         metalEntity.setDescription(event.getDescription());
         metalEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
@@ -129,10 +134,15 @@ public class MaterialRegisterService {
         panelEntity.setType(event.getType());
         panelEntity.setColor(event.getColor());
         panelEntity.setLength(event.getLength());
+        panelEntity.setLengthUnit(event.getLengthUnit());
         panelEntity.setWidth(event.getWidth());
+        panelEntity.setWidthUnit(event.getWidthUnit());
         panelEntity.setTotalThickness(event.getTotalThickness());
+        panelEntity.setTotalThicknessUnit(event.getTotalThicknessUnit());
         panelEntity.setFrontSheetThickness(event.getFrontSheetThickness());
+        panelEntity.setFrontSheetThicknessUnit(event.getFrontSheetThicknessUnit());
         panelEntity.setBackSheetThickness(event.getBackSheetThickness());
+        panelEntity.setBackSheetThicknessUnit(event.getBackSheetThicknessUnit());
         panelEntity.setQuantity(event.getQuantity());
         panelEntity.setDescription(event.getDescription());
         panelEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
@@ -145,7 +155,9 @@ public class MaterialRegisterService {
         rebarEntity.setId(String.valueOf(event.getMaterialId()));
         rebarEntity.setName(event.getName());
         rebarEntity.setMaxLength(event.getMaxLength());
+        rebarEntity.setMaxLengthUnit(event.getMaxLengthUnit());
         rebarEntity.setWeight(event.getWeight());
+        rebarEntity.setWeightUnit(event.getWeightUnit());
         rebarEntity.setQuantity(event.getQuantity());
         rebarEntity.setDescription(event.getDescription());
         rebarEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());
@@ -158,8 +170,10 @@ public class MaterialRegisterService {
         setEntity.setId(String.valueOf(event.getMaterialId()));
         setEntity.setName(event.getName());
         setEntity.setGalvanisedSheetThickness(event.getGalvanisedSheetThickness());
+        setEntity.setGalvanisedSheetThicknessUnit(event.getGalvanisedSheetThicknessUnit());
         setEntity.setColor(event.getColor());
         setEntity.setMaxLength(event.getMaxLength());
+        setEntity.setMaxLengthUnit(event.getMaxLengthUnit());
         setEntity.setQuantity(event.getQuantity());
         setEntity.setDescription(event.getDescription());
         setEntity.setSpecificationFileUrl(event.getSpecificationFileUrl());

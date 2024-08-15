@@ -30,7 +30,7 @@ public class AdminOrderController {
         this.restTemplate = restTemplate;
     }
 
-    @Operation(summary = "Update order from admin account")
+    @Operation(summary = "Update order status/add admin note from admin account")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order update successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
                     content = {@Content(mediaType = "multipart/form-data",
@@ -41,6 +41,20 @@ public class AdminOrderController {
     public ResponseEntity<OrderConfirmationDTO> updateOrderStatus(@RequestPart(value = "order") @Valid OrderDTO order,
                                                                   @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
-        return ResponseEntity.ok(orderService.updateOrderStatus(order));
+        String email = extractEmailFromToken(token);
+        String fullName = getFullNameFromToken(email);
+
+        return ResponseEntity.ok(orderService.updateOrderStatus(order, fullName));
+    }
+
+    private String getFullNameFromToken(String email) {
+        return restTemplate
+                .getForObject("http://user-query-service/" + APPLICATION_VERSION + "/user/user/query/get-fullname/" + email, String.class);
+    }
+
+    private String extractEmailFromToken(String token) {
+        token = token.substring(7);
+        return restTemplate
+                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
     }
 }

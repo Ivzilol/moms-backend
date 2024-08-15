@@ -18,4 +18,12 @@ public interface InventoryQueryUpdateMapper {
     void mapUpdateRebarEventToRebarEntity(UpdateRebarEvent updateRebarEvent, @MappingTarget RebarEntity rebarEntity);
     void mapUpdateSetEventToSetEntity(UpdateSetEvent updateSetEvent, @MappingTarget SetEntity setEntity);
     void mapUpdateUnspecifiedEventToUnspecifiedEntity(UpdateUnspecifiedEvent updateUnspecifiedEvent, @MappingTarget UnspecifiedEntity unspecifiedEntity);
+    void mapFastenerRegisterEventToFastenerEntity(RegisterFastenerEvent registerFastenerEvent, @MappingTarget FastenerEntity fastenerEntity);
+    void mapGalvanizedSheetRegisterEventToEntity(RegisterGalvanizedEvent registerGalvanizedEvent,@MappingTarget GalvanisedSheetEntity galvanisedSheetEntity);
+    void mapInsulationRegisterEventToEntity(RegisterInsulationEvent registerInsulationEvent,@MappingTarget InsulationEntity insulationEntity);
+    void mapPanelRegisterEventToEntity(RegisterPanelEvent registerPanelEvent, @MappingTarget PanelEntity panelEntity);
+    void mapRebarRegisterEventToEntity(RegisterRebarEvent registerRebarEvent, @MappingTarget RebarEntity rebarEntity);
+    void mapSetRegisterEventToEntity(RegisterSetEvent registerSetEvent, @MappingTarget SetEntity setEntity);
+    void mapUnspecifiedRegisterEventToEntity(RegisterUnspecifiedEvent registerUnspecifiedEvent, @MappingTarget UnspecifiedEntity unspecifiedEntity);
+    void mapMetalRegisterEventToEntity(RegisterMetalEvent registerMetalEvent, @MappingTarget MetalEntity metalEntity);
 }
