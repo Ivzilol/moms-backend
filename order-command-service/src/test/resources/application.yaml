@@ -2,6 +2,15 @@ server:
   port: 8083
 
 spring:
+  application:
+    name: order-command-service
+  config:
+    import: optional:configserver:http://localhost:8888/,optional:file:./application-env.properties
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testDB
+    username: username
+    password: password
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -10,10 +19,20 @@ spring:
     init:
       mode: never
 
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
+
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          client:
+            RestTemplate=DEBUG:
 
 eureka:
   client:
