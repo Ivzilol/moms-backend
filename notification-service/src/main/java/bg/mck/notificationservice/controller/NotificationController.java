@@ -1,5 +1,6 @@
 package bg.mck.notificationservice.controller;
 
+import bg.mck.notificationservice.dto.ForgotPasswordEmailDTO;
 import bg.mck.notificationservice.service.MailService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.mail.MessagingException;
@@ -22,6 +23,12 @@ public class NotificationController {
     @PostMapping(value = "/sendNotification", consumes = "application/json")
     public ResponseEntity<?> sendNotification(@RequestBody String order) throws JsonProcessingException, MessagingException {
         mailService.sendMessage(order);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/sendResetEmail", consumes = "application/json")
+    ResponseEntity<?> sendResetPassword(@RequestBody ForgotPasswordEmailDTO dto) throws MessagingException {
+        mailService.sendResetPasswordMessage(dto);
         return ResponseEntity.ok().build();
     }
 
