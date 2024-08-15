@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,6 @@ public class InventoryService {
 
             ResponseEntity<Void> response = restTemplate.postForEntity(inventoryServiceUrl, materials, Void.class);
 
-            System.out.println("Response: " + response.getStatusCode());
-
             if (response.getStatusCode() == HttpStatus.OK) {
                 LOGGER.info("Order sent successfully to inventory service");
             } else {
@@ -49,6 +48,28 @@ public class InventoryService {
             LOGGER.error("Failed to send order to inventory service", e);
             throw new CouldNotSendToInventoryException("Failed to send order to inventory service");
         }
+    }
+
+    public void sendMaterialsToInventory(OrderDTO orderDTO) {
+        Map<MaterialType, List<? extends BaseDTO>> materials = mapOrderDTOToMaterials(orderDTO);
+        addMaterialsToInventory(materials);
+    }
+
+    private Map<MaterialType, List<? extends BaseDTO>> mapOrderDTOToMaterials(OrderDTO orderDTO) {
+        Map<MaterialType, List<? extends BaseDTO>> materials = new HashMap<>();
+        switch (orderDTO.getMaterialType()) {
+            case FASTENERS -> materials.put(MaterialType.FASTENERS, orderDTO.getFasteners());
+            case GALVANIZED_SHEET -> materials.put(MaterialType.GALVANIZED_SHEET, orderDTO.getGalvanisedSheets());
+            case INSULATION -> materials.put(MaterialType.INSULATION, orderDTO.getInsulation());
+            case METAL -> materials.put(MaterialType.METAL, orderDTO.getMetals());
+            case PANELS -> materials.put(MaterialType.PANELS, orderDTO.getPanels());
+            case REBAR -> materials.put(MaterialType.REBAR, orderDTO.getRebars());
+            case SERVICE -> materials.put(MaterialType.SERVICE, orderDTO.getServices());
+            case SET -> materials.put(MaterialType.SET, orderDTO.getSets());
+            case TRANSPORT -> materials.put(MaterialType.TRANSPORT, orderDTO.getTransports());
+            case UNSPECIFIED -> materials.put(MaterialType.UNSPECIFIED, orderDTO.getUnspecified());
+        }
+        return materials;
     }
 
 }
