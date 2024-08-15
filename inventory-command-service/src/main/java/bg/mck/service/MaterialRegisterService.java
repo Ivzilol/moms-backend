@@ -115,7 +115,8 @@ public class MaterialRegisterService {
             InsulationEntity insulationEntity = mapInsulationEntity(createMaterialDTO);
             this.insulationRepository.save(insulationEntity);
             InsulationEntity createInsulation = this.insulationRepository
-                    .findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getThickness());
+                    .findByName(createMaterialDTO.getType() + " "
+                            + createMaterialDTO.getThickness() + " " + createMaterialDTO.getThicknessUnit());
             Optional<CategoryEntity> byMaterialType = this.categoryRepository
                     .findByMaterialType(MaterialType.INSULATION);
             String materialType = byMaterialType.get().getMaterialType().name();
@@ -511,7 +512,7 @@ public class MaterialRegisterService {
     public boolean checkMaterialName(CreateMaterialDTO createMaterialDTO) {
         if (createMaterialDTO.getMaterialType().equals(MaterialType.FASTENERS)) {
             FastenerEntity byName = this.fastenerRepository.findByName(createMaterialDTO.getType() + " " +
-                    createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength());
+                    createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength() + " " + createMaterialDTO.getLengthUnit().name());
             return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.GALVANIZED_SHEET)) {

@@ -2,6 +2,7 @@ package bg.mck.controller;
 
 import bg.mck.dto.CreateMaterialDTO;
 import bg.mck.dto.ErrorCreateMaterialDTO;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.service.ErrorsService;
 import bg.mck.service.MaterialRegisterService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,6 +67,7 @@ public class MaterialRegisterController {
         boolean checkMaterialName = this.materialRegisterService.checkMaterialName(createMaterialDTO);
         if (checkMaterialName) {
             errorCreateMaterialDTO.setMaterialAlreadyExist(MATERIAL_EXIST);
+            throw new DuplicatedInventoryItemException("Material already exists.");
         }
         if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()
