@@ -21,7 +21,7 @@ public class ConstructionSiteController {
 
     @Operation(summary = "Create construction site")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order created successfully"),
+            @ApiResponse(responseCode = "200", description = "Construction site created successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data"),
             @ApiResponse(responseCode = "409", description = "Construction site already exists")
     }
@@ -32,6 +32,12 @@ public class ConstructionSiteController {
     }
 
     @Operation(summary = "Update construction site")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Construction site updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Incorrect data"),
+            @ApiResponse(responseCode = "409", description = "Construction site already exists")
+    }
+    )
     @PatchMapping("/update-construction-site")
     public ResponseEntity<?> updateConstructionSite(@RequestBody @Valid ConstructionSiteDTO constructionSiteDTO) {
         return ResponseEntity.ok(constructionSiteService.updateConstructionSite(constructionSiteDTO));
