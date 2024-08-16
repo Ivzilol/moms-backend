@@ -45,10 +45,10 @@ public class OrderController {
         this.restTemplate = restTemplate;
     }
 
-    @GetMapping("/get-order/{id}")
-    public ResponseEntity<Object> getOrder(@PathVariable Long id) {
-        return ResponseEntity.ok(orderService.getOrder(id));
-    }
+//    @GetMapping("/get-order/{id}")
+//    public ResponseEntity<Object> getOrder(@PathVariable Long id) {
+//        return ResponseEntity.ok(orderService.getOrder(id));
+//    }
 
     @Operation(summary = "Create order")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order created successfully"),
@@ -65,26 +65,28 @@ public class OrderController {
 
         List<FileDTO> fileUrls = new ArrayList<>();
 
-        for (MultipartFile multipartFile : files) {
-            File file = convertMultipartFileToFile(multipartFile);
+        if (!files.isEmpty()) {
+            for (MultipartFile multipartFile : files) {
+                File file = convertMultipartFileToFile(multipartFile);
 
-            FileSystemResource fileResource = new FileSystemResource(file);
+                FileSystemResource fileResource = new FileSystemResource(file);
 
-            MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
-            formData.add("order", order);
-            formData.add("files", fileResource);
+                MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
+                formData.add("order", order);
+                formData.add("files", fileResource);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-            headers.set(HttpHeaders.AUTHORIZATION, token);
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+                headers.set(HttpHeaders.AUTHORIZATION, token);
 
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, headers);
+                HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, headers);
 
-            String fileStorageServiceUrl = "http://file-storage-service/" + APPLICATION_VERSION + "/user/files/upload";
+                String fileStorageServiceUrl = "http://file-storage-service/" + APPLICATION_VERSION + "/user/files/upload";
 
-            ResponseEntity<FileDTO> response = restTemplate.exchange(fileStorageServiceUrl, HttpMethod.POST, requestEntity, FileDTO.class);
+                ResponseEntity<FileDTO> response = restTemplate.exchange(fileStorageServiceUrl, HttpMethod.POST, requestEntity, FileDTO.class);
 
-            fileUrls.add(response.getBody());
+                fileUrls.add(response.getBody());
+            }
         }
         return ResponseEntity.ok(orderService.createOrder(order, email, fileUrls));
     }

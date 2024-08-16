@@ -59,7 +59,7 @@ public class OrderUtil {
                         .setSpecificationFileUrl(fastenerEntity.getSpecificationFileUrl())
                         .setClazz(fastenerEntity.getClazz())
                         .setLength(fastenerEntity.getLength())
-                        .setModel(fastenerEntity.getModel())
+                        .setStandard(fastenerEntity.getStandard())
                         .setType(fastenerEntity.getType()))
                 .collect(Collectors.toSet());
         createOrderEvent.setOrderId(1L)

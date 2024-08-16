@@ -40,7 +40,7 @@ values  (1, null, 'Извозване на отпадъци', 'APPROVED', 1, 'ht
         (15, 'няма да можем да го изпълним', 'Камион за превоз на материали', 'NOT_APPROVED', 5, 'https://testUrl.com', '5000 CM', 'CB 2456 TT', '9800 KG', 6);
 
 
-insert into fastener (id, admin_note, description, material_status, quantity, specification_file_url, clazz, diameter, length, model, type, order_id)
+insert into fastener (id, admin_note, description, material_status, quantity, specification_file_url, clazz, diameter, length, standard, type, order_id)
 values  (1, null, 'да са на HILTI', 'APPROVED', 420, 'https://testURL.com', '10.9', 'Подложна шайба М20', '20 MM', 'ISO 7089', 'Подложна шайба М20', 3),
         (2, null, 'да са на HILTI', 'APPROVED', 420, 'https://testURL.com', '10.9', 'Подложна шайба М20', '20 MM', 'ISO 7089', 'Подложна шайба М20', 3),
         (3, 'Не могат да се доставят до края на седмицата', 'Цолска резба', 'NOT_APPROVED', 10, 'https://testURL.com', '10.9', 'Сегментен анкер тип  аналог на  HILTI HST3', '120 MM', 'ISO 7089', 'Сегментен анкер тип  аналог на  HILTI HST3', 3),

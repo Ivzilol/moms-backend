@@ -5,26 +5,26 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 public class GalvanisedSheetEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
     private String type;
     private String maxLength;
-    private String area;
+    private String numberOfSheets;
     private String adminNote;
     private MaterialStatus materialStatus;
 
     public GalvanisedSheetEvent() {
     }
 
-    public GalvanisedSheetEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String maxLength, String area, String adminNote, MaterialStatus materialStatus) {
+    public GalvanisedSheetEvent(Long id, String quantity, String description, String specificationFileUrl, String type, String maxLength, String numberOfSheets, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.type = type;
         this.maxLength = maxLength;
-        this.area = area;
+        this.numberOfSheets = numberOfSheets;
         this.adminNote = adminNote;
         this.materialStatus = materialStatus;
     }
@@ -38,11 +38,11 @@ public class GalvanisedSheetEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public GalvanisedSheetEvent setQuantity(Double quantity) {
+    public GalvanisedSheetEvent setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -83,12 +83,12 @@ public class GalvanisedSheetEvent {
         return this;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public GalvanisedSheetEvent setArea(String area) {
-        this.area = area;
+    public GalvanisedSheetEvent setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
         return this;
     }
 

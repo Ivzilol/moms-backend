@@ -1,6 +1,8 @@
 package bg.mck.ordercommandservice.dto;
 
+import bg.mck.ordercommandservice.entity.enums.AreaUnits;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public class PanelDTO extends BaseDTO {
@@ -23,12 +25,14 @@ public class PanelDTO extends BaseDTO {
     @Pattern(regexp = "^[^-].*", message = "BackSheetThickness must be positive")
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
+    @NotNull(message = "Quantity is required")
+    private String quantity;
+    private AreaUnits quantityUnit;
 
     public PanelDTO() {
     }
 
-    public PanelDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public PanelDTO(String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit, String quantity, AreaUnits quantityUnit) {
         this.type = type;
         this.color = color;
         this.length = length;
@@ -41,6 +45,26 @@ public class PanelDTO extends BaseDTO {
         this.frontSheetThicknessUnit = frontSheetThicknessUnit;
         this.backSheetThickness = backSheetThickness;
         this.backSheetThicknessUnit = backSheetThicknessUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
+    }
+
+    public PanelDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit, String quantity, AreaUnits quantityUnit) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
+        this.color = color;
+        this.length = length;
+        this.lengthUnit = lengthUnit;
+        this.width = width;
+        this.widthUnit = widthUnit;
+        this.totalThickness = totalThickness;
+        this.totalThicknessUnit = totalThicknessUnit;
+        this.frontSheetThickness = frontSheetThickness;
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        this.backSheetThickness = backSheetThickness;
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
     }
 
     public String getType() {
@@ -49,6 +73,15 @@ public class PanelDTO extends BaseDTO {
 
     public PanelDTO setType(String type) {
         this.type = type;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public PanelDTO setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 
@@ -85,6 +118,15 @@ public class PanelDTO extends BaseDTO {
 
     public PanelDTO setWidth(@Pattern(regexp = "^[^-].*", message = "Width must be positive") String width) {
         this.width = width;
+        return this;
+    }
+
+    public AreaUnits getQuantityUnit() {
+        return quantityUnit;
+    }
+
+    public PanelDTO setQuantityUnit(AreaUnits quantityUnit) {
+        this.quantityUnit = quantityUnit;
         return this;
     }
 

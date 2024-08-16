@@ -5,13 +5,13 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 public class FasterEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
     private String type;
     private String diameter;
     private String length;
-    private String model;
+    private String standard;
     private String clazz;
     private String adminNote;
     private MaterialStatus materialStatus;
@@ -19,7 +19,7 @@ public class FasterEvent {
     public FasterEvent() {
     }
 
-    public FasterEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String diameter, String length, String model, String clazz, String adminNote, MaterialStatus materialStatus) {
+    public FasterEvent(Long id, String quantity, String description, String specificationFileUrl, String type, String diameter, String length, String standard, String clazz, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -27,7 +27,7 @@ public class FasterEvent {
         this.type = type;
         this.diameter = diameter;
         this.length = length;
-        this.model = model;
+        this.standard = standard;
         this.clazz = clazz;
         this.adminNote = adminNote;
         this.materialStatus = materialStatus;
@@ -60,11 +60,11 @@ public class FasterEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public FasterEvent setQuantity(Double quantity) {
+    public FasterEvent setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -114,12 +114,12 @@ public class FasterEvent {
         return this;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public FasterEvent setModel(String model) {
-        this.model = model;
+    public FasterEvent setStandard(String standard) {
+        this.standard = standard;
         return this;
     }
 

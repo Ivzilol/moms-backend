@@ -1,47 +1,36 @@
 package bg.mck.ordercommandservice.dto;
 
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public class SetDTO extends BaseDTO {
-
-    @Pattern(regexp = "^[^-].*", message = "GalvanisedSheetThickness must be positive")
-    private String galvanisedSheetThickness;
-    private LengthUnits galvanisedSheetThicknessUnit;
+    @NotNull(message = "Color is required")
     private String color;
 
     @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    @NotNull(message = "Length is required")
     private String maxLength;
     private LengthUnits maxLengthUnit;
+    private String quantity;
+
 
     public SetDTO() {
     }
 
-    public SetDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String galvanisedSheetThickness, LengthUnits galvanisedSheetThicknessUnit, String color, String maxLength, LengthUnits maxLengthUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
+    public SetDTO(String color, String maxLength, LengthUnits maxLengthUnit, String quantity) {
         this.color = color;
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
+        this.quantity = quantity;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public SetDTO setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
-
-    public LengthUnits getGalvanisedSheetThicknessUnit() {
-        return galvanisedSheetThicknessUnit;
-    }
-
-    public SetDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-        return this;
+    public SetDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus, String color, String maxLength, LengthUnits maxLengthUnit, String quantity) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.color = color;
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.quantity = quantity;
     }
 
     public String getColor() {
@@ -50,6 +39,15 @@ public class SetDTO extends BaseDTO {
 
     public SetDTO setColor(String color) {
         this.color = color;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public SetDTO setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 

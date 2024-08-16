@@ -1,5 +1,7 @@
 package bg.mck.ordercommandservice.entity;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -9,27 +11,32 @@ public class FastenerEntity extends BaseMaterialEntity {
     private String type;
     private String diameter;
     private String length;
-    private String model;
+    @Column(name = "standard")
+    private String standard;
     private String clazz;
+    private String quantity;
 
     public FastenerEntity() {
     }
 
-    public FastenerEntity(Double quantity, String note, String specificationFileUrl, String type, String diameter, String length, String model, String clazz) {
-        super(quantity, note, specificationFileUrl);
+    public FastenerEntity(Long id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type, String diameter, String length, String standard, String clazz, String quantity) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.diameter = diameter;
         this.length = length;
-        this.model = model;
+        this.standard = standard;
         this.clazz = clazz;
+        this.quantity = quantity;
     }
 
-    public FastenerEntity(String type, String description, String diameter, String length, String model, String clazz) {
+    public FastenerEntity(String note, String specificationFileUrl, String type, String diameter, String length, String standard, String clazz, String quantity) {
+        super(note, specificationFileUrl);
         this.type = type;
         this.diameter = diameter;
         this.length = length;
-        this.model = model;
+        this.standard = standard;
         this.clazz = clazz;
+        this.quantity = quantity;
     }
 
     public String getType() {
@@ -59,12 +66,12 @@ public class FastenerEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public FastenerEntity setModel(String model) {
-        this.model = model;
+    public FastenerEntity setStandard(String standard) {
+        this.standard = standard;
         return this;
     }
 
@@ -77,4 +84,12 @@ public class FastenerEntity extends BaseMaterialEntity {
         return this;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public FastenerEntity setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
+    }
 }

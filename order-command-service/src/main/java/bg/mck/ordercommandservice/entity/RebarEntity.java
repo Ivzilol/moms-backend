@@ -1,19 +1,35 @@
 package bg.mck.ordercommandservice.entity;
 
-import jakarta.persistence.Column;
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "rebars")
 public class RebarEntity extends BaseMaterialEntity {
 
     private String maxLength;
-    private String weight;
+    private String quantity;
 
     public RebarEntity() {
 
+    }
+
+    public RebarEntity(String maxLength, String quantity) {
+        this.maxLength = maxLength;
+        this.quantity = quantity;
+    }
+
+    public RebarEntity(Long id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String maxLength, String quantity) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.maxLength = maxLength;
+        this.quantity = quantity;
+    }
+
+    public RebarEntity(String note, String specificationFileUrl, String maxLength, String quantity) {
+        super(note, specificationFileUrl);
+        this.maxLength = maxLength;
+        this.quantity = quantity;
     }
 
     public String getMaxLength() {
@@ -25,12 +41,12 @@ public class RebarEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getWeight() {
-        return weight;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public RebarEntity setWeight(String weight) {
-        this.weight = weight;
+    public RebarEntity setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 }

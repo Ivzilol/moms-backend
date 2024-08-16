@@ -1,5 +1,6 @@
 package bg.mck.ordercommandservice.entity;
 
+import bg.mck.ordercommandservice.entity.enums.AreaUnits;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -10,8 +11,12 @@ import jakarta.validation.constraints.Pattern;
 @Table(name = "insulation")
 public class InsulationEntity extends BaseMaterialEntity {
 
+    @Column(nullable = false)
     private String type;
     private String thickness;
+    @Column(nullable = false)
+    private String quantity;
+
 
     public InsulationEntity() {
     }
@@ -32,6 +37,15 @@ public class InsulationEntity extends BaseMaterialEntity {
 
     public InsulationEntity setThickness(String thickness) {
         this.thickness = thickness;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public InsulationEntity setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 }
