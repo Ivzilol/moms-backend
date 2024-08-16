@@ -65,7 +65,7 @@ public class OrderController {
 
         List<FileDTO> fileUrls = new ArrayList<>();
 
-        if (!files.isEmpty()) {
+        if (files != null && !files.isEmpty()) {
             for (MultipartFile multipartFile : files) {
                 File file = convertMultipartFileToFile(multipartFile);
 
