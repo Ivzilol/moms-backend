@@ -8,6 +8,7 @@ import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.InsulationUpdateEvent;
 import bg.mck.events.material.MaterialEvent;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.InsulationRepository;
@@ -61,7 +62,26 @@ public class InsulationUpdateService {
     }
 
     private void updateInsulationEntity(InsulationUpdateDTO insulationUpdateDTO, InsulationEntity insulationEntity) {
+        InsulationEntity currentState = insulationRepository.findById(insulationEntity.getId()).get();
         materialMapper.updateInsulationEntityFromDto(insulationUpdateDTO,insulationEntity);
+        if (!currentState.getType().equals(insulationEntity.getType()) ||
+            !currentState.getThickness().equals(insulationEntity.getThickness()) ||
+            !currentState.getThicknessUnit().name().equals(insulationEntity.getThicknessUnit().name())) {
+            if(doesAlreadyExists(insulationEntity)) {
+                throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
+            } else {
+                insulationEntity.setName(insulationEntity.getType() + " "
+                        + insulationEntity.getThickness() + " " + insulationEntity.getThicknessUnit());
+            }
+        }
+
+
         insulationRepository.save(insulationEntity);
+    }
+
+    private boolean doesAlreadyExists(InsulationEntity insulationEntity) {
+        InsulationEntity byName = insulationRepository.findByName(insulationEntity.getType() + " "
+                + insulationEntity.getThickness() + " " + insulationEntity.getThicknessUnit());
+        return byName != null;
     }
 }

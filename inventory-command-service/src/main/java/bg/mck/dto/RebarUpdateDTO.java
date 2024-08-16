@@ -1,18 +1,24 @@
 package bg.mck.dto;
 
+import bg.mck.enums.LengthUnits;
+import bg.mck.enums.WeightUnits;
 import jakarta.validation.constraints.DecimalMin;
 
 public class RebarUpdateDTO {
 
     private String name;
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
-    private Double MaxLength;
-    @DecimalMin(value = "0.0", message = "weight must be positive")
-    private Double weight;
+    private String maxLength;
+
+    private LengthUnits maxLengthUnit;
+
+    private String weight;
+
+    private WeightUnits weightUnit;
+
     @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
-    private String description;
 
+    private String description;
 
     private String specificationFileUrl;
 
@@ -28,21 +34,39 @@ public class RebarUpdateDTO {
         return this;
     }
 
-    public Double getMaxLength() {
-        return MaxLength;
+    public String getMaxLength() {
+        return maxLength;
     }
 
-    public RebarUpdateDTO setMaxLength(Double maxLength) {
-        MaxLength = maxLength;
+    public RebarUpdateDTO setMaxLength(String maxLength) {
+        this.maxLength = maxLength;
         return this;
     }
 
-    public Double getWeight() {
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public RebarUpdateDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public String getWeight() {
         return weight;
     }
 
-    public RebarUpdateDTO setWeight(Double weight) {
+    public RebarUpdateDTO setWeight(String weight) {
         this.weight = weight;
+        return this;
+    }
+
+    public WeightUnits getWeightUnit() {
+        return weightUnit;
+    }
+
+    public RebarUpdateDTO setWeightUnit(WeightUnits weightUnit) {
+        this.weightUnit = weightUnit;
         return this;
     }
 

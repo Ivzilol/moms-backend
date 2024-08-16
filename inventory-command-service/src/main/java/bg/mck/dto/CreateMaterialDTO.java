@@ -5,12 +5,14 @@ import bg.mck.enums.AreaUnits;
 import bg.mck.enums.LengthUnits;
 import bg.mck.enums.MaterialType;
 import bg.mck.enums.WeightUnits;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import static bg.mck.errors.ErrorsCreateMaterial.*;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateMaterialDTO {
 
     @NotNull(message = INVALID_MATERIAL_TYPE)

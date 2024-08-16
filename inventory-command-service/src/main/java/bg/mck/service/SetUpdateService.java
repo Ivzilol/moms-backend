@@ -8,6 +8,7 @@ import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.MaterialEvent;
 import bg.mck.events.material.SetUpdateEvent;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.SetRepository;
@@ -59,8 +60,27 @@ public class SetUpdateService {
     }
 
     private void updateSetEntity(SetUpdateDTO setUpdateDTO, SetEntity setEntity) {
+        SetEntity currentState = setRepository.findById(setEntity.getId()).get();
+
         materialMapper.updateSetEntityFromDto(setUpdateDTO,setEntity);
+        if (!currentState.getGalvanisedSheetThickness().equals(setEntity.getGalvanisedSheetThickness()) ||
+            !currentState.getGalvanisedSheetThicknessUnit().name().equals(setEntity.getGalvanisedSheetThicknessUnit().name()) ||
+            !currentState.getColor().equals(setEntity.getColor())) {
+            if(doesAlreadyExists(setEntity)) {
+                throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
+            } else {
+                setEntity.setName(setEntity.getGalvanisedSheetThickness() + " " + setEntity.getGalvanisedSheetThicknessUnit() + " " +
+                        setEntity.getColor());
+            }
+        }
         setRepository.save(setEntity);
 
+    }
+
+    private boolean doesAlreadyExists(SetEntity setEntity) {
+        SetEntity byName = setRepository.findByName(setEntity.getGalvanisedSheetThickness() + " " + setEntity.getGalvanisedSheetThicknessUnit() + " " +
+                setEntity.getColor());
+
+        return byName != null;
     }
 }

@@ -2,16 +2,25 @@ package bg.mck.service;
 
 import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.dto.CreateMaterialDTO;
+import bg.mck.dto.CreateOrderMaterialsDto;
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.entity.materialEntity.*;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.*;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.repository.*;
 import bg.mck.utils.EventCreationHelper;
+import bg.mck.utils.ValidationUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import static bg.mck.enums.ConstantMessages.FASTENER_UPDATE_DTO_NAME;
+import static bg.mck.enums.ConstantMessages.MATERIAL;
 
 @Service
 public class MaterialRegisterService {
@@ -115,7 +124,8 @@ public class MaterialRegisterService {
             InsulationEntity insulationEntity = mapInsulationEntity(createMaterialDTO);
             this.insulationRepository.save(insulationEntity);
             InsulationEntity createInsulation = this.insulationRepository
-                    .findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getThickness());
+                    .findByName(createMaterialDTO.getType() + " "
+                            + createMaterialDTO.getThickness() + " " + createMaterialDTO.getThicknessUnit());
             Optional<CategoryEntity> byMaterialType = this.categoryRepository
                     .findByMaterialType(MaterialType.INSULATION);
             String materialType = byMaterialType.get().getMaterialType().name();
@@ -511,7 +521,7 @@ public class MaterialRegisterService {
     public boolean checkMaterialName(CreateMaterialDTO createMaterialDTO) {
         if (createMaterialDTO.getMaterialType().equals(MaterialType.FASTENERS)) {
             FastenerEntity byName = this.fastenerRepository.findByName(createMaterialDTO.getType() + " " +
-                    createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength());
+                    createMaterialDTO.getDiameter() + " " + createMaterialDTO.getLength() + " " + createMaterialDTO.getLengthUnit());
             return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.GALVANIZED_SHEET)) {
@@ -520,7 +530,7 @@ public class MaterialRegisterService {
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.INSULATION)) {
             InsulationEntity byName = this.insulationRepository.findByName(createMaterialDTO.getType() + " "
-                    + createMaterialDTO.getThickness());
+                    + createMaterialDTO.getThickness() + " " + createMaterialDTO.getThicknessUnit());
             return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.METAL)) {
@@ -528,8 +538,8 @@ public class MaterialRegisterService {
             return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.PANELS)) {
-            PanelEntity byName = this.panelRepository.findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength()
-                    + " " + createMaterialDTO.getTotalThickness());
+            PanelEntity byName = this.panelRepository.findByName(createMaterialDTO.getType() + " " + createMaterialDTO.getLength() + " " + createMaterialDTO.getLengthUnit()
+                    + " " + createMaterialDTO.getTotalThickness() + " " + createMaterialDTO.getTotalThicknessUnit());
             return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.REBAR)) {
@@ -537,7 +547,7 @@ public class MaterialRegisterService {
             return byName != null;
         }
         if (createMaterialDTO.getMaterialType().equals(MaterialType.SET)) {
-            SetEntity byName = this.setRepository.findByName(createMaterialDTO.getGalvanisedSheetThickness() + " " +
+            SetEntity byName = this.setRepository.findByName(createMaterialDTO.getGalvanisedSheetThickness() + " " + createMaterialDTO.getGalvanisedSheetThicknessUnit() + " " +
                     createMaterialDTO.getColor());
             return byName != null;
         }
@@ -547,5 +557,42 @@ public class MaterialRegisterService {
             return byName != null;
         }
         return false;
+    }
+
+    public void createMaterialsFromOrder(CreateOrderMaterialsDto createOrderMaterialsDto) throws MethodArgumentNotValidException, NoSuchMethodException {
+        for (var entry : createOrderMaterialsDto.getMaterials().entrySet()) {
+            String category = entry.getKey();
+            List<CreateMaterialDTO> materials = entry.getValue();
+
+            for (CreateMaterialDTO material : materials) {
+                if (category.equals(MaterialType.FASTENERS.name())) {
+                    material.setMaterialType(MaterialType.FASTENERS);
+                } else if (category.equals(MaterialType.GALVANIZED_SHEET.name())) {
+                    material.setMaterialType(MaterialType.GALVANIZED_SHEET);
+                } else if (category.equals(MaterialType.INSULATION.name())) {
+                    material.setMaterialType(MaterialType.INSULATION);
+                } else if (category.equals(MaterialType.METAL.name())) {
+                    material.setMaterialType(MaterialType.METAL);
+                } else if (category.equals(MaterialType.REBAR.name())) {
+                    material.setMaterialType(MaterialType.REBAR);
+                } else if (category.equals(MaterialType.SET.name())) {
+                    material.setMaterialType(MaterialType.SET);
+                } else if (category.equals(MaterialType.UNSPECIFIED.name())) {
+                    material.setMaterialType(MaterialType.UNSPECIFIED);
+                } else if (category.equals(MaterialType.PANELS.name())) {
+                    material.setMaterialType(MaterialType.PANELS);
+                }
+
+                if (!ValidationUtil.isValid(material,MATERIAL)) {
+                    continue;
+                }
+                boolean doesExist = checkMaterialName(material);
+                if (doesExist) {
+                  continue;
+                }
+
+                createMaterial(material);
+            }
+        }
     }
 }
