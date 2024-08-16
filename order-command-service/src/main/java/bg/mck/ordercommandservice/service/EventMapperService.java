@@ -46,7 +46,7 @@ public class EventMapperService {
         this.orderQueryServiceClient = orderQueryServiceClient;
     }
 
-    public void mapEvent(OrderEntity orderEntity) { //TODO remove after
+    public void mapEvent(OrderEntity orderEntity) {
         processAndSendEvent(orderEntity, orderEntity.getFasteners(), fastenerMapper::toEvent);
         processAndSendEvent(orderEntity, orderEntity.getGalvanisedSheets(), galvanisedSheetMapper::toEvent);
         processAndSendEvent(orderEntity, orderEntity.getMetals(), metalMapper::toEvent);
