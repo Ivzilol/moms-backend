@@ -3,11 +3,26 @@ package bg.mck.ordercommandservice.dto;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ServiceDTO extends BaseDTO {
+    private String quantity;
 
     public ServiceDTO() {
     }
 
-    public ServiceDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus) {
+    public ServiceDTO(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public ServiceDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus, String quantity) {
         super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.quantity = quantity;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public ServiceDTO setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
     }
 }
