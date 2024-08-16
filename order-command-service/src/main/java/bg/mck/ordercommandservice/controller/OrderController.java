@@ -45,11 +45,6 @@ public class OrderController {
         this.restTemplate = restTemplate;
     }
 
-//    @GetMapping("/get-order/{id}")
-//    public ResponseEntity<Object> getOrder(@PathVariable Long id) {
-//        return ResponseEntity.ok(orderService.getOrder(id));
-//    }
-
     @Operation(summary = "Create order")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order created successfully"),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
