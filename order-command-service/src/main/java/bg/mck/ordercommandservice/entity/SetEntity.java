@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.entity;
 
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -10,32 +11,30 @@ import jakarta.persistence.Table;
 public class SetEntity extends BaseMaterialEntity {
 
     private String quantity;
-    private LengthUnits quantityUnit;
+    @Column(nullable = false)
     private String color;
+    @Column(nullable = false)
     private String maxLength;
 
     public SetEntity() {
     }
 
-    public SetEntity(String quantity, LengthUnits quantityUnit, String color, String maxLength) {
+    public SetEntity(String quantity, String color, String maxLength) {
         this.quantity = quantity;
-        this.quantityUnit = quantityUnit;
         this.color = color;
         this.maxLength = maxLength;
     }
 
-    public SetEntity(Long id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String quantity, LengthUnits quantityUnit, String color, String maxLength) {
+    public SetEntity(Long id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String quantity, String color, String maxLength) {
         super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.quantity = quantity;
-        this.quantityUnit = quantityUnit;
         this.color = color;
         this.maxLength = maxLength;
     }
 
-    public SetEntity(String note, String specificationFileUrl, String quantity, LengthUnits quantityUnit, String color, String maxLength) {
+    public SetEntity(String note, String specificationFileUrl, String quantity, String color, String maxLength) {
         super(note, specificationFileUrl);
         this.quantity = quantity;
-        this.quantityUnit = quantityUnit;
         this.color = color;
         this.maxLength = maxLength;
     }
@@ -64,15 +63,6 @@ public class SetEntity extends BaseMaterialEntity {
 
     public SetEntity setQuantity(String quantity) {
         this.quantity = quantity;
-        return this;
-    }
-
-    public LengthUnits getQuantityUnit() {
-        return quantityUnit;
-    }
-
-    public SetEntity setQuantityUnit(LengthUnits quantityUnit) {
-        this.quantityUnit = quantityUnit;
         return this;
     }
 }
