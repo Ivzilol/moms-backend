@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Pattern;
 
 public class FastenerDTO extends BaseDTO {
 
-
     private String type;
     private String diameter;
 
@@ -15,7 +14,6 @@ public class FastenerDTO extends BaseDTO {
     private String standard;
     private String clazz;
     private String quantity;
-
 
     public FastenerDTO() {
     }
@@ -49,11 +47,11 @@ public class FastenerDTO extends BaseDTO {
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getLength() {
+    public String getLength() {
         return length;
     }
 
-    public FastenerDTO setLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String length) {
+    public FastenerDTO setLength(String length) {
         this.length = length;
         return this;
     }
