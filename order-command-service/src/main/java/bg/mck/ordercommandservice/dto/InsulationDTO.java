@@ -5,7 +5,7 @@ import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public class InsulationDTO extends BaseDTO{
+public class InsulationDTO extends BaseDTO {
 
     private String type;
 

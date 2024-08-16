@@ -7,8 +7,8 @@ import bg.mck.ordercommandservice.entity.enums.AreaUnits;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.event.GalvanisedSheetEvent;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")

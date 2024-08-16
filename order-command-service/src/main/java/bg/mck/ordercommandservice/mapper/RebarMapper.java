@@ -17,11 +17,14 @@ public interface RebarMapper {
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(split(rebarEntity.getMaxLength())[0])"),
             @Mapping(target = "maxLengthUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.LengthUnits.valueOf(split(rebarEntity.getMaxLength())[1]))"),
+            @Mapping(target = "quantity", expression = "java(split(rebarEntity.getQuantity())[0])"),
+            @Mapping(target = "quantityUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.WeightUnits.valueOf(split(rebarEntity.getQuantity())[1]))")
     })
     RebarDTO toDTO(RebarEntity rebarEntity);
 
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(concatenateLength(rebarDTO.getMaxLength(), rebarDTO.getMaxLengthUnit()))"),
+            @Mapping(target = "quantity", expression = "java(concatenateWeight(rebarDTO.getQuantity(), rebarDTO.getQuantityUnit()))")
     })
     RebarEntity toEntity(RebarDTO rebarDTO);
 
@@ -29,8 +32,17 @@ public interface RebarMapper {
 
     void toUpdateRebarEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget RebarEntity rebarEntity);
 
-    default String concatenateLength(String length, LengthUnits lengthUnit) {
-        return length + " " + lengthUnit;
+    default String concatenateLength(String unit, LengthUnits unitType) {
+        if (unit == null && unitType == null) {
+            return null;
+        }
+        if (unit == null) {
+            return unitType.toString();
+        }
+        if (unitType == null) {
+            return unit;
+        }
+        return unit + " " + unitType;
     }
 
     default String concatenateWeight(String unit, WeightUnits unitType) {
