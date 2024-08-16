@@ -5,24 +5,24 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 public class MetalEvent {
 
     private Long id;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
     private String totalWeight;
     private String adminNote;
     private MaterialStatus materialStatus;
+    private String kind;
 
     public MetalEvent() {
     }
 
-    public MetalEvent(Long id, Double quantity, String description, String specificationFileUrl, String totalWeight, String adminNote, MaterialStatus materialStatus) {
+    public MetalEvent(Long id, String kind ,String description, String specificationFileUrl, String totalWeight, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.totalWeight = totalWeight;
         this.adminNote = adminNote;
         this.materialStatus = materialStatus;
+        this.kind = kind;
     }
 
     public Long getId() {
@@ -34,12 +34,12 @@ public class MetalEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
+    public String getKind() {
+        return kind;
     }
 
-    public MetalEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
+    public MetalEvent setKind(String kind) {
+        this.kind = kind;
         return this;
     }
 

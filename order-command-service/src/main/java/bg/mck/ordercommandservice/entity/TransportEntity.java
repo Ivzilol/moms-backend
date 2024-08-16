@@ -18,7 +18,7 @@ public class TransportEntity extends BaseMaterialEntity {
     }
 
     public TransportEntity(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String maxLength, String weight, String truck) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+
         this.maxLength = maxLength;
         this.weight = weight;
         this.truck = truck;

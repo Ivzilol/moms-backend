@@ -1,6 +1,8 @@
 package bg.mck.ordercommandservice.dto;
 
+import bg.mck.ordercommandservice.entity.enums.AreaUnits;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public class InsulationDTO extends BaseDTO{
@@ -10,15 +12,28 @@ public class InsulationDTO extends BaseDTO{
     @Pattern(regexp = "^[^-].*", message = "Thickness must be positive")
     private String thickness;
     private LengthUnits thicknessUnit;
+    @NotNull
+    private String quantity;
+    private AreaUnits quantityUnit;
 
     public InsulationDTO() {
     }
 
-    public InsulationDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String thickness, LengthUnits thicknessUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public InsulationDTO(String type, String thickness, LengthUnits thicknessUnit, String quantity, AreaUnits quantityUnit) {
         this.type = type;
         this.thickness = thickness;
         this.thicknessUnit = thicknessUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
+    }
+
+    public InsulationDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String thickness, LengthUnits thicknessUnit, String quantity, AreaUnits quantityUnit) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
+        this.thickness = thickness;
+        this.thicknessUnit = thicknessUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
     }
 
     public String getType() {
@@ -30,11 +45,11 @@ public class InsulationDTO extends BaseDTO{
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Thickness must be positive") String getThickness() {
+    public String getThickness() {
         return thickness;
     }
 
-    public InsulationDTO setThickness(@Pattern(regexp = "^[^-].*", message = "Thickness must be positive") String thickness) {
+    public InsulationDTO setThickness(String thickness) {
         this.thickness = thickness;
         return this;
     }
@@ -45,6 +60,24 @@ public class InsulationDTO extends BaseDTO{
 
     public InsulationDTO setThicknessUnit(LengthUnits thicknessUnit) {
         this.thicknessUnit = thicknessUnit;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public InsulationDTO setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public AreaUnits getQuantityUnit() {
+        return quantityUnit;
+    }
+
+    public InsulationDTO setQuantityUnit(AreaUnits quantityUnit) {
+        this.quantityUnit = quantityUnit;
         return this;
     }
 }

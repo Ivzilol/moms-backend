@@ -7,30 +7,53 @@ import jakarta.validation.constraints.Pattern;
 
 public class RebarDTO extends BaseDTO {
 
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+//    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
     private String maxLength;
     private LengthUnits maxLengthUnit;
-
-    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
-    private String weight;
-    private WeightUnits weightUnit;
+    private String quantity;
+    private WeightUnits quantityUnit;
 
     public RebarDTO() {
     }
 
-    public RebarDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public RebarDTO(String maxLength, LengthUnits maxLengthUnit, String quantity, WeightUnits quantityUnit) {
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
-        this.weight = weight;
-        this.weightUnit = weightUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getMaxLength() {
+    public RebarDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String quantity, WeightUnits quantityUnit) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public RebarDTO setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public WeightUnits getQuantityUnit() {
+        return quantityUnit;
+    }
+
+    public RebarDTO setQuantityUnit(WeightUnits quantityUnit) {
+        this.quantityUnit = quantityUnit;
+        return this;
+    }
+
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public RebarDTO setMaxLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String maxLength) {
+    public RebarDTO setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
@@ -44,21 +67,4 @@ public class RebarDTO extends BaseDTO {
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Weight must be positive") String getWeight() {
-        return weight;
-    }
-
-    public RebarDTO setWeight(@Pattern(regexp = "^[^-].*", message = "Weight must be positive") String weight) {
-        this.weight = weight;
-        return this;
-    }
-
-    public WeightUnits getWeightUnit() {
-        return weightUnit;
-    }
-
-    public RebarDTO setWeightUnit(WeightUnits weightUnit) {
-        this.weightUnit = weightUnit;
-        return this;
-    }
 }

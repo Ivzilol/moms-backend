@@ -41,7 +41,7 @@ class FastenerMapperTest {
         assertEquals(fastenerDTO.getSpecificationFileUrl(), result.getSpecificationFileUrl());
         assertEquals(fastenerDTO.getDiameter(), result.getDiameter());
         assertEquals(fastenerDTO.getLength(), result.getLength());
-        assertEquals(fastenerDTO.getModel(), result.getModel());
+        assertEquals(fastenerDTO.getStandard(), result.getStandard());
         assertEquals(fastenerDTO.getType(), result.getType());
         assertEquals(fastenerDTO.getClazz(), result.getClazz());
     }
@@ -57,7 +57,7 @@ class FastenerMapperTest {
         assertEquals(fastenerEntity.getSpecificationFileUrl(), result.getSpecificationFileUrl());
         assertEquals(fastenerEntity.getDiameter(), result.getDiameter());
         assertEquals(fastenerEntity.getLength().split(" ")[0], result.getLength());
-        assertEquals(fastenerEntity.getModel(), result.getModel());
+        assertEquals(fastenerEntity.getStandard(), result.getStandard());
         assertEquals(fastenerEntity.getType(), result.getType());
         assertEquals(fastenerEntity.getClazz(), result.getClazz());
     }
@@ -73,7 +73,7 @@ class FastenerMapperTest {
         assertEquals(fastenerEntity.getSpecificationFileUrl(), result.getSpecificationFileUrl());
         assertEquals(fastenerEntity.getDiameter(), result.getDiameter());
         assertEquals(fastenerEntity.getLength(), result.getLength());
-        assertEquals(fastenerEntity.getModel(), result.getModel());
+        assertEquals(fastenerEntity.getStandard(), result.getStandard());
         assertEquals(fastenerEntity.getType(), result.getType());
     }
 

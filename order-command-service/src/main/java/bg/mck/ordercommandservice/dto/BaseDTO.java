@@ -7,9 +7,6 @@ public class BaseDTO {
 
     private Long id;
 
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
-
     private String description;
 
     private String specificationFileUrl;
@@ -20,9 +17,8 @@ public class BaseDTO {
     public BaseDTO() {
     }
 
-    public BaseDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus) {
+    public BaseDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus) {
         this.id = id;
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.adminNote = adminNote;
@@ -53,15 +49,6 @@ public class BaseDTO {
 
     public BaseDTO setMaterialStatus(String materialStatus) {
         this.materialStatus = materialStatus;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public BaseDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
         return this;
     }
 

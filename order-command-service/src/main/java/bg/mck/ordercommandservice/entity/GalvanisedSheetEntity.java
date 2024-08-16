@@ -1,7 +1,7 @@
 package bg.mck.ordercommandservice.entity;
 
+import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
@@ -13,18 +13,28 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
     @Column(name = "max_length")
     private String maxLength;
     @Pattern(regexp = "^[^-].*", message = "Area must be positive")
-    @Column(name = "area")
-    private String area;
+    @Column(name = "number_of_sheets")
+    private String numberOfSheets;
+    private String quantity;
 
 
     public GalvanisedSheetEntity() {
     }
 
-    public GalvanisedSheetEntity(Double quantity, String note, String specificationFileUrl, String type, String maxLength, String area) {
-        super(quantity, note, specificationFileUrl);
+    public GalvanisedSheetEntity(Long id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type, String maxLength, String numberOfSheets, String quantity) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.maxLength = maxLength;
-        this.area = area;
+        this.numberOfSheets = numberOfSheets;
+        this.quantity = quantity;
+    }
+
+    public GalvanisedSheetEntity(String note, String specificationFileUrl, String type, String maxLength, String numberOfSheets, String quantity) {
+        super(note, specificationFileUrl);
+        this.type = type;
+        this.maxLength = maxLength;
+        this.numberOfSheets = numberOfSheets;
+        this.quantity = quantity;
     }
 
     public String getType() {
@@ -36,21 +46,30 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getMaxLength() {
+    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getMaxLength() {
         return maxLength;
     }
 
-    public GalvanisedSheetEntity setMaxLength(String maxLength) {
+    public GalvanisedSheetEntity setMaxLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public String getArea() {
-        return area;
+    public @Pattern(regexp = "^[^-].*", message = "Area must be positive") String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public GalvanisedSheetEntity setArea(String area) {
-        this.area = area;
+    public GalvanisedSheetEntity setNumberOfSheets(@Pattern(regexp = "^[^-].*", message = "Area must be positive") String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public GalvanisedSheetEntity setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 }

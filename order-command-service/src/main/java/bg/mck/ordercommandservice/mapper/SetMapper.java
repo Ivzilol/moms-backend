@@ -14,15 +14,12 @@ import org.mapstruct.Mappings;
 public interface SetMapper {
 
     @Mappings({
-            @Mapping(target = "galvanisedSheetThickness", expression = "java(split(setEntity.getGalvanisedSheetThickness())[0])"),
-            @Mapping(target = "galvanisedSheetThicknessUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.LengthUnits.valueOf(split(setEntity.getGalvanisedSheetThickness())[1]))"),
             @Mapping(target = "maxLength", expression = "java(split(setEntity.getMaxLength())[0])"),
             @Mapping(target = "maxLengthUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.LengthUnits.valueOf(split(setEntity.getMaxLength())[1]))")
     })
     SetDTO toDTO(SetEntity setEntity);
 
     @Mappings({
-            @Mapping(target = "galvanisedSheetThickness", expression = "java(concatenate(setDTO.getGalvanisedSheetThickness(), setDTO.getGalvanisedSheetThicknessUnit()))"),
             @Mapping(target = "maxLength", expression = "java(concatenate(setDTO.getMaxLength(), setDTO.getMaxLengthUnit()))")
     })
     SetEntity toEntity(SetDTO setDTO);
