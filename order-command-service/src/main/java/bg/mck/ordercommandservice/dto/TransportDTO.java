@@ -13,17 +13,28 @@ public class TransportDTO extends BaseDTO {
     private String weight;
     private WeightUnits weightUnit;
     private String truck;
+    private String quantity;
 
     public TransportDTO() {
     }
 
-    public TransportDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck) {
+    public TransportDTO(String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck, String quantity) {
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.weight = weight;
+        this.weightUnit = weightUnit;
+        this.truck = truck;
+        this.quantity = quantity;
+    }
+
+    public TransportDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck, String quantity) {
         super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
         this.weight = weight;
         this.weightUnit = weightUnit;
         this.truck = truck;
+        this.quantity = quantity;
     }
 
     public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getMaxLength() {
@@ -32,6 +43,15 @@ public class TransportDTO extends BaseDTO {
 
     public TransportDTO setMaxLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String maxLength) {
         this.maxLength = maxLength;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public TransportDTO setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 

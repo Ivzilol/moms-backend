@@ -8,7 +8,6 @@ public class SetEvent {
     private String quantity;
     private String description;
     private String specificationFileUrl;
-    private String galvanisedSheetThickness;
     private String color;
     private String maxLength;
     private String adminNote;
@@ -17,12 +16,11 @@ public class SetEvent {
     public SetEvent() {
     }
 
-    public SetEvent(Long id, String quantity, String description, String specificationFileUrl, String galvanisedSheetThickness, String color, String maxLength, String adminNote, MaterialStatus materialStatus) {
+    public SetEvent(Long id, String quantity, String description, String specificationFileUrl, String color, String maxLength, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
         this.color = color;
         this.maxLength = maxLength;
         this.adminNote = adminNote;
@@ -83,14 +81,6 @@ public class SetEvent {
         return this;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public SetEvent setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
 
     public String getColor() {
         return color;

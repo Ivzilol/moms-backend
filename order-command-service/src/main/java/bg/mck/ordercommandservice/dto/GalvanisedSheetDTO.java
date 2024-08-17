@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 
 public class GalvanisedSheetDTO extends BaseDTO {
 
-    @NotNull
+    @NotNull(message = "Type is required")
     private String type;
 
     @Pattern(regexp = "^[^-].*", message = "Length must be positive")
@@ -17,23 +17,33 @@ public class GalvanisedSheetDTO extends BaseDTO {
     private LengthUnits maxLengthUnit;
 
     @Pattern(regexp = "^[^-].*", message = "Area must be positive")
-    @NotNull
     private String numberOfSheets;
 
+    @NotNull(message = "Quantity is required")
     private String quantity;
+    @NotNull(message = "Quantity unit is required")
     private AreaUnits quantityUnit;
 
 
     public GalvanisedSheetDTO() {
     }
 
-    public GalvanisedSheetDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String maxLength, LengthUnits maxLengthUnit, String numberOfSheets, String quantity1, AreaUnits quantityUnit) {
+    public GalvanisedSheetDTO(String type, String maxLength, LengthUnits maxLengthUnit, String numberOfSheets, String quantity, AreaUnits quantityUnit) {
+        this.type = type;
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.numberOfSheets = numberOfSheets;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
+    }
+
+    public GalvanisedSheetDTO(Long id, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String maxLength, LengthUnits maxLengthUnit, String numberOfSheets, String quantity, AreaUnits quantityUnit) {
         super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
         this.numberOfSheets = numberOfSheets;
-        this.quantity = quantity1;
+        this.quantity = quantity;
         this.quantityUnit = quantityUnit;
     }
 
@@ -46,11 +56,11 @@ public class GalvanisedSheetDTO extends BaseDTO {
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") @NotNull String getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public GalvanisedSheetDTO setMaxLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") @NotNull String maxLength) {
+    public GalvanisedSheetDTO setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
@@ -64,11 +74,11 @@ public class GalvanisedSheetDTO extends BaseDTO {
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Area must be positive") @NotNull String getNumberOfSheets() {
+    public String getNumberOfSheets() {
         return numberOfSheets;
     }
 
-    public GalvanisedSheetDTO setNumberOfSheets(@Pattern(regexp = "^[^-].*", message = "Area must be positive") @NotNull String numberOfSheets) {
+    public GalvanisedSheetDTO setNumberOfSheets(String numberOfSheets) {
         this.numberOfSheets = numberOfSheets;
         return this;
     }

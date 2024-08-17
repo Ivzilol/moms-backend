@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 
 public class RebarDTO extends BaseDTO {
 
-//    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
     private String maxLength;
     private LengthUnits maxLengthUnit;
     private String quantity;
