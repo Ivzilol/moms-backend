@@ -1,19 +1,26 @@
 package bg.mck.dto;
 
+import bg.mck.enums.LengthUnits;
 import jakarta.validation.constraints.DecimalMin;
 
 public class FastenerUpdateDTO {
     private String name;
+
     private String type;
+
     private String diameter;
-    @DecimalMin(value = "0.0", message = "Length must be positive")
-    private Double length;
+
+    private String length;
+    private LengthUnits lengthUnit;
+
     private String model;
+
     private String clazz;
+
     @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
-    private String description;
 
+    private String description;
 
     private String specificationFileUrl;
 
@@ -47,12 +54,21 @@ public class FastenerUpdateDTO {
         return this;
     }
 
-    public Double getLength() {
+    public String getLength() {
         return length;
     }
 
-    public FastenerUpdateDTO setLength(Double length) {
+    public FastenerUpdateDTO setLength(String length) {
         this.length = length;
+        return this;
+    }
+
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public FastenerUpdateDTO setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
         return this;
     }
 

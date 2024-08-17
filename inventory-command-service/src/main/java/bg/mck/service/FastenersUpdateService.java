@@ -8,6 +8,7 @@ import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.FastenerUpdateEvent;
 import bg.mck.events.material.MaterialEvent;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.FastenerRepository;
@@ -69,8 +70,26 @@ public class FastenersUpdateService {
 
 
     private void updateFastenerEntity(FastenerUpdateDTO fastenerUpdateDTO, FastenerEntity fastenerEntity) {
+        FastenerEntity currentState = fastenerRepository.findById(fastenerEntity.getId()).get();
         materialMapper.updateFastenerEntityFromDto(fastenerUpdateDTO,fastenerEntity);
+        if (!currentState.getType().equals(fastenerEntity.getType()) ||
+            !currentState.getDiameter().equals(fastenerEntity.getDiameter()) ||
+            !currentState.getLength().equals(fastenerEntity.getLength()) ||
+            !currentState.getLengthUnit().name().equals(fastenerEntity.getLengthUnit().name())) {
+            if(doesAlreadyExists(fastenerEntity)) {
+                throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
+            } else {
+                fastenerEntity.setName(fastenerEntity.getType() + " " +
+                        fastenerEntity.getDiameter() + " " + fastenerEntity.getLength() + " " + fastenerEntity.getLengthUnit().name());
+            }
+        }
         fastenerRepository.save(fastenerEntity);
+    }
+
+    private boolean doesAlreadyExists(FastenerEntity fastenerEntity) {
+        FastenerEntity byName = fastenerRepository.findByName(fastenerEntity.getType() + " " +
+                fastenerEntity.getDiameter() + " " + fastenerEntity.getLength() + " " + fastenerEntity.getLengthUnit().name());
+        return byName != null;
     }
 
 }

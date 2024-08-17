@@ -1,7 +1,9 @@
 package bg.mck.controller;
 
 import bg.mck.dto.CreateMaterialDTO;
+import bg.mck.dto.CreateOrderMaterialsDto;
 import bg.mck.dto.ErrorCreateMaterialDTO;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.service.ErrorsService;
 import bg.mck.service.MaterialRegisterService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +16,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +28,6 @@ import java.util.stream.Collectors;
 import static bg.mck.errors.ErrorsCreateMaterial.MATERIAL_EXIST;
 
 @RestController
-@RequestMapping("/${APPLICATION_VERSION}/admin/inventory/command/materials")
 public class MaterialRegisterController {
 
     private final MaterialRegisterService materialRegisterService;
@@ -45,7 +47,7 @@ public class MaterialRegisterController {
                                     schema = @Schema(implementation = ErrorCreateMaterialDTO.class))})
             }
     )
-    @PostMapping("/create")
+    @PostMapping("/${APPLICATION_VERSION}/admin/inventory/command/materials/create")
     public ResponseEntity<?> createMaterial(@RequestBody @Valid CreateMaterialDTO createMaterialDTO,
                                             BindingResult result) {
         ResponseEntity<ErrorCreateMaterialDTO> errorCreateMaterialDTO =
@@ -59,6 +61,16 @@ public class MaterialRegisterController {
         return ResponseEntity.ok().build();
     }
 
+
+    @PostMapping("/orders/materials/create")
+    public ResponseEntity<Void> createMaterialsFromOrder(@RequestBody CreateOrderMaterialsDto createOrderMaterialsDto) throws MethodArgumentNotValidException, NoSuchMethodException {
+        if (createOrderMaterialsDto == null || createOrderMaterialsDto.getMaterials() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        materialRegisterService.createMaterialsFromOrder(createOrderMaterialsDto);
+        return ResponseEntity.ok().build();
+    }
+
     private ResponseEntity<ErrorCreateMaterialDTO> errorRegistrationMaterial(
             BindingResult result,
             CreateMaterialDTO createMaterialDTO) {
@@ -66,6 +78,7 @@ public class MaterialRegisterController {
         boolean checkMaterialName = this.materialRegisterService.checkMaterialName(createMaterialDTO);
         if (checkMaterialName) {
             errorCreateMaterialDTO.setMaterialAlreadyExist(MATERIAL_EXIST);
+            throw new DuplicatedInventoryItemException("Material already exists.");
         }
         if (result.hasErrors()) {
             List<String> errors = result.getAllErrors().stream()

@@ -1,17 +1,27 @@
 package bg.mck.dto;
 
+import bg.mck.enums.AreaUnits;
+import bg.mck.enums.LengthUnits;
 import jakarta.validation.constraints.DecimalMin;
 
 public class GalvanizedSheetUpdateDTO {
     private String name;
+
     private String type;
-    @DecimalMin(value = "0.0", inclusive = false, message = "maxLength must be greater than 0")
-    private Double maxLength;
-    @DecimalMin(value = "0.0", inclusive = false, message = "area must be greater than 0")
-    private Double area;
+
+    private String maxLength;
+
+    private LengthUnits maxLengthUnit;
+
+    private String area;
+
+    private AreaUnits areaUnit;
+
     @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
+
     private String description;
+
     private String specificationFileUrl;
 
     public GalvanizedSheetUpdateDTO() {
@@ -35,21 +45,39 @@ public class GalvanizedSheetUpdateDTO {
         return this;
     }
 
-    public Double getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public GalvanizedSheetUpdateDTO setMaxLength(Double maxLength) {
+    public GalvanizedSheetUpdateDTO setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public Double getArea() {
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public GalvanizedSheetUpdateDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public String getArea() {
         return area;
     }
 
-    public GalvanizedSheetUpdateDTO setArea(Double area) {
+    public GalvanizedSheetUpdateDTO setArea(String area) {
         this.area = area;
+        return this;
+    }
+
+    public AreaUnits getAreaUnit() {
+        return areaUnit;
+    }
+
+    public GalvanizedSheetUpdateDTO setAreaUnit(AreaUnits areaUnit) {
+        this.areaUnit = areaUnit;
         return this;
     }
 

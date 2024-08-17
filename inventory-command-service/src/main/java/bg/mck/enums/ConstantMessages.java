@@ -19,5 +19,7 @@ public class ConstantMessages {
     public static final String FASTENER_UPDATE_DTO_NAME = "fastenerUpdateDTO";
     public static final String GALVANIZED_SHEET_DTO_NAME = "galvanizedSheetUpdateDTO";
     public static final String METAL_DTO_NAME = "metalUpdateDTO";
+    public static final String MATERIAL = "material";
     public static final String CATEGORY_NOT_FOUND_MESSAGE = "Category with name: %s not found.";
+    public static final String UPDATE_FAILED_MATERIAL_ALREADY_EXIST = "Update failed. Already exist material with these attributes.";
 }

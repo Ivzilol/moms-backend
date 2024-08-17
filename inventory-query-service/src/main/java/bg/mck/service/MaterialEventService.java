@@ -279,14 +279,14 @@ public class MaterialEventService {
     }
 
     private void registerEvent(String data, String category) throws JsonProcessingException {
-        if (category.equals(String.valueOf(MaterialType.FASTENERS))) {
+        if (category.equals(MaterialType.FASTENERS.name())) {
             MaterialEvent<RegisterFastenerEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
             MaterialEvent<RegisterFastenerEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterMaterial(saveEvent.getEvent());
         }
-        if (category.equals(String.valueOf(MaterialType.GALVANIZED_SHEET))) {
+        if (category.equals(MaterialType.GALVANIZED_SHEET.name())) {
             MaterialEvent<RegisterGalvanizedEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
@@ -295,7 +295,7 @@ public class MaterialEventService {
         }
 
 
-        if (category.equals(String.valueOf(MaterialType.INSULATION))) {
+        if (category.equals(MaterialType.INSULATION.name())) {
             MaterialEvent<RegisterInsulationEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
@@ -303,7 +303,7 @@ public class MaterialEventService {
             this.materialRegisterService.processingRegisterInsulation(saveEvent.getEvent());
         }
 
-        if (category.equals(String.valueOf(MaterialType.METAL))) {
+        if (category.equals(MaterialType.METAL.name())) {
             MaterialEvent<RegisterMetalEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
@@ -311,7 +311,7 @@ public class MaterialEventService {
             this.materialRegisterService.processingRegisterMetal(saveEvent.getEvent());
         }
 
-        if (category.equals(String.valueOf(MaterialType.PANELS))) {
+        if (category.equals(MaterialType.PANELS.name())) {
             MaterialEvent<RegisterPanelEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
@@ -319,7 +319,7 @@ public class MaterialEventService {
             this.materialRegisterService.processingRegisterPanel(saveEvent.getEvent());
         }
 
-        if (category.equals(String.valueOf(MaterialType.REBAR))) {
+        if (category.equals(MaterialType.REBAR.name())) {
             MaterialEvent<RegisterRebarEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
@@ -327,7 +327,7 @@ public class MaterialEventService {
             this.materialRegisterService.processingRegisterRebar(saveEvent.getEvent());
         }
 
-        if (category.equals(String.valueOf(MaterialType.SET))) {
+        if (category.equals(MaterialType.SET.name())) {
             MaterialEvent<RegisterSetEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
@@ -335,7 +335,7 @@ public class MaterialEventService {
             this.materialRegisterService.processingRegisterSet(saveEvent.getEvent());
         }
 
-        if (category.equals(String.valueOf(MaterialType.UNSPECIFIED))) {
+        if (category.equals(MaterialType.UNSPECIFIED.name())) {
             MaterialEvent<RegisterUnspecifiedEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });

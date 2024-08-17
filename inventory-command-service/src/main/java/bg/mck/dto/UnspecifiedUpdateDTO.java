@@ -1,6 +1,7 @@
 package bg.mck.dto;
 
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
 
 public class UnspecifiedUpdateDTO {
@@ -9,6 +10,7 @@ public class UnspecifiedUpdateDTO {
 
     @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
+
     private String description;
 
     private String specificationFileUrl;

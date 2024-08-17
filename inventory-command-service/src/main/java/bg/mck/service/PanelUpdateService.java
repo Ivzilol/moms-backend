@@ -8,6 +8,7 @@ import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.MaterialEvent;
 import bg.mck.events.material.PanelUpdateEvent;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.PanelRepository;
@@ -58,7 +59,27 @@ public class PanelUpdateService {
         return panelUpdateEvent;
     }
     private void updatePanelEntity(PanelUpdateDTO panelUpdateDTO, PanelEntity panelEntity) {
+        PanelEntity currentState = panelRepository.findById(panelEntity.getId()).get();
         materialMapper.updatePanelEntityFromDto(panelUpdateDTO,panelEntity);
+        if (!currentState.getType().equals(panelEntity.getType()) ||
+            !currentState.getLength().equals(panelEntity.getLength()) ||
+            !currentState.getLengthUnit().name().equals(panelEntity.getLengthUnit().name()) ||
+            !currentState.getTotalThickness().equals(panelEntity.getTotalThickness()) ||
+            !currentState.getTotalThicknessUnit().name().equals(panelEntity.getTotalThicknessUnit().name())) {
+            if(doesAlreadyExists(panelEntity)) {
+                throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
+            } else {
+                panelEntity.setName(panelEntity.getType() + " " + panelEntity.getLength() + " " + panelEntity.getLengthUnit()
+                        + " " + panelEntity.getTotalThickness() + " " + panelEntity.getTotalThicknessUnit());
+            }
+        }
+
         panelRepository.save(panelEntity);
+    }
+
+    private boolean doesAlreadyExists(PanelEntity panelEntity) {
+        PanelEntity byName = panelRepository.findByName(panelEntity.getType() + " " + panelEntity.getLength() + " " + panelEntity.getLengthUnit()
+                + " " + panelEntity.getTotalThickness() + " " + panelEntity.getTotalThicknessUnit());
+        return byName != null;
     }
 }

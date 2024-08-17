@@ -1,41 +1,50 @@
 package bg.mck.dto;
 
+import bg.mck.enums.LengthUnits;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.DecimalMin;
 
 public class SetUpdateDTO {
 
-    private String name;
 
-    @DecimalMin(value = "0.0", message = "GalvanisedSheetThickness must be positive")
-    private Double galvanisedSheetThickness;
+    private String name;
+    private String galvanisedSheetThickness;
+
+    private LengthUnits galvanisedSheetThicknessUnit;
+
     private String color;
-    @DecimalMin(value = "0.0", message = "MaxLength must be positive")
+
     private String maxLength;
+
+    private LengthUnits maxLengthUnit;
+
     @DecimalMin(value = "0.0", message = "Quantity must be positive")
     private Double quantity;
-    private String description;
 
+    private String description;
 
     private String specificationFileUrl;
 
     public SetUpdateDTO() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public SetUpdateDTO setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public Double getGalvanisedSheetThickness() {
+    public String getGalvanisedSheetThickness() {
         return galvanisedSheetThickness;
     }
 
-    public SetUpdateDTO setGalvanisedSheetThickness(Double galvanisedSheetThickness) {
+    public SetUpdateDTO setGalvanisedSheetThickness(String galvanisedSheetThickness) {
         this.galvanisedSheetThickness = galvanisedSheetThickness;
+        return this;
+    }
+
+    public LengthUnits getGalvanisedSheetThicknessUnit() {
+        return galvanisedSheetThicknessUnit;
+    }
+
+    public SetUpdateDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
+        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
         return this;
     }
 
@@ -54,6 +63,15 @@ public class SetUpdateDTO {
 
     public SetUpdateDTO setMaxLength(String maxLength) {
         this.maxLength = maxLength;
+        return this;
+    }
+
+    public LengthUnits getMaxLengthUnit() {
+        return maxLengthUnit;
+    }
+
+    public SetUpdateDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
+        this.maxLengthUnit = maxLengthUnit;
         return this;
     }
 
@@ -81,6 +99,15 @@ public class SetUpdateDTO {
 
     public SetUpdateDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SetUpdateDTO setName(String name) {
+        this.name = name;
         return this;
     }
 }
