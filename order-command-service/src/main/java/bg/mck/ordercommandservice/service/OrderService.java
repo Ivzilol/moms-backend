@@ -280,8 +280,11 @@ public class OrderService {
     }
 
     private static void addFileUrlToMaterial(List<?> currentMaterials, FileDTO fileDTO) {
-
-        BaseDTO baseDTO = (BaseDTO) currentMaterials.get(Integer.parseInt(fileDTO.getFileMatcher()) - 1);
+        int matcher = Integer.parseInt(fileDTO.getFileMatcher());
+        if (matcher > currentMaterials.size()) {
+            throw new FileMatcherNotFoundException(String.format("The file %s has no matching material", fileDTO.getFileName()));
+        }
+        BaseDTO baseDTO = (BaseDTO) currentMaterials.get(matcher - 1);
         baseDTO.setSpecificationFileUrl(fileDTO.getFileUrl());
     }
 
