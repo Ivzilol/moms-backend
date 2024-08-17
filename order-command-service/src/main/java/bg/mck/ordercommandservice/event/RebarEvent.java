@@ -5,7 +5,7 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 public class RebarEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
     private String maxLength;
@@ -16,7 +16,7 @@ public class RebarEvent {
     public RebarEvent() {
     }
 
-    public RebarEvent(Long id, Double quantity, String description, String specificationFileUrl, String maxLength, String weight, String adminNote, MaterialStatus materialStatus) {
+    public RebarEvent(Long id, String quantity, String description, String specificationFileUrl, String maxLength, String weight, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -36,11 +36,11 @@ public class RebarEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public RebarEvent setQuantity(Double quantity) {
+    public RebarEvent setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }

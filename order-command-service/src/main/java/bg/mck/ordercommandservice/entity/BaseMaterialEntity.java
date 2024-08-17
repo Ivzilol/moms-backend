@@ -10,8 +10,7 @@ import jakarta.validation.constraints.DecimalMin;
 @MappedSuperclass
 public class BaseMaterialEntity extends BaseEntity {
 
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
+
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -27,29 +26,20 @@ public class BaseMaterialEntity extends BaseEntity {
     public BaseMaterialEntity() {
     }
 
-    public BaseMaterialEntity(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus) {
+    public BaseMaterialEntity(Long id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus) {
         super(id);
-        this.quantity = quantity;
+
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.adminNote = adminNote;
         this.materialStatus = materialStatus;
     }
 
-    public BaseMaterialEntity(Double quantity, String note, String specificationFileUrl) {
-        this.quantity = quantity;
+    public BaseMaterialEntity(String note, String specificationFileUrl) {
         this.description = note;
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public BaseMaterialEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

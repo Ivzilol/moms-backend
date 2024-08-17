@@ -18,7 +18,7 @@ public class TransportDTO extends BaseDTO {
     }
 
     public TransportDTO(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
         this.weight = weight;

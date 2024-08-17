@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public abstract class BaseEvent {
 
-
     private EventType eventType;
     private LocalDateTime eventTime;
 

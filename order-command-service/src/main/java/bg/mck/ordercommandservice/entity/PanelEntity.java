@@ -1,11 +1,8 @@
 package bg.mck.ordercommandservice.entity;
 
-import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMin;
 
 @Entity
 @Table(name = "panels")
@@ -18,10 +15,22 @@ public class PanelEntity extends BaseMaterialEntity {
     private String totalThickness;
     private String frontSheetThickness;
     private String backSheetThickness;
+    private String quantity;
 
 
     public PanelEntity() {
 
+    }
+
+    public PanelEntity(String type, String color, String length, String width, String totalThickness, String frontSheetThickness, String backSheetThickness, String quantity) {
+        this.type = type;
+        this.color = color;
+        this.length = length;
+        this.width = width;
+        this.totalThickness = totalThickness;
+        this.frontSheetThickness = frontSheetThickness;
+        this.backSheetThickness = backSheetThickness;
+        this.quantity = quantity;
     }
 
     public PanelEntity(String type) {
@@ -29,12 +38,12 @@ public class PanelEntity extends BaseMaterialEntity {
     }
 
     public PanelEntity(Long id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+
         this.type = type;
     }
 
     public PanelEntity(Double quantity, String note, String specificationFileUrl, String type) {
-        super(quantity, note, specificationFileUrl);
+
         this.type = type;
     }
 
@@ -44,6 +53,15 @@ public class PanelEntity extends BaseMaterialEntity {
 
     public PanelEntity setType(String type) {
         this.type = type;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public PanelEntity setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 

@@ -5,7 +5,7 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 public class InsulationEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
     private String type;
@@ -16,7 +16,7 @@ public class InsulationEvent {
     public InsulationEvent() {
     }
 
-    public InsulationEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String thickness, String adminNote, MaterialStatus materialStatus) {
+    public InsulationEvent(Long id, String quantity, String description, String specificationFileUrl, String type, String thickness, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -54,11 +54,11 @@ public class InsulationEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public InsulationEvent setQuantity(Double quantity) {
+    public InsulationEvent setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }

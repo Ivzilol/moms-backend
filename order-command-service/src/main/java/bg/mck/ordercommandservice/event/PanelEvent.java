@@ -5,7 +5,7 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 public class PanelEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
     private String type;
@@ -21,7 +21,7 @@ public class PanelEvent {
     public PanelEvent() {
     }
 
-    public PanelEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String color, String length, String width, String totalThickness, String frontSheetThickness, String backSheetThickness, String adminNote, MaterialStatus materialStatus) {
+    public PanelEvent(Long id, String quantity, String description, String specificationFileUrl, String type, String color, String length, String width, String totalThickness, String frontSheetThickness, String backSheetThickness, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -64,11 +64,11 @@ public class PanelEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public PanelEvent setQuantity(Double quantity) {
+    public PanelEvent setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }

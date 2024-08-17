@@ -17,14 +17,11 @@ public interface RebarMapper {
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(split(rebarEntity.getMaxLength())[0])"),
             @Mapping(target = "maxLengthUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.LengthUnits.valueOf(split(rebarEntity.getMaxLength())[1]))"),
-            @Mapping(target = "weight", expression = "java(split(rebarEntity.getWeight())[0])"),
-            @Mapping(target = "weightUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.WeightUnits.valueOf(split(rebarEntity.getWeight())[1]))")
     })
     RebarDTO toDTO(RebarEntity rebarEntity);
 
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(concatenateLength(rebarDTO.getMaxLength(), rebarDTO.getMaxLengthUnit()))"),
-            @Mapping(target = "weight", expression = "java(concatenateWeight(rebarDTO.getWeight(), rebarDTO.getWeightUnit()))")
     })
     RebarEntity toEntity(RebarDTO rebarDTO);
 

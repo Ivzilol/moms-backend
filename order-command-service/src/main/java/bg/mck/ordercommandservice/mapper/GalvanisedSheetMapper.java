@@ -17,14 +17,14 @@ public interface GalvanisedSheetMapper {
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(split(galvanisedSheetEntity.getMaxLength())[0])"),
             @Mapping(target = "maxLengthUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.LengthUnits.valueOf(split(galvanisedSheetEntity.getMaxLength())[1]))"),
-            @Mapping(target = "area", expression = "java(split(galvanisedSheetEntity.getArea())[0])"),
-            @Mapping(target = "areaUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.AreaUnits.valueOf(split(galvanisedSheetEntity.getArea())[1]))")
+            @Mapping(target = "quantity", expression = "java(split(galvanisedSheetEntity.getQuantity())[0])"),
+            @Mapping(target = "quantityUnit", expression = "java(bg.mck.ordercommandservice.entity.enums.AreaUnits.valueOf(split(galvanisedSheetEntity.getQuantity())[1]))")
     })
     GalvanisedSheetDTO toDTO(GalvanisedSheetEntity galvanisedSheetEntity);
 
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(concatenateLength(galvanisedSheetDTO.getMaxLength(), galvanisedSheetDTO.getMaxLengthUnit()))"),
-            @Mapping(target = "area", expression = "java(concatenateArea(galvanisedSheetDTO.getArea(), galvanisedSheetDTO.getAreaUnit()))")
+            @Mapping(target = "quantity", expression = "java(concatenateArea(galvanisedSheetDTO.getQuantity(), galvanisedSheetDTO.getQuantityUnit()))")
     })
     GalvanisedSheetEntity toEntity(GalvanisedSheetDTO galvanisedSheetDTO);
 
