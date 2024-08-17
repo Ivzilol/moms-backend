@@ -13,6 +13,7 @@ public class PanelEntity extends BaseMaterialEntity {
     private String totalThickness;
     private String frontSheetThickness;
     private String backSheetThickness;
+    private String quantity;
 
 
     public PanelEntity() {
@@ -23,14 +24,25 @@ public class PanelEntity extends BaseMaterialEntity {
         this.type = type;
     }
 
-    public PanelEntity(String id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public PanelEntity(String id, String quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
+        this.quantity = quantity;
     }
 
-    public PanelEntity(Double quantity, String note, String specificationFileUrl, String type) {
-        super(quantity, note, specificationFileUrl);
+    public PanelEntity(String quantity, String note, String specificationFileUrl, String type) {
+        super(note, specificationFileUrl);
         this.type = type;
+        this.quantity = quantity;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public PanelEntity setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
     }
 
     public String getType() {

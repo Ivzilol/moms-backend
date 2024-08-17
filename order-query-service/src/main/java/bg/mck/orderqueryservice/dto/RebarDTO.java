@@ -9,18 +9,25 @@ public class RebarDTO extends BaseDTO {
     private String maxLength;
     private LengthUnits maxLengthUnit;
 
-    private String weight;
-    private WeightUnits weightUnit;
+    private String quantity;
+    private WeightUnits quantityUnit;
 
     public RebarDTO() {
     }
 
-    public RebarDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public RebarDTO(String maxLength, LengthUnits maxLengthUnit, String quantity, WeightUnits quantityUnit) {
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
-        this.weight = weight;
-        this.weightUnit = weightUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
+    }
+
+    public RebarDTO(String id, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String quantity, WeightUnits quantityUnit) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
     }
 
     public String getMaxLength() {
@@ -41,21 +48,21 @@ public class RebarDTO extends BaseDTO {
         return this;
     }
 
-    public String getWeight() {
-        return weight;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public RebarDTO setWeight(String weight) {
-        this.weight = weight;
+    public RebarDTO setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 
-    public WeightUnits getWeightUnit() {
-        return weightUnit;
+    public WeightUnits getQuantityUnit() {
+        return quantityUnit;
     }
 
-    public RebarDTO setWeightUnit(WeightUnits weightUnit) {
-        this.weightUnit = weightUnit;
+    public RebarDTO setQuantityUnit(WeightUnits quantityUnit) {
+        this.quantityUnit = quantityUnit;
         return this;
     }
 }

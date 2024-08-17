@@ -6,26 +6,40 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("sets")
 public class SetEntity extends BaseMaterialEntity {
 
-    private String galvanisedSheetThickness;
+    private String quantity;
     private String color;
     private String maxLength;
 
     public SetEntity() {
     }
 
-    public SetEntity(String id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String galvanisedSheetThickness, String color, String maxLength) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
+    public SetEntity(String quantity, String color, String maxLength) {
+        this.quantity = quantity;
         this.color = color;
         this.maxLength = maxLength;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
+    public SetEntity(String id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String quantity, String color, String maxLength) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.quantity = quantity;
+        this.color = color;
+        this.maxLength = maxLength;
     }
 
-    public SetEntity setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
+    public SetEntity(String note, String specificationFileUrl, String quantity, String color, String maxLength) {
+        super(note, specificationFileUrl);
+        this.quantity = quantity;
+        this.color = color;
+        this.maxLength = maxLength;
+    }
+
+    public String getQuantity() {
+
+        return quantity;
+    }
+
+    public SetEntity setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 

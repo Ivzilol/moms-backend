@@ -7,26 +7,28 @@ public class FastenerEntity extends BaseMaterialEntity {
     private String type;
     private String diameter;
     private String length;
-    private String model;
+    private String standard;
     private String clazz;
+    private String quantity;
 
     public FastenerEntity() {
     }
 
-    public FastenerEntity(Double quantity, String note, String specificationFileUrl, String type, String diameter, String length, String model, String clazz) {
-        super(quantity, note, specificationFileUrl);
+    public FastenerEntity(String quantity, String note, String specificationFileUrl, String type, String diameter, String length, String standard, String clazz) {
+        super(note, specificationFileUrl);
+        this.quantity = quantity;
         this.type = type;
         this.diameter = diameter;
         this.length = length;
-        this.model = model;
+        this.standard = standard;
         this.clazz = clazz;
     }
 
-    public FastenerEntity(String type, String description, String diameter, String length, String model, String clazz) {
+    public FastenerEntity(String type, String description, String diameter, String length, String standard, String clazz) {
         this.type = type;
         this.diameter = diameter;
         this.length = length;
-        this.model = model;
+        this.standard = standard;
         this.clazz = clazz;
     }
 
@@ -57,12 +59,12 @@ public class FastenerEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public FastenerEntity setModel(String model) {
-        this.model = model;
+    public FastenerEntity setStandard(String standard) {
+        this.standard = standard;
         return this;
     }
 
@@ -75,4 +77,12 @@ public class FastenerEntity extends BaseMaterialEntity {
         return this;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public FastenerEntity setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
+    }
 }

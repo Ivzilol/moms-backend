@@ -1,5 +1,6 @@
 package bg.mck.orderqueryservice.entity;
 
+import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("insulation")
@@ -7,10 +8,30 @@ public class InsulationEntity extends BaseMaterialEntity {
 
     private String type;
     private String thickness;
+    private String quantity;
 
     public InsulationEntity() {
     }
 
+    public InsulationEntity(String type, String thickness, String quantity) {
+        this.type = type;
+        this.thickness = thickness;
+        this.quantity = quantity;
+    }
+
+    public InsulationEntity(String id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type, String thickness, String quantity) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
+        this.thickness = thickness;
+        this.quantity = quantity;
+    }
+
+    public InsulationEntity(String note, String specificationFileUrl, String type, String thickness, String quantity) {
+        super(note, specificationFileUrl);
+        this.type = type;
+        this.thickness = thickness;
+        this.quantity = quantity;
+    }
 
     public String getType() {
         return type;
@@ -27,6 +48,15 @@ public class InsulationEntity extends BaseMaterialEntity {
 
     public InsulationEntity setThickness(String thickness) {
         this.thickness = thickness;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public InsulationEntity setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 }

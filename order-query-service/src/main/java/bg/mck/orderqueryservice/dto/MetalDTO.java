@@ -6,14 +6,22 @@ public class MetalDTO extends BaseDTO {
 
     private String totalWeight;
     private WeightUnits totalWeightUnit;
+    private String kind;
 
     public MetalDTO() {
     }
 
-    public MetalDTO(String id, WeightUnits totalWeightUnit, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String totalWeight) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public MetalDTO(String totalWeight, WeightUnits totalWeightUnit, String kind) {
         this.totalWeight = totalWeight;
         this.totalWeightUnit = totalWeightUnit;
+        this.kind = kind;
+    }
+
+    public MetalDTO(String id, String description, String specificationFileUrl, String adminNote, String materialStatus, String totalWeight, WeightUnits totalWeightUnit, String kind) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.totalWeight = totalWeight;
+        this.totalWeightUnit = totalWeightUnit;
+        this.kind = kind;
     }
 
     public String getTotalWeight() {
@@ -31,6 +39,15 @@ public class MetalDTO extends BaseDTO {
 
     public MetalDTO setTotalWeightUnit(WeightUnits totalWeightUnit) {
         this.totalWeightUnit = totalWeightUnit;
+        return this;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public MetalDTO setKind(String kind) {
+        this.kind = kind;
         return this;
     }
 }
