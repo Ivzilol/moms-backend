@@ -5,7 +5,7 @@ import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 public class ServiceEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
     private String adminNote;
@@ -14,7 +14,7 @@ public class ServiceEvent {
     public ServiceEvent() {
     }
 
-    public ServiceEvent(Long id, Double quantity, String description, String specificationFileUrl) {
+    public ServiceEvent(Long id, String quantity, String description, String specificationFileUrl) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -30,11 +30,11 @@ public class ServiceEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public ServiceEvent setQuantity(Double quantity) {
+    public ServiceEvent setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }

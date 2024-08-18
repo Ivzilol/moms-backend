@@ -5,7 +5,7 @@ import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 public class RebarEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
     private String maxLength;
@@ -16,13 +16,15 @@ public class RebarEvent {
     public RebarEvent() {
     }
 
-    public RebarEvent(Long id, Double quantity, String description, String specificationFileUrl, String maxLength, String weight) {
+    public RebarEvent(Long id, String quantity, String description, String specificationFileUrl, String maxLength, String weight, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.maxLength = maxLength;
         this.weight = weight;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {
@@ -34,30 +36,12 @@ public class RebarEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public RebarEvent setQuantity(Double quantity) {
+    public RebarEvent setQuantity(String quantity) {
         this.quantity = quantity;
-        return this;
-    }
-
-    public String getAdminNote() {
-        return adminNote;
-    }
-
-    public RebarEvent setAdminNote(String adminNote) {
-        this.adminNote = adminNote;
-        return this;
-    }
-
-    public MaterialStatus getMaterialStatus() {
-        return materialStatus;
-    }
-
-    public RebarEvent setMaterialStatus(MaterialStatus materialStatus) {
-        this.materialStatus = materialStatus;
         return this;
     }
 
@@ -94,6 +78,24 @@ public class RebarEvent {
 
     public RebarEvent setWeight(String weight) {
         this.weight = weight;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public RebarEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public RebarEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 }

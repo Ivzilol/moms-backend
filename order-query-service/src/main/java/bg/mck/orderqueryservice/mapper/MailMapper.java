@@ -18,6 +18,7 @@ public class MailMapper {
         emailDTO.setMaterialType(orderEvent.getMaterialType().name());
         emailDTO.setOrderStatus(orderEvent.getOrderStatus().name());
         emailDTO.setConstructionSiteName(orderEvent.getConstructionSite().getName());
+        emailDTO.setSpecificationFileUrl(orderEvent.getSpecificationFileUrl());
         emailDTO.setConstructionSiteNumber(orderEvent.getConstructionSite().getConstructionNumber());
         emailDTO.setMaterials(orderEvent.getMaterials());
         return emailDTO;

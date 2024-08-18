@@ -1,45 +1,35 @@
 package bg.mck.orderqueryservice.dto;
 
 import bg.mck.orderqueryservice.entity.enums.LengthUnits;
+import bg.mck.orderqueryservice.entity.enums.WeightUnits;
 
 public class SetDTO extends BaseDTO {
-
-    private String galvanisedSheetThickness;
-    private LengthUnits galvanisedSheetThicknessUnit;
 
     private String color;
 
     private String maxLength;
     private LengthUnits maxLengthUnit;
+    private String quantity;
+    private WeightUnits quantityUnit;
 
     public SetDTO() {
     }
 
-    public SetDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String galvanisedSheetThickness, LengthUnits galvanisedSheetThicknessUnit, String color, String maxLength, LengthUnits maxLengthUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
+    public SetDTO(String color, String maxLength, LengthUnits maxLengthUnit, String quantity, WeightUnits quantityUnit) {
         this.color = color;
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public SetDTO setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
-
-    public LengthUnits getGalvanisedSheetThicknessUnit() {
-        return galvanisedSheetThicknessUnit;
-    }
-
-    public SetDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-        return this;
+    public SetDTO(String id, String description, String specificationFileUrl, String adminNote, String materialStatus, String color, String maxLength, LengthUnits maxLengthUnit, String quantity, WeightUnits quantityUnit) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.color = color;
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
     }
 
     public String getColor() {
@@ -66,6 +56,24 @@ public class SetDTO extends BaseDTO {
 
     public SetDTO setMaxLengthUnit(LengthUnits maxLengthUnit) {
         this.maxLengthUnit = maxLengthUnit;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public SetDTO setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public WeightUnits getQuantityUnit() {
+        return quantityUnit;
+    }
+
+    public SetDTO setQuantityUnit(WeightUnits quantityUnit) {
+        this.quantityUnit = quantityUnit;
         return this;
     }
 }

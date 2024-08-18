@@ -1,5 +1,6 @@
 package bg.mck.orderqueryservice.entity;
 
+import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -15,18 +16,35 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
     @Field(name = "max_length")
     private String maxLength;
 
-    @Field(name = "area")
-    private String area;
+    @Field(name = "number_of_sheets")
+    private String numberOfSheets;
+    private String quantity;
 
 
     public GalvanisedSheetEntity() {
     }
 
-    public GalvanisedSheetEntity(Double quantity, String note, String specificationFileUrl, String type, String maxLength, String area) {
-        super(quantity, note, specificationFileUrl);
+    public GalvanisedSheetEntity(String type, String maxLength, String numberOfSheets, String quantity) {
         this.type = type;
         this.maxLength = maxLength;
-        this.area = area;
+        this.numberOfSheets = numberOfSheets;
+        this.quantity = quantity;
+    }
+
+    public GalvanisedSheetEntity(String id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus, String type, String maxLength, String numberOfSheets, String quantity) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
+        this.maxLength = maxLength;
+        this.numberOfSheets = numberOfSheets;
+        this.quantity = quantity;
+    }
+
+    public GalvanisedSheetEntity(String note, String specificationFileUrl, String type, String maxLength, String numberOfSheets, String quantity) {
+        super(note, specificationFileUrl);
+        this.type = type;
+        this.maxLength = maxLength;
+        this.numberOfSheets = numberOfSheets;
+        this.quantity = quantity;
     }
 
     public String getType() {
@@ -47,12 +65,21 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public GalvanisedSheetEntity setArea(String area) {
-        this.area = area;
+    public GalvanisedSheetEntity setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public GalvanisedSheetEntity setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 }

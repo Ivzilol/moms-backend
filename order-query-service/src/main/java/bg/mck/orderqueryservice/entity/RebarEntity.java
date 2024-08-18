@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class RebarEntity extends BaseMaterialEntity {
 
     private String maxLength;
-    private String weight;
+    private String quantity;
 
     public RebarEntity() {
 
@@ -21,12 +21,12 @@ public class RebarEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getWeight() {
-        return weight;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public RebarEntity setWeight(String weight) {
-        this.weight = weight;
+    public RebarEntity setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 }

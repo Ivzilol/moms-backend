@@ -12,6 +12,7 @@ public class ConstructionSiteDTO {
     }
 
     public ConstructionSiteDTO(String id, String name, String constructionNumber) {
+        this.id = id;
         this.name = name;
         this.constructionNumber = constructionNumber;
     }

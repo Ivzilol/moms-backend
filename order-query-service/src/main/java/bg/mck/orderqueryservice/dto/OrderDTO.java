@@ -26,8 +26,8 @@ public class OrderDTO {
     private MaterialType materialType;
 
     private String specificationFileUrl;
-    private Set<FastenerDTO> fasteners;
 
+    private Set<FastenerDTO> fasteners;
     private Set<GalvanisedSheetDTO> galvanisedSheets;
     private Set<InsulationDTO> insulation;
     private Set<MetalDTO> metals;
@@ -37,6 +37,7 @@ public class OrderDTO {
     private Set<UnspecifiedDTO> unspecified;
     private Set<ServiceDTO> services;
     private Set<TransportDTO> transports;
+
     public OrderDTO() {
     }
 

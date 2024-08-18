@@ -5,10 +5,9 @@ import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 public class SetEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
-    private String galvanisedSheetThickness;
     private String color;
     private String maxLength;
     private String adminNote;
@@ -17,14 +16,15 @@ public class SetEvent {
     public SetEvent() {
     }
 
-    public SetEvent(Long id, Double quantity, String description, String specificationFileUrl, String galvanisedSheetThickness, String color, String maxLength) {
+    public SetEvent(Long id, String quantity, String description, String specificationFileUrl, String color, String maxLength, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
         this.color = color;
         this.maxLength = maxLength;
+        this.adminNote = adminNote;
+        this.materialStatus = materialStatus;
     }
 
     public Long getId() {
@@ -54,11 +54,11 @@ public class SetEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public SetEvent setQuantity(Double quantity) {
+    public SetEvent setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -81,14 +81,6 @@ public class SetEvent {
         return this;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public SetEvent setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
 
     public String getColor() {
         return color;

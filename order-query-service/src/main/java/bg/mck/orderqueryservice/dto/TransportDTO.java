@@ -12,17 +12,28 @@ public class TransportDTO extends BaseDTO {
     private WeightUnits weightUnit;
 
     private String truck;
+    private String quantity;
 
     public TransportDTO() {
     }
 
-    public TransportDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public TransportDTO(String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck, String quantity) {
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
         this.weight = weight;
         this.weightUnit = weightUnit;
         this.truck = truck;
+        this.quantity = quantity;
+    }
+
+    public TransportDTO(String id, String description, String specificationFileUrl, String adminNote, String materialStatus, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, String truck, String quantity) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.weight = weight;
+        this.weightUnit = weightUnit;
+        this.truck = truck;
+        this.quantity = quantity;
     }
 
     public String getMaxLength() {
@@ -67,6 +78,15 @@ public class TransportDTO extends BaseDTO {
 
     public TransportDTO setTruck(String truck) {
         this.truck = truck;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public TransportDTO setQuantity(String quantity) {
+        this.quantity = quantity;
         return this;
     }
 }

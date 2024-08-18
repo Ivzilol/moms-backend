@@ -1,5 +1,6 @@
 package bg.mck.orderqueryservice.dto;
 
+import bg.mck.orderqueryservice.entity.enums.AreaUnits;
 import bg.mck.orderqueryservice.entity.enums.LengthUnits;
 
 public class PanelDTO extends BaseDTO {
@@ -22,11 +23,13 @@ public class PanelDTO extends BaseDTO {
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
 
+    private String quantity;
+    private AreaUnits quantityUnit;
+
     public PanelDTO() {
     }
 
-    public PanelDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public PanelDTO(String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit, String quantity, AreaUnits quantityUnit) {
         this.type = type;
         this.color = color;
         this.length = length;
@@ -39,6 +42,26 @@ public class PanelDTO extends BaseDTO {
         this.frontSheetThicknessUnit = frontSheetThicknessUnit;
         this.backSheetThickness = backSheetThickness;
         this.backSheetThicknessUnit = backSheetThicknessUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
+    }
+
+    public PanelDTO(String id, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit, String quantity, AreaUnits quantityUnit) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
+        this.type = type;
+        this.color = color;
+        this.length = length;
+        this.lengthUnit = lengthUnit;
+        this.width = width;
+        this.widthUnit = widthUnit;
+        this.totalThickness = totalThickness;
+        this.totalThicknessUnit = totalThicknessUnit;
+        this.frontSheetThickness = frontSheetThickness;
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        this.backSheetThickness = backSheetThickness;
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
+        this.quantity = quantity;
+        this.quantityUnit = quantityUnit;
     }
 
     public String getType() {
@@ -146,6 +169,24 @@ public class PanelDTO extends BaseDTO {
 
     public PanelDTO setBackSheetThicknessUnit(LengthUnits backSheetThicknessUnit) {
         this.backSheetThicknessUnit = backSheetThicknessUnit;
+        return this;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public PanelDTO setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public AreaUnits getQuantityUnit() {
+        return quantityUnit;
+    }
+
+    public PanelDTO setQuantityUnit(AreaUnits quantityUnit) {
+        this.quantityUnit = quantityUnit;
         return this;
     }
 }

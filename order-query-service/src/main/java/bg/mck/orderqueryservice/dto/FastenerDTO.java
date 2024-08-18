@@ -10,31 +10,39 @@ public class FastenerDTO extends BaseDTO {
 
     private String length;
     private LengthUnits lengthUnit;
-
-    private String model;
+    private String standard;
     private String clazz;
 
 
     public FastenerDTO() {
     }
 
-    public FastenerDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String diameter, String length, LengthUnits lengthUnit, String model, String clazz) {
-        super(id, quantity, description, specificationFileUrl, adminNote, materialStatus);
+    public FastenerDTO(String id, String standard, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String diameter, String length, LengthUnits lengthUnit, String clazz) {
+        super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.diameter = diameter;
+        this.standard = standard;
         this.length = length;
         this.lengthUnit = lengthUnit;
-        this.model = model;
         this.clazz = clazz;
     }
 
-    public FastenerDTO(String type, String diameter, String length, LengthUnits lengthUnit, String model, String clazz) {
+    public FastenerDTO(String type, String diameter, String length, LengthUnits lengthUnit, String standard, String clazz) {
         this.type = type;
         this.diameter = diameter;
+        this.standard = standard;
         this.length = length;
         this.lengthUnit = lengthUnit;
-        this.model = model;
         this.clazz = clazz;
+    }
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public FastenerDTO setStandard(String standard) {
+        this.standard = standard;
+        return this;
     }
 
     public String getType() {
@@ -70,15 +78,6 @@ public class FastenerDTO extends BaseDTO {
 
     public FastenerDTO setLength(String length) {
         this.length = length;
-        return this;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public FastenerDTO setModel(String model) {
-        this.model = model;
         return this;
     }
 
