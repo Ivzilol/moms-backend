@@ -4,6 +4,7 @@ import bg.mck.userqueryservice.application.dto.UserLoginDTO;
 import bg.mck.userqueryservice.application.dto.UserLoginResponseDTO;
 import bg.mck.userqueryservice.application.entity.UserEntity;
 import bg.mck.userqueryservice.application.exceptions.InvalidEmailOrPasswordException;
+import bg.mck.userqueryservice.application.exceptions.UserIsInActiveException;
 import bg.mck.userqueryservice.application.mapper.UserMapper;
 import bg.mck.userqueryservice.application.repository.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
@@ -37,6 +38,9 @@ public class UserLoginService {
 
         UserEntity user = userRepository.findByEmail(userDto.getEmail());
         if (isPasswordCorrect(user, userDto.getPassword())) {
+            if (!user.isActive()) {
+                throw new UserIsInActiveException();
+            }
             return userMapper.toUserResponseDTO(user);
         } else {
             throw new InvalidEmailOrPasswordException("Invalid email or password");

@@ -5,7 +5,7 @@ import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 public class PanelEvent {
 
     private Long id;
-    private Double quantity;
+    private String quantity;
     private String description;
     private String specificationFileUrl;
     private String type;
@@ -21,7 +21,7 @@ public class PanelEvent {
     public PanelEvent() {
     }
 
-    public PanelEvent(Long id, Double quantity, String description, String specificationFileUrl, String type, String color, String length, String width, String totalThickness, String frontSheetThickness, String backSheetThickness) {
+    public PanelEvent(Long id, String quantity, String description, String specificationFileUrl, String type, String color, String length, String width, String totalThickness, String frontSheetThickness, String backSheetThickness, String adminNote, MaterialStatus materialStatus) {
         this.id = id;
         this.quantity = quantity;
         this.description = description;
@@ -33,25 +33,10 @@ public class PanelEvent {
         this.totalThickness = totalThickness;
         this.frontSheetThickness = frontSheetThickness;
         this.backSheetThickness = backSheetThickness;
-    }
-
-    public String getAdminNote() {
-        return adminNote;
-    }
-
-    public PanelEvent setAdminNote(String adminNote) {
         this.adminNote = adminNote;
-        return this;
-    }
-
-    public MaterialStatus getMaterialStatus() {
-        return materialStatus;
-    }
-
-    public PanelEvent setMaterialStatus(MaterialStatus materialStatus) {
         this.materialStatus = materialStatus;
-        return this;
     }
+
 
     public Long getId() {
         return id;
@@ -62,11 +47,11 @@ public class PanelEvent {
         return this;
     }
 
-    public Double getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public PanelEvent setQuantity(Double quantity) {
+    public PanelEvent setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -149,6 +134,24 @@ public class PanelEvent {
 
     public PanelEvent setBackSheetThickness(String backSheetThickness) {
         this.backSheetThickness = backSheetThickness;
+        return this;
+    }
+
+    public String getAdminNote() {
+        return adminNote;
+    }
+
+    public PanelEvent setAdminNote(String adminNote) {
+        this.adminNote = adminNote;
+        return this;
+    }
+
+    public MaterialStatus getMaterialStatus() {
+        return materialStatus;
+    }
+
+    public PanelEvent setMaterialStatus(MaterialStatus materialStatus) {
+        this.materialStatus = materialStatus;
         return this;
     }
 }

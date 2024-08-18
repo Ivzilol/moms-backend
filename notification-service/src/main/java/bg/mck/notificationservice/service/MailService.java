@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -56,10 +57,13 @@ public class MailService {
         }
 
         StringBuilder materialsHtml = new StringBuilder();
+
         materialsHtml.append("<tr>");
         for (String columnName : columnNames) {
             if (!"_id".equals(columnName)) {
-                materialsHtml.append("<th>").append(columnName).append("</th>");
+                materialsHtml.append("<th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">")
+                        .append(columnName)
+                        .append("</th>");
             }
         }
         materialsHtml.append("</tr>");
@@ -68,9 +72,14 @@ public class MailService {
             materialsHtml.append("<tr>");
             for (String columnName : columnNames) {
                 if (!"_id".equals(columnName)) {
-                    materialsHtml.append("<td>")
-                            .append(materialNode.path(columnName).asText())
-                            .append("</td>");
+                    String value = materialNode.path(columnName).asText(null);
+                    materialsHtml.append("<td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">");
+                    if ("specificationFileUrl".equals(columnName)) {
+                        materialsHtml.append("<a href=\"").append(value).append("\">Изтегли</a>");
+                    } else {
+                        materialsHtml.append(value != null ? value : "Няма");
+                    }
+                    materialsHtml.append("</td>");
                 }
             }
             materialsHtml.append("</tr>");
@@ -83,7 +92,7 @@ public class MailService {
 
     }
 
-    private void sendMail(String email,String subject, String message) throws MessagingException {
+    private void sendMail(String email, String subject, String message) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
 
@@ -96,47 +105,66 @@ public class MailService {
     }
 
     private static String getMessage(String orderStatusText, String orderNumber, String orderDate, String deliveryDate, String constructionSiteName, String constructionSiteNumber, String orderStatus, String specificationFileUrl, StringBuilder materialsHtml) {
-        return "<!DOCTYPE html>" +
-                "<html>" +
-                "<head>" +
-                "    <style>" +
-                "        .email-content { font-family: Arial, sans-serif; }" +
-                "        .email-header { background-color: #f8f9fa; padding: 20px; text-align: center; }" +
-                "        .email-body { padding: 20px; }" +
-                "        .email-footer { background-color: #f8f9fa; padding: 10px; text-align: center; font-size: 12px; }" +
-                "        .order-details { margin: 20px 0; width: 100%; border-collapse: collapse; }" +
-                "        .order-details th, .order-details td { padding: 10px; text-align: left; border: 1px solid #ddd; }" +
-                "        .order-details th { background-color: #007bff; color: white; }" +
-                "        .order-details td { background-color: #f2f2f2; }" +
-                "    </style>" +
-                "</head>" +
-                "<body>" +
-                "    <div class=\"email-content\">" +
-                "        <div class=\"email-header\">" +
-                "            <h1>Вашата поръчка е " + orderStatusText + "</h1>" +
-                "        </div>" +
-                "        <div class=\"email-body\">" +
-                "            <p>С удоволствие ви информираме, че вашата поръчка е " + orderStatusText + ". По-долу са подробностите за вашата поръчка:</p>" +
-                "            <table class=\"order-details\">" +
-                "                <tr><th>Номер на поръчката:</th><td>" + orderNumber + "</td></tr>" +
-                "                <tr><th>Дата на поръчката:</th><td>" + orderDate + "</td></tr>" +
-                "                <tr><th>Дата на доставка:</th><td>" + deliveryDate + "</td></tr>" +
-                "                <tr><th>Име на строителния обект:</th><td>" + constructionSiteName + "</td></tr>" +
-                "                <tr><th>Номер на строителния обект:</th><td>" + constructionSiteNumber + "</td></tr>" +
-                "                <tr><th>Статус на поръчката:</th><td>" + orderStatus + "</td></tr>" +
-                "                <tr><th>Файл със спецификации:</th><td><a href=\"" + specificationFileUrl + "\">Изтегли</a></td></tr>" +
-                "                <tr><th colspan=\"2\">Материали</th></tr>" +
-                materialsHtml +
-                "            </table>" +
-                "            <p>Ако имате въпроси или се нуждаете от допълнителна помощ, не се колебайте да се свържете с нас.</p>" +
-                "            <p>Благодарим ви!</p>" +
-                "        </div>" +
-                "        <div class=\"email-footer\">" +
-                "            <p>&copy; 2024 MCK</p>" +
-                "        </div>" +
-                "    </div>" +
-                "</body>" +
-                "</html>";
+        StringBuilder messageBuilder = new StringBuilder();
+
+        messageBuilder.append("<!DOCTYPE html>")
+                .append("<html>")
+                .append("<body style=\"font-family: Arial, sans-serif; margin: 0; padding: 0;\">")
+                .append("    <div style=\"background-color: #f8f9fa; padding: 20px; text-align: center;\">")
+                .append("        <h1>Вашата поръчка е ").append(orderStatusText).append("</h1>")
+                .append("    </div>")
+                .append("    <div style=\"padding: 20px;\">")
+                .append("        <p>С удоволствие ви информираме, че вашата поръчка е ").append(orderStatusText).append(". По-долу са подробностите за вашата поръчка:</p>")
+                .append("        <table style=\"margin: 20px 0; width: 100%; border-collapse: collapse;\">")
+                .append("            <tr>")
+                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Номер на поръчката:</th>")
+                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(orderNumber).append("</td>")
+                .append("            </tr>")
+                .append("            <tr>")
+                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Дата на поръчката:</th>")
+                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(orderDate).append("</td>")
+                .append("            </tr>")
+                .append("            <tr>")
+                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Дата на доставка:</th>")
+                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(deliveryDate).append("</td>")
+                .append("            </tr>")
+                .append("            <tr>")
+                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Име на строителния обект:</th>")
+                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(constructionSiteName).append("</td>")
+                .append("            </tr>")
+                .append("            <tr>")
+                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Номер на строителния обект:</th>")
+                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(constructionSiteNumber).append("</td>")
+                .append("            </tr>")
+                .append("            <tr>")
+                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Статус на поръчката:</th>")
+                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(orderStatus).append("</td>")
+                .append("            </tr>");
+
+        if (specificationFileUrl != null && !specificationFileUrl.equals("null") && !specificationFileUrl.isEmpty()) {
+            messageBuilder.append("            <tr>")
+                    .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Файл със спецификации:</th>")
+                    .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\"><a href=\"")
+                    .append(specificationFileUrl)
+                    .append("\">Изтегли</a></td>")
+                    .append("            </tr>");
+        }
+
+        messageBuilder.append("            <tr>")
+                .append("                <th colspan=\"2\" style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Материали</th>")
+                .append("            </tr>")
+                .append(materialsHtml)
+                .append("        </table>")
+                .append("        <p>Ако имате въпроси или се нуждаете от допълнителна помощ, не се колебайте да се свържете с нас.</p>")
+                .append("        <p>Благодарим ви!</p>")
+                .append("    </div>")
+                .append("    <div style=\"background-color: #f8f9fa; padding: 10px; text-align: center; font-size: 12px;\">")
+                .append("        <p>&copy; ").append(LocalDateTime.now().getYear()).append(" MCK</p>")
+                .append("    </div>")
+                .append("</body>")
+                .append("</html>");
+
+        return messageBuilder.toString();
     }
 
     public void sendResetPasswordMessage(ForgotPasswordEmailDTO dto) throws MessagingException {

@@ -4,8 +4,6 @@ public class BaseDTO {
 
     private String id;
 
-    private Double quantity;
-
     private String description;
 
     private String specificationFileUrl;
@@ -16,9 +14,8 @@ public class BaseDTO {
     public BaseDTO() {
     }
 
-    public BaseDTO(String id, Double quantity, String description, String specificationFileUrl, String adminNote, String materialStatus) {
+    public BaseDTO(String id, String description, String specificationFileUrl, String adminNote, String materialStatus) {
         this.id = id;
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.adminNote = adminNote;
@@ -52,14 +49,6 @@ public class BaseDTO {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public BaseDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

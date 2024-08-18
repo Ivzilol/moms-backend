@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class BaseMaterialEntity extends BaseEntity {
 
-    private Double quantity;
 
     private String description;
 
@@ -19,28 +18,17 @@ public class BaseMaterialEntity extends BaseEntity {
     public BaseMaterialEntity() {
     }
 
-    public BaseMaterialEntity(String id, Double quantity, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus) {
+    public BaseMaterialEntity(String id, String description, String specificationFileUrl, String adminNote, MaterialStatus materialStatus) {
         super(id);
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
         this.adminNote = adminNote;
         this.materialStatus = materialStatus;
     }
 
-    public BaseMaterialEntity(Double quantity, String note, String specificationFileUrl) {
-        this.quantity = quantity;
+    public BaseMaterialEntity(String note, String specificationFileUrl) {
         this.description = note;
         this.specificationFileUrl = specificationFileUrl;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public BaseMaterialEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
     }
 
     public String getDescription() {

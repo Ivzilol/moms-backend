@@ -31,7 +31,8 @@ public class UserLoginController {
     @Operation(summary = "User login")
     @ApiResponses(
             value = {@ApiResponse(responseCode = "200", description = "Successfully log in."),
-                    @ApiResponse(responseCode = "400", description = "Incorrect credentials.",
+                    @ApiResponse(responseCode = "400", description = "Incorrect credentials."),
+                     @ApiResponse(responseCode = "409", description = "User is inactive.",
                             content = {@Content(mediaType = "application/json")})
             }
     )
