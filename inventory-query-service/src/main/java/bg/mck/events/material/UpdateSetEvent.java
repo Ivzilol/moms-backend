@@ -14,13 +14,10 @@ public class UpdateSetEvent extends BaseMaterialEvent {
     private String category;
     private String name;
     private String materialType;
-    private String galvanisedSheetThickness;
-    private LengthUnits galvanisedSheetThicknessUnit;
     private String color;
     private String maxLength;
     private LengthUnits maxLengthUnit;
     private String description;
-    private Double quantity;
     private String specificationFileUrl;
 
     public String getCategory() {
@@ -50,23 +47,6 @@ public class UpdateSetEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public UpdateSetEvent setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
-
-    public LengthUnits getGalvanisedSheetThicknessUnit() {
-        return galvanisedSheetThicknessUnit;
-    }
-
-    public UpdateSetEvent setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-        return this;
-    }
 
     public String getColor() {
         return color;
@@ -104,14 +84,6 @@ public class UpdateSetEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UpdateSetEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getSpecificationFileUrl() {
         return specificationFileUrl;

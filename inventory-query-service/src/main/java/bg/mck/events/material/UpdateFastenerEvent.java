@@ -10,9 +10,8 @@ public class UpdateFastenerEvent extends BaseMaterialEvent {
     private String diameter;
     private String length;
     private LengthUnits lengthUnit;
-    private String model;
+    private String standard;
     private String clazz;
-    private Double quantity;
     private String type;
     private String specificationFileUrl;
     private String category;
@@ -20,16 +19,15 @@ public class UpdateFastenerEvent extends BaseMaterialEvent {
     public UpdateFastenerEvent() {
     }
 
-    public UpdateFastenerEvent(Long materialId, EventType eventType, String name, String description, String diameter, String length, LengthUnits lengthUnit, String model, String clazz, Double quantity, String type, String specificationFileUrl, String category) {
+    public UpdateFastenerEvent(Long materialId, EventType eventType, String name, String description, String diameter, String length, LengthUnits lengthUnit, String standard, String clazz, String type, String specificationFileUrl, String category) {
         super(materialId, eventType);
         this.name = name;
         this.description = description;
         this.diameter = diameter;
         this.length = length;
         this.lengthUnit = lengthUnit;
-        this.model = model;
+        this.standard = standard;
         this.clazz = clazz;
-        this.quantity = quantity;
         this.type = type;
         this.specificationFileUrl = specificationFileUrl;
         this.category = category;
@@ -80,12 +78,12 @@ public class UpdateFastenerEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public UpdateFastenerEvent setModel(String model) {
-        this.model = model;
+    public UpdateFastenerEvent setStandard(String standard) {
+        this.standard = standard;
         return this;
     }
 
@@ -98,14 +96,6 @@ public class UpdateFastenerEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UpdateFastenerEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getType() {
         return type;

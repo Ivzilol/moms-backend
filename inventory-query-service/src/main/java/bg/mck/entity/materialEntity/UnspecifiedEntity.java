@@ -10,7 +10,6 @@ public class UnspecifiedEntity extends BaseMaterialEntity {
 
     @Indexed
     private String name;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
 
@@ -22,7 +21,6 @@ public class UnspecifiedEntity extends BaseMaterialEntity {
     private UnspecifiedEntity(Builder builder) {
         super(builder.id);
         this.name = builder.name;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
     }
@@ -31,7 +29,6 @@ public class UnspecifiedEntity extends BaseMaterialEntity {
     public UnspecifiedEntity(UnspecifiedEntity other) {
         super(other.getId());
         this.name = other.name;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
     }
@@ -46,14 +43,6 @@ public class UnspecifiedEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UnspecifiedEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -78,22 +67,18 @@ public class UnspecifiedEntity extends BaseMaterialEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UnspecifiedEntity that = (UnspecifiedEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(specificationFileUrl, that.specificationFileUrl);
+        return Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, quantity, description, specificationFileUrl);
+        return Objects.hash(name, description, specificationFileUrl);
     }
 
     @Override
     public String toString() {
         return "UnspecifiedEntity{" +
                 "name='" + name + '\'' +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 '}';
@@ -103,7 +88,6 @@ public class UnspecifiedEntity extends BaseMaterialEntity {
     public static class Builder {
         private String id;
         private String name;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
 
@@ -117,10 +101,6 @@ public class UnspecifiedEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

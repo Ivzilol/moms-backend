@@ -12,11 +12,6 @@ public class RebarDTO implements MaterialDTO{
     private String maxLength;
     private LengthUnits maxLengthUnit;
 
-    private String weight;
-    private WeightUnits weightUnit;
-
-    private Double quantity;
-
     private String description;
 
     private String specificationFileUrl;
@@ -47,21 +42,6 @@ public class RebarDTO implements MaterialDTO{
         this.maxLength = maxLength;
     }
 
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;
@@ -79,14 +59,6 @@ public class RebarDTO implements MaterialDTO{
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public WeightUnits getWeightUnit() {
-        return weightUnit;
-    }
-
-    public RebarDTO setWeightUnit(WeightUnits weightUnit) {
-        this.weightUnit = weightUnit;
-        return this;
-    }
 
     public LengthUnits getMaxLengthUnit() {
         return maxLengthUnit;

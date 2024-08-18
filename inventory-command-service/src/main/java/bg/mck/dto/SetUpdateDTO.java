@@ -5,23 +5,21 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class SetUpdateDTO {
 
 
     private String name;
-    private String galvanisedSheetThickness;
 
-    private LengthUnits galvanisedSheetThicknessUnit;
-
+    @NotNull(message = "Color is required")
     private String color;
-
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    @NotNull(message = "Length is required")
     private String maxLength;
-
+    @NotNull(message = "Length unit is required")
     private LengthUnits maxLengthUnit;
-
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
 
     private String description;
 
@@ -30,23 +28,6 @@ public class SetUpdateDTO {
     public SetUpdateDTO() {
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public SetUpdateDTO setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
-
-    public LengthUnits getGalvanisedSheetThicknessUnit() {
-        return galvanisedSheetThicknessUnit;
-    }
-
-    public SetUpdateDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-        return this;
-    }
 
     public String getColor() {
         return color;
@@ -75,14 +56,6 @@ public class SetUpdateDTO {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public SetUpdateDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

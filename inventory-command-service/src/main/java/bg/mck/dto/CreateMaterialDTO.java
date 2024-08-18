@@ -6,7 +6,6 @@ import bg.mck.enums.LengthUnits;
 import bg.mck.enums.MaterialType;
 import bg.mck.enums.WeightUnits;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
@@ -15,61 +14,43 @@ import static bg.mck.errors.ErrorsCreateMaterial.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateMaterialDTO {
 
-    @NotNull(message = INVALID_MATERIAL_TYPE)
     private MaterialType materialType;
     private String name;
     private String description;
     private String diameter;
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
     private String length;
     private LengthUnits lengthUnit;
-    private String model;
+    private String standard;
     private String clazz;
-    @DecimalMin(value = "0.0", message = INVALID_QUANTITY)
-    private Double quantity;
     private String note;
     private String specificationFileUrl;
     private String marking;
     private String number;
     private String type;
-    @Pattern(regexp = "^[^-].*", message = "Width must be positive")
+    private String kind;
     private String width;
     private LengthUnits widthUnit;
-    @Pattern(regexp = "^[^-].*", message = "Area must be positive")
-    private String area;
-    private AreaUnits areaUnit;
+    private String numberOfSheets;
     private String color;
-    @Pattern(regexp = "^[^-].*", message = "Thickness must be positive")
     private String thickness;
     private LengthUnits thicknessUnit;
-
-    @Pattern(regexp = "^[^-].*", message = "FrontSheetThickness must be positive")
     private String frontSheetThickness;
     private LengthUnits frontSheetThicknessUnit;
-
-    @Pattern(regexp = "^[^-].*", message = "BackSheetThickness must be positive")
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
     private Double thermalPerformance;
     private Double density;
-    @Pattern(regexp = "^[^-].*", message = "TotalThickness must be positive")
     private String totalThickness;
     private LengthUnits totalThicknessUnit;
     private Double sheetThickness;
     private Integer positionNumber;
     private String steel;
-    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
     private String weight;
     private WeightUnits weightUnit;
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
     private String maxLength;
     private LengthUnits maxLengthUnit;
-
-    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
     private String totalWeight;
     private WeightUnits totalWeightUnit;
-
-    @Pattern(regexp = "^[^-].*", message = "GalvanisedSheetThickness must be positive")
     private String galvanisedSheetThickness;
     private LengthUnits galvanisedSheetThicknessUnit;
 
@@ -122,12 +103,12 @@ public class CreateMaterialDTO {
         this.length = length;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setStandard(String standard) {
+        this.standard = standard;
     }
 
     public String getClazz() {
@@ -136,14 +117,6 @@ public class CreateMaterialDTO {
 
     public void setClazz(String clazz) {
         this.clazz = clazz;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
     }
 
     public String getNote() {
@@ -194,12 +167,12 @@ public class CreateMaterialDTO {
         this.width = width;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
     }
 
     public String getColor() {
@@ -325,14 +298,6 @@ public class CreateMaterialDTO {
         return this;
     }
 
-    public AreaUnits getAreaUnit() {
-        return areaUnit;
-    }
-
-    public CreateMaterialDTO setAreaUnit(AreaUnits areaUnit) {
-        this.areaUnit = areaUnit;
-        return this;
-    }
 
     public LengthUnits getThicknessUnit() {
         return thicknessUnit;
@@ -403,6 +368,15 @@ public class CreateMaterialDTO {
 
     public CreateMaterialDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
         this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
+        return this;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public CreateMaterialDTO setKind(String kind) {
+        this.kind = kind;
         return this;
     }
 }

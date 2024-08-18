@@ -11,12 +11,9 @@ public class SetEntity extends BaseMaterialEntity {
 
     @Indexed
     private String name;
-    private String galvanisedSheetThickness;
-    private LengthUnits galvanisedSheetThicknessUnit;
     private String color;
     private String maxLength;
     private LengthUnits maxLengthUnit;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
 
@@ -27,12 +24,9 @@ public class SetEntity extends BaseMaterialEntity {
     // Constructor accepting Builder
     private SetEntity(Builder builder) {
         this.name = builder.name;
-        this.galvanisedSheetThickness = builder.galvanisedSheetThickness;
-        this.galvanisedSheetThicknessUnit = builder.galvanisedSheetThicknessUnit;
         this.color = builder.color;
         this.maxLength = builder.maxLength;
         this.maxLengthUnit = builder.maxLengthUnit;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
     }
@@ -40,12 +34,9 @@ public class SetEntity extends BaseMaterialEntity {
     // Copy constructor
     public SetEntity(SetEntity other) {
         this.name = other.name;
-        this.galvanisedSheetThickness = other.galvanisedSheetThickness;
-        this.galvanisedSheetThicknessUnit = other.galvanisedSheetThicknessUnit;
         this.color = other.color;
         this.maxLength = other.maxLength;
         this.maxLengthUnit = other.maxLengthUnit;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
     }
@@ -60,23 +51,6 @@ public class SetEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public SetEntity setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
-
-    public LengthUnits getGalvanisedSheetThicknessUnit() {
-        return galvanisedSheetThicknessUnit;
-    }
-
-    public SetEntity setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-        return this;
-    }
 
     public String getColor() {
         return color;
@@ -105,14 +79,6 @@ public class SetEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public SetEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -137,32 +103,21 @@ public class SetEntity extends BaseMaterialEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SetEntity setEntity = (SetEntity) o;
-        return Objects.equals(name, setEntity.name) &&
-                Objects.equals(galvanisedSheetThickness, setEntity.galvanisedSheetThickness) &&
-                galvanisedSheetThicknessUnit == setEntity.galvanisedSheetThicknessUnit &&
-                Objects.equals(color, setEntity.color) &&
-                Objects.equals(maxLength, setEntity.maxLength) &&
-                maxLengthUnit == setEntity.maxLengthUnit &&
-                Objects.equals(quantity, setEntity.quantity) &&
-                Objects.equals(description, setEntity.description) &&
-                Objects.equals(specificationFileUrl, setEntity.specificationFileUrl);
+        return Objects.equals(name, setEntity.name) && Objects.equals(color, setEntity.color) && Objects.equals(maxLength, setEntity.maxLength) && maxLengthUnit == setEntity.maxLengthUnit && Objects.equals(description, setEntity.description) && Objects.equals(specificationFileUrl, setEntity.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, galvanisedSheetThickness, galvanisedSheetThicknessUnit, color, maxLength, maxLengthUnit, quantity, description, specificationFileUrl);
+        return Objects.hash(name, color, maxLength, maxLengthUnit, description, specificationFileUrl);
     }
 
     @Override
     public String toString() {
         return "SetEntity{" +
                 "name='" + name + '\'' +
-                ", galvanisedSheetThickness='" + galvanisedSheetThickness + '\'' +
-                ", galvanisedSheetThicknessUnit=" + galvanisedSheetThicknessUnit +
                 ", color='" + color + '\'' +
                 ", maxLength='" + maxLength + '\'' +
                 ", maxLengthUnit=" + maxLengthUnit +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 '}';
@@ -171,12 +126,9 @@ public class SetEntity extends BaseMaterialEntity {
     // Builder pattern implementation
     public static class Builder {
         private String name;
-        private String galvanisedSheetThickness;
-        private LengthUnits galvanisedSheetThicknessUnit;
         private String color;
         private String maxLength;
         private LengthUnits maxLengthUnit;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
 
@@ -185,15 +137,6 @@ public class SetEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-            this.galvanisedSheetThickness = galvanisedSheetThickness;
-            return this;
-        }
-
-        public Builder setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-            this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-            return this;
-        }
 
         public Builder setColor(String color) {
             this.color = color;
@@ -210,10 +153,6 @@ public class SetEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

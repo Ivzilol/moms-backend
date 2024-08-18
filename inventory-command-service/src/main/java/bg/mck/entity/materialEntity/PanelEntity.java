@@ -34,8 +34,6 @@ public class PanelEntity {
     @Enumerated(EnumType.STRING)
     private LengthUnits backSheetThicknessUnit;
 
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -65,7 +63,6 @@ public class PanelEntity {
         this.frontSheetThicknessUnit = builder.frontSheetThicknessUnit;
         this.backSheetThickness = builder.backSheetThickness;
         this.backSheetThicknessUnit = builder.backSheetThicknessUnit;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
         this.category = builder.category;
@@ -87,7 +84,6 @@ public class PanelEntity {
         this.frontSheetThicknessUnit = other.frontSheetThicknessUnit;
         this.backSheetThickness = other.backSheetThickness;
         this.backSheetThicknessUnit = other.backSheetThicknessUnit;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
         this.category = other.category;
@@ -220,14 +216,7 @@ public class PanelEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
 
-    public PanelEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -261,29 +250,12 @@ public class PanelEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PanelEntity that = (PanelEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(name, that.name)
-                && Objects.equals(type, that.type)
-                && Objects.equals(color, that.color)
-                && Objects.equals(length, that.length)
-                && lengthUnit == that.lengthUnit
-                && Objects.equals(width, that.width)
-                && widthUnit == that.widthUnit
-                && Objects.equals(totalThickness, that.totalThickness)
-                && totalThicknessUnit == that.totalThicknessUnit
-                && Objects.equals(frontSheetThickness, that.frontSheetThickness)
-                && frontSheetThicknessUnit == that.frontSheetThicknessUnit
-                && Objects.equals(backSheetThickness, that.backSheetThickness)
-                && backSheetThicknessUnit == that.backSheetThicknessUnit
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(description, that.description)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl)
-                && Objects.equals(category, that.category);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(color, that.color) && Objects.equals(length, that.length) && lengthUnit == that.lengthUnit && Objects.equals(width, that.width) && widthUnit == that.widthUnit && Objects.equals(totalThickness, that.totalThickness) && totalThicknessUnit == that.totalThicknessUnit && Objects.equals(frontSheetThickness, that.frontSheetThickness) && frontSheetThicknessUnit == that.frontSheetThicknessUnit && Objects.equals(backSheetThickness, that.backSheetThickness) && backSheetThicknessUnit == that.backSheetThicknessUnit && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl) && Objects.equals(category, that.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, color, length, lengthUnit, width, widthUnit, totalThickness, totalThicknessUnit, frontSheetThickness, frontSheetThicknessUnit, backSheetThickness, backSheetThicknessUnit, quantity, description, specificationFileUrl, category);
+        return Objects.hash(id, name, type, color, length, lengthUnit, width, widthUnit, totalThickness, totalThicknessUnit, frontSheetThickness, frontSheetThicknessUnit, backSheetThickness, backSheetThicknessUnit, description, specificationFileUrl, category);
     }
 
     @Override
@@ -303,7 +275,6 @@ public class PanelEntity {
                 ", frontSheetThicknessUnit=" + frontSheetThicknessUnit +
                 ", backSheetThickness='" + backSheetThickness + '\'' +
                 ", backSheetThicknessUnit=" + backSheetThicknessUnit +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 ", category=" + category +
@@ -326,7 +297,6 @@ public class PanelEntity {
         private LengthUnits frontSheetThicknessUnit;
         private String backSheetThickness;
         private LengthUnits backSheetThicknessUnit;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
         private CategoryEntity category;
@@ -401,10 +371,6 @@ public class PanelEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

@@ -13,9 +13,8 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
     private String diameter;
     private String length;
     private LengthUnits lengthUnit;
-    private String model;
+    private String standard;
     private String clazz;
-    private Double quantity;
     private String type;
     private String specificationFileUrl;
 
@@ -25,7 +24,7 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
     }
 
 
-    public RegisterFastenerEvent(Long materialId, EventType eventType, String category, String name, String description, String diameter, String length, LengthUnits lengthUnit, String model, String clazz, Double quantity, String type, String specificationFileUrl) {
+    public RegisterFastenerEvent(Long materialId, EventType eventType, String category, String name, String description, String diameter, String length, LengthUnits lengthUnit, String standard, String clazz, String type, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
@@ -33,9 +32,8 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
         this.diameter = diameter;
         this.length = length;
         this.lengthUnit = lengthUnit;
-        this.model = model;
+        this.standard = standard;
         this.clazz = clazz;
-        this.quantity = quantity;
         this.type = type;
         this.specificationFileUrl = specificationFileUrl;
     }
@@ -80,12 +78,12 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
         this.length = length;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setStandard(String standard) {
+        this.standard = standard;
     }
 
     public String getClazz() {
@@ -94,14 +92,6 @@ public class RegisterFastenerEvent extends BaseMaterialEvent {
 
     public void setClazz(String clazz) {
         this.clazz = clazz;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
     }
 
     public String getSpecificationFileUrl() {

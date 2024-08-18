@@ -23,6 +23,15 @@ public interface MaterialMapper {
     UnspecifiedUpdateDTO mapUnspecifiedDtoFromUpdateMaterialDto(UpdateMaterialDTO updateMaterialDTO);
     MetalUpdateDTO mapMetalDtoFromUpdateMaterialDto(UpdateMaterialDTO updateMaterialDTO);
 
+    FastenerRegisterDTO mapFastenerRegisterDtoFromCreateMaterialDTO(CreateMaterialDTO createMaterialDTO);
+    GalvanizedSheetRegisterDTO mapGalvanizedSheetRegisterDtoFromCreateMaterialDTO(CreateMaterialDTO createMaterialDTO);
+    InsulationRegisterDTO mapInsulationRegisterDtoFromCreateMaterialDTO(CreateMaterialDTO createMaterialDTO);
+    PanelRegisterDTO mapPanelRegisterDtoFromCreateMaterialDTO(CreateMaterialDTO createMaterialDTO);
+    SetRegisterDTO mapSetRegisterDtoFromCreateMaterialDTO(CreateMaterialDTO createMaterialDTO);
+    MetalRegisterDTO mapMetalRegisterDtoFromCreateMaterialDTO(CreateMaterialDTO createMaterialDTO);
+    RebarRegisterDTO mapRebarRegisterDtoFromCreateMaterialDTO(CreateMaterialDTO createMaterialDTO);
+    UnspecifiedRegisterDTO mapUnspecifiedRegisterDtoFromCreateMaterialDTO(CreateMaterialDTO createMaterialDTO);
+
     void updateFastenerEntityFromDto(FastenerUpdateDTO fastenerUpdateDTO, @MappingTarget FastenerEntity fastenerEntity);
     void updateGalvanizedSheetEntityFromDto(GalvanizedSheetUpdateDTO galvanizedSheetUpdateDTO, @MappingTarget GalvanisedSheetEntity galvanisedSheetEntity);
     void updateInsulationEntityFromDto(InsulationUpdateDTO insulationUpdateDTO, @MappingTarget InsulationEntity insulationEntity);

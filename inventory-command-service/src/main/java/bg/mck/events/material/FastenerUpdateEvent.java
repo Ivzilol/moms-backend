@@ -12,9 +12,8 @@ public class FastenerUpdateEvent extends BaseMaterialEvent {
     private String diameter;
     private String length;
     private LengthUnits lengthUnit;
-    private String model;
+    private String standard;
     private String clazz;
-    private Double quantity;
     private String note;
     private String specificationFileUrl;
 
@@ -89,12 +88,12 @@ public class FastenerUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public FastenerUpdateEvent setModel(String model) {
-        this.model = model;
+    public FastenerUpdateEvent setStandard(String standard) {
+        this.standard = standard;
         return this;
     }
 
@@ -107,14 +106,6 @@ public class FastenerUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public FastenerUpdateEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getNote() {
         return note;

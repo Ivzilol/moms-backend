@@ -1,6 +1,5 @@
 package bg.mck.entity.materialEntity;
 
-import bg.mck.enums.AreaUnits;
 import bg.mck.enums.LengthUnits;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,9 +14,7 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
     private String type;
     private String maxLength;
     private LengthUnits maxLengthUnit;
-    private String area;
-    private AreaUnits areaUnit;
-    private Double quantity;
+    private String numberOfSheets;
     private String description;
     private String specificationFileUrl;
 
@@ -31,9 +28,7 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         this.type = builder.type;
         this.maxLength = builder.maxLength;
         this.maxLengthUnit = builder.maxLengthUnit;
-        this.area = builder.area;
-        this.areaUnit = builder.areaUnit;
-        this.quantity = builder.quantity;
+        this.numberOfSheets = builder.numberOfSheets;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
     }
@@ -44,9 +39,7 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         this.type = other.type;
         this.maxLength = other.maxLength;
         this.maxLengthUnit = other.maxLengthUnit;
-        this.area = other.area;
-        this.areaUnit = other.areaUnit;
-        this.quantity = other.quantity;
+        this.numberOfSheets = other.numberOfSheets;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
     }
@@ -88,32 +81,15 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public GalvanisedSheetEntity setArea(String area) {
-        this.area = area;
+    public GalvanisedSheetEntity setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
         return this;
     }
 
-    public AreaUnits getAreaUnit() {
-        return areaUnit;
-    }
-
-    public GalvanisedSheetEntity setAreaUnit(AreaUnits areaUnit) {
-        this.areaUnit = areaUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public GalvanisedSheetEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -138,20 +114,12 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GalvanisedSheetEntity that = (GalvanisedSheetEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(maxLength, that.maxLength) &&
-                maxLengthUnit == that.maxLengthUnit &&
-                Objects.equals(area, that.area) &&
-                areaUnit == that.areaUnit &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(specificationFileUrl, that.specificationFileUrl);
+        return Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(maxLength, that.maxLength) && maxLengthUnit == that.maxLengthUnit && Objects.equals(numberOfSheets, that.numberOfSheets) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, type, maxLength, maxLengthUnit, area, areaUnit, quantity, description, specificationFileUrl);
+        return Objects.hash(name, type, maxLength, maxLengthUnit, numberOfSheets, description, specificationFileUrl);
     }
 
     @Override
@@ -161,9 +129,7 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
                 ", type='" + type + '\'' +
                 ", maxLength='" + maxLength + '\'' +
                 ", maxLengthUnit=" + maxLengthUnit +
-                ", area='" + area + '\'' +
-                ", areaUnit=" + areaUnit +
-                ", quantity=" + quantity +
+                ", numberOfSheets='" + numberOfSheets + '\'' +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 '}';
@@ -175,9 +141,7 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         private String type;
         private String maxLength;
         private LengthUnits maxLengthUnit;
-        private String area;
-        private AreaUnits areaUnit;
-        private Double quantity;
+        private String numberOfSheets;
         private String description;
         private String specificationFileUrl;
 
@@ -201,20 +165,11 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setArea(String area) {
-            this.area = area;
+        public Builder setNumberOfSheets(String numberOfSheets) {
+            this.numberOfSheets = numberOfSheets;
             return this;
         }
 
-        public Builder setAreaUnit(AreaUnits areaUnit) {
-            this.areaUnit = areaUnit;
-            return this;
-        }
-
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

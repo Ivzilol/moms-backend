@@ -8,18 +8,16 @@ public class RegisterUnspecifiedEvent extends BaseMaterialEvent {
 
     private String name;
 
-    private Double quantity;
 
     private String description;
 
     private String specificationFileUrl;
 
 
-    public RegisterUnspecifiedEvent(Long materialId, EventType eventType, String category, String name, Double quantity, String description, String specificationFileUrl) {
+    public RegisterUnspecifiedEvent(Long materialId, EventType eventType, String category, String name, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
@@ -44,13 +42,6 @@ public class RegisterUnspecifiedEvent extends BaseMaterialEvent {
         this.name = name;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;
