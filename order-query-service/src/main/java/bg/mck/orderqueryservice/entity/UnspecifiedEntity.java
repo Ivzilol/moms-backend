@@ -3,6 +3,8 @@ package bg.mck.orderqueryservice.entity;
 import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Document("unspecified")
 public class UnspecifiedEntity  extends BaseMaterialEntity {
 
@@ -32,5 +34,26 @@ public class UnspecifiedEntity  extends BaseMaterialEntity {
     public UnspecifiedEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        UnspecifiedEntity that = (UnspecifiedEntity) o;
+        return Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "UnspecifiedEntity{" +
+                "quantity='" + quantity + '\'' +
+                "} " + super.toString();
     }
 }

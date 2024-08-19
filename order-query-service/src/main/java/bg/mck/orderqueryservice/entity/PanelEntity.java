@@ -3,6 +3,8 @@ package bg.mck.orderqueryservice.entity;
 import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Document("panels")
 public class PanelEntity extends BaseMaterialEntity {
 
@@ -106,5 +108,41 @@ public class PanelEntity extends BaseMaterialEntity {
     public PanelEntity setBackSheetThickness(String backSheetThickness) {
         this.backSheetThickness = backSheetThickness;
         return this;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        PanelEntity that = (PanelEntity) o;
+        return Objects.equals(type, that.type) &&
+                Objects.equals(color, that.color) &&
+                Objects.equals(length, that.length) &&
+                Objects.equals(width, that.width) &&
+                Objects.equals(totalThickness, that.totalThickness) &&
+                Objects.equals(frontSheetThickness, that.frontSheetThickness) &&
+                Objects.equals(backSheetThickness, that.backSheetThickness) &&
+                Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type, color, length, width, totalThickness, frontSheetThickness, backSheetThickness, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "PanelEntity{" +
+                "type='" + type + '\'' +
+                ", color='" + color + '\'' +
+                ", length='" + length + '\'' +
+                ", width='" + width + '\'' +
+                ", totalThickness='" + totalThickness + '\'' +
+                ", frontSheetThickness='" + frontSheetThickness + '\'' +
+                ", backSheetThickness='" + backSheetThickness + '\'' +
+                ", quantity='" + quantity + '\'' +
+                "} " + super.toString();
     }
 }
