@@ -4,7 +4,6 @@ import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.enums.AreaUnits;
 import bg.mck.enums.LengthUnits;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 
 import java.util.Objects;
 
@@ -26,13 +25,7 @@ public class GalvanisedSheetEntity {
     @Enumerated(EnumType.STRING)
     private LengthUnits maxLengthUnit;
 
-    private String area;
-
-    @Enumerated(EnumType.STRING)
-    private AreaUnits areaUnit;
-
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
+    private String numberOfSheets;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -53,9 +46,7 @@ public class GalvanisedSheetEntity {
         this.type = builder.type;
         this.maxLength = builder.maxLength;
         this.maxLengthUnit = builder.maxLengthUnit;
-        this.area = builder.area;
-        this.areaUnit = builder.areaUnit;
-        this.quantity = builder.quantity;
+        this.numberOfSheets = builder.numberOfSheets;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
         this.category = builder.category;
@@ -68,9 +59,7 @@ public class GalvanisedSheetEntity {
         this.type = other.type;
         this.maxLength = other.maxLength;
         this.maxLengthUnit = other.maxLengthUnit;
-        this.area = other.area;
-        this.areaUnit = other.areaUnit;
-        this.quantity = other.quantity;
+        this.numberOfSheets = other.numberOfSheets;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
         this.category = other.category;
@@ -122,32 +111,15 @@ public class GalvanisedSheetEntity {
         return this;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public GalvanisedSheetEntity setArea(String area) {
-        this.area = area;
+    public GalvanisedSheetEntity setNumberOfSheets(String area) {
+        this.numberOfSheets = area;
         return this;
     }
 
-    public AreaUnits getAreaUnit() {
-        return areaUnit;
-    }
-
-    public GalvanisedSheetEntity setAreaUnit(AreaUnits areaUnit) {
-        this.areaUnit = areaUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public GalvanisedSheetEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -181,22 +153,12 @@ public class GalvanisedSheetEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GalvanisedSheetEntity that = (GalvanisedSheetEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(name, that.name)
-                && Objects.equals(type, that.type)
-                && Objects.equals(maxLength, that.maxLength)
-                && maxLengthUnit == that.maxLengthUnit
-                && Objects.equals(area, that.area)
-                && areaUnit == that.areaUnit
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(description, that.description)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl)
-                && Objects.equals(category, that.category);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(maxLength, that.maxLength) && maxLengthUnit == that.maxLengthUnit && Objects.equals(numberOfSheets, that.numberOfSheets) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl) && Objects.equals(category, that.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, maxLength, maxLengthUnit, area, areaUnit, quantity, description, specificationFileUrl, category);
+        return Objects.hash(id, name, type, maxLength, maxLengthUnit, numberOfSheets, description, specificationFileUrl, category);
     }
 
     @Override
@@ -207,9 +169,7 @@ public class GalvanisedSheetEntity {
                 ", type='" + type + '\'' +
                 ", maxLength='" + maxLength + '\'' +
                 ", maxLengthUnit=" + maxLengthUnit +
-                ", area='" + area + '\'' +
-                ", areaUnit=" + areaUnit +
-                ", quantity=" + quantity +
+                ", numberOfSheets='" + numberOfSheets + '\'' +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 ", category=" + category +
@@ -223,9 +183,7 @@ public class GalvanisedSheetEntity {
         private String type;
         private String maxLength;
         private LengthUnits maxLengthUnit;
-        private String area;
-        private AreaUnits areaUnit;
-        private Double quantity;
+        private String numberOfSheets;
         private String description;
         private String specificationFileUrl;
         private CategoryEntity category;
@@ -255,20 +213,11 @@ public class GalvanisedSheetEntity {
             return this;
         }
 
-        public Builder setArea(String area) {
-            this.area = area;
+        public Builder setNumberOfSheets(String numberOfSheets) {
+            this.numberOfSheets = numberOfSheets;
             return this;
         }
 
-        public Builder setAreaUnit(AreaUnits areaUnit) {
-            this.areaUnit = areaUnit;
-            return this;
-        }
-
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

@@ -8,9 +8,6 @@ public class UnspecifiedUpdateDTO {
 
     private String name;
 
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
-
     private String description;
 
     private String specificationFileUrl;
@@ -27,14 +24,6 @@ public class UnspecifiedUpdateDTO {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UnspecifiedUpdateDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

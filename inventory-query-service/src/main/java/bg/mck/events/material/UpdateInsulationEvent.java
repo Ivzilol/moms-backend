@@ -18,7 +18,6 @@ public class UpdateInsulationEvent extends BaseMaterialEvent {
     private String type;
     private String thickness;
     private LengthUnits thicknessUnit;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
 
@@ -76,14 +75,7 @@ public class UpdateInsulationEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
 
-    public UpdateInsulationEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

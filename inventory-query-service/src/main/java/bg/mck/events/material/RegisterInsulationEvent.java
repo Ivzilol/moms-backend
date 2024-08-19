@@ -14,20 +14,19 @@ public class RegisterInsulationEvent extends BaseMaterialEvent {
     private String thickness;
     private LengthUnits thicknessUnit;
 
-    private Double quantity;
+
 
     private String description;
 
     private String specificationFileUrl;
 
-    public RegisterInsulationEvent(Long materialId, EventType eventType, String category, String name, String type, String thickness, LengthUnits thicknessUnit, Double quantity, String description, String specificationFileUrl) {
+    public RegisterInsulationEvent(Long materialId, EventType eventType, String category, String name, String type, String thickness, LengthUnits thicknessUnit, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.type = type;
         this.thickness = thickness;
         this.thicknessUnit = thicknessUnit;
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
@@ -68,13 +67,6 @@ public class RegisterInsulationEvent extends BaseMaterialEvent {
         this.thickness = thickness;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;

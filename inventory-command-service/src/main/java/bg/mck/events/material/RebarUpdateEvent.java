@@ -21,12 +21,6 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
 
     private LengthUnits maxLengthUnit;
 
-    private String weight;
-
-    private WeightUnits weightUnit;
-
-    private Double quantity;
-
     private String description;
 
     private String specificationFileUrl;
@@ -76,32 +70,6 @@ public class RebarUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getWeight() {
-        return weight;
-    }
-
-    public RebarUpdateEvent setWeight(String weight) {
-        this.weight = weight;
-        return this;
-    }
-
-    public WeightUnits getWeightUnit() {
-        return weightUnit;
-    }
-
-    public RebarUpdateEvent setWeightUnit(WeightUnits weightUnit) {
-        this.weightUnit = weightUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public RebarUpdateEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

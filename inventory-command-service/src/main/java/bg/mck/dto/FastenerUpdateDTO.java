@@ -1,7 +1,8 @@
 package bg.mck.dto;
 
 import bg.mck.enums.LengthUnits;
-import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class FastenerUpdateDTO {
     private String name;
@@ -10,15 +11,13 @@ public class FastenerUpdateDTO {
 
     private String diameter;
 
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
     private String length;
     private LengthUnits lengthUnit;
 
-    private String model;
+    private String standard;
 
     private String clazz;
-
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
 
     private String description;
 
@@ -72,12 +71,12 @@ public class FastenerUpdateDTO {
         return this;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public FastenerUpdateDTO setModel(String model) {
-        this.model = model;
+    public FastenerUpdateDTO setStandard(String standard) {
+        this.standard = standard;
         return this;
     }
 
@@ -90,14 +89,6 @@ public class FastenerUpdateDTO {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public FastenerUpdateDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

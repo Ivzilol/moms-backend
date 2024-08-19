@@ -16,11 +16,9 @@ public class FastenersDTO implements MaterialDTO {
 
     private LengthUnits lengthUnit;
 
-    private String model;
+    private String standard;
 
     private String clazz;
-
-    private Double quantity;
 
     private String description;
 
@@ -68,12 +66,12 @@ public class FastenersDTO implements MaterialDTO {
         this.length = length;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setStandard(String standard) {
+        this.standard = standard;
     }
 
     public String getClazz() {
@@ -84,13 +82,6 @@ public class FastenersDTO implements MaterialDTO {
         this.clazz = clazz;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;

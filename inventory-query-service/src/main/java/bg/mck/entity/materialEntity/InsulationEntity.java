@@ -14,7 +14,6 @@ public class InsulationEntity extends BaseMaterialEntity {
     private String type;
     private String thickness;
     private LengthUnits thicknessUnit;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
 
@@ -28,7 +27,6 @@ public class InsulationEntity extends BaseMaterialEntity {
         this.type = builder.type;
         this.thickness = builder.thickness;
         this.thicknessUnit = builder.thicknessUnit;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
     }
@@ -39,7 +37,6 @@ public class InsulationEntity extends BaseMaterialEntity {
         this.type = other.type;
         this.thickness = other.thickness;
         this.thicknessUnit = other.thicknessUnit;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
     }
@@ -81,14 +78,6 @@ public class InsulationEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public InsulationEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -113,18 +102,12 @@ public class InsulationEntity extends BaseMaterialEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InsulationEntity that = (InsulationEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(thickness, that.thickness) &&
-                thicknessUnit == that.thicknessUnit &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(specificationFileUrl, that.specificationFileUrl);
+        return Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(thickness, that.thickness) && thicknessUnit == that.thicknessUnit && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, type, thickness, thicknessUnit, quantity, description, specificationFileUrl);
+        return Objects.hash(name, type, thickness, thicknessUnit, description, specificationFileUrl);
     }
 
     @Override
@@ -134,7 +117,6 @@ public class InsulationEntity extends BaseMaterialEntity {
                 ", type='" + type + '\'' +
                 ", thickness='" + thickness + '\'' +
                 ", thicknessUnit=" + thicknessUnit +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 '}';
@@ -146,7 +128,6 @@ public class InsulationEntity extends BaseMaterialEntity {
         private String type;
         private String thickness;
         private LengthUnits thicknessUnit;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
 
@@ -170,10 +151,6 @@ public class InsulationEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

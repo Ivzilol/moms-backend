@@ -3,17 +3,19 @@ package bg.mck.dto;
 import bg.mck.enums.WeightUnits;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class MetalUpdateDTO {
     private String name;
 
+    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
+    @NotNull(message = "Total weight is required")
     private String totalWeight;
 
     private WeightUnits totalWeightUnit;
-
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
-
+    @NotNull(message = "Kind is required")
+    private String kind;
     private String description;
 
     private String specificationFileUrl;
@@ -48,14 +50,6 @@ public class MetalUpdateDTO {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public MetalUpdateDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -72,6 +66,15 @@ public class MetalUpdateDTO {
 
     public MetalUpdateDTO setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public MetalUpdateDTO setKind(String kind) {
+        this.kind = kind;
         return this;
     }
 }

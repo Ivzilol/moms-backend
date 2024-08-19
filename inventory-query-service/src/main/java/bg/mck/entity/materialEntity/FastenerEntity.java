@@ -15,9 +15,8 @@ public class FastenerEntity extends BaseMaterialEntity {
     private String diameter;
     private String length;
     private LengthUnits lengthUnit;
-    private String model;
+    private String standard;
     private String clazz;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
 
@@ -32,9 +31,8 @@ public class FastenerEntity extends BaseMaterialEntity {
         this.diameter = builder.diameter;
         this.length = builder.length;
         this.lengthUnit = builder.lengthUnit;
-        this.model = builder.model;
+        this.standard = builder.standard;
         this.clazz = builder.clazz;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
     }
@@ -46,9 +44,8 @@ public class FastenerEntity extends BaseMaterialEntity {
         this.diameter = other.diameter;
         this.length = other.length;
         this.lengthUnit = other.lengthUnit;
-        this.model = other.model;
+        this.standard = other.standard;
         this.clazz = other.clazz;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
     }
@@ -99,12 +96,12 @@ public class FastenerEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public FastenerEntity setModel(String model) {
-        this.model = model;
+    public FastenerEntity setStandard(String standard) {
+        this.standard = standard;
         return this;
     }
 
@@ -117,14 +114,6 @@ public class FastenerEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public FastenerEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -149,21 +138,12 @@ public class FastenerEntity extends BaseMaterialEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FastenerEntity that = (FastenerEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(diameter, that.diameter) &&
-                Objects.equals(length, that.length) &&
-                lengthUnit == that.lengthUnit &&
-                Objects.equals(model, that.model) &&
-                Objects.equals(clazz, that.clazz) &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(specificationFileUrl, that.specificationFileUrl);
+        return Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(diameter, that.diameter) && Objects.equals(length, that.length) && lengthUnit == that.lengthUnit && Objects.equals(standard, that.standard) && Objects.equals(clazz, that.clazz) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, type, diameter, length, lengthUnit, model, clazz, quantity, description, specificationFileUrl);
+        return Objects.hash(name, type, diameter, length, lengthUnit, standard, clazz, description, specificationFileUrl);
     }
 
     @Override
@@ -174,9 +154,8 @@ public class FastenerEntity extends BaseMaterialEntity {
                 ", diameter='" + diameter + '\'' +
                 ", length='" + length + '\'' +
                 ", lengthUnit=" + lengthUnit +
-                ", model='" + model + '\'' +
+                ", standard='" + standard + '\'' +
                 ", clazz='" + clazz + '\'' +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 '}';
@@ -189,9 +168,8 @@ public class FastenerEntity extends BaseMaterialEntity {
         private String diameter;
         private String length;
         private LengthUnits lengthUnit;
-        private String model;
+        private String standard;
         private String clazz;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
 
@@ -220,8 +198,8 @@ public class FastenerEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setModel(String model) {
-            this.model = model;
+        public Builder setStandard(String standard) {
+            this.standard = standard;
             return this;
         }
 
@@ -230,10 +208,6 @@ public class FastenerEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

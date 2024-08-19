@@ -14,9 +14,6 @@ public class RebarEntity extends BaseMaterialEntity {
     private String name;
     private String maxLength;
     private LengthUnits maxLengthUnit;
-    private String weight;
-    private WeightUnits weightUnit;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
 
@@ -29,9 +26,6 @@ public class RebarEntity extends BaseMaterialEntity {
         this.name = builder.name;
         this.maxLength = builder.maxLength;
         this.maxLengthUnit = builder.maxLengthUnit;
-        this.weight = builder.weight;
-        this.weightUnit = builder.weightUnit;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
     }
@@ -41,9 +35,6 @@ public class RebarEntity extends BaseMaterialEntity {
         this.name = other.name;
         this.maxLength = other.maxLength;
         this.maxLengthUnit = other.maxLengthUnit;
-        this.weight = other.weight;
-        this.weightUnit = other.weightUnit;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
     }
@@ -76,32 +67,6 @@ public class RebarEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public String getWeight() {
-        return weight;
-    }
-
-    public RebarEntity setWeight(String weight) {
-        this.weight = weight;
-        return this;
-    }
-
-    public WeightUnits getWeightUnit() {
-        return weightUnit;
-    }
-
-    public RebarEntity setWeightUnit(WeightUnits weightUnit) {
-        this.weightUnit = weightUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public RebarEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -126,19 +91,12 @@ public class RebarEntity extends BaseMaterialEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RebarEntity that = (RebarEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(maxLength, that.maxLength) &&
-                maxLengthUnit == that.maxLengthUnit &&
-                Objects.equals(weight, that.weight) &&
-                weightUnit == that.weightUnit &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(specificationFileUrl, that.specificationFileUrl);
+        return Objects.equals(name, that.name) && Objects.equals(maxLength, that.maxLength) && maxLengthUnit == that.maxLengthUnit && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, maxLength, maxLengthUnit, weight, weightUnit, quantity, description, specificationFileUrl);
+        return Objects.hash(name, maxLength, maxLengthUnit, description, specificationFileUrl);
     }
 
     @Override
@@ -147,9 +105,6 @@ public class RebarEntity extends BaseMaterialEntity {
                 "name='" + name + '\'' +
                 ", maxLength='" + maxLength + '\'' +
                 ", maxLengthUnit=" + maxLengthUnit +
-                ", weight='" + weight + '\'' +
-                ", weightUnit=" + weightUnit +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 '}';
@@ -160,9 +115,6 @@ public class RebarEntity extends BaseMaterialEntity {
         private String name;
         private String maxLength;
         private LengthUnits maxLengthUnit;
-        private String weight;
-        private WeightUnits weightUnit;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
 
@@ -181,20 +133,6 @@ public class RebarEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setWeight(String weight) {
-            this.weight = weight;
-            return this;
-        }
-
-        public Builder setWeightUnit(WeightUnits weightUnit) {
-            this.weightUnit = weightUnit;
-            return this;
-        }
-
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

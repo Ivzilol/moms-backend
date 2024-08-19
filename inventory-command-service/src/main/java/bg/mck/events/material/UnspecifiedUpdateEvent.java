@@ -17,7 +17,6 @@ public class UnspecifiedUpdateEvent extends BaseMaterialEvent {
 
     private String name;
 
-    private Double quantity;
 
     private String description;
 
@@ -51,14 +50,6 @@ public class UnspecifiedUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UnspecifiedUpdateEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

@@ -1,24 +1,23 @@
 package bg.mck.dto;
 
-import bg.mck.enums.AreaUnits;
 import bg.mck.enums.LengthUnits;
-import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class GalvanizedSheetUpdateDTO {
     private String name;
 
+    @NotNull(message = "Type is required")
     private String type;
 
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    @NotNull
     private String maxLength;
 
     private LengthUnits maxLengthUnit;
 
-    private String area;
-
-    private AreaUnits areaUnit;
-
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
+    @Pattern(regexp = "^[^-].*", message = "Number of sheets must be positive")
+    private String numberOfSheets;
 
     private String description;
 
@@ -63,32 +62,15 @@ public class GalvanizedSheetUpdateDTO {
         return this;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public GalvanizedSheetUpdateDTO setArea(String area) {
-        this.area = area;
+    public GalvanizedSheetUpdateDTO setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
         return this;
     }
 
-    public AreaUnits getAreaUnit() {
-        return areaUnit;
-    }
-
-    public GalvanizedSheetUpdateDTO setAreaUnit(AreaUnits areaUnit) {
-        this.areaUnit = areaUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public GalvanizedSheetUpdateDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

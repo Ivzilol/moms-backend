@@ -12,19 +12,19 @@ public class RegisterMetalEvent extends BaseMaterialEvent {
     private String totalWeight;
     private WeightUnits totalWeightUnit;
 
-    private Double quantity;
+    private String kind;
 
     private String description;
 
     private String specificationFileUrl;
 
-    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, String totalWeight, WeightUnits totalWeightUnit, Double quantity, String description, String specificationFileUrl) {
+    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, String totalWeight, WeightUnits totalWeightUnit, String kind, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.totalWeight = totalWeight;
         this.totalWeightUnit = totalWeightUnit;
-        this.quantity = quantity;
+        this.kind = kind;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
@@ -57,14 +57,6 @@ public class RegisterMetalEvent extends BaseMaterialEvent {
         this.totalWeight = totalWeight;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -87,6 +79,15 @@ public class RegisterMetalEvent extends BaseMaterialEvent {
 
     public RegisterMetalEvent setTotalWeightUnit(WeightUnits totalWeightUnit) {
         this.totalWeightUnit = totalWeightUnit;
+        return this;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public RegisterMetalEvent setKind(String kind) {
+        this.kind = kind;
         return this;
     }
 }

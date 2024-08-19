@@ -16,15 +16,12 @@ public class SetUpdateEvent extends BaseMaterialEvent {
 
     private String name;
 
-    private String galvanisedSheetThickness;
-    private LengthUnits galvanisedSheetThicknessUnit;
 
     private String color;
 
     private String maxLength;
     private LengthUnits maxLengthUnit;
 
-    private Double quantity;
 
     private String description;
 
@@ -57,23 +54,6 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public SetUpdateEvent setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
-
-    public LengthUnits getGalvanisedSheetThicknessUnit() {
-        return galvanisedSheetThicknessUnit;
-    }
-
-    public SetUpdateEvent setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-        return this;
-    }
 
     public String getColor() {
         return color;
@@ -102,14 +82,6 @@ public class SetUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public SetUpdateEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

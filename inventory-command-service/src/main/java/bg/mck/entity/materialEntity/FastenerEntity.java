@@ -3,7 +3,6 @@ package bg.mck.entity.materialEntity;
 import bg.mck.entity.categoryEntity.CategoryEntity;
 import bg.mck.enums.LengthUnits;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 
 import java.util.Objects;
 
@@ -26,12 +25,10 @@ public class FastenerEntity {
     @Enumerated(EnumType.STRING)
     private LengthUnits lengthUnit;
 
-    private String model;
+    private String standard;
 
     private String clazz;
 
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -51,9 +48,8 @@ public class FastenerEntity {
         this.diameter = builder.diameter;
         this.length = builder.length;
         this.lengthUnit = builder.lengthUnit;
-        this.model = builder.model;
+        this.standard = builder.standard;
         this.clazz = builder.clazz;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
         this.category = builder.category;
@@ -66,9 +62,8 @@ public class FastenerEntity {
         this.diameter = other.diameter;
         this.length = other.length;
         this.lengthUnit = other.lengthUnit;
-        this.model = other.model;
+        this.standard = other.standard;
         this.clazz = other.clazz;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
         this.category = other.category;
@@ -114,12 +109,12 @@ public class FastenerEntity {
         this.length = length;
     }
 
-    public String getModel() {
-        return model;
+    public String getStandard() {
+        return standard;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setStandard(String model) {
+        this.standard = model;
     }
 
     public String getClazz() {
@@ -130,13 +125,6 @@ public class FastenerEntity {
         this.clazz = clazz;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;
@@ -176,12 +164,12 @@ public class FastenerEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FastenerEntity that = (FastenerEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(diameter, that.diameter) && Objects.equals(length, that.length) && lengthUnit == that.lengthUnit && Objects.equals(model, that.model) && Objects.equals(clazz, that.clazz) && Objects.equals(quantity, that.quantity) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl) && Objects.equals(category, that.category);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(diameter, that.diameter) && Objects.equals(length, that.length) && lengthUnit == that.lengthUnit && Objects.equals(standard, that.standard) && Objects.equals(clazz, that.clazz) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl) && Objects.equals(category, that.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, diameter, length, lengthUnit, model, clazz, quantity, description, specificationFileUrl, category);
+        return Objects.hash(id, name, type, diameter, length, lengthUnit, standard, clazz, description, specificationFileUrl, category);
     }
 
     @Override
@@ -193,9 +181,8 @@ public class FastenerEntity {
                 ", diameter='" + diameter + '\'' +
                 ", length='" + length + '\'' +
                 ", lengthUnit=" + lengthUnit +
-                ", model='" + model + '\'' +
+                ", standard='" + standard + '\'' +
                 ", clazz='" + clazz + '\'' +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 ", category=" + category +
@@ -209,9 +196,8 @@ public class FastenerEntity {
         private String diameter;
         private String length;
         private LengthUnits lengthUnit;
-        private String model;
+        private String standard;
         private String clazz;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
         private CategoryEntity category;
@@ -246,8 +232,8 @@ public class FastenerEntity {
             return this;
         }
 
-        public Builder setModel(String model) {
-            this.model = model;
+        public Builder setStandard(String standard) {
+            this.standard = standard;
             return this;
         }
 
@@ -256,10 +242,6 @@ public class FastenerEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

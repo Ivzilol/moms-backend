@@ -3,20 +3,15 @@ package bg.mck.dto;
 import bg.mck.enums.LengthUnits;
 import bg.mck.enums.WeightUnits;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Pattern;
 
 public class RebarUpdateDTO {
 
     private String name;
+    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
     private String maxLength;
 
     private LengthUnits maxLengthUnit;
-
-    private String weight;
-
-    private WeightUnits weightUnit;
-
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
 
     private String description;
 
@@ -52,32 +47,7 @@ public class RebarUpdateDTO {
         return this;
     }
 
-    public String getWeight() {
-        return weight;
-    }
 
-    public RebarUpdateDTO setWeight(String weight) {
-        this.weight = weight;
-        return this;
-    }
-
-    public WeightUnits getWeightUnit() {
-        return weightUnit;
-    }
-
-    public RebarUpdateDTO setWeightUnit(WeightUnits weightUnit) {
-        this.weightUnit = weightUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public RebarUpdateDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

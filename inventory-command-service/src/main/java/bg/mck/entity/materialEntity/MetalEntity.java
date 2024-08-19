@@ -22,8 +22,7 @@ public class MetalEntity {
     @Enumerated(EnumType.STRING)
     private WeightUnits totalWeightUnit;
 
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
+    private String kind;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -43,7 +42,7 @@ public class MetalEntity {
         this.name = builder.name;
         this.totalWeight = builder.totalWeight;
         this.totalWeightUnit = builder.totalWeightUnit;
-        this.quantity = builder.quantity;
+        this.kind = builder.kind;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
         this.category = builder.category;
@@ -55,7 +54,7 @@ public class MetalEntity {
         this.name = other.name;
         this.totalWeight = other.totalWeight;
         this.totalWeightUnit = other.totalWeightUnit;
-        this.quantity = other.quantity;
+        this.kind = other.kind;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
         this.category = other.category;
@@ -98,14 +97,6 @@ public class MetalEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public MetalEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -134,24 +125,26 @@ public class MetalEntity {
         return this;
     }
 
+    public String getKind() {
+        return kind;
+    }
+
+    public MetalEntity setKind(String kind) {
+        this.kind = kind;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MetalEntity that = (MetalEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(name, that.name)
-                && Objects.equals(totalWeight, that.totalWeight)
-                && totalWeightUnit == that.totalWeightUnit
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(description, that.description)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl)
-                && Objects.equals(category, that.category);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(totalWeight, that.totalWeight) && totalWeightUnit == that.totalWeightUnit && Objects.equals(kind, that.kind) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl) && Objects.equals(category, that.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, totalWeight, totalWeightUnit, quantity, description, specificationFileUrl, category);
+        return Objects.hash(id, name, totalWeight, totalWeightUnit, kind, description, specificationFileUrl, category);
     }
 
     @Override
@@ -161,12 +154,14 @@ public class MetalEntity {
                 ", name='" + name + '\'' +
                 ", totalWeight='" + totalWeight + '\'' +
                 ", totalWeightUnit=" + totalWeightUnit +
-                ", quantity=" + quantity +
+                ", kind='" + kind + '\'' +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 ", category=" + category +
                 '}';
     }
+
+
 
     // Builder pattern implementation
     public static class Builder {
@@ -174,7 +169,7 @@ public class MetalEntity {
         private String name;
         private String totalWeight;
         private WeightUnits totalWeightUnit;
-        private Double quantity;
+        private String kind;
         private String description;
         private String specificationFileUrl;
         private CategoryEntity category;
@@ -199,8 +194,8 @@ public class MetalEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
+        public Builder setKind(String kind) {
+            this.kind = kind;
             return this;
         }
 
