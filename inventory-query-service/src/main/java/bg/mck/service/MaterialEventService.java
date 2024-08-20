@@ -76,7 +76,6 @@ public class MaterialEventService {
     }
 
 
-
     @SuppressWarnings("unchecked")
     public <T extends BaseMaterialEntity> T reconstructMaterialEntity(String materialId, String materialType, Class<T> clazz) {
         doesItemExist(materialId, materialType);
@@ -151,8 +150,7 @@ public class MaterialEventService {
             metalRepository.save(metalEntity);
             materialRedisService.cacheObject(metalEntity, materialType);
             return metalEntity;
-        }
-        else {
+        } else {
             throw new InvalidCategoryException("Unhandled category type: " + materialType);
         }
 
@@ -161,9 +159,9 @@ public class MaterialEventService {
     private void applyMetalEvent(MaterialEvent<? extends BaseMaterialEvent> event, MetalEntity metalEntity) {
         BaseMaterialEvent baseEvent = event.getEvent();
         if (baseEvent instanceof UpdateMetalEvent updateEvent) {
-            inventoryQueryUpdateMapper.mapUpdateMetalEventToMetalEntity(updateEvent,metalEntity);
+            inventoryQueryUpdateMapper.mapUpdateMetalEventToMetalEntity(updateEvent, metalEntity);
         } else if (baseEvent instanceof RegisterMetalEvent registerEvent) {
-            inventoryQueryUpdateMapper.mapMetalRegisterEventToEntity(registerEvent,metalEntity);
+            inventoryQueryUpdateMapper.mapMetalRegisterEventToEntity(registerEvent, metalEntity);
             metalEntity.setId(registerEvent.getMaterialId().toString());
         }
 
@@ -172,9 +170,9 @@ public class MaterialEventService {
     private void applyUnspecifiedEvent(MaterialEvent<? extends BaseMaterialEvent> event, UnspecifiedEntity unspecifiedEntity) {
         BaseMaterialEvent baseEvent = event.getEvent();
         if (baseEvent instanceof UpdateUnspecifiedEvent updateEvent) {
-            inventoryQueryUpdateMapper.mapUpdateUnspecifiedEventToUnspecifiedEntity(updateEvent,unspecifiedEntity);
+            inventoryQueryUpdateMapper.mapUpdateUnspecifiedEventToUnspecifiedEntity(updateEvent, unspecifiedEntity);
         } else if (baseEvent instanceof RegisterUnspecifiedEvent registerEvent) {
-            inventoryQueryUpdateMapper.mapUnspecifiedRegisterEventToEntity(registerEvent,unspecifiedEntity);
+            inventoryQueryUpdateMapper.mapUnspecifiedRegisterEventToEntity(registerEvent, unspecifiedEntity);
             unspecifiedEntity.setId(registerEvent.getMaterialId().toString());
         }
     }
@@ -182,9 +180,9 @@ public class MaterialEventService {
     private void applySetEvent(MaterialEvent<? extends BaseMaterialEvent> event, SetEntity setEntity) {
         BaseMaterialEvent baseEvent = event.getEvent();
         if (baseEvent instanceof UpdateSetEvent updateEvent) {
-            inventoryQueryUpdateMapper.mapUpdateSetEventToSetEntity(updateEvent,setEntity);
+            inventoryQueryUpdateMapper.mapUpdateSetEventToSetEntity(updateEvent, setEntity);
         } else if (baseEvent instanceof RegisterSetEvent registerEvent) {
-            inventoryQueryUpdateMapper.mapSetRegisterEventToEntity(registerEvent,setEntity);
+            inventoryQueryUpdateMapper.mapSetRegisterEventToEntity(registerEvent, setEntity);
             setEntity.setId(registerEvent.getMaterialId().toString());
         }
     }
@@ -192,9 +190,9 @@ public class MaterialEventService {
     private void applyRebarEvent(MaterialEvent<? extends BaseMaterialEvent> event, RebarEntity rebarEntity) {
         BaseMaterialEvent baseEvent = event.getEvent();
         if (baseEvent instanceof UpdateRebarEvent updateEvent) {
-            inventoryQueryUpdateMapper.mapUpdateRebarEventToRebarEntity(updateEvent,rebarEntity);
+            inventoryQueryUpdateMapper.mapUpdateRebarEventToRebarEntity(updateEvent, rebarEntity);
         } else if (baseEvent instanceof RegisterRebarEvent registerEvent) {
-            inventoryQueryUpdateMapper.mapRebarRegisterEventToEntity(registerEvent,rebarEntity);
+            inventoryQueryUpdateMapper.mapRebarRegisterEventToEntity(registerEvent, rebarEntity);
             rebarEntity.setId(registerEvent.getMaterialId().toString());
         }
     }
@@ -202,9 +200,9 @@ public class MaterialEventService {
     private void applyPanelEvents(MaterialEvent<? extends BaseMaterialEvent> event, PanelEntity panelEntity) {
         BaseMaterialEvent baseEvent = event.getEvent();
         if (baseEvent instanceof UpdatePanelEvent updateEvent) {
-            inventoryQueryUpdateMapper.mapUpdatePanelEventToPanelEntity(updateEvent,panelEntity);
+            inventoryQueryUpdateMapper.mapUpdatePanelEventToPanelEntity(updateEvent, panelEntity);
         } else if (baseEvent instanceof RegisterPanelEvent registerEvent) {
-            inventoryQueryUpdateMapper.mapPanelRegisterEventToEntity(registerEvent,panelEntity);
+            inventoryQueryUpdateMapper.mapPanelRegisterEventToEntity(registerEvent, panelEntity);
             panelEntity.setId(registerEvent.getMaterialId().toString());
         }
     }
@@ -212,9 +210,9 @@ public class MaterialEventService {
     private void applyInsulationEvent(MaterialEvent<? extends BaseMaterialEvent> event, InsulationEntity insulationEntity) {
         BaseMaterialEvent baseEvent = event.getEvent();
         if (baseEvent instanceof UpdateInsulationEvent updateEvent) {
-            inventoryQueryUpdateMapper.mapUpdateInsulationEventToInsulationEntity(updateEvent,insulationEntity);
+            inventoryQueryUpdateMapper.mapUpdateInsulationEventToInsulationEntity(updateEvent, insulationEntity);
         } else if (baseEvent instanceof RegisterInsulationEvent registerEvent) {
-            inventoryQueryUpdateMapper.mapInsulationRegisterEventToEntity(registerEvent,insulationEntity);
+            inventoryQueryUpdateMapper.mapInsulationRegisterEventToEntity(registerEvent, insulationEntity);
             insulationEntity.setId(registerEvent.getMaterialId().toString());
         }
     }
@@ -222,9 +220,9 @@ public class MaterialEventService {
     private void applyGalvanisedSheetEvent(MaterialEvent<? extends BaseMaterialEvent> event, GalvanisedSheetEntity galvanisedSheetEntity) {
         BaseMaterialEvent baseEvent = event.getEvent();
         if (baseEvent instanceof UpdateGalvanizedSheetEvent updateEvent) {
-            inventoryQueryUpdateMapper.mapUpdateGalvanizedSheetEventToGalvanizedSheetEntity(updateEvent,galvanisedSheetEntity);
+            inventoryQueryUpdateMapper.mapUpdateGalvanizedSheetEventToGalvanizedSheetEntity(updateEvent, galvanisedSheetEntity);
         } else if (baseEvent instanceof RegisterGalvanizedEvent registerEvent) {
-            inventoryQueryUpdateMapper.mapGalvanizedSheetRegisterEventToEntity(registerEvent,galvanisedSheetEntity);
+            inventoryQueryUpdateMapper.mapGalvanizedSheetRegisterEventToEntity(registerEvent, galvanisedSheetEntity);
             galvanisedSheetEntity.setId(registerEvent.getMaterialId().toString());
         }
     }
@@ -233,9 +231,9 @@ public class MaterialEventService {
     private void applyFastenerEvent(MaterialEvent<? extends BaseMaterialEvent> materialEvent, FastenerEntity entity) {
         BaseMaterialEvent event = materialEvent.getEvent();
         if (event instanceof UpdateFastenerEvent updateEvent) {
-            inventoryQueryUpdateMapper.mapFastenerUpdateEventToFastenerEntity(updateEvent,entity);
+            inventoryQueryUpdateMapper.mapFastenerUpdateEventToFastenerEntity(updateEvent, entity);
         } else if (event instanceof RegisterFastenerEvent registerEvent) {
-            inventoryQueryUpdateMapper.mapFastenerRegisterEventToFastenerEntity(registerEvent,entity);
+            inventoryQueryUpdateMapper.mapFastenerRegisterEventToFastenerEntity(registerEvent, entity);
             entity.setId(registerEvent.getMaterialId().toString());
         }
     }
@@ -285,63 +283,48 @@ public class MaterialEventService {
                     });
             MaterialEvent<RegisterFastenerEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterMaterial(saveEvent.getEvent());
-        }
-        if (category.equals(MaterialType.GALVANIZED_SHEET.name())) {
+        } else if (category.equals(MaterialType.GALVANIZED_SHEET.name())) {
             MaterialEvent<RegisterGalvanizedEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
             MaterialEvent<RegisterGalvanizedEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterGalvanized(saveEvent.getEvent());
-        }
-
-
-        if (category.equals(MaterialType.INSULATION.name())) {
+        } else if (category.equals(MaterialType.INSULATION.name())) {
             MaterialEvent<RegisterInsulationEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
             MaterialEvent<RegisterInsulationEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterInsulation(saveEvent.getEvent());
-        }
-
-        if (category.equals(MaterialType.METAL.name())) {
+        } else if (category.equals(MaterialType.METAL.name())) {
             MaterialEvent<RegisterMetalEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
             MaterialEvent<RegisterMetalEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterMetal(saveEvent.getEvent());
-        }
-
-        if (category.equals(MaterialType.PANELS.name())) {
+        } else if (category.equals(MaterialType.PANELS.name())) {
             MaterialEvent<RegisterPanelEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
             MaterialEvent<RegisterPanelEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterPanel(saveEvent.getEvent());
-        }
-
-        if (category.equals(MaterialType.REBAR.name())) {
+        } else if (category.equals(MaterialType.REBAR.name())) {
             MaterialEvent<RegisterRebarEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
             MaterialEvent<RegisterRebarEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterRebar(saveEvent.getEvent());
-        }
-
-        if (category.equals(MaterialType.SET.name())) {
+        } else if (category.equals(MaterialType.SET.name())) {
             MaterialEvent<RegisterSetEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
             MaterialEvent<RegisterSetEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterSet(saveEvent.getEvent());
-        }
-
-        if (category.equals(MaterialType.UNSPECIFIED.name())) {
+        } else if (category.equals(MaterialType.UNSPECIFIED.name())) {
             MaterialEvent<RegisterUnspecifiedEvent> materialEvent =
                     objectMapper.readValue(data, new TypeReference<>() {
                     });
             MaterialEvent<RegisterUnspecifiedEvent> saveEvent = saveEvent(materialEvent);
             this.materialRegisterService.processingRegisterUnspecified(saveEvent.getEvent());
-
         } else {
             throw new InvalidCategoryException("Unhandled category type: " + category);
         }
@@ -478,7 +461,8 @@ public class MaterialEventService {
     }
 
     @CacheEvict(value = "materials", key = "#category + '_' + #materialName.substring(0,2)")
-    public void evictCache(String category, String materialName) {}
+    public void evictCache(String category, String materialName) {
+    }
 
 
 }
