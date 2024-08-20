@@ -114,6 +114,7 @@ public class UserProfileManagementServiceTest {
         dto.setEmail("jane@smith.com");
         dto.setRole(AuthorityEnum.ADMIN);
 
+        when(objectMapper.writeValueAsString(any(UserEvent.class))).thenReturn("mockedJsonString");
         when(userRepository.findById(1L)).thenReturn(Optional.of(userEntity));
         when(authorityRepository.getAuthorityByAuthority(AuthorityEnum.USER))
                 .thenReturn(new Authority().setAuthority(AuthorityEnum.USER));
@@ -131,8 +132,8 @@ public class UserProfileManagementServiceTest {
         verify(userRepository).save(userEntity);
 
         ArgumentCaptor<UserEvent<ProfileUpdatedEvent>> captor = ArgumentCaptor.forClass(UserEvent.class);
-        verify(userQueryClient).sendEvent(anyString(), eq(EventType.UserProfileUpdated.name()));
         verify(objectMapper).writeValueAsString(captor.capture());
+        verify(userQueryClient).sendEvent(eq("mockedJsonString"), eq(EventType.UserProfileUpdated.name()));
 
         UserEvent<ProfileUpdatedEvent> capturedEvent = captor.getValue();
         assertEquals(EventType.UserProfileUpdated, capturedEvent.getEventType());

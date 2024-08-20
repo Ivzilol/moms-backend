@@ -12,7 +12,7 @@ public class UserStatusUpdatedDTO {
     }
 
     public UserStatusUpdatedDTO setActive(boolean active) {
-        isActive = active;
+        this.isActive = active;
         return this;
     }
 }
