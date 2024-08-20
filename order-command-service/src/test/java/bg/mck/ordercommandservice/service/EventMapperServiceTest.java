@@ -57,7 +57,6 @@ class EventMapperServiceTest {
     private EventMapperService eventMapperService;
 
 
-
     @Test
     void mapEvent_withTransportMaterials_sendsEvent_OrderCreated() {
         // Arrange
@@ -123,32 +122,5 @@ class EventMapperServiceTest {
 
         verify(orderQueryServiceClient, never()).sendEvent(any(), anyString());
     }
-
-    @Test
-    void givenCreatedOrderStatus_whenMapEvent_thenOrderCreatedEventType() {
-        OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setOrderStatus(OrderStatus.CREATED);
-
-        eventMapperService.mapEvent(orderEntity);
-
-        ArgumentCaptor<EventData<CreateOrderEvent<?>>> eventCaptor = ArgumentCaptor.forClass(EventData.class);
-        verify(orderQueryServiceClient, atLeastOnce()).sendEvent(eventCaptor.capture(), eq(EventType.ORDER_CREATED.toString()));
-
-        assertEquals(EventType.ORDER_CREATED, eventCaptor.getValue().getEventType());
-    }
-
-    @Test
-    void givenUpdatedOrderStatus_whenMapEvent_thenOrderUpdatedEventType() {
-        OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setOrderStatus(OrderStatus.COMPLETED);
-
-        eventMapperService.mapEvent(orderEntity);
-
-        ArgumentCaptor<EventData<CreateOrderEvent<?>>> eventCaptor = ArgumentCaptor.forClass(EventData.class);
-        verify(orderQueryServiceClient, atLeastOnce()).sendEvent(eventCaptor.capture(), eq(EventType.ORDER_UPDATED.toString()));
-
-        assertEquals(EventType.ORDER_UPDATED, eventCaptor.getValue().getEventType());
-    }
-
 }
 

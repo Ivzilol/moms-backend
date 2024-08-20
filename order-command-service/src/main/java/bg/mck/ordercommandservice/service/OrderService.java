@@ -59,7 +59,10 @@ public class OrderService {
         ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
 
-        orderEntity.setEmail(email).setOrderNumber(lastOrderNumber.orElse(0) + 1).setOrderStatus(OrderStatus.CREATED).setOrderDate(ZonedDateTime.now(ZoneId.of("Europe/Sofia")).plusHours(3)) //FIXME: find a better way to set the time and timezone
+        orderEntity.setEmail(email)
+                .setOrderNumber(lastOrderNumber.orElse(0) + 1)
+                .setOrderStatus(OrderStatus.CREATED)
+                .setOrderDate(ZonedDateTime.now(ZoneId.of("Europe/Sofia")).plusHours(3)) //FIXME: find a better way to set the time and timezone
                 .setConstructionSite(constructionSiteByNumberAndName);
 
         orderRepository.save(orderEntity);
@@ -77,7 +80,8 @@ public class OrderService {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByName = constructionSiteService.getConstructionSiteByName(order.getConstructionSite().getName());
 
-        orderEntity.setEmail(email).setConstructionSite(constructionSiteByName);
+        orderEntity.setEmail(email)
+                .setConstructionSite(constructionSiteByName);
 
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} updated successfully", orderEntity.getId());
