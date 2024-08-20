@@ -11,7 +11,7 @@ public class UpdateMetalEvent extends BaseMaterialEvent {
     private String totalWeight;
     private WeightUnits totalWeightUnit;
 
-    private Double quantity;
+    private String kind;
 
     private String description;
 
@@ -68,14 +68,6 @@ public class UpdateMetalEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UpdateMetalEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -92,6 +84,15 @@ public class UpdateMetalEvent extends BaseMaterialEvent {
 
     public UpdateMetalEvent setSpecificationFileUrl(String specificationFileUrl) {
         this.specificationFileUrl = specificationFileUrl;
+        return this;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public UpdateMetalEvent setKind(String kind) {
+        this.kind = kind;
         return this;
     }
 }

@@ -63,14 +63,13 @@ public class SetUpdateService {
         SetEntity currentState = setRepository.findById(setEntity.getId()).get();
 
         materialMapper.updateSetEntityFromDto(setUpdateDTO,setEntity);
-        if (!currentState.getGalvanisedSheetThickness().equals(setEntity.getGalvanisedSheetThickness()) ||
-            !currentState.getGalvanisedSheetThicknessUnit().name().equals(setEntity.getGalvanisedSheetThicknessUnit().name()) ||
-            !currentState.getColor().equals(setEntity.getColor())) {
+        if (!currentState.getColor().equals(setEntity.getColor()) ||
+            !currentState.getMaxLength().equals(setEntity.getMaxLength()) ||
+            !currentState.getMaxLengthUnit().equals(setEntity.getMaxLengthUnit())) {
             if(doesAlreadyExists(setEntity)) {
                 throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
             } else {
-                setEntity.setName(setEntity.getGalvanisedSheetThickness() + " " + setEntity.getGalvanisedSheetThicknessUnit() + " " +
-                        setEntity.getColor());
+                setEntity.setName(setEntity.getColor() + " " + setEntity.getMaxLength() + " " + setEntity.getMaxLengthUnit());
             }
         }
         setRepository.save(setEntity);
@@ -78,8 +77,8 @@ public class SetUpdateService {
     }
 
     private boolean doesAlreadyExists(SetEntity setEntity) {
-        SetEntity byName = setRepository.findByName(setEntity.getGalvanisedSheetThickness() + " " + setEntity.getGalvanisedSheetThicknessUnit() + " " +
-                setEntity.getColor());
+        SetEntity byName = setRepository.findByName(setEntity.getColor() + " " + setEntity.getMaxLength() + " " +
+                setEntity.getMaxLengthUnit());
 
         return byName != null;
     }

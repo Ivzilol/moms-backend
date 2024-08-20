@@ -16,10 +16,7 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
     private String maxLength;
     private LengthUnits maxLengthUnit;
 
-    private String area;
-    private AreaUnits areaUnit;
-
-    private Double quantity;
+    private String numberOfSheets;
 
     private String description;
 
@@ -78,32 +75,16 @@ public class GalvanizedSheetUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public GalvanizedSheetUpdateEvent setArea(String area) {
-        this.area = area;
+    public GalvanizedSheetUpdateEvent setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
         return this;
     }
 
-    public AreaUnits getAreaUnit() {
-        return areaUnit;
-    }
 
-    public GalvanizedSheetUpdateEvent setAreaUnit(AreaUnits areaUnit) {
-        this.areaUnit = areaUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public GalvanizedSheetUpdateEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

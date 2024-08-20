@@ -43,25 +43,26 @@ public class MaterialRegisterController {
     @ApiResponses(
             value = {@ApiResponse(responseCode = "200", description = "Successful registration"),
                     @ApiResponse(responseCode = "400", description = "Incorrect field",
-                            content = {@Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = ErrorCreateMaterialDTO.class))})
+                            content = {@Content(mediaType = "application/json")})
             }
     )
     @PostMapping("/${APPLICATION_VERSION}/admin/inventory/command/materials/create")
-    public ResponseEntity<?> createMaterial(@RequestBody @Valid CreateMaterialDTO createMaterialDTO,
-                                            BindingResult result) {
-        ResponseEntity<ErrorCreateMaterialDTO> errorCreateMaterialDTO =
-                errorRegistrationMaterial(result, createMaterialDTO);
-        if (errorCreateMaterialDTO != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(errorCreateMaterialDTO.getBody());
+    public ResponseEntity<?> createMaterial(@RequestBody CreateMaterialDTO createMaterialDTO) throws MethodArgumentNotValidException, NoSuchMethodException {
+        if (createMaterialDTO == null) {
+            return ResponseEntity.badRequest().build();
         }
-
         this.materialRegisterService.createMaterial(createMaterialDTO);
         return ResponseEntity.ok().build();
     }
 
 
+    @Operation(summary = "Create Materials From Order Service")
+    @ApiResponses(
+            value = {@ApiResponse(responseCode = "200", description = "Successful new materials registration from order service"),
+                    @ApiResponse(responseCode = "400", description = "Incorrect field",
+                            content = {@Content(mediaType = "application/json")})
+            }
+    )
     @PostMapping("/orders/materials/create")
     public ResponseEntity<Void> createMaterialsFromOrder(@RequestBody CreateOrderMaterialsDto createOrderMaterialsDto) throws MethodArgumentNotValidException, NoSuchMethodException {
         if (createOrderMaterialsDto == null || createOrderMaterialsDto.getMaterials() == null) {
@@ -71,22 +72,22 @@ public class MaterialRegisterController {
         return ResponseEntity.ok().build();
     }
 
-    private ResponseEntity<ErrorCreateMaterialDTO> errorRegistrationMaterial(
-            BindingResult result,
-            CreateMaterialDTO createMaterialDTO) {
-        ErrorCreateMaterialDTO errorCreateMaterialDTO = new ErrorCreateMaterialDTO();
-        boolean checkMaterialName = this.materialRegisterService.checkMaterialName(createMaterialDTO);
-        if (checkMaterialName) {
-            errorCreateMaterialDTO.setMaterialAlreadyExist(MATERIAL_EXIST);
-            throw new DuplicatedInventoryItemException("Material already exists.");
-        }
-        if (result.hasErrors()) {
-            List<String> errors = result.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            this.errorsService.setErrorsCreateMaterial(errors, errorCreateMaterialDTO);
-            return ResponseEntity.ok(errorCreateMaterialDTO);
-        }
-        return null;
-    }
+//    private ResponseEntity<ErrorCreateMaterialDTO> errorRegistrationMaterial(
+//            BindingResult result,
+//            CreateMaterialDTO createMaterialDTO) {
+//        ErrorCreateMaterialDTO errorCreateMaterialDTO = new ErrorCreateMaterialDTO();
+//        boolean checkMaterialName = this.materialRegisterService.checkMaterialName(createMaterialDTO);
+//        if (checkMaterialName) {
+//            errorCreateMaterialDTO.setMaterialAlreadyExist(MATERIAL_EXIST);
+//            throw new DuplicatedInventoryItemException("Material already exists.");
+//        }
+//        if (result.hasErrors()) {
+//            List<String> errors = result.getAllErrors().stream()
+//                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+//                    .collect(Collectors.toList());
+//            this.errorsService.setErrorsCreateMaterial(errors, errorCreateMaterialDTO);
+//            return ResponseEntity.ok(errorCreateMaterialDTO);
+//        }
+//        return null;
+//    }
 }

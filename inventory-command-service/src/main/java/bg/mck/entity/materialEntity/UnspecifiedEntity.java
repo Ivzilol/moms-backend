@@ -16,8 +16,6 @@ public class UnspecifiedEntity {
 
     private String name;
 
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -35,7 +33,6 @@ public class UnspecifiedEntity {
     private UnspecifiedEntity(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
         this.category = builder.category;
@@ -45,7 +42,6 @@ public class UnspecifiedEntity {
     public UnspecifiedEntity(UnspecifiedEntity other) {
         this.id = other.id;
         this.name = other.name;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
         this.category = other.category;
@@ -70,14 +66,6 @@ public class UnspecifiedEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UnspecifiedEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -111,17 +99,12 @@ public class UnspecifiedEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UnspecifiedEntity that = (UnspecifiedEntity) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(name, that.name)
-                && Objects.equals(quantity, that.quantity)
-                && Objects.equals(description, that.description)
-                && Objects.equals(specificationFileUrl, that.specificationFileUrl)
-                && Objects.equals(category, that.category);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl) && Objects.equals(category, that.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, quantity, description, specificationFileUrl, category);
+        return Objects.hash(id, name, description, specificationFileUrl, category);
     }
 
     @Override
@@ -129,7 +112,6 @@ public class UnspecifiedEntity {
         return "UnspecifiedEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 ", category=" + category +
@@ -140,7 +122,6 @@ public class UnspecifiedEntity {
     public static class Builder {
         private Long id;
         private String name;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
         private CategoryEntity category;
@@ -155,10 +136,6 @@ public class UnspecifiedEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

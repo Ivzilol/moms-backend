@@ -27,7 +27,6 @@ public class PanelsDTO implements MaterialDTO{
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
 
-    private Double quantity;
 
     private String description;
 
@@ -106,13 +105,6 @@ public class PanelsDTO implements MaterialDTO{
         this.backSheetThickness = backSheetThickness;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;

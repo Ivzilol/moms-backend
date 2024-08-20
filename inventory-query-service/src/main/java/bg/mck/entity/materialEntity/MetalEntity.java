@@ -13,7 +13,7 @@ public class MetalEntity extends BaseMaterialEntity {
     private String name;
     private String totalWeight;
     private WeightUnits totalWeightUnit;
-    private Double quantity;
+    private String kind;
     private String description;
     private String specificationFileUrl;
 
@@ -26,7 +26,7 @@ public class MetalEntity extends BaseMaterialEntity {
         this.name = builder.name;
         this.totalWeight = builder.totalWeight;
         this.totalWeightUnit = builder.totalWeightUnit;
-        this.quantity = builder.quantity;
+        this.kind = builder.kind;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
     }
@@ -36,7 +36,7 @@ public class MetalEntity extends BaseMaterialEntity {
         this.name = other.name;
         this.totalWeight = other.totalWeight;
         this.totalWeightUnit = other.totalWeightUnit;
-        this.quantity = other.quantity;
+        this.kind = other.kind;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
     }
@@ -69,14 +69,6 @@ public class MetalEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public MetalEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -96,22 +88,27 @@ public class MetalEntity extends BaseMaterialEntity {
         return this;
     }
 
+
+    public String getKind() {
+        return kind;
+    }
+
+    public MetalEntity setKind(String kind) {
+        this.kind = kind;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MetalEntity that = (MetalEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(totalWeight, that.totalWeight) &&
-                totalWeightUnit == that.totalWeightUnit &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(specificationFileUrl, that.specificationFileUrl);
+        return Objects.equals(name, that.name) && Objects.equals(totalWeight, that.totalWeight) && totalWeightUnit == that.totalWeightUnit && Objects.equals(kind, that.kind) && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, totalWeight, totalWeightUnit, quantity, description, specificationFileUrl);
+        return Objects.hash(name, totalWeight, totalWeightUnit, kind, description, specificationFileUrl);
     }
 
     @Override
@@ -120,7 +117,7 @@ public class MetalEntity extends BaseMaterialEntity {
                 "name='" + name + '\'' +
                 ", totalWeight='" + totalWeight + '\'' +
                 ", totalWeightUnit=" + totalWeightUnit +
-                ", quantity=" + quantity +
+                ", kind='" + kind + '\'' +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 '}';
@@ -131,7 +128,7 @@ public class MetalEntity extends BaseMaterialEntity {
         private String name;
         private String totalWeight;
         private WeightUnits totalWeightUnit;
-        private Double quantity;
+        private String kind;
         private String description;
         private String specificationFileUrl;
 
@@ -150,8 +147,8 @@ public class MetalEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
+        public Builder setKind(String kind) {
+            this.kind = kind;
             return this;
         }
 

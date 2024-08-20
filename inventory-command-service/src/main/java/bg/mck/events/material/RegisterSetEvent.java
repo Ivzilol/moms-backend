@@ -9,30 +9,23 @@ public class RegisterSetEvent extends BaseMaterialEvent {
 
     private String name;
 
-    private String galvanisedSheetThickness;
-    private LengthUnits galvanisedSheetThicknessUnit;
-
     private String color;
 
     private String maxLength;
     private LengthUnits maxLengthUnit;
 
-    private Double quantity;
 
     private String description;
 
     private String specificationFileUrl;
 
-    public RegisterSetEvent(Long materialId, EventType eventType, String category, String name, String galvanisedSheetThickness, LengthUnits galvanisedSheetThicknessUnit, String color, String maxLength, LengthUnits maxLengthUnit, Double quantity, String description, String specificationFileUrl) {
+    public RegisterSetEvent(Long materialId, EventType eventType, String category, String name, String color, String maxLength, LengthUnits maxLengthUnit, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
         this.color = color;
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
@@ -59,23 +52,6 @@ public class RegisterSetEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public RegisterSetEvent setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-        return this;
-    }
-
-    public LengthUnits getGalvanisedSheetThicknessUnit() {
-        return galvanisedSheetThicknessUnit;
-    }
-
-    public RegisterSetEvent setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-        return this;
-    }
 
     public String getColor() {
         return color;
@@ -104,14 +80,6 @@ public class RegisterSetEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public RegisterSetEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

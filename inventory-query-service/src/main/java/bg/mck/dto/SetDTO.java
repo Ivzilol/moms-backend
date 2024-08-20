@@ -8,15 +8,13 @@ public class SetDTO implements MaterialDTO{
 
     private String name;
 
-    private String galvanisedSheetThickness;
-    private LengthUnits galvanisedSheetThicknessUnit;
 
     private String color;
 
     private String maxLength;
 
     private LengthUnits maxLengthUnit;
-    private Double quantity;
+
 
     private String description;
 
@@ -39,14 +37,6 @@ public class SetDTO implements MaterialDTO{
         this.name = name;
     }
 
-    public String getGalvanisedSheetThickness() {
-        return galvanisedSheetThickness;
-    }
-
-    public void setGalvanisedSheetThickness(String galvanisedSheetThickness) {
-        this.galvanisedSheetThickness = galvanisedSheetThickness;
-    }
-
     public String getColor() {
         return color;
     }
@@ -63,13 +53,6 @@ public class SetDTO implements MaterialDTO{
         this.maxLength = maxLength;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;
@@ -87,14 +70,6 @@ public class SetDTO implements MaterialDTO{
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public LengthUnits getGalvanisedSheetThicknessUnit() {
-        return galvanisedSheetThicknessUnit;
-    }
-
-    public SetDTO setGalvanisedSheetThicknessUnit(LengthUnits galvanisedSheetThicknessUnit) {
-        this.galvanisedSheetThicknessUnit = galvanisedSheetThicknessUnit;
-        return this;
-    }
 
     public LengthUnits getMaxLengthUnit() {
         return maxLengthUnit;

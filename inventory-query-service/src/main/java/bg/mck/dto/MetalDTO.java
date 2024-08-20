@@ -11,7 +11,7 @@ public class MetalDTO implements MaterialDTO{
     private String totalWeight;
     private WeightUnits totalWeightUnit;
 
-    private Double quantity;
+    private String kind;
 
     private String description;
 
@@ -42,13 +42,6 @@ public class MetalDTO implements MaterialDTO{
         this.totalWeight = totalWeight;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;
@@ -72,6 +65,15 @@ public class MetalDTO implements MaterialDTO{
 
     public MetalDTO setTotalWeightUnit(WeightUnits totalWeightUnit) {
         this.totalWeightUnit = totalWeightUnit;
+        return this;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public MetalDTO setKind(String kind) {
+        this.kind = kind;
         return this;
     }
 }

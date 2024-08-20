@@ -2,19 +2,20 @@ package bg.mck.dto;
 
 import bg.mck.enums.LengthUnits;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class InsulationUpdateDTO {
 
     private String name;
 
+    @NotNull(message = "Type is required")
     private String type;
 
+    @Pattern(regexp = "^[^-].*", message = "Thickness must be positive")
     private String thickness;
 
     private LengthUnits thicknessUnit;
-
-    @DecimalMin(value = "0.0", message = "Quantity must be positive")
-    private Double quantity;
 
     private String description;
 
@@ -56,15 +57,6 @@ public class InsulationUpdateDTO {
 
     public InsulationUpdateDTO setThicknessUnit(LengthUnits thicknessUnit) {
         this.thicknessUnit = thicknessUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public InsulationUpdateDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
         return this;
     }
 

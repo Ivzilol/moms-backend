@@ -16,11 +16,7 @@ public class RegisterGalvanizedEvent extends BaseMaterialEvent {
 
     private LengthUnits maxLengthUnit;
 
-    private String area;
-
-    private AreaUnits areaUnit;
-
-    private Double quantity;
+    private String numberOfSheets;
 
     private String description;
 
@@ -30,16 +26,14 @@ public class RegisterGalvanizedEvent extends BaseMaterialEvent {
 
     }
 
-    public RegisterGalvanizedEvent(Long materialId, EventType eventType, String category, String name, String type, String maxLength, LengthUnits maxLengthUnit, String area, AreaUnits areaUnit, Double quantity, String description, String specificationFileUrl) {
+    public RegisterGalvanizedEvent(Long materialId, EventType eventType, String category, String name, String type, String maxLength, LengthUnits maxLengthUnit, String numberOfSheets, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.type = type;
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
-        this.area = area;
-        this.areaUnit = areaUnit;
-        this.quantity = quantity;
+        this.numberOfSheets = numberOfSheets;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
@@ -89,32 +83,15 @@ public class RegisterGalvanizedEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public RegisterGalvanizedEvent setArea(String area) {
-        this.area = area;
+    public RegisterGalvanizedEvent setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
         return this;
     }
 
-    public AreaUnits getAreaUnit() {
-        return areaUnit;
-    }
-
-    public RegisterGalvanizedEvent setAreaUnit(AreaUnits areaUnit) {
-        this.areaUnit = areaUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public RegisterGalvanizedEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

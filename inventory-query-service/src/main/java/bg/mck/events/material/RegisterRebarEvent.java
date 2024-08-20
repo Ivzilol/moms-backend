@@ -12,24 +12,17 @@ public class RegisterRebarEvent extends BaseMaterialEvent {
 
     private String maxLength;
     private LengthUnits maxLengthUnit;
-    private String weight;
-    private WeightUnits weightUnit;
-
-    private Double quantity;
 
     private String description;
 
     private String specificationFileUrl;
 
-    public RegisterRebarEvent(Long materialId, EventType eventType, String category, String name, String maxLength, LengthUnits maxLengthUnit, String weight, WeightUnits weightUnit, Double quantity, String description, String specificationFileUrl) {
+    public RegisterRebarEvent(Long materialId, EventType eventType, String category, String name, String maxLength, LengthUnits maxLengthUnit, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.maxLength = maxLength;
         this.maxLengthUnit = maxLengthUnit;
-        this.weight = weight;
-        this.weightUnit = weightUnit;
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
@@ -74,32 +67,6 @@ public class RegisterRebarEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public String getWeight() {
-        return weight;
-    }
-
-    public RegisterRebarEvent setWeight(String weight) {
-        this.weight = weight;
-        return this;
-    }
-
-    public WeightUnits getWeightUnit() {
-        return weightUnit;
-    }
-
-    public RegisterRebarEvent setWeightUnit(WeightUnits weightUnit) {
-        this.weightUnit = weightUnit;
-        return this;
-    }
-
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public RegisterRebarEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

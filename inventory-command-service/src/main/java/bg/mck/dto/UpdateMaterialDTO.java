@@ -13,7 +13,6 @@ public class UpdateMaterialDTO {
     private LengthUnits lengthUnit;
     private String model;
     private String clazz;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
     private String maxLength;
@@ -100,14 +99,6 @@ public class UpdateMaterialDTO {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public UpdateMaterialDTO setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

@@ -28,13 +28,12 @@ public class RegisterPanelEvent extends BaseMaterialEvent {
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
 
-    private Double quantity;
 
     private String description;
 
     private String specificationFileUrl;
 
-    public RegisterPanelEvent(Long materialId, EventType eventType, String category, String name, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit, Double quantity, String description, String specificationFileUrl) {
+    public RegisterPanelEvent(Long materialId, EventType eventType, String category, String name, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
@@ -50,7 +49,6 @@ public class RegisterPanelEvent extends BaseMaterialEvent {
         this.frontSheetThicknessUnit = frontSheetThicknessUnit;
         this.backSheetThickness = backSheetThickness;
         this.backSheetThicknessUnit = backSheetThicknessUnit;
-        this.quantity = quantity;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }
@@ -185,14 +183,6 @@ public class RegisterPanelEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public RegisterPanelEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;

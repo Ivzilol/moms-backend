@@ -1,16 +1,11 @@
 package bg.mck.dto;
 
 import bg.mck.enums.LengthUnits;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public class PanelUpdateDTO {
+public class PanelRegisterDTO extends BaseDTO {
 
-    private String name;
     @NotNull(message = "Type is required")
     private String type;
     @NotNull(message = "Color is required")
@@ -33,46 +28,29 @@ public class PanelUpdateDTO {
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
 
-
-    private String description;
-
-    private String specificationFileUrl;
-
-    public PanelUpdateDTO() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public PanelUpdateDTO setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getType() {
+    public @NotNull(message = "Type is required") String getType() {
         return type;
     }
 
-    public PanelUpdateDTO setType(String type) {
+    public PanelRegisterDTO setType(@NotNull(message = "Type is required") String type) {
         this.type = type;
         return this;
     }
 
-    public String getColor() {
+    public @NotNull(message = "Color is required") String getColor() {
         return color;
     }
 
-    public PanelUpdateDTO setColor(String color) {
+    public PanelRegisterDTO setColor(@NotNull(message = "Color is required") String color) {
         this.color = color;
         return this;
     }
 
-    public String getLength() {
+    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getLength() {
         return length;
     }
 
-    public PanelUpdateDTO setLength(String length) {
+    public PanelRegisterDTO setLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String length) {
         this.length = length;
         return this;
     }
@@ -81,16 +59,16 @@ public class PanelUpdateDTO {
         return lengthUnit;
     }
 
-    public PanelUpdateDTO setLengthUnit(LengthUnits lengthUnit) {
+    public PanelRegisterDTO setLengthUnit(LengthUnits lengthUnit) {
         this.lengthUnit = lengthUnit;
         return this;
     }
 
-    public String getWidth() {
+    public @Pattern(regexp = "^[^-].*", message = "Width must be positive") String getWidth() {
         return width;
     }
 
-    public PanelUpdateDTO setWidth(String width) {
+    public PanelRegisterDTO setWidth(@Pattern(regexp = "^[^-].*", message = "Width must be positive") String width) {
         this.width = width;
         return this;
     }
@@ -99,16 +77,16 @@ public class PanelUpdateDTO {
         return widthUnit;
     }
 
-    public PanelUpdateDTO setWidthUnit(LengthUnits widthUnit) {
+    public PanelRegisterDTO setWidthUnit(LengthUnits widthUnit) {
         this.widthUnit = widthUnit;
         return this;
     }
 
-    public String getTotalThickness() {
+    public @Pattern(regexp = "^[^-].*", message = "TotalThickness must be positive") String getTotalThickness() {
         return totalThickness;
     }
 
-    public PanelUpdateDTO setTotalThickness(String totalThickness) {
+    public PanelRegisterDTO setTotalThickness(@Pattern(regexp = "^[^-].*", message = "TotalThickness must be positive") String totalThickness) {
         this.totalThickness = totalThickness;
         return this;
     }
@@ -117,16 +95,16 @@ public class PanelUpdateDTO {
         return totalThicknessUnit;
     }
 
-    public PanelUpdateDTO setTotalThicknessUnit(LengthUnits totalThicknessUnit) {
+    public PanelRegisterDTO setTotalThicknessUnit(LengthUnits totalThicknessUnit) {
         this.totalThicknessUnit = totalThicknessUnit;
         return this;
     }
 
-    public String getFrontSheetThickness() {
+    public @Pattern(regexp = "^[^-].*", message = "FrontSheetThickness must be positive") @NotNull(message = "Front sheet thickness is required") String getFrontSheetThickness() {
         return frontSheetThickness;
     }
 
-    public PanelUpdateDTO setFrontSheetThickness(String frontSheetThickness) {
+    public PanelRegisterDTO setFrontSheetThickness(@Pattern(regexp = "^[^-].*", message = "FrontSheetThickness must be positive") @NotNull(message = "Front sheet thickness is required") String frontSheetThickness) {
         this.frontSheetThickness = frontSheetThickness;
         return this;
     }
@@ -135,16 +113,16 @@ public class PanelUpdateDTO {
         return frontSheetThicknessUnit;
     }
 
-    public PanelUpdateDTO setFrontSheetThicknessUnit(LengthUnits frontSheetThicknessUnit) {
+    public PanelRegisterDTO setFrontSheetThicknessUnit(LengthUnits frontSheetThicknessUnit) {
         this.frontSheetThicknessUnit = frontSheetThicknessUnit;
         return this;
     }
 
-    public String getBackSheetThickness() {
+    public @Pattern(regexp = "^[^-].*", message = "BackSheetThickness must be positive") @NotNull(message = "Back sheet thickness is required") String getBackSheetThickness() {
         return backSheetThickness;
     }
 
-    public PanelUpdateDTO setBackSheetThickness(String backSheetThickness) {
+    public PanelRegisterDTO setBackSheetThickness(@Pattern(regexp = "^[^-].*", message = "BackSheetThickness must be positive") @NotNull(message = "Back sheet thickness is required") String backSheetThickness) {
         this.backSheetThickness = backSheetThickness;
         return this;
     }
@@ -153,28 +131,8 @@ public class PanelUpdateDTO {
         return backSheetThicknessUnit;
     }
 
-    public PanelUpdateDTO setBackSheetThicknessUnit(LengthUnits backSheetThicknessUnit) {
+    public PanelRegisterDTO setBackSheetThicknessUnit(LengthUnits backSheetThicknessUnit) {
         this.backSheetThicknessUnit = backSheetThicknessUnit;
-        return this;
-    }
-
-
-
-    public String getDescription() {
-        return description;
-    }
-
-    public PanelUpdateDTO setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public PanelUpdateDTO setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
         return this;
     }
 }

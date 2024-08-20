@@ -23,7 +23,6 @@ public class PanelEntity extends BaseMaterialEntity {
     private LengthUnits frontSheetThicknessUnit;
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
-    private Double quantity;
     private String description;
     private String specificationFileUrl;
 
@@ -46,7 +45,6 @@ public class PanelEntity extends BaseMaterialEntity {
         this.frontSheetThicknessUnit = builder.frontSheetThicknessUnit;
         this.backSheetThickness = builder.backSheetThickness;
         this.backSheetThicknessUnit = builder.backSheetThicknessUnit;
-        this.quantity = builder.quantity;
         this.description = builder.description;
         this.specificationFileUrl = builder.specificationFileUrl;
     }
@@ -66,7 +64,6 @@ public class PanelEntity extends BaseMaterialEntity {
         this.frontSheetThicknessUnit = other.frontSheetThicknessUnit;
         this.backSheetThickness = other.backSheetThickness;
         this.backSheetThicknessUnit = other.backSheetThicknessUnit;
-        this.quantity = other.quantity;
         this.description = other.description;
         this.specificationFileUrl = other.specificationFileUrl;
     }
@@ -189,14 +186,6 @@ public class PanelEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public PanelEntity setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
@@ -221,27 +210,12 @@ public class PanelEntity extends BaseMaterialEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PanelEntity that = (PanelEntity) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(color, that.color) &&
-                Objects.equals(length, that.length) &&
-                lengthUnit == that.lengthUnit &&
-                Objects.equals(width, that.width) &&
-                widthUnit == that.widthUnit &&
-                Objects.equals(totalThickness, that.totalThickness) &&
-                totalThicknessUnit == that.totalThicknessUnit &&
-                Objects.equals(frontSheetThickness, that.frontSheetThickness) &&
-                frontSheetThicknessUnit == that.frontSheetThicknessUnit &&
-                Objects.equals(backSheetThickness, that.backSheetThickness) &&
-                backSheetThicknessUnit == that.backSheetThicknessUnit &&
-                Objects.equals(quantity, that.quantity) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(specificationFileUrl, that.specificationFileUrl);
+        return Objects.equals(name, that.name) && Objects.equals(type, that.type) && Objects.equals(color, that.color) && Objects.equals(length, that.length) && lengthUnit == that.lengthUnit && Objects.equals(width, that.width) && widthUnit == that.widthUnit && Objects.equals(totalThickness, that.totalThickness) && totalThicknessUnit == that.totalThicknessUnit && Objects.equals(frontSheetThickness, that.frontSheetThickness) && frontSheetThicknessUnit == that.frontSheetThicknessUnit && Objects.equals(backSheetThickness, that.backSheetThickness) && backSheetThicknessUnit == that.backSheetThicknessUnit && Objects.equals(description, that.description) && Objects.equals(specificationFileUrl, that.specificationFileUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, type, color, length, lengthUnit, width, widthUnit, totalThickness, totalThicknessUnit, frontSheetThickness, frontSheetThicknessUnit, backSheetThickness, backSheetThicknessUnit, quantity, description, specificationFileUrl);
+        return Objects.hash(name, type, color, length, lengthUnit, width, widthUnit, totalThickness, totalThicknessUnit, frontSheetThickness, frontSheetThicknessUnit, backSheetThickness, backSheetThicknessUnit, description, specificationFileUrl);
     }
 
     @Override
@@ -260,7 +234,6 @@ public class PanelEntity extends BaseMaterialEntity {
                 ", frontSheetThicknessUnit=" + frontSheetThicknessUnit +
                 ", backSheetThickness='" + backSheetThickness + '\'' +
                 ", backSheetThicknessUnit=" + backSheetThicknessUnit +
-                ", quantity=" + quantity +
                 ", description='" + description + '\'' +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 '}';
@@ -281,7 +254,6 @@ public class PanelEntity extends BaseMaterialEntity {
         private LengthUnits frontSheetThicknessUnit;
         private String backSheetThickness;
         private LengthUnits backSheetThicknessUnit;
-        private Double quantity;
         private String description;
         private String specificationFileUrl;
 
@@ -350,10 +322,6 @@ public class PanelEntity extends BaseMaterialEntity {
             return this;
         }
 
-        public Builder setQuantity(Double quantity) {
-            this.quantity = quantity;
-            return this;
-        }
 
         public Builder setDescription(String description) {
             this.description = description;

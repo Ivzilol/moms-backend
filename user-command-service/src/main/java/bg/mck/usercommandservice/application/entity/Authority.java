@@ -29,16 +29,18 @@ public class Authority {
         return id;
     }
 
-    public void setId(Long id) {
+    public Authority setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public AuthorityEnum getAuthority() {
         return authority;
     }
 
-    public void setAuthority(AuthorityEnum authority) {
+    public Authority setAuthority(AuthorityEnum authority) {
         this.authority = authority;
+        return this;
     }
 
     @Override

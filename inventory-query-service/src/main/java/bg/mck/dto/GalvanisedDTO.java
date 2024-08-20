@@ -15,11 +15,7 @@ public class GalvanisedDTO implements MaterialDTO{
 
     private LengthUnits maxLengthUnit;
 
-    private String area;
-
-    private AreaUnits areaUnit;
-
-    private Double quantity;
+    private String numberOfSheets;
 
     private String description;
 
@@ -59,21 +55,15 @@ public class GalvanisedDTO implements MaterialDTO{
         this.maxLength = maxLength;
     }
 
-    public String getArea() {
-        return area;
+    public String getNumberOfSheets() {
+        return numberOfSheets;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
 
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
     public String getDescription() {
         return description;
@@ -91,14 +81,6 @@ public class GalvanisedDTO implements MaterialDTO{
         this.specificationFileUrl = specificationFileUrl;
     }
 
-    public AreaUnits getAreaUnit() {
-        return areaUnit;
-    }
-
-    public GalvanisedDTO setAreaUnit(AreaUnits areaUnit) {
-        this.areaUnit = areaUnit;
-        return this;
-    }
 
     public LengthUnits getMaxLengthUnit() {
         return maxLengthUnit;

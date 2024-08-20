@@ -23,7 +23,6 @@ public class AppInit implements CommandLineRunner {
 
         FastenerEntity fastenerEntity = new FastenerEntity();
         fastenerEntity.setName("Fastener1");
-        fastenerEntity.setQuantity(5.0);
         fastenerEntity.setLength("15.50");
 
         fastenerRepository.save(fastenerEntity);

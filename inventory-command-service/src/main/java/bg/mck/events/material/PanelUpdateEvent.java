@@ -31,7 +31,6 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
 
-    private Double quantity;
 
     private String description;
 
@@ -172,14 +171,7 @@ public class PanelUpdateEvent extends BaseMaterialEvent {
         return this;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
 
-    public PanelUpdateEvent setQuantity(Double quantity) {
-        this.quantity = quantity;
-        return this;
-    }
 
     public String getDescription() {
         return description;
