@@ -9,11 +9,13 @@ import bg.mck.ordercommandservice.event.EventData;
 import bg.mck.ordercommandservice.event.EventType;
 import bg.mck.ordercommandservice.event.TransportEvent;
 import bg.mck.ordercommandservice.mapper.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
@@ -53,6 +55,8 @@ class EventMapperServiceTest {
 
     @InjectMocks
     private EventMapperService eventMapperService;
+
+
 
     @Test
     void mapEvent_withTransportMaterials_sendsEvent_OrderCreated() {
@@ -118,6 +122,32 @@ class EventMapperServiceTest {
         eventMapperService.mapEvent(orderEntity);
 
         verify(orderQueryServiceClient, never()).sendEvent(any(), anyString());
+    }
+
+    @Test
+    void givenCreatedOrderStatus_whenMapEvent_thenOrderCreatedEventType() {
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderStatus(OrderStatus.CREATED);
+
+        eventMapperService.mapEvent(orderEntity);
+
+        ArgumentCaptor<EventData<CreateOrderEvent<?>>> eventCaptor = ArgumentCaptor.forClass(EventData.class);
+        verify(orderQueryServiceClient, atLeastOnce()).sendEvent(eventCaptor.capture(), eq(EventType.ORDER_CREATED.toString()));
+
+        assertEquals(EventType.ORDER_CREATED, eventCaptor.getValue().getEventType());
+    }
+
+    @Test
+    void givenUpdatedOrderStatus_whenMapEvent_thenOrderUpdatedEventType() {
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderStatus(OrderStatus.COMPLETED);
+
+        eventMapperService.mapEvent(orderEntity);
+
+        ArgumentCaptor<EventData<CreateOrderEvent<?>>> eventCaptor = ArgumentCaptor.forClass(EventData.class);
+        verify(orderQueryServiceClient, atLeastOnce()).sendEvent(eventCaptor.capture(), eq(EventType.ORDER_UPDATED.toString()));
+
+        assertEquals(EventType.ORDER_UPDATED, eventCaptor.getValue().getEventType());
     }
 
 }

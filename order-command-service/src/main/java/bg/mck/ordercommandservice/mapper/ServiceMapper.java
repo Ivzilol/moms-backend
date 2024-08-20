@@ -17,4 +17,5 @@ public interface ServiceMapper {
     ServiceEvent toEvent(ServiceEntity serviceEntity);
 
     void toUpdateServiceEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget ServiceEntity serviceEntity);
+
 }

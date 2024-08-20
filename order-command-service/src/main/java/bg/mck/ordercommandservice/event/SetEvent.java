@@ -8,7 +8,7 @@ public class SetEvent {
     private String quantity;
     private String description;
     private String specificationFileUrl;
-    private String color;
+    private String color; // TODO remove this field
     private String maxLength;
     private String adminNote;
     private MaterialStatus materialStatus;
