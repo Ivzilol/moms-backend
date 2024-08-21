@@ -4,6 +4,7 @@ package bg.mck.userqueryservice.application.events;
 import bg.mck.userqueryservice.application.enums.EventType;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ProfileStatusUpdatedEvent extends BaseEvent {
 
@@ -25,4 +26,6 @@ public class ProfileStatusUpdatedEvent extends BaseEvent {
         isActive = active;
         return this;
     }
+
+
 }

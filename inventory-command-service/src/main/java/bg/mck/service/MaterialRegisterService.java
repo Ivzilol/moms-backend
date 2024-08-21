@@ -210,8 +210,7 @@ public class MaterialRegisterService {
             SetEntity setEntity = mapSetEntity(setRegisterDTO);
             this.setRepository.save(setEntity);
             SetEntity createSet = this.setRepository
-                    .findByName(createMaterialDTO.getGalvanisedSheetThickness() + " " + createMaterialDTO.getGalvanisedSheetThicknessUnit() + " " +
-                            createMaterialDTO.getColor());
+                    .findByName(setRegisterDTO.getColor() + " " + setRegisterDTO.getMaxLength() + " " + setRegisterDTO.getMaxLengthUnit());
 
             Optional<CategoryEntity> byMaterialType = this.categoryRepository
                     .findByMaterialType(MaterialType.SET);
@@ -571,7 +570,7 @@ public class MaterialRegisterService {
                 }).orElseThrow(() -> new RuntimeException("Failed to map UnspecifiedEntity"));
     }
 
-    private boolean materialExists(CreateMaterialDTO createMaterialDTO) {
+    boolean materialExists(CreateMaterialDTO createMaterialDTO) {
         if (createMaterialDTO.getMaterialType().equals(MaterialType.FASTENERS)) {
             if (createMaterialDTO.getType() == null || createMaterialDTO.getDiameter() == null || createMaterialDTO.getLength() == null ||
             createMaterialDTO.getLengthUnit() == null) {

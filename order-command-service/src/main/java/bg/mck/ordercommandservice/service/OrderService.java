@@ -213,7 +213,7 @@ public class OrderService {
                     if (!materialDTO.getAdminNote().contains("##")) {
                         return;
                     }
-                    if (material.getAdminNote().equals(materialDTO.getAdminNote())) {
+                    if (material.getAdminNote() != null && material.getAdminNote().equals(materialDTO.getAdminNote())) {
                         return;
                     }
 

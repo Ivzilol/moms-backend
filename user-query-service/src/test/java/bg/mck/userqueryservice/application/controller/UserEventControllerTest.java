@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -127,16 +128,83 @@ public class UserEventControllerTest {
 
 
     @Test
-    public void testProcessUserEvent_UpdateProfileEvent() throws Exception {
+    public void testProcessUserEvent_UpdateProfileStatus() throws Exception {
         ProfileStatusUpdatedEvent profileUpdatedEvent = new ProfileStatusUpdatedEvent();
         profileUpdatedEvent.setUserId(1L);
-        profileUpdatedEvent.setActive(true);
+        profileUpdatedEvent.setActive(false);
+        profileUpdatedEvent.setLocalDateTime(LocalDateTime.now());
+
+        UserEvent<ProfileStatusUpdatedEvent> userEvent = new UserEvent<>();
+        userEvent.setEvent(profileUpdatedEvent);
+        userEvent.setEventType(EventType.UserStatusUpdated);
+        userEvent.setId("200");
+
+        UserEntity userEntityBefore = userRepository.findById(profileUpdatedEvent.getUserId().toString()).orElse(null);
+        assertNotNull(userEntityBefore);
+        assertTrue(userEntityBefore.isActive());
+
+        String data = objectMapper.writeValueAsString(userEvent);
+
+        mockMvc.perform(post("/users/event")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Event-Type", EventType.UserStatusUpdated.name())
+                        .content(data))
+                .andExpect(status().isOk());
+
+        UserEntity userEntityAfter = userRepository.findById(profileUpdatedEvent.getUserId().toString()).orElse(null);
+        assertNotNull(userEntityAfter);
+        assertFalse(userEntityAfter.isActive());
+
+
+        UserEvent<? extends BaseEvent> savedEvent = eventRepository.findById(userEvent.getId()).get();
+        ProfileStatusUpdatedEvent event = (ProfileStatusUpdatedEvent) savedEvent.getEvent();
+        assertEquals(userEvent.getId(), savedEvent.getId());
+        assertEquals(profileUpdatedEvent.isActive(), event.isActive());
+        assertEquals(profileUpdatedEvent.getEventType(), event.getEventType());
+    }
+
+    @Test
+    public void testProcessUserEvent_UpdateProfileStatus_InvalidUser_ThrowsException() throws Exception {
+        ProfileStatusUpdatedEvent profileUpdatedEvent = new ProfileStatusUpdatedEvent();
+        profileUpdatedEvent.setUserId(1000L);
+        profileUpdatedEvent.setActive(false);
         profileUpdatedEvent.setLocalDateTime(LocalDateTime.now());
 
         UserEvent<ProfileStatusUpdatedEvent> userEvent = new UserEvent<>();
         userEvent.setEvent(profileUpdatedEvent);
         userEvent.setEventType(EventType.UserProfileUpdated);
         userEvent.setId("200");
+
+
+        String data = objectMapper.writeValueAsString(userEvent);
+
+        mockMvc.perform(post("/users/event")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Event-Type", EventType.UserStatusUpdated.name())
+                        .content(data))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertInstanceOf(UserNotFoundException.class, result.getResolvedException()));
+    }
+
+
+    @Test
+    public void testProcessUserEvent_UpdateProfile() throws Exception {
+        ProfileUpdatedEvent profileUpdatedEvent = new ProfileUpdatedEvent();
+        profileUpdatedEvent.setUserId(1L);
+        profileUpdatedEvent.setEmail("newEmail@email.bg");
+        profileUpdatedEvent.setFirstName("firstName");
+        profileUpdatedEvent.setLastName("lastName");
+        profileUpdatedEvent.setPhoneNumber("0000000");
+        profileUpdatedEvent.setLocalDateTime(LocalDateTime.now());
+
+        UserEvent<ProfileUpdatedEvent> userEvent = new UserEvent<>();
+        userEvent.setEvent(profileUpdatedEvent);
+        userEvent.setEventType(EventType.UserProfileUpdated);
+        userEvent.setId("200");
+
+        UserEntity userEntityBefore = userRepository.findById(profileUpdatedEvent.getUserId().toString()).orElse(null);
+        assertNotNull(userEntityBefore);
+        assertEquals("test@test.com", userEntityBefore.getEmail());
 
         String data = objectMapper.writeValueAsString(userEvent);
 
@@ -146,14 +214,50 @@ public class UserEventControllerTest {
                         .content(data))
                 .andExpect(status().isOk());
 
-        UserEntity userEntity = userRepository.findById(profileUpdatedEvent.getUserId().toString()).orElse(null);
-        assertNotNull(userEntity);
-        assertEquals(profileUpdatedEvent.isActive(), userEntity.isActive());
+        UserEntity userEntityAfter = userRepository.findById(profileUpdatedEvent.getUserId().toString()).orElse(null);
+        assertNotNull(userEntityAfter);
+        assertEquals(profileUpdatedEvent.getEmail(), userEntityAfter.getEmail());
+        assertEquals(profileUpdatedEvent.getFirstName(), userEntityAfter.getFirstName());
+        assertEquals(profileUpdatedEvent.getLastName(), userEntityAfter.getLastName());
+        assertEquals(profileUpdatedEvent.getPhoneNumber(), userEntityAfter.getPhoneNumber());
 
 
         UserEvent<? extends BaseEvent> savedEvent = eventRepository.findById(userEvent.getId()).get();
+        ProfileUpdatedEvent event = (ProfileUpdatedEvent) savedEvent.getEvent();
         assertEquals(userEvent.getId(), savedEvent.getId());
+        assertEquals(profileUpdatedEvent.getFirstName(), event.getFirstName());
+        assertEquals(profileUpdatedEvent.getLastName(), event.getLastName());
+        assertEquals(profileUpdatedEvent.getPhoneNumber(), event.getPhoneNumber());
+        assertEquals(profileUpdatedEvent.getEmail(), event.getEmail());
     }
+
+    @Test
+    public void testProcessUserEvent_UpdateProfile_InvalidUser_ThrowsException() throws Exception {
+        ProfileUpdatedEvent profileUpdatedEvent = new ProfileUpdatedEvent();
+        profileUpdatedEvent.setUserId(1000L);
+        profileUpdatedEvent.setEmail("newEmail@email.bg");
+        profileUpdatedEvent.setFirstName("firstName");
+        profileUpdatedEvent.setLastName("lastName");
+        profileUpdatedEvent.setPhoneNumber("0000000");
+        profileUpdatedEvent.setLocalDateTime(LocalDateTime.now());
+
+        UserEvent<ProfileUpdatedEvent> userEvent = new UserEvent<>();
+        userEvent.setEvent(profileUpdatedEvent);
+        userEvent.setEventType(EventType.UserProfileUpdated);
+        userEvent.setId("200");
+
+
+        String data = objectMapper.writeValueAsString(userEvent);
+
+        mockMvc.perform(post("/users/event")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Event-Type", EventType.UserProfileUpdated.name())
+                        .content(data))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertInstanceOf(UserNotFoundException.class, result.getResolvedException()));
+    }
+
+
 
 
     @Test
