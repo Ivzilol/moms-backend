@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Pattern;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Objects;
+
 @Document("galvanised_sheets")
 public class GalvanisedSheetEntity extends BaseMaterialEntity {
 
@@ -81,5 +83,32 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
     public GalvanisedSheetEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        GalvanisedSheetEntity that = (GalvanisedSheetEntity) o;
+        return Objects.equals(type, that.type) &&
+                Objects.equals(maxLength, that.maxLength) &&
+                Objects.equals(numberOfSheets, that.numberOfSheets) &&
+                Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type, maxLength, numberOfSheets, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "GalvanisedSheetEntity{" +
+                "type='" + type + '\'' +
+                ", maxLength='" + maxLength + '\'' +
+                ", numberOfSheets='" + numberOfSheets + '\'' +
+                ", quantity='" + quantity + '\'' +
+                "} " + super.toString();
     }
 }

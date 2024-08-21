@@ -3,6 +3,8 @@ package bg.mck.orderqueryservice.entity;
 import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Document
 public class BaseMaterialEntity extends BaseEntity {
 
@@ -65,5 +67,33 @@ public class BaseMaterialEntity extends BaseEntity {
     public BaseMaterialEntity setMaterialStatus(MaterialStatus materialStatus) {
         this.materialStatus = materialStatus;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        BaseMaterialEntity that = (BaseMaterialEntity) o;
+        return Objects.equals(description, that.description) &&
+                Objects.equals(specificationFileUrl, that.specificationFileUrl) &&
+                Objects.equals(adminNote, that.adminNote) &&
+                materialStatus == that.materialStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), description, specificationFileUrl, adminNote, materialStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "BaseMaterialEntity{" +
+                "id='" + getId() + '\'' +
+                ", description='" + description + '\'' +
+                ", specificationFileUrl='" + specificationFileUrl + '\'' +
+                ", adminNote='" + adminNote + '\'' +
+                ", materialStatus=" + materialStatus +
+                '}';
     }
 }
