@@ -12,6 +12,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -106,6 +108,11 @@ public class MailService {
 
     private static String getMessage(String orderStatusText, String orderNumber, String orderDate, String deliveryDate, String constructionSiteName, String constructionSiteNumber, String orderStatus, String specificationFileUrl, StringBuilder materialsHtml) {
         StringBuilder messageBuilder = new StringBuilder();
+        ZonedDateTime timeOfCreation = ZonedDateTime.parse(orderDate);
+        ZonedDateTime timeOfDelivery = ZonedDateTime.parse(deliveryDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        orderDate = timeOfCreation.format(formatter);
+        deliveryDate = timeOfDelivery.format(formatter);
 
         messageBuilder.append("<!DOCTYPE html>")
                 .append("<html>")
@@ -168,108 +175,39 @@ public class MailService {
     }
 
     public void sendResetPasswordMessage(ForgotPasswordEmailDTO dto) throws MessagingException {
-        String subject = "Password Reset Request";
-        String content = "<!DOCTYPE html>"
-                + "<html lang=\"en\">"
-                + "<head>"
-                + "    <meta charset=\"UTF-8\">"
-                + "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
-                + "    <title>Password Reset Email</title>"
-                + "    <style>"
-                + "        body {"
-                + "            font-family: Arial, sans-serif;"
-                + "            color: #333;"
-                + "            background-color: #f4f4f4;"
-                + "            margin: 0;"
-                + "            padding: 0;"
-                + "        }"
-                + "        .container {"
-                + "            width: 100%;"
-                + "            max-width: 600px;"
-                + "            margin: 0 auto;"
-                + "            background-color: #ffffff;"
-                + "            border-radius: 8px;"
-                + "            overflow: hidden;"
-                + "            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);"
-                + "        }"
-                + "        .header {"
-                + "            background-color: #007bff;"
-                + "            color: #ffffff;"
-                + "            padding: 20px;"
-                + "            text-align: center;"
-                + "        }"
-                + "        .header h1 {"
-                + "            margin: 0;"
-                + "            font-size: 24px;"
-                + "        }"
-                + "        .content {"
-                + "            padding: 20px;"
-                + "        }"
-                + "        .content h2 {"
-                + "            font-size: 18px;"
-                + "            margin-top: 0;"
-                + "        }"
-                + "        .content p {"
-                + "            line-height: 1.6;"
-                + "        }"
-                + "        .button {"
-                + "            display: inline-block;"
-                + "            padding: 10px 20px;"
-                + "            font-size: 16px;"
-                + "            color: #ffffff;"
-                + "            background-color: #007bff;"
-                + "            text-decoration: none;"
-                + "            border-radius: 5px;"
-                + "            text-align: center;"
-                + "            margin-top: 20px;"
-                + "        }"
-                + "        .footer {"
-                + "            background-color: #f4f4f4;"
-                + "            text-align: center;"
-                + "            padding: 10px;"
-                + "            font-size: 14px;"
-                + "        }"
-                + "        .footer p {"
-                + "            margin: 0;"
-                + "        }"
-                + "        .token-info {"
-                + "            margin-top: 20px;"
-                + "            padding: 10px;"
-                + "            background-color: #f9f9f9;"
-                + "            border: 1px solid #ddd;"
-                + "            border-radius: 5px;"
-                + "        }"
-                + "        .token-info p {"
-                + "            margin: 0;"
-                + "            font-size: 16px;"
-                + "        }"
-                + "    </style>"
-                + "</head>"
-                + "<body>"
-                + "    <div class=\"container\">"
-                + "        <div class=\"header\">"
-                + "            <h1>Password Reset Request</h1>"
-                + "        </div>"
-                + "        <div class=\"content\">"
-                + "            <h2>Hello " + dto.getEmail().split("@")[0] + ",</h2>"
-                + "            <p>We received a request to reset your password. Please click the link below to create a new password:</p>"
-                + "            <div class=\"token-info\">"
-                + "                <p>Your password reset token is:</p>"
-                + "                  <br>"
-                + "                <p><strong>" + dto.getUuid() + "</strong></p>"
-                + "                  <br>"
-                + "                <p>Please copy this token and paste it into the designated field on the reset password page.</p>"
-                + "            </div>"
-                + "            <a href=\"" + resetLink + "\" class=\"button\">Reset Password</a>"
-                + "            <p>If you did not request this change, please ignore this email.</p>"
-                + "            <p>Best regards,<br>MCK Team</p>"
-                + "        </div>"
-                + "        <div class=\"footer\">"
-                + "            <p>&copy; " + java.time.Year.now().getValue() + " MCK. All rights reserved.</p>"
-                + "        </div>"
-                + "    </div>"
-                + "</body>"
-                + "</html>";
+        String subject = "Промяна на парола!";
+        String content = "<!DOCTYPE html>\n" +
+                "<html lang=\"bg\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Заявка за смяна на парола</title>\n" +
+                "</head>\n" +
+                "<body style=\"font-family: Arial, sans-serif; color: #333; background-color: #f4f4f4; margin: 0; padding: 0;\">\n" +
+                "    <div style=\"width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\">\n" +
+                "        <div style=\"background-color: #007bff; color: #ffffff; padding: 20px; text-align: center;\">\n" +
+                "            <h1 style=\"margin: 0; font-size: 24px;\">Искане за нулиране на парола</h1>\n" +
+                "        </div>\n" +
+                "        <div style=\"padding: 20px;\">\n" +
+                "            <h2 style=\"font-size: 18px; margin-top: 0;\">Здравейте, "+ dto.getEmail().split("@")[0] + "</h2>\n" +
+                "            <p style=\"line-height: 1.6;\">Получихме заявка за промяна на вашата парола. Моля, кликнете върху линка по-долу, за да създадете нова парола:</p>\n" +
+                "            <div style=\"margin-top: 20px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px;\">\n" +
+                "                <p style=\"margin: 0; font-size: 16px;\">Вашият код за смяна на паролата е:</p>\n" +
+                "                <br>\n" +
+                "                <p style=\"margin: 0; font-size: 16px;\"><strong>"+ dto.getUuid() + "</strong></p>\n" +
+                "                <br>\n" +
+                "                <p style=\"margin: 0; font-size: 16px;\">Моля, копирайте този код и го поставете в обозначеното поле на страницата за смяна на паролата.</p>\n" +
+                "            </div>\n" +
+                "            <a href=\""+ resetLink  +"\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-decoration: none; border-radius: 5px; text-align: center; margin-top: 20px;\">Смяна на парола</a>\n" +
+                "            <p style=\"line-height: 1.6;\">Ако не сте поискали тази промяна, моля, игнорирайте този имейл.</p>\n" +
+                "            <p style=\"line-height: 1.6;\">С уважение,<br>Екипът на MCK</p>\n" +
+                "        </div>\n" +
+                "        <div style=\"background-color: #f4f4f4; text-align: center; padding: 10px; font-size: 14px;\">\n" +
+                "            <p style=\"margin: 0;\">&copy; "+ LocalDateTime.now().getYear() +" MCK. Всички права запазени.</p>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "</body>\n" +
+                "</html>";
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");

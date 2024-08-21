@@ -204,7 +204,7 @@ public interface OrderMapper {
     RebarDTO fromRebarEntityToDTO(RebarEntity rebarEntity);
 
     @Mapping(target = "maxLength", expression = "java(setEntity.getMaxLength() != null ? setEntity.getMaxLength().split(\"\\\\s+\")[0] : null)")
-    @Mapping(target = "maxLengthUnit", expression = "java(setEntity.getMaxLength().split(\"\\\\s+\").length > 1 ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(setEntity.getMaxLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "maxLengthUnit", expression = "java(setEntity.getMaxLength() != null && setEntity.getMaxLength().split(\"\\\\s+\").length > 1 ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(setEntity.getMaxLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
     @Mapping(target = "quantity", expression = "java(setEntity.getQuantity() != null ? setEntity.getQuantity().split(\"\\\\s+\")[0] : null)")
     @Mapping(target = "quantityUnit", expression = "java(setEntity.getQuantity() != null && setEntity.getQuantity().split(\"\\\\s+\").length > 1 ? bg.mck.orderqueryservice.entity.enums.WeightUnits.valueOf(setEntity.getQuantity().split(\"\\\\s+\")[1].toUpperCase()) : null)")
     SetDTO fromSetEntityToDTO(SetEntity setEntity);
@@ -214,9 +214,9 @@ public interface OrderMapper {
     ServiceDTO fromServiceEntityToDTO(ServiceEntity serviceEntity);
 
     @Mapping(target = "maxLength", expression = "java(transportEntity.getMaxLength() != null ? transportEntity.getMaxLength().split(\"\\\\s+\")[0] : null)")
-    @Mapping(target = "maxLengthUnit", expression = "java(transportEntity.getMaxLength().split(\"\\\\s+\").length > 1 ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(transportEntity.getMaxLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "maxLengthUnit", expression = "java(transportEntity.getMaxLength() != null && transportEntity.getMaxLength().split(\"\\\\s+\").length > 1 ? bg.mck.orderqueryservice.entity.enums.LengthUnits.valueOf(transportEntity.getMaxLength().split(\"\\\\s+\")[1].toUpperCase()) : null)")
     @Mapping(target = "weight", expression = "java(transportEntity.getWeight() != null ? transportEntity.getWeight().split(\"\\\\s+\")[0] : null)")
-    @Mapping(target = "weightUnit", expression = "java(transportEntity.getWeight().split(\"\\\\s+\").length > 1 ? bg.mck.orderqueryservice.entity.enums.WeightUnits.valueOf(transportEntity.getWeight().split(\"\\\\s+\")[1].toUpperCase()) : null)")
+    @Mapping(target = "weightUnit", expression = "java(transportEntity.getWeight() != null && transportEntity.getWeight().split(\"\\\\s+\").length > 1 ? bg.mck.orderqueryservice.entity.enums.WeightUnits.valueOf(transportEntity.getWeight().split(\"\\\\s+\")[1].toUpperCase()) : null)")
     TransportDTO fromTransportEntityToDTO(TransportEntity transportEntity);
 
     void toUpdateFasterEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget FastenerEntity fastenerEntity);
