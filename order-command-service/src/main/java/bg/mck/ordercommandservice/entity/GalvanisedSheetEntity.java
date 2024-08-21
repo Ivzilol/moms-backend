@@ -4,6 +4,8 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "galvanised_sheets")
 public class GalvanisedSheetEntity extends BaseMaterialEntity {
@@ -68,5 +70,28 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
     public GalvanisedSheetEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GalvanisedSheetEntity that = (GalvanisedSheetEntity) o;
+        return Objects.equals(type, that.type) && Objects.equals(maxLength, that.maxLength) && Objects.equals(numberOfSheets, that.numberOfSheets) && Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, maxLength, numberOfSheets, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "GalvanisedSheetEntity{" +
+                "type='" + type + '\'' +
+                ", maxLength='" + maxLength + '\'' +
+                ", numberOfSheets='" + numberOfSheets + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

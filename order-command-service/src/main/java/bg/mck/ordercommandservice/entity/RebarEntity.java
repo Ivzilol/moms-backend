@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "rebars")
 public class RebarEntity extends BaseMaterialEntity {
@@ -50,5 +52,26 @@ public class RebarEntity extends BaseMaterialEntity {
     public RebarEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RebarEntity that = (RebarEntity) o;
+        return Objects.equals(maxLength, that.maxLength) && Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(maxLength, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "RebarEntity{" +
+                "maxLength='" + maxLength + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

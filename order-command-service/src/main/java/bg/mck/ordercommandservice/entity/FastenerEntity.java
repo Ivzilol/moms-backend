@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "fastener")
 public class FastenerEntity extends BaseMaterialEntity {
@@ -91,5 +93,30 @@ public class FastenerEntity extends BaseMaterialEntity {
     public FastenerEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FastenerEntity that = (FastenerEntity) o;
+        return Objects.equals(type, that.type) && Objects.equals(diameter, that.diameter) && Objects.equals(length, that.length) && Objects.equals(standard, that.standard) && Objects.equals(clazz, that.clazz) && Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, diameter, length, standard, clazz, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "FastenerEntity{" +
+                "type='" + type + '\'' +
+                ", diameter='" + diameter + '\'' +
+                ", length='" + length + '\'' +
+                ", standard='" + standard + '\'' +
+                ", clazz='" + clazz + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

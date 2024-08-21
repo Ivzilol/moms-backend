@@ -6,6 +6,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "sets")
 public class SetEntity extends BaseMaterialEntity {
@@ -65,5 +67,27 @@ public class SetEntity extends BaseMaterialEntity {
     public SetEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SetEntity setEntity = (SetEntity) o;
+        return Objects.equals(quantity, setEntity.quantity) && Objects.equals(color, setEntity.color) && Objects.equals(maxLength, setEntity.maxLength);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(quantity, color, maxLength);
+    }
+
+    @Override
+    public String toString() {
+        return "SetEntity{" +
+                "quantity='" + quantity + '\'' +
+                ", color='" + color + '\'' +
+                ", maxLength='" + maxLength + '\'' +
+                '}';
     }
 }

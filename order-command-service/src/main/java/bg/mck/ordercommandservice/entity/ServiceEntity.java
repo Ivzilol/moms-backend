@@ -4,6 +4,8 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "services")
 public class ServiceEntity extends BaseMaterialEntity {
@@ -34,4 +36,5 @@ public class ServiceEntity extends BaseMaterialEntity {
         this.quantity = quantity;
         return this;
     }
+
 }
