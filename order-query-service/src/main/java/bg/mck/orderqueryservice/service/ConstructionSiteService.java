@@ -5,7 +5,6 @@ import bg.mck.orderqueryservice.entity.ConstructionSiteEntity;
 import bg.mck.orderqueryservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.orderqueryservice.mapper.ConstructionSiteMapper;
 import bg.mck.orderqueryservice.repository.ConstructionSiteRepository;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +15,11 @@ import java.util.stream.Collectors;
 public class ConstructionSiteService {
 
     private final ConstructionSiteRepository constructionSiteRepository;
-    private final Gson gson;
     private final ConstructionSiteMapper constructionSiteMapper;
 
     @Autowired
-    public ConstructionSiteService(ConstructionSiteRepository constructionSiteRepository, Gson gson, ConstructionSiteMapper constructionSiteMapper) {
+    public ConstructionSiteService(ConstructionSiteRepository constructionSiteRepository, ConstructionSiteMapper constructionSiteMapper) {
         this.constructionSiteRepository = constructionSiteRepository;
-        this.gson = gson;
         this.constructionSiteMapper = constructionSiteMapper;
     }
 

@@ -24,6 +24,7 @@ public class MailService {
 
     private final JavaMailSender mailSender;
     private final ObjectMapper objectMapper;
+
     @Value("${spring.mail.username}")
     private String from;
 
@@ -35,22 +36,40 @@ public class MailService {
         this.objectMapper = objectMapper;
     }
 
-
     public void sendMessage(String order) throws JsonProcessingException, MessagingException {
         JsonNode rootNode = objectMapper.readTree(order);
-
-        String orderNumber = rootNode.path("orderNumber").asText();
-        String email = rootNode.path("email").asText();
-        String orderDate = rootNode.path("orderDate").asText();
-        String deliveryDate = rootNode.path("deliveryDate").asText();
-        String orderDescription = rootNode.path("orderDescription").asText();
-        String orderStatus = rootNode.path("orderStatus").asText();
-        String constructionSiteName = rootNode.path("constructionSiteName").asText();
-        String constructionSiteNumber = rootNode.path("constructionSiteNumber").asText();
-        String specificationFileUrl = rootNode.path("specificationFileUrl").asText();
+        String orderNumber = getNodeText(rootNode, "orderNumber");
+        String email = getNodeText(rootNode, "email");
+        String orderDate = formatDate(getNodeText(rootNode, "orderDate"));
+        String deliveryDate = formatDate(getNodeText(rootNode, "deliveryDate"));
+        String orderDescription = getNodeText(rootNode, "orderDescription");
+        String orderStatus = getNodeText(rootNode, "orderStatus");
+        String constructionSiteName = getNodeText(rootNode, "constructionSiteName");
+        String constructionSiteNumber = getNodeText(rootNode, "constructionSiteNumber");
+        String specificationFileUrl = getNodeText(rootNode, "specificationFileUrl");
         boolean isNewOrder = rootNode.path("newOrder").asBoolean();
         JsonNode materialsNode = rootNode.path("materials");
 
+        Set<String> columnNames = extractColumnNames(materialsNode);
+        StringBuilder materialsHtml = buildMaterialsHtml(columnNames, materialsNode);
+
+        String orderStatusText = isNewOrder ? "създадена" : "променена";
+        String message = buildOrderMessage(orderStatusText, orderDescription, orderNumber, orderDate, deliveryDate,
+                constructionSiteName, constructionSiteNumber, orderStatus, specificationFileUrl, materialsHtml);
+        sendMail(email, "Вашата поръчка е " + orderStatusText, message);
+    }
+
+    private String getNodeText(JsonNode node, String fieldName) {
+        return node.path(fieldName).asText("");
+    }
+
+    private String formatDate(String dateStr) {
+        ZonedDateTime dateTime = ZonedDateTime.parse(dateStr);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dateTime.format(formatter);
+    }
+
+    private Set<String> extractColumnNames(JsonNode materialsNode) {
         Set<String> columnNames = new HashSet<>();
         for (JsonNode materialNode : materialsNode) {
             Iterator<Map.Entry<String, JsonNode>> fields = materialNode.fields();
@@ -58,9 +77,11 @@ public class MailService {
                 columnNames.add(fields.next().getKey());
             }
         }
+        return columnNames;
+    }
 
+    private StringBuilder buildMaterialsHtml(Set<String> columnNames, JsonNode materialsNode) {
         StringBuilder materialsHtml = new StringBuilder();
-
         materialsHtml.append("<tr>");
         for (String columnName : columnNames) {
             if (!"_id".equals(columnName)) {
@@ -75,24 +96,19 @@ public class MailService {
             materialsHtml.append("<tr>");
             for (String columnName : columnNames) {
                 if (!"_id".equals(columnName)) {
-                    String value = materialNode.path(columnName).asText(null);
+                    String value = materialNode.path(columnName).asText("Няма");
                     materialsHtml.append("<td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">");
                     if ("specificationFileUrl".equals(columnName)) {
                         materialsHtml.append("<a href=\"").append(value).append("\">Изтегли</a>");
                     } else {
-                        materialsHtml.append(value != null ? value : "Няма");
+                        materialsHtml.append(value);
                     }
                     materialsHtml.append("</td>");
                 }
             }
             materialsHtml.append("</tr>");
         }
-
-        String orderStatusText = isNewOrder ? "създадена" : "променена";
-
-        String message = getMessage(orderStatusText, orderDescription, orderNumber, orderDate, deliveryDate, constructionSiteName, constructionSiteNumber, orderStatus, specificationFileUrl, materialsHtml);
-        sendMail(email, "Вашата поръчка е " + orderStatusText, message);
-
+        return materialsHtml;
     }
 
     private void sendMail(String email, String subject, String message) throws MessagingException {
@@ -107,13 +123,12 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
-    private static String getMessage(String orderStatusText,String orderDescription, String orderNumber, String orderDate, String deliveryDate, String constructionSiteName, String constructionSiteNumber, String orderStatus, String specificationFileUrl, StringBuilder materialsHtml) {
+    private static String buildOrderMessage(String orderStatusText, String orderDescription, String orderNumber,
+                                            String orderDate, String deliveryDate, String constructionSiteName,
+                                            String constructionSiteNumber, String orderStatus, String specificationFileUrl,
+                                            StringBuilder materialsHtml) {
+
         StringBuilder messageBuilder = new StringBuilder();
-        ZonedDateTime timeOfCreation = ZonedDateTime.parse(orderDate);
-        ZonedDateTime timeOfDelivery = ZonedDateTime.parse(deliveryDate);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        orderDate = timeOfCreation.format(formatter);
-        deliveryDate = timeOfDelivery.format(formatter);
 
         messageBuilder.append("<!DOCTYPE html>")
                 .append("<html lang=\"bg\">")
@@ -135,7 +150,7 @@ public class MailService {
                 .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(orderNumber).append("</td>")
                 .append("                </tr>")
                 .append("                <tr>")
-                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Описаниед:</th>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Описание:</th>")
                 .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(orderDescription).append("</td>")
                 .append("                </tr>")
                 .append("                <tr>")
@@ -159,7 +174,7 @@ public class MailService {
                 .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(orderStatus).append("</td>")
                 .append("                </tr>");
 
-        if (specificationFileUrl != null && !specificationFileUrl.equals("null") && !specificationFileUrl.isEmpty()) {
+        if (specificationFileUrl != null && !specificationFileUrl.isEmpty()) {
             messageBuilder.append("                <tr>")
                     .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Файл със спецификации:</th>")
                     .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\"><a href=\"")
@@ -190,10 +205,15 @@ public class MailService {
         return messageBuilder.toString();
     }
 
-
     public void sendResetPasswordMessage(ForgotPasswordEmailDTO dto) throws MessagingException {
         String subject = "Промяна на парола!";
-        String content = "<!DOCTYPE html>\n" +
+        String content = buildResetPasswordMessage(dto);
+
+        sendMail(dto.getEmail(), subject, content);
+    }
+
+    private String buildResetPasswordMessage(ForgotPasswordEmailDTO dto) {
+        return "<!DOCTYPE html>\n" +
                 "<html lang=\"bg\">\n" +
                 "<head>\n" +
                 "    <meta charset=\"UTF-8\">\n" +
@@ -206,34 +226,24 @@ public class MailService {
                 "            <h1 style=\"margin: 0; font-size: 24px;\">Искане за нулиране на парола</h1>\n" +
                 "        </div>\n" +
                 "        <div style=\"padding: 20px;\">\n" +
-                "            <h2 style=\"font-size: 18px; margin-top: 0;\">Здравейте, "+ dto.getEmail().split("@")[0] + "</h2>\n" +
+                "            <h2 style=\"font-size: 18px; margin-top: 0;\">Здравейте, " + dto.getEmail().split("@")[0] + "</h2>\n" +
                 "            <p style=\"line-height: 1.6;\">Получихме заявка за промяна на вашата парола. Моля, кликнете върху линка по-долу, за да създадете нова парола:</p>\n" +
                 "            <div style=\"margin-top: 20px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px;\">\n" +
                 "                <p style=\"margin: 0; font-size: 16px;\">Вашият код за смяна на паролата е:</p>\n" +
                 "                <br>\n" +
-                "                <p style=\"margin: 0; font-size: 16px;\"><strong>"+ dto.getUuid() + "</strong></p>\n" +
+                "                <p style=\"margin: 0; font-size: 16px;\"><strong>" + dto.getUuid() + "</strong></p>\n" +
                 "                <br>\n" +
                 "                <p style=\"margin: 0; font-size: 16px;\">Моля, копирайте този код и го поставете в обозначеното поле на страницата за смяна на паролата.</p>\n" +
                 "            </div>\n" +
-                "            <a href=\""+ resetLink  +"\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-decoration: none; border-radius: 5px; text-align: center; margin-top: 20px;\">Смяна на парола</a>\n" +
+                "            <a href=\"" + resetLink + "\" style=\"display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #007bff; text-decoration: none; border-radius: 5px; text-align: center; margin-top: 20px;\">Смяна на парола</a>\n" +
                 "            <p style=\"line-height: 1.6;\">Ако не сте поискали тази промяна, моля, игнорирайте този имейл.</p>\n" +
                 "            <p style=\"line-height: 1.6;\">С уважение,<br>Екипът на MCK</p>\n" +
                 "        </div>\n" +
                 "        <div style=\"background-color: #f4f4f4; text-align: center; padding: 10px; font-size: 14px;\">\n" +
-                "            <p style=\"margin: 0;\">&copy; "+ LocalDateTime.now().getYear() +" MCK. Всички права запазени.</p>\n" +
+                "            <p style=\"margin: 0;\">&copy; " + LocalDateTime.now().getYear() + " MCK. Всички права запазени.</p>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
-
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
-
-        messageHelper.setFrom(from);
-        messageHelper.setTo(dto.getEmail());
-        messageHelper.setSubject(subject);
-        messageHelper.setText(content, true);
-
-        mailSender.send(mimeMessage);
     }
 }

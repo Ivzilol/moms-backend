@@ -24,8 +24,9 @@ public class OrderController {
 
     private final OrderService orderService;
     private final RestTemplate restTemplate;
+
     @Value("${APPLICATION_VERSION}")
-    private String APPLICATION_VERSION;
+    private String applicationVersion;
 
     @Autowired
     public OrderController(OrderService orderService, RestTemplate restTemplate) {
@@ -33,18 +34,18 @@ public class OrderController {
         this.restTemplate = restTemplate;
     }
 
-    @Operation(summary = "Getting all orders from admin account")
+    @Operation(summary = "Get all orders for admin")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieve all orders"),
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved all orders"),
     })
     @GetMapping("admin/order/query/get-all")
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
-    @Operation(summary = "Getting all orders from user account")
+    @Operation(summary = "Get all orders for the current user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieve all orders"),
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved all orders"),
     })
     @GetMapping("user/order/query/get-all")
     public ResponseEntity<List<OrderDTO>> getAllOrdersByUser() {
@@ -68,7 +69,7 @@ public class OrderController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = OrderDTO.class))),
             @ApiResponse(responseCode = "404", description = "Order not found")
     })
-    @GetMapping("/user/order/query/get-order-by-orderNumber/{number}")
+    @GetMapping("user/order/query/get-order-by-orderNumber/{number}")
     public ResponseEntity<OrderDTO> getOrderByOrderNumber(@PathVariable Integer number) {
         return ResponseEntity.ok(orderService.getOrderByOrderNumber(number));
     }
@@ -85,9 +86,17 @@ public class OrderController {
     public ResponseEntity<List<OrderDTO>> getMyOrders(@Parameter(description = "JWT token to authenticate the user", required = true)
                                                       @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
-        token = token.substring(7);
-        String email = restTemplate
-                .getForObject("http://authentication-service/" + APPLICATION_VERSION + "/authentication/getemail/" + token, String.class);
+        String email = getEmailFromToken(token);
         return ResponseEntity.ok(orderService.getMyOrders(email));
+    }
+
+    /**
+     * Helper method to extract email from the JWT token.
+     * @param token The JWT token provided in the Authorization header.
+     * @return The email address associated with the token.
+     */
+    private String getEmailFromToken(String token) {
+        token = token.startsWith("Bearer ") ? token.substring(7) : token;
+        return restTemplate.getForObject("http://authentication-service/" + applicationVersion + "/authentication/getemail/" + token, String.class);
     }
 }
