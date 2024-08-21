@@ -2,6 +2,8 @@ package bg.mck.orderqueryservice.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Document("fastener")
 public class FastenerEntity extends BaseMaterialEntity {
     private String type;
@@ -84,5 +86,38 @@ public class FastenerEntity extends BaseMaterialEntity {
     public FastenerEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        FastenerEntity that = (FastenerEntity) o;
+        return Objects.equals(type, that.type) &&
+                Objects.equals(diameter, that.diameter) &&
+                Objects.equals(length, that.length) &&
+                Objects.equals(standard, that.standard) &&
+                Objects.equals(clazz, that.clazz) &&
+                Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type, diameter, length, standard, clazz, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "FastenerEntity{" +
+                "type='" + type + '\'' +
+                ", diameter='" + diameter + '\'' +
+                ", length='" + length + '\'' +
+                ", standard='" + standard + '\'' +
+                ", clazz='" + clazz + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", note='" + getAdminNote() + '\'' +
+                ", specificationFileUrl='" + getSpecificationFileUrl() + '\'' +
+                '}';
     }
 }

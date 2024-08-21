@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Document("orders")
@@ -262,5 +263,40 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity setMaterialType(MaterialType materialType) {
         this.materialType = materialType;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        OrderEntity that = (OrderEntity) o;
+        return orderNumber == that.orderNumber &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(orderDescription, that.orderDescription) &&
+                Objects.equals(specificationFileUrl, that.specificationFileUrl) &&
+                Objects.equals(materialType, that.materialType) &&
+                Objects.equals(orderStatus, that.orderStatus) &&
+                Objects.equals(constructionSite, that.constructionSite) &&
+                Objects.equals(fasteners, that.fasteners);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), email, orderNumber, orderDescription, specificationFileUrl, materialType, orderStatus, constructionSite, fasteners);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "email='" + email + '\'' +
+                ", orderNumber=" + orderNumber +
+                ", orderDescription='" + orderDescription + '\'' +
+                ", specificationFileUrl='" + specificationFileUrl + '\'' +
+                ", materialType='" + materialType + '\'' +
+                ", orderStatus='" + orderStatus + '\'' +
+                ", constructionSite=" + constructionSite +
+                ", fasteners=" + fasteners +
+                '}';
     }
 }

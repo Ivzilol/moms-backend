@@ -29,7 +29,9 @@ public class OrderService {
 
     public List<OrderDTO> getAllOrders() {
         try {
-            return redisService.getCachedObjects();
+                return redisService.getCachedObjects().isEmpty() ? orderRepository.findAll()
+                        .stream().map(orderMapper::fromOrderEntityToDTO).collect(Collectors.toList()) :
+                        redisService.getCachedObjects();
         } catch (Exception e) {
             return orderRepository.findAll()
                 .stream().map(orderMapper::fromOrderEntityToDTO)

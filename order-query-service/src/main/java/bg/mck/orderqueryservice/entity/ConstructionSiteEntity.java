@@ -3,6 +3,8 @@ package bg.mck.orderqueryservice.entity;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Objects;
+
 @Document("construction_sites")
 public class ConstructionSiteEntity extends BaseEntity {
 
@@ -61,6 +63,28 @@ public class ConstructionSiteEntity extends BaseEntity {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConstructionSiteEntity that = (ConstructionSiteEntity) o;
+        return Objects.equals(constructionNumber, that.constructionNumber) &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(constructionNumber, name);
+    }
+
+    @Override
+    public String toString() {
+        return "ConstructionSiteEntity{" +
+                "constructionNumber='" + constructionNumber + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
 
