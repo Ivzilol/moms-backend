@@ -42,7 +42,7 @@ spring:
       - id: inventory-command-service
         uri: lb://inventory-command-service
         predicates:
-          - Path=/${APPLICATION_VERSION}/user/inventory/command/**, /${APPLICATION_VERSION}/superadmin/inventory/command/**
+          - Path=/${APPLICATION_VERSION}/user/inventory/command/**, /${APPLICATION_VERSION}/admin/inventory/command/**
         filters:
           - name: AuthorizationFilter
           - name: AuthenticationFilter
@@ -50,7 +50,7 @@ spring:
       - id: inventory-query-service
         uri: lb://inventory-query-service
         predicates:
-          - Path=/${APPLICATION_VERSION}/user/inventory/query/**, /${APPLICATION_VERSION}/superadmin/inventory/query/**
+          - Path=/${APPLICATION_VERSION}/user/inventory/query/**, /${APPLICATION_VERSION}/admin/inventory/query/**
         filters:
           - name: AuthorizationFilter
           - name: AuthenticationFilter

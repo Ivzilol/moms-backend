@@ -45,8 +45,10 @@ public class ConstructionSiteService {
     }
 
     public void updateConstructionSite(ConstructionSiteEntity constructionSiteEntity) {
-        ConstructionSiteEntity oldEntity = this.constructionSiteRepository.findById(constructionSiteEntity.getId()).orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site not found"));
-        oldEntity = constructionSiteEntity;
-        this.constructionSiteRepository.save(oldEntity);
+        this.constructionSiteRepository.save(
+                this.constructionSiteRepository
+                        .findById(constructionSiteEntity.getId())
+                        .orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site not found"))
+        );
     }
 }

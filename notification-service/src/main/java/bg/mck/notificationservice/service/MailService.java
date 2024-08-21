@@ -43,6 +43,7 @@ public class MailService {
         String email = rootNode.path("email").asText();
         String orderDate = rootNode.path("orderDate").asText();
         String deliveryDate = rootNode.path("deliveryDate").asText();
+        String orderDescription = rootNode.path("orderDescription").asText();
         String orderStatus = rootNode.path("orderStatus").asText();
         String constructionSiteName = rootNode.path("constructionSiteName").asText();
         String constructionSiteNumber = rootNode.path("constructionSiteNumber").asText();
@@ -89,7 +90,7 @@ public class MailService {
 
         String orderStatusText = isNewOrder ? "създадена" : "променена";
 
-        String message = getMessage(orderStatusText, orderNumber, orderDate, deliveryDate, constructionSiteName, constructionSiteNumber, orderStatus, specificationFileUrl, materialsHtml);
+        String message = getMessage(orderStatusText, orderDescription, orderNumber, orderDate, deliveryDate, constructionSiteName, constructionSiteNumber, orderStatus, specificationFileUrl, materialsHtml);
         sendMail(email, "Вашата поръчка е " + orderStatusText, message);
 
     }
@@ -106,7 +107,7 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
-    private static String getMessage(String orderStatusText, String orderNumber, String orderDate, String deliveryDate, String constructionSiteName, String constructionSiteNumber, String orderStatus, String specificationFileUrl, StringBuilder materialsHtml) {
+    private static String getMessage(String orderStatusText,String orderDescription, String orderNumber, String orderDate, String deliveryDate, String constructionSiteName, String constructionSiteNumber, String orderStatus, String specificationFileUrl, StringBuilder materialsHtml) {
         StringBuilder messageBuilder = new StringBuilder();
         ZonedDateTime timeOfCreation = ZonedDateTime.parse(orderDate);
         ZonedDateTime timeOfDelivery = ZonedDateTime.parse(deliveryDate);
@@ -115,64 +116,80 @@ public class MailService {
         deliveryDate = timeOfDelivery.format(formatter);
 
         messageBuilder.append("<!DOCTYPE html>")
-                .append("<html>")
-                .append("<body style=\"font-family: Arial, sans-serif; margin: 0; padding: 0;\">")
-                .append("    <div style=\"background-color: #f8f9fa; padding: 20px; text-align: center;\">")
-                .append("        <h1>Вашата поръчка е ").append(orderStatusText).append("</h1>")
-                .append("    </div>")
-                .append("    <div style=\"padding: 20px;\">")
-                .append("        <p>С удоволствие ви информираме, че вашата поръчка е ").append(orderStatusText).append(". По-долу са подробностите за вашата поръчка:</p>")
-                .append("        <table style=\"margin: 20px 0; width: 100%; border-collapse: collapse;\">")
-                .append("            <tr>")
-                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Номер на поръчката:</th>")
-                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(orderNumber).append("</td>")
-                .append("            </tr>")
-                .append("            <tr>")
-                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Дата на поръчката:</th>")
-                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(orderDate).append("</td>")
-                .append("            </tr>")
-                .append("            <tr>")
-                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Дата на доставка:</th>")
-                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(deliveryDate).append("</td>")
-                .append("            </tr>")
-                .append("            <tr>")
-                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Име на строителния обект:</th>")
-                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(constructionSiteName).append("</td>")
-                .append("            </tr>")
-                .append("            <tr>")
-                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Номер на строителния обект:</th>")
-                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(constructionSiteNumber).append("</td>")
-                .append("            </tr>")
-                .append("            <tr>")
-                .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Статус на поръчката:</th>")
-                .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">").append(orderStatus).append("</td>")
-                .append("            </tr>");
+                .append("<html lang=\"bg\">")
+                .append("<head>")
+                .append("    <meta charset=\"UTF-8\">")
+                .append("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">")
+                .append("    <title>Поръчка Създадена</title>")
+                .append("</head>")
+                .append("<body style=\"font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;\">")
+                .append("    <div style=\"width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\">")
+                .append("        <div style=\"background-color: #007bff; color: white; padding: 15px; text-align: center; border-radius: 8px 8px 0 0;\">")
+                .append("            <h1 style=\"margin: 0; font-size: 24px;\">Вашата поръчка е ").append(orderStatusText).append("</h1>")
+                .append("        </div>")
+                .append("        <div style=\"padding: 20px;\">")
+                .append("            <p>С удоволствие ви информираме, че вашата поръчка е ").append(orderStatusText).append(". По-долу са подробностите за вашата поръчка:</p>")
+                .append("            <table style=\"width: 100%; border-collapse: collapse; margin-bottom: 20px;\">")
+                .append("                <tr>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Номер на поръчката:</th>")
+                .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(orderNumber).append("</td>")
+                .append("                </tr>")
+                .append("                <tr>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Описаниед:</th>")
+                .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(orderDescription).append("</td>")
+                .append("                </tr>")
+                .append("                <tr>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Дата на поръчката:</th>")
+                .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(orderDate).append("</td>")
+                .append("                </tr>")
+                .append("                <tr>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Дата на доставка:</th>")
+                .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(deliveryDate).append("</td>")
+                .append("                </tr>")
+                .append("                <tr>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Име на строителния обект:</th>")
+                .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(constructionSiteName).append("</td>")
+                .append("                </tr>")
+                .append("                <tr>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Номер на строителния обект:</th>")
+                .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(constructionSiteNumber).append("</td>")
+                .append("                </tr>")
+                .append("                <tr>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Статус на поръчката:</th>")
+                .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(orderStatus).append("</td>")
+                .append("                </tr>");
 
         if (specificationFileUrl != null && !specificationFileUrl.equals("null") && !specificationFileUrl.isEmpty()) {
-            messageBuilder.append("            <tr>")
-                    .append("                <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Файл със спецификации:</th>")
-                    .append("                <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\"><a href=\"")
+            messageBuilder.append("                <tr>")
+                    .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Файл със спецификации:</th>")
+                    .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\"><a href=\"")
                     .append(specificationFileUrl)
-                    .append("\">Изтегли</a></td>")
-                    .append("            </tr>");
+                    .append("\" style=\"color: #007bff; text-decoration: none;\">Изтегли</a></td>")
+                    .append("                </tr>");
         }
 
-        messageBuilder.append("            <tr>")
-                .append("                <th colspan=\"2\" style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Материали</th>")
-                .append("            </tr>")
+        messageBuilder.append("                <tr>")
+                .append("                    <th colspan=\"2\" style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white; text-align: center;\">Материали</th>")
+                .append("                </tr>")
+                .append("            </table>")
+                .append("            <div style=\"overflow-x: auto;\">")
+                .append("                <table style=\"width: 100%; border-collapse: collapse; margin: 0 auto;\">")
                 .append(materialsHtml)
-                .append("        </table>")
-                .append("        <p>Ако имате въпроси или се нуждаете от допълнителна помощ, не се колебайте да се свържете с нас.</p>")
-                .append("        <p>Благодарим ви!</p>")
-                .append("    </div>")
-                .append("    <div style=\"background-color: #f8f9fa; padding: 10px; text-align: center; font-size: 12px;\">")
-                .append("        <p>&copy; ").append(LocalDateTime.now().getYear()).append(" MCK</p>")
+                .append("                </table>")
+                .append("            </div>")
+                .append("            <p style=\"margin-top: 20px;\">Ако имате въпроси или се нуждаете от допълнителна помощ, не се колебайте да се свържете с нас.</p>")
+                .append("            <p>Благодарим ви!</p>")
+                .append("        </div>")
+                .append("        <div style=\"background-color: #f8f9fa; padding: 10px; text-align: center; font-size: 12px; color: #777;\">")
+                .append("            <p>&copy; ").append(LocalDateTime.now().getYear()).append(" MCK</p>")
+                .append("        </div>")
                 .append("    </div>")
                 .append("</body>")
                 .append("</html>");
 
         return messageBuilder.toString();
     }
+
 
     public void sendResetPasswordMessage(ForgotPasswordEmailDTO dto) throws MessagingException {
         String subject = "Промяна на парола!";
