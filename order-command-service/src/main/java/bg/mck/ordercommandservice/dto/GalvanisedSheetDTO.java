@@ -21,6 +21,7 @@ public class GalvanisedSheetDTO extends BaseDTO {
     private String numberOfSheets;
 
     @NotNull(message = "Quantity is required")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Thickness must be numeric and positive")
     private String quantity;
     @NotNull(message = "Quantity unit is required")
     private AreaUnits quantityUnit;

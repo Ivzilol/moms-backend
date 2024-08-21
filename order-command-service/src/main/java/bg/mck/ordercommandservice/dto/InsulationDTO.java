@@ -15,7 +15,9 @@ public class InsulationDTO extends BaseDTO {
     @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Thickness must be numeric and positive")
     private String thickness;
     private LengthUnits thicknessUnit;
-    @NotNull
+
+    @NotNull(message = "Quantity is required")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Quantity must be numeric and positive")
     private String quantity;
     private AreaUnits quantityUnit;
 

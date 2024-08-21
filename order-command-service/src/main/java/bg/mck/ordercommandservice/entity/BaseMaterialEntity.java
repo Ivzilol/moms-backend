@@ -10,8 +10,6 @@ import jakarta.validation.constraints.DecimalMin;
 @MappedSuperclass
 public class BaseMaterialEntity extends BaseEntity {
 
-
-
     @Column(columnDefinition = "TEXT")
     private String description;
 

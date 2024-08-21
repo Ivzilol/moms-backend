@@ -8,10 +8,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "fastener")
 public class FastenerEntity extends BaseMaterialEntity {
+
     private String type;
     private String diameter;
     private String length;
-    @Column(name = "standard")
     private String standard;
     private String clazz;
     private String quantity;

@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 @Table(name = "sets")
 public class SetEntity extends BaseMaterialEntity {
 
+    @Column(nullable = false)
     private String quantity;
     @Column(nullable = false)
     private String color;

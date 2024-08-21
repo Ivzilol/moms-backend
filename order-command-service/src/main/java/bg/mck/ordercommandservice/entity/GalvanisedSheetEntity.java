@@ -10,15 +10,10 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
 
     @Column(nullable = false)
     private String type;
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
-    @Column(name = "max_length")
     private String maxLength;
-    @Pattern(regexp = "^[^-].*", message = "Area must be positive")
-    @Column(name = "number_of_sheets")
     private String numberOfSheets;
     @Column(nullable = false)
     private String quantity;
-
 
     public GalvanisedSheetEntity() {
     }
@@ -48,20 +43,20 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public GalvanisedSheetEntity setMaxLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String maxLength) {
+    public GalvanisedSheetEntity setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Area must be positive") String getNumberOfSheets() {
+    public String getNumberOfSheets() {
         return numberOfSheets;
     }
 
-    public GalvanisedSheetEntity setNumberOfSheets(@Pattern(regexp = "^[^-].*", message = "Area must be positive") String numberOfSheets) {
+    public GalvanisedSheetEntity setNumberOfSheets(String numberOfSheets) {
         this.numberOfSheets = numberOfSheets;
         return this;
     }

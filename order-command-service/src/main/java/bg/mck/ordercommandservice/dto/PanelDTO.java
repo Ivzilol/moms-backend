@@ -31,6 +31,7 @@ public class PanelDTO extends BaseDTO {
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
     @NotNull(message = "Quantity is required")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Quantity must be numeric and positive")
     private String quantity;
     private AreaUnits quantityUnit;
 
