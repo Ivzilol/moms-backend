@@ -6,13 +6,15 @@ import bg.mck.ordercommandservice.entity.GalvanisedSheetEntity;
 import bg.mck.ordercommandservice.entity.enums.AreaUnits;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.event.GalvanisedSheetEvent;
+import bg.mck.ordercommandservice.mapper.util.Concatenator;
+import bg.mck.ordercommandservice.mapper.util.Splitter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
-public interface GalvanisedSheetMapper {
+public interface GalvanisedSheetMapper extends Splitter, Concatenator {
 
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(split(galvanisedSheetEntity.getMaxLength())[0])"),
@@ -23,45 +25,10 @@ public interface GalvanisedSheetMapper {
     GalvanisedSheetDTO toDTO(GalvanisedSheetEntity galvanisedSheetEntity);
 
     @Mappings({
-            @Mapping(target = "maxLength", expression = "java(concatenateLength(galvanisedSheetDTO.getMaxLength(), galvanisedSheetDTO.getMaxLengthUnit()))"),
-            @Mapping(target = "quantity", expression = "java(concatenateArea(galvanisedSheetDTO.getQuantity(), galvanisedSheetDTO.getQuantityUnit()))")
+            @Mapping(target = "maxLength", expression = "java(concatenate(galvanisedSheetDTO.getMaxLength(), galvanisedSheetDTO.getMaxLengthUnit()))"),
+            @Mapping(target = "quantity", expression = "java(concatenate(galvanisedSheetDTO.getQuantity(), galvanisedSheetDTO.getQuantityUnit()))")
     })
     GalvanisedSheetEntity toEntity(GalvanisedSheetDTO galvanisedSheetDTO);
 
     GalvanisedSheetEvent toEvent(GalvanisedSheetEntity galvanisedSheetEntity);
-
-    void toUpdateGalvanisedSheetEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget GalvanisedSheetEntity galvanisedSheetEntity);
-
-    default String concatenateLength(String unit, LengthUnits unitType) {
-        if (unit == null && unitType == null) {
-            return null;
-        }
-        if (unit == null) {
-            return unitType.toString();
-        }
-        if (unitType == null) {
-            return unit;
-        }
-        return unit + " " + unitType;
-    }
-
-    default String concatenateArea(String unit, AreaUnits unitType) {
-        if (unit == null && unitType == null) {
-            return null;
-        }
-        if (unit == null) {
-            return unitType.toString();
-        }
-        if (unitType == null) {
-            return unit;
-        }
-        return unit + " " + unitType;
-    }
-
-    default String[] split(String unit) {
-        if (unit == null) {
-            return null;
-        }
-        return unit.split(" ");
-    }
 }
