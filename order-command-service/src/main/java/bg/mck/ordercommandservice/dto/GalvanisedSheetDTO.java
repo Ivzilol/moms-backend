@@ -12,7 +12,6 @@ public class GalvanisedSheetDTO extends BaseDTO {
     private String type;
 
     @Pattern(regexp = "^[^-].*", message = "Length must be positive")
-    @NotNull
     private String maxLength;
     private LengthUnits maxLengthUnit;
 

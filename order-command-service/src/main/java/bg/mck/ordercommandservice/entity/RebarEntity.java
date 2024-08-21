@@ -1,6 +1,7 @@
 package bg.mck.ordercommandservice.entity;
 
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -9,6 +10,7 @@ import jakarta.persistence.Table;
 public class RebarEntity extends BaseMaterialEntity {
 
     private String maxLength;
+    @Column(nullable = false)
     private String quantity;
 
     public RebarEntity() {

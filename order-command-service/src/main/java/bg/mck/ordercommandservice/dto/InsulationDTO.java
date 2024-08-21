@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 
 public class InsulationDTO extends BaseDTO {
 
+    @NotNull(message = "Type is required")
     private String type;
 
     @Pattern(regexp = "^[^-].*", message = "Thickness must be positive")

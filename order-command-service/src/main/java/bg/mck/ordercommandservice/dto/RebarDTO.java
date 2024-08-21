@@ -5,11 +5,14 @@ import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.entity.enums.WeightUnits;
 import jakarta.validation.constraints.Pattern;
 
+import static bg.mck.ordercommandservice.dto.util.RegexPatterns.POSITIVE_NUMBER_REGEX;
+
 public class RebarDTO extends BaseDTO {
 
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Length must be numeric and positive")
     private String maxLength;
     private LengthUnits maxLengthUnit;
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Quantity must be numeric and positive")
     private String quantity;
     private WeightUnits quantityUnit;
 

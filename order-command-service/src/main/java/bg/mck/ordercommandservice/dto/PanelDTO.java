@@ -7,13 +7,16 @@ import jakarta.validation.constraints.Pattern;
 
 public class PanelDTO extends BaseDTO {
 
+    @NotNull(message = "Type is required")
     private String type;
+    @NotNull(message = "Color is required")
     private String color;
 
     @Pattern(regexp = "^[^-].*", message = "Length must be positive")
     private String length;
     private LengthUnits lengthUnit;
     @Pattern(regexp = "^[^-].*", message = "Width must be positive")
+    @NotNull(message = "Width is required")
     private String width;
     private LengthUnits widthUnit;
     @Pattern(regexp = "^[^-].*", message = "TotalThickness must be positive")

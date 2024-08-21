@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 @Table(name = "galvanised_sheets")
 public class GalvanisedSheetEntity extends BaseMaterialEntity {
 
+    @Column(nullable = false)
     private String type;
     @Pattern(regexp = "^[^-].*", message = "Length must be positive")
     @Column(name = "max_length")
@@ -15,6 +16,7 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
     @Pattern(regexp = "^[^-].*", message = "Area must be positive")
     @Column(name = "number_of_sheets")
     private String numberOfSheets;
+    @Column(nullable = false)
     private String quantity;
 
 

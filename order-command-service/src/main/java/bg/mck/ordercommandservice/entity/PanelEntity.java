@@ -1,6 +1,7 @@
 package bg.mck.ordercommandservice.entity;
 
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -8,9 +9,12 @@ import jakarta.persistence.Table;
 @Table(name = "panels")
 public class PanelEntity extends BaseMaterialEntity {
 
+    @Column(nullable = false)
     private String type;
+    @Column(nullable = false)
     private String color;
     private String length;
+    @Column(nullable = false)
     private String width;
     private String totalThickness;
     private String frontSheetThickness;

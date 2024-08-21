@@ -1,13 +1,16 @@
 package bg.mck.ordercommandservice.dto;
 
 import bg.mck.ordercommandservice.entity.enums.WeightUnits;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public class MetalDTO extends BaseDTO {
 
     @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
+    @NotNull(message = "Total weight is required")
     private String totalWeight;
     private WeightUnits totalWeightUnit;
+    @NotNull(message = "Kind is required")
     private String kind;
 
     public MetalDTO() {
