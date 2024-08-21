@@ -20,8 +20,13 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ForgotPasswordService {
@@ -31,6 +36,7 @@ public class ForgotPasswordService {
     private final NotificationServiceClient notificationServiceClient;
     private final UserQueryServiceClient userQueryServiceClient;
     private final ObjectMapper objectMapper;
+    ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public ForgotPasswordService(ForgotPasswordRepository forgotPasswordRepository, UserRepository userRepository, NotificationServiceClient notificationServiceClient, UserQueryServiceClient userQueryServiceClient, ObjectMapper objectMapper) {
         this.forgotPasswordRepository = forgotPasswordRepository;
@@ -61,9 +67,27 @@ public class ForgotPasswordService {
 
         forgotPasswordRepository.save(forgotPassword);
         ForgotPasswordEmailDTO toSend = new ForgotPasswordEmailDTO(user.getEmail(), uuid);
-        notificationServiceClient.sendResetPassword(toSend);
+
+        CompletableFuture.runAsync(() -> notificationServiceClient.sendResetPassword(toSend), executor)
+                .orTimeout(10, TimeUnit.SECONDS)
+                .exceptionally(ex -> {
+                    executor.shutdownNow();
+                    return null;
+                });
     }
 
+    @PreDestroy
+    public void shutDown() {
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(4, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+    }
 
 
     @Transactional

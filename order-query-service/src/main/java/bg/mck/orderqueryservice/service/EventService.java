@@ -7,10 +7,7 @@ import bg.mck.orderqueryservice.entity.ConstructionSiteEntity;
 import bg.mck.orderqueryservice.entity.OrderEntity;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
 import bg.mck.orderqueryservice.entity.enums.OrderStatus;
-import bg.mck.orderqueryservice.events.BaseEvent;
-import bg.mck.orderqueryservice.events.ConstructionSiteEvent;
-import bg.mck.orderqueryservice.events.CreateOrderEvent;
-import bg.mck.orderqueryservice.events.OrderEvent;
+import bg.mck.orderqueryservice.events.*;
 import bg.mck.orderqueryservice.exception.OrderNotFoundException;
 import bg.mck.orderqueryservice.mapper.ConstructionSiteMapper;
 import bg.mck.orderqueryservice.mapper.MailMapper;
@@ -24,9 +21,14 @@ import com.google.gson.reflect.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PreDestroy;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class EventService {
@@ -42,6 +44,7 @@ public class EventService {
     private final ConstructionSiteService constructionSiteService;
     private final NotificationServiceClient notificationServiceClient;
     private final MailMapper mailMapper;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public EventService(EventRepository eventRepository, RedisService redisService, OrderMapper orderMapper, EventTypeUtils eventTypeUtils, Gson gson, OrderService orderService, OrderRepository orderRepository, ConstructionSiteMapper constructionSiteMapper, ConstructionSiteService constructionSiteService, NotificationServiceClient notificationServiceClient, MailMapper mailMapper) throws NoSuchMethodException {
         this.eventRepository = eventRepository;
@@ -61,34 +64,73 @@ public class EventService {
     @Transactional
     public void processOrderEvent(String data, String eventType) throws InvocationTargetException, IllegalAccessException {
         String materialType = getMaterialType(data);
+        invokeOrderProcessor(eventType, data, materialType);
+    }
+
+    private void invokeOrderProcessor(String eventType, String data, String materialType) throws InvocationTargetException, IllegalAccessException {
         eventTypeUtils.getOrderMethodProcessors().get(eventType).invoke(this, data, eventType, materialType);
     }
 
     private <T extends BaseEvent> void processCreateEvent(String data, String eventType, String materialType) {
-        Type eventTypeToken = eventTypeUtils.getTypeEvents().get(eventType).get(materialType);
-        OrderEvent<CreateOrderEvent<T>> orderEvent = gson.fromJson(data, eventTypeToken);
-        OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-        orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
-        orderEntity.setOrderStatus(OrderStatus.CREATED);
-        saveEvent(orderEvent);
-        processEntity(orderEntity);
-        sendEmail(orderEvent, true);
+        OrderEvent<CreateOrderEvent<T>> orderEvent = parseOrderEvent(data, eventType, materialType);
+        OrderEntity orderEntity = createOrderEntity(orderEvent);
+        saveAndProcessOrder(orderEvent, orderEntity, true);
     }
 
     private <T extends BaseEvent> void processUpdateEvent(String data, String eventType, String materialType) throws JsonProcessingException {
-        Type eventTypeToken = eventTypeUtils.getTypeEvents().get(eventType).get(materialType);
-        OrderEvent<CreateOrderEvent<T>> orderEvent = gson.fromJson(data, eventTypeToken);
-        OrderEntity newOrderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
-        orderRepository.findById(newOrderEntity.getId()).ifPresentOrElse(entity -> {
-            entity = newOrderEntity;
-            orderRepository.save(entity);
-        }, () -> {
-            throw new OrderNotFoundException("Order with id: " + newOrderEntity.getId() + "does not exist");
-        });
+        OrderEvent<CreateOrderEvent<T>> orderEvent = parseOrderEvent(data, eventType, materialType);
+        orderEvent.getEvent().setEventType(OrderEventType.ORDER_UPDATED);
+        OrderEntity newOrderEntity = createOrderEntity(orderEvent);
+        updateExistingOrder(newOrderEntity);
+        saveAndProcessOrder(orderEvent, newOrderEntity, false);
+    }
 
+    private <T extends BaseEvent> OrderEvent<CreateOrderEvent<T>> parseOrderEvent(String data, String eventType, String materialType) {
+        Type eventTypeToken = eventTypeUtils.getTypeEvents().get(eventType).get(materialType);
+        return gson.fromJson(data, eventTypeToken);
+    }
+
+    private <T extends BaseEvent> OrderEntity createOrderEntity(OrderEvent<CreateOrderEvent<T>> orderEvent) {
+        OrderEntity orderEntity = orderMapper.toOrderEntity(orderEvent.getEvent());
+        orderEntity.setId(String.valueOf(orderEvent.getEvent().getOrderId()));
+        return orderEntity;
+    }
+
+    private void updateExistingOrder(OrderEntity newOrderEntity) {
+        orderRepository.findById(newOrderEntity.getId()).ifPresentOrElse(
+                existingOrder -> {
+                    orderRepository.save(newOrderEntity);
+                },
+                () -> { throw new OrderNotFoundException("Order with id: " + newOrderEntity.getId() + " does not exist"); }
+        );
+    }
+
+    private <T extends BaseEvent> void saveAndProcessOrder(OrderEvent<CreateOrderEvent<T>> orderEvent, OrderEntity orderEntity, boolean isNewOrder) {
         saveEvent(orderEvent);
-        processEntity(newOrderEntity);
-        sendEmail(orderEvent, false);
+        processEntity(orderEntity);
+        sendNotification(orderEvent, isNewOrder);
+    }
+
+    private <T extends BaseEvent> void sendNotification(OrderEvent<CreateOrderEvent<T>> orderEvent, boolean isNewOrder) {
+        CompletableFuture.runAsync(() -> sendEmail(orderEvent, isNewOrder), executor)
+                .orTimeout(10, TimeUnit.SECONDS)
+                .exceptionally(ex -> {
+                    shutdownExecutor();
+                    return null;
+                });
+    }
+
+    @PreDestroy
+    public void shutdownExecutor() {
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
     }
 
     private void processEntity(OrderEntity orderEntity) {
@@ -102,7 +144,8 @@ public class EventService {
     }
 
     private String getMaterialType(String data) {
-        return Arrays.stream(MaterialType.values()).filter(material -> data.contains(material.name()))
+        return Arrays.stream(MaterialType.values())
+                .filter(material -> data.contains(material.name()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unknown material type in data: " + data))
                 .name();
@@ -110,31 +153,31 @@ public class EventService {
 
     @Transactional
     public void processConstructionSiteEvent(String data, String eventType) throws InvocationTargetException, IllegalAccessException {
-        this.eventTypeUtils.getConstructionMethodProcessors().get(eventType).invoke(this, data);
+        eventTypeUtils.getConstructionMethodProcessors().get(eventType).invoke(this, data);
     }
 
     private void processCreateConstructionSite(String data) {
-        Type eventTypeToken = new TypeToken<OrderEvent<ConstructionSiteEvent>>() {
-        }.getType();
-        OrderEvent<ConstructionSiteEvent> constructionEvent = gson.fromJson(data, eventTypeToken);
+        OrderEvent<ConstructionSiteEvent> constructionEvent = parseConstructionSiteEvent(data);
         ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntityFromEvent(constructionEvent.getEvent());
         constructionSiteEntity.setId(String.valueOf(constructionEvent.getEvent().getId()));
         saveEvent(constructionEvent);
         constructionSiteService.saveConstructionSite(constructionSiteEntity);
     }
 
-
     private void processUpdateConstructionSite(String data) {
-        Type eventTypeToken = new TypeToken<OrderEvent<ConstructionSiteEvent>>() {
-        }.getType();
-        OrderEvent<ConstructionSiteEvent> constructionEvent = gson.fromJson(data, eventTypeToken);
+        OrderEvent<ConstructionSiteEvent> constructionEvent = parseConstructionSiteEvent(data);
         ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntityFromEvent(constructionEvent.getEvent());
         constructionSiteService.updateConstructionSite(constructionSiteEntity);
     }
 
-    private <T extends BaseEvent> void sendEmail(OrderEvent<CreateOrderEvent<T>> orderEvent, boolean newOrder) {
+    private OrderEvent<ConstructionSiteEvent> parseConstructionSiteEvent(String data) {
+        Type eventTypeToken = new TypeToken<OrderEvent<ConstructionSiteEvent>>() {}.getType();
+        return gson.fromJson(data, eventTypeToken);
+    }
+
+    private <T extends BaseEvent> void sendEmail(OrderEvent<CreateOrderEvent<T>> orderEvent, boolean isNewOrder) {
         EmailDTO emailDTO = mailMapper.toEmailDTO(orderEvent.getEvent());
-        emailDTO.setNewOrder(newOrder);
+        emailDTO.setNewOrder(isNewOrder);
         notificationServiceClient.sendNotification(emailDTO);
     }
 }

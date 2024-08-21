@@ -8,6 +8,7 @@ import bg.mck.orderqueryservice.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,19 +29,18 @@ public class OrderService {
     }
 
     public List<OrderDTO> getAllOrders() {
-        try {
-                return redisService.getCachedObjects().isEmpty() ? orderRepository.findAll()
-                        .stream().map(orderMapper::fromOrderEntityToDTO).collect(Collectors.toList()) :
-                        redisService.getCachedObjects();
-        } catch (Exception e) {
-            return orderRepository.findAll()
-                .stream().map(orderMapper::fromOrderEntityToDTO)
-                .collect(Collectors.toList());
+        List<OrderDTO> cachedOrders = redisService.getCachedObjects();
+        if (!cachedOrders.isEmpty()) {
+            return cachedOrders;
         }
+
+        return orderRepository.findAll()
+                .stream()
+                .map(orderMapper::fromOrderEntityToDTO)
+                .collect(Collectors.toList());
     }
 
     public List<OrderDTO> getMyOrders(String email) {
-
         return orderRepository
                 .findByEmail(email)
                 .stream()
@@ -49,13 +49,8 @@ public class OrderService {
     }
 
     public OrderDTO getOrderById(Long id) {
-        String orderId = String.valueOf(id);
-        OrderDTO orderDTO = redisService.getCachedObjectById(id);
-        if (orderDTO != null) {
-            return orderDTO;
-        } else {
-            throw new OrderNotFoundException("Order with id " + orderId + " not found");
-        }
+        return Optional.ofNullable(redisService.getCachedObjectById(id))
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found"));
     }
 
     public OrderDTO getOrderByOrderNumber(Integer number) {
