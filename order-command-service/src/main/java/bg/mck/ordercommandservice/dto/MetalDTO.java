@@ -4,9 +4,11 @@ import bg.mck.ordercommandservice.entity.enums.WeightUnits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+import static bg.mck.ordercommandservice.dto.util.RegexPatterns.POSITIVE_NUMBER_REGEX;
+
 public class MetalDTO extends BaseDTO {
 
-    @Pattern(regexp = "^[^-].*", message = "Weight must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Weight must be numeric and positive")
     @NotNull(message = "Total weight is required")
     private String totalWeight;
     private WeightUnits totalWeightUnit;
