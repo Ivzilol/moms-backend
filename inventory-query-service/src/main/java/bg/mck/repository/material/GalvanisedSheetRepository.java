@@ -14,7 +14,7 @@ import java.util.List;
 public interface GalvanisedSheetRepository extends MongoRepository<GalvanisedSheetEntity, String> {
 
     @Query(value = "{ 'name' : { $regex: ?0, $options: 'i' } }",
-            fields = "{ 'id' : 1, 'name' : 1, 'type' : 1, 'maxLength' : 1, 'area' : 1, " +
-                    "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
+            fields = "{ 'id' : 1, 'name' : 1, 'type' : 1, 'maxLength' : 1, 'maxLengthUnit' : 1, " +
+                    "'numberOfSheets' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<GalvanisedDTO> findByPartOfName(String regex, Sort sort);
 }
