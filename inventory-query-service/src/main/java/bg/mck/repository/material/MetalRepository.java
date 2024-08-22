@@ -14,6 +14,6 @@ import java.util.List;
 public interface MetalRepository extends MongoRepository<MetalEntity, String> {
     @Query(value = "{ 'name' : { $regex: ?0, $options: 'i' } }",
             fields = "{ 'id' : 1, 'name' : 1, 'totalWeight' : 1, " +
-                    "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
+                    "'totalWeightUnit' : 1, 'kind' : 1, 'description' : 1 }")
     List<MetalDTO> findByPartOfName(String regex, Sort sort);
 }
