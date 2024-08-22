@@ -15,6 +15,6 @@ public interface InsulationRepository extends MongoRepository<InsulationEntity, 
 
     @Query(value = "{ 'name' : { $regex: ?0, $options: 'i' } }",
             fields = "{ 'id' : 1, 'name' : 1, 'type' : 1, 'thickness' : 1, " +
-                    "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
+                    "'thicknessUnit' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<InsulationDTO> findByPartOfName(String regex, Sort sort);
 }
