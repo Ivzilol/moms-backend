@@ -335,28 +335,24 @@ public class OrderServiceTest {
         verify(orderRepository).save(orderEntity);
         verify(orderEventService).createOrderEvent(orderEntity);
     }
+
     @Test
     void testOrderCreatedWithOrderEvent() throws Exception {
-        orderRepository.deleteAll();
-        fastenerRepository.deleteAll();
-        // Ensure OrderEntity is initialized
-        orderEntity = new OrderEntity();
-        orderEntity.setId(1L);
-
-        // Mock the mapper to return the initialized OrderEntity
         when(orderMapper.toOrderEntity(eq(orderDTO))).thenReturn(orderEntity);
+        orderEntity.setOrderNumber(1);
+        when(constructionSiteService.getConstructionSiteByNumberAndName(any())).thenReturn(constructionSiteEntity);
+        when(orderRepository.findLastOrderNumber()).thenReturn(Optional.of(100));
+        when(orderRepository.save(eq(orderEntity))).thenReturn(orderEntity);
+        when(orderEventService.createOrderEvent(eq(orderEntity))).thenReturn(orderConfirmationDTO);
 
-        // Call the createOrder method
         OrderConfirmationDTO result = orderService.createOrder(orderDTO, "test@test.bg", Collections.emptyList());
 
-        // Assertions to verify that the orderEntity is correctly processed
         assertNotNull(orderEntity);
-        assertEquals(orderEntity.getOrderNumber(), 12346); // Assuming it should increment
+        assertEquals(orderEntity.getOrderNumber(), 101);
         assertEquals(orderEntity.getEmail(), "test@test.bg");
         assertEquals(orderEntity.getOrderStatus(), OrderStatus.CREATED);
         assertEquals(orderEntity.getConstructionSite(), constructionSiteEntity);
 
-        // Verifying interactions
         verify(orderMapper).toOrderEntity(orderDTO);
         verify(orderRepository).save(orderEntity);
         verify(inventoryService).sendMaterialsToInventory(orderDTO);

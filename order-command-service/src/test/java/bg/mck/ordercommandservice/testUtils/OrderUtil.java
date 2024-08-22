@@ -45,7 +45,7 @@ public class OrderUtil {
                 .setSpecificationFileUrl("https://www.example.com")
                 .setMaterialType(MaterialType.FASTENERS)
                 .setFasteners(Set.of(MaterialUtil.createFastenerEntity(),
-                        MaterialUtil.createFastenerEntity()));
+                        MaterialUtil.createFastenerEntity().setDiameter("10.0")));
         orderEntity.setId(1L);
         return orderEntity;
     }
