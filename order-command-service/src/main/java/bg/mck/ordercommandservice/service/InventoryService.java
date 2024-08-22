@@ -4,6 +4,7 @@ import bg.mck.ordercommandservice.dto.BaseDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.exception.CouldNotSendToInventoryException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,9 +34,12 @@ public class InventoryService {
     public void addMaterialsToInventory(Map<MaterialType, List<? extends BaseDTO>> materials) {
 
         try {
-            String inventoryServiceUrl = "http://inventory-command-service/" + APPLICATION_VERSION + "/admin/inventory/command/materials/create";
+            String inventoryServiceUrl = "http://inventory-command-service/orders/materials/create";
 
-            ResponseEntity<Void> response = restTemplate.postForEntity(inventoryServiceUrl, materials, Void.class);
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("materials", materials);
+
+            ResponseEntity<Void> response = restTemplate.postForEntity(inventoryServiceUrl, requestBody, Void.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 LOGGER.info("Order sent successfully to inventory service");
