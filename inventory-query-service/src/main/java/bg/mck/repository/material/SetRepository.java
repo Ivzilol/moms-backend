@@ -17,4 +17,6 @@ public interface SetRepository extends MongoRepository<SetEntity, String> {
             fields = "{ 'id' : 1, 'name' : 1, 'galvanisedSheetThickness' : 1, 'color' : 1, 'maxLength' : 1, " +
                     "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<SetDTO> findByPartOfName(String regex, Sort sort);
+
+    SetEntity findByName(String name);
 }

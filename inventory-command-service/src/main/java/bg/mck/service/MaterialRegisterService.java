@@ -210,7 +210,8 @@ public class MaterialRegisterService {
             SetEntity setEntity = mapSetEntity(setRegisterDTO);
             this.setRepository.save(setEntity);
             SetEntity createSet = this.setRepository
-                    .findByName(setRegisterDTO.getColor() + " " + setRegisterDTO.getMaxLength() + " " + setRegisterDTO.getMaxLengthUnit());
+                    .findByName(createMaterialDTO.getColor() + " " + createMaterialDTO.getMaxLength() + " "
+                            + createMaterialDTO.getMaxLengthUnit());
 
             Optional<CategoryEntity> byMaterialType = this.categoryRepository
                     .findByMaterialType(MaterialType.SET);
@@ -270,7 +271,7 @@ public class MaterialRegisterService {
     }
 
     private void validateRegisterDTO(BaseDTO registerDto) throws MethodArgumentNotValidException, NoSuchMethodException {
-         ValidationUtil.isValid(registerDto, "registerDto");
+        ValidationUtil.isValid(registerDto, "registerDto");
     }
 
 
@@ -573,7 +574,7 @@ public class MaterialRegisterService {
     boolean materialExists(CreateMaterialDTO createMaterialDTO) {
         if (createMaterialDTO.getMaterialType().equals(MaterialType.FASTENERS)) {
             if (createMaterialDTO.getType() == null || createMaterialDTO.getDiameter() == null || createMaterialDTO.getLength() == null ||
-            createMaterialDTO.getLengthUnit() == null) {
+                    createMaterialDTO.getLengthUnit() == null) {
                 return true;
             }
             FastenerEntity byName = this.fastenerRepository.findByName(createMaterialDTO.getType() + " " +

@@ -7,6 +7,8 @@ import bg.mck.enums.WeightUnits;
 
 public class UpdateMaterialDTO {
     private String name;
+    private String numberOfSheets;
+    private String kind;
     private String type;
     private String diameter;
     private String length;
@@ -286,6 +288,24 @@ public class UpdateMaterialDTO {
 
     public UpdateMaterialDTO setColor(String color) {
         this.color = color;
+        return this;
+    }
+
+    public String getNumberOfSheets() {
+        return numberOfSheets;
+    }
+
+    public UpdateMaterialDTO setNumberOfSheets(String numberOfSheets) {
+        this.numberOfSheets = numberOfSheets;
+        return this;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public UpdateMaterialDTO setKind(String kind) {
+        this.kind = kind;
         return this;
     }
 }

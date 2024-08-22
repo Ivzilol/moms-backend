@@ -17,4 +17,6 @@ public interface GalvanisedSheetRepository extends MongoRepository<GalvanisedShe
             fields = "{ 'id' : 1, 'name' : 1, 'type' : 1, 'maxLength' : 1, 'area' : 1, " +
                     "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<GalvanisedDTO> findByPartOfName(String regex, Sort sort);
+
+    GalvanisedSheetEntity findByName(String name);
 }

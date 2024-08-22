@@ -21,11 +21,11 @@ public class AppInit implements CommandLineRunner {
     public void run(String... args) throws Exception {
         inventoryService.initCategory();
 
-        FastenerEntity fastenerEntity = new FastenerEntity();
-        fastenerEntity.setName("Fastener1");
-        fastenerEntity.setLength("15.50");
-
-        fastenerRepository.save(fastenerEntity);
+//        FastenerEntity fastenerEntity = new FastenerEntity();
+//        fastenerEntity.setName("Fastener1");
+//        fastenerEntity.setLength("15.50");
+//
+//        fastenerRepository.save(fastenerEntity);
 
     }
 }

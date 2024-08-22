@@ -16,4 +16,6 @@ public interface MetalRepository extends MongoRepository<MetalEntity, String> {
             fields = "{ 'id' : 1, 'name' : 1, 'totalWeight' : 1, " +
                     "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<MetalDTO> findByPartOfName(String regex, Sort sort);
+
+    MetalEntity findByName(String name);
 }
