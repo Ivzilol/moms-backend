@@ -126,19 +126,6 @@ public class PanelEntity extends BaseMaterialEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PanelEntity that = (PanelEntity) o;
-        return Objects.equals(type, that.type) && Objects.equals(color, that.color) && Objects.equals(length, that.length) && Objects.equals(width, that.width) && Objects.equals(totalThickness, that.totalThickness) && Objects.equals(frontSheetThickness, that.frontSheetThickness) && Objects.equals(backSheetThickness, that.backSheetThickness) && Objects.equals(quantity, that.quantity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, color, length, width, totalThickness, frontSheetThickness, backSheetThickness, quantity);
-    }
-
-    @Override
     public String toString() {
         return "PanelEntity{" +
                 "type='" + type + '\'' +

@@ -99,4 +99,10 @@ public class OrderController {
         token = token.startsWith("Bearer ") ? token.substring(7) : token;
         return restTemplate.getForObject("http://authentication-service/" + applicationVersion + "/authentication/getemail/" + token, String.class);
     }
+
+    @GetMapping("delete-redis")
+    public void deleteRedis() {
+        orderService.deleteRedis();
+
+    }
 }
