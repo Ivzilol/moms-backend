@@ -15,7 +15,8 @@ public interface FastenerRepository extends MongoRepository<FastenerEntity, Stri
     FastenerEntity findByName(String name);
 
     @Query(value = "{ 'name' : { $regex: ?0, $options: 'i' } }",
-            fields = "{ 'id' : 1, 'name' : 1, 'type' : 1, 'diameter' : 1, 'length' : 1, 'model' : 1, " +
+            fields = "{ 'id' : 1, 'name' : 1, 'type' : 1, 'diameter' : 1, 'length' : 1, 'lengthUnit' : 1, " +
+                    "'standard' : 1, " +
                     "'clazz' : 1, 'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<FastenersDTO> findByPartOfName(String materialName, Sort sort);
 }

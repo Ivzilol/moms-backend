@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface RebarRepository extends MongoRepository<RebarEntity, String> {
     @Query(value = "{ 'name' : { $regex: ?0, $options: 'i' } }",
-            fields = "{ 'id' : 1, 'name' : 1, 'maxLength' : 1, 'weight' : 1, " +
+            fields = "{ 'id' : 1, 'name' : 1, 'maxLength' : 1, 'maxLengthUnit' : 1, " +
                     "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<RebarDTO> findByPartOfName(String regex, Sort sort);
 
