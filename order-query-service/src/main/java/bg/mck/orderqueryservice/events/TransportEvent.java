@@ -2,7 +2,7 @@ package bg.mck.orderqueryservice.events;
 
 import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 
-public class TransportEvent {
+public class TransportEvent extends BaseMaterialEvent {
 
     private Long id;
     private String quantity;
