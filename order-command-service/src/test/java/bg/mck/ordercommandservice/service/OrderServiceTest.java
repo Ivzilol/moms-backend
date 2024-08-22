@@ -8,7 +8,9 @@ import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 import bg.mck.ordercommandservice.mapper.OrderMapper;
+import bg.mck.ordercommandservice.repository.FastenerRepository;
 import bg.mck.ordercommandservice.repository.OrderRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -45,6 +47,9 @@ public class OrderServiceTest {
     @Mock
     private OrderEventService orderEventService;
 
+    @Mock
+    private FastenerRepository fastenerRepository;
+
     @InjectMocks
     private OrderService orderService;
 
@@ -57,8 +62,6 @@ public class OrderServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
-        // Initialize test data
         orderDTO = createOrderDTO();
         orderEntity = createOrderEntity();
         constructionSiteEntity = createConstructionSiteEntity();
@@ -330,6 +333,33 @@ public class OrderServiceTest {
         assertNotNull(result);
         assertEquals(OrderStatus.DELIVERY_IN_PROGRESS, result.getOrderStatus());
         verify(orderRepository).save(orderEntity);
+        verify(orderEventService).createOrderEvent(orderEntity);
+    }
+    @Test
+    void testOrderCreatedWithOrderEvent() throws Exception {
+        orderRepository.deleteAll();
+        fastenerRepository.deleteAll();
+        // Ensure OrderEntity is initialized
+        orderEntity = new OrderEntity();
+        orderEntity.setId(1L);
+
+        // Mock the mapper to return the initialized OrderEntity
+        when(orderMapper.toOrderEntity(eq(orderDTO))).thenReturn(orderEntity);
+
+        // Call the createOrder method
+        OrderConfirmationDTO result = orderService.createOrder(orderDTO, "test@test.bg", Collections.emptyList());
+
+        // Assertions to verify that the orderEntity is correctly processed
+        assertNotNull(orderEntity);
+        assertEquals(orderEntity.getOrderNumber(), 12346); // Assuming it should increment
+        assertEquals(orderEntity.getEmail(), "test@test.bg");
+        assertEquals(orderEntity.getOrderStatus(), OrderStatus.CREATED);
+        assertEquals(orderEntity.getConstructionSite(), constructionSiteEntity);
+
+        // Verifying interactions
+        verify(orderMapper).toOrderEntity(orderDTO);
+        verify(orderRepository).save(orderEntity);
+        verify(inventoryService).sendMaterialsToInventory(orderDTO);
         verify(orderEventService).createOrderEvent(orderEntity);
     }
 }
