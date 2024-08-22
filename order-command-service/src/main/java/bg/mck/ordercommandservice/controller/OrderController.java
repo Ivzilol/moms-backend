@@ -4,6 +4,7 @@ import bg.mck.ordercommandservice.dto.FileDTO;
 import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
+import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 import bg.mck.ordercommandservice.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,12 +47,13 @@ public class OrderController {
     }
 
     @Operation(summary = "Create order")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order created successfully"),
-            @ApiResponse(responseCode = "400", description = "Incorrect data",
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order created successfully",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = OrderConfirmationDTO.class))})
-    }
-    )
+                            schema = @Schema(implementation = OrderDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Incorrect data",
+                    content = {@Content(mediaType = "application/json")})
+    })
     @PostMapping(value = "/create-order", consumes = {"multipart/form-data"})
     public ResponseEntity<OrderConfirmationDTO> createOrder(@RequestPart(value = "order") @Valid OrderDTO order,
                                                             @RequestPart(value = "files", required = false) List<MultipartFile> files,
@@ -96,12 +98,13 @@ public class OrderController {
 
 
     @Operation(summary = "Update order from user account")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order update successfully"),
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order update successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
-                    content = {@Content(mediaType = "multipart/form-data",
-                            schema = @Schema(implementation = UpdateOrderDTO.class))})
-    }
-    )
+                    content = {@Content(mediaType = "application/json")})
+    })
     @PatchMapping(value = "/update-order", consumes = {"multipart/form-data"})
     public ResponseEntity<OrderConfirmationDTO> updateOrder(@RequestPart(value = "order") @Valid OrderDTO order,
                                                             @RequestPart(value = "files", required = false) List<MultipartFile> files,
@@ -112,7 +115,21 @@ public class OrderController {
     }
 
 
-    @Operation(summary = "Cancel order")
+    @Operation(summary = "Cancel an order",
+            description = "Cancels an order based on the provided order ID. The request must be authorized.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order deleted successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderConfirmationDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid order ID",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderNotFoundException.class))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Order not found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderNotFoundException.class))})
+    })
     @PatchMapping(value = "/delete-order/{orderId}")
     public ResponseEntity<OrderConfirmationDTO> deleteOrder(@PathVariable Long orderId,
                                                             @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
@@ -122,16 +139,21 @@ public class OrderController {
     }
 
 
-    @Operation(summary = "Restore order") //TODO: remove this feature
-    @PatchMapping(value = "/restore-order/{orderId}")
-    public ResponseEntity<OrderConfirmationDTO> restoreOrder(@PathVariable Long orderId,
-                                                             @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        String email = extractEmailFromToken(token);
-
-        return ResponseEntity.ok(orderService.restoreOrder(orderId, email));
-    }
-
-    @Operation(summary = "Delete material item")
+    @Operation(summary = "Delete a material from an order",
+            description = "Deletes a specific material from an order based on the provided order ID and material ID. The request must be authorized.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Material deleted successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderConfirmationDTO.class))}),
+            @ApiResponse(responseCode = "400", description = "Invalid order ID or material ID",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderNotFoundException.class))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", description = "Order or material not found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderNotFoundException.class))})
+    })
     @PatchMapping(value = "/delete-material/{orderId}/{materialId}")
     public ResponseEntity<OrderConfirmationDTO> deleteMaterial(@PathVariable Long orderId, @PathVariable Long materialId,
                                                                @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
