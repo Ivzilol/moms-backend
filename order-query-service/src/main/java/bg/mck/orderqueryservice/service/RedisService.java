@@ -2,6 +2,8 @@ package bg.mck.orderqueryservice.service;
 
 import bg.mck.orderqueryservice.dto.OrderDTO;
 import bg.mck.orderqueryservice.entity.ConstructionSiteEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.Set;
 public class RedisService {
 
     private final String CACHE_KEY = "orderQueryService";
+    @Value("${spring.data.redis.database}")
+    private Integer dbIndex;
 
 
     private final RedisTemplate<String, OrderDTO> redisTemplate;
@@ -38,5 +42,13 @@ public class RedisService {
         if (keys != null && !keys.isEmpty()) {
             redisTemplate.delete(keys);
         }
+    }
+
+    public void clearCacheInDatabase() {
+        redisTemplate.execute((RedisCallback<Void>) connection -> {
+            connection.select(dbIndex);
+            connection.serverCommands().flushDb();
+            return null;
+        });
     }
 }
