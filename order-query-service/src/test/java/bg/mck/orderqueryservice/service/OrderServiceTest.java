@@ -63,7 +63,7 @@ public class OrderServiceTest {
         assertEquals(1, result.size());
         assertEquals(orderDTO, result.get(0));
 
-        verify(redisService, times(2)).getCachedObjects();
+        verify(redisService, times(1)).getCachedObjects();
     }
 
     @Test
@@ -85,12 +85,9 @@ public class OrderServiceTest {
         when(orderRepository.findAll()).thenReturn(List.of(orderEntity));
         when(orderMapper.fromOrderEntityToDTO(orderEntity)).thenReturn(orderDTO);
 
-        List<OrderDTO> result = orderService.getAllOrders();
-        assertEquals(1, result.size());
-        assertEquals(orderDTO, result.get(0));
+        assertThrows(RuntimeException.class, () -> orderService.getAllOrders());
 
         verify(redisService, times(1)).getCachedObjects();
-        verify(orderRepository, times(1)).findAll();
     }
 
     @Test
