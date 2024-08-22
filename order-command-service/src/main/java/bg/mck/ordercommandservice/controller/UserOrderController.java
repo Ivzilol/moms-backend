@@ -31,13 +31,15 @@ public class UserOrderController {
     }
 
 
-    @Operation(summary = "Answer to admin note from user account")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Answer added successfully"),
+    @Operation(summary = "Answer to admin note from user account",
+            description = "This endpoint allows users to answer to an admin note.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Answer updated successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderConfirmationDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
-                    content = {@Content(mediaType = "multipart/form-data",
-                            schema = @Schema(implementation = OrderDTO.class))}),
-    }
-    )
+                    content = {@Content(mediaType = "application/json")}),
+    })
     @PatchMapping(value = "/answer-add", consumes = {"multipart/form-data"})
     public ResponseEntity<?> getAnswerToAdminNote(@RequestPart(value = "order") @Valid OrderDTO order,
                                                   @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {

@@ -1,6 +1,8 @@
 package bg.mck.ordercommandservice.testUtils;
 
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
+import bg.mck.ordercommandservice.dto.FileDTO;
+import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
 import bg.mck.ordercommandservice.entity.OrderEntity;
@@ -43,7 +45,7 @@ public class OrderUtil {
                 .setSpecificationFileUrl("https://www.example.com")
                 .setMaterialType(MaterialType.FASTENERS)
                 .setFasteners(Set.of(MaterialUtil.createFastenerEntity(),
-                        MaterialUtil.createFastenerEntity()));
+                        MaterialUtil.createFastenerEntity().setDiameter("10.0")));
         orderEntity.setId(1L);
         return orderEntity;
     }
@@ -76,5 +78,37 @@ public class OrderUtil {
                 .setMaterials(fasterEventSet);
 
         return createOrderEvent;
+    }
+
+    public static OrderConfirmationDTO createOrderConfirmationDTO() {
+        return new OrderConfirmationDTO.Builder()
+                .orderStatus(OrderStatus.CREATED)
+                .orderId(1L)
+                .orderNumber(50)
+                .constructionSiteNumber("1234")
+                .constructionSiteName("Site Name")
+                .build();
+
+    }
+
+    public static OrderConfirmationDTO updateOrderConfirmationDTO() {
+        return new OrderConfirmationDTO.Builder()
+                .orderStatus(OrderStatus.UPDATED)
+                .orderId(1L)
+                .orderNumber(50)
+                .constructionSiteNumber("1234")
+                .constructionSiteName("Site Name")
+                .build();
+
+    }
+
+    public static FileDTO createFileDTO() {
+        return new FileDTO().setFileUrl("https://www.example.com")
+                .setFileName("file.txt")
+                .setFileMatcher("001")
+                .setUploaderEmail("test@abv.bg")
+                .setUploadTime(LocalDateTime.now())
+                .setId("fileID");
+
     }
 }

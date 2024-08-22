@@ -5,27 +5,33 @@ import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+import static bg.mck.ordercommandservice.dto.util.RegexPatterns.POSITIVE_NUMBER_REGEX;
+
 public class PanelDTO extends BaseDTO {
 
+    @NotNull(message = "Type is required")
     private String type;
+    @NotNull(message = "Color is required")
     private String color;
 
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Length must be numeric and positive")
     private String length;
     private LengthUnits lengthUnit;
-    @Pattern(regexp = "^[^-].*", message = "Width must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "must be numeric and positive")
+    @NotNull(message = "Width is required")
     private String width;
     private LengthUnits widthUnit;
-    @Pattern(regexp = "^[^-].*", message = "TotalThickness must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "TotalThickness must be numeric and positive")
     private String totalThickness;
     private LengthUnits totalThicknessUnit;
-    @Pattern(regexp = "^[^-].*", message = "FrontSheetThickness must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "FrontSheetThickness must be numeric and positive")
     private String frontSheetThickness;
     private LengthUnits frontSheetThicknessUnit;
-    @Pattern(regexp = "^[^-].*", message = "BackSheetThickness must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "BackSheetThickness must be numeric and positive")
     private String backSheetThickness;
     private LengthUnits backSheetThicknessUnit;
     @NotNull(message = "Quantity is required")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Quantity must be numeric and positive")
     private String quantity;
     private AreaUnits quantityUnit;
 

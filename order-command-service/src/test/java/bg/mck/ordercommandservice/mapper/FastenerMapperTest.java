@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.mapper;
 
 import bg.mck.ordercommandservice.dto.FastenerDTO;
 import bg.mck.ordercommandservice.entity.FastenerEntity;
+import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.event.FasterEvent;
 import bg.mck.ordercommandservice.testUtils.MaterialUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -40,7 +41,8 @@ class FastenerMapperTest {
         assertEquals(fastenerDTO.getQuantity(), result.getQuantity());
         assertEquals(fastenerDTO.getSpecificationFileUrl(), result.getSpecificationFileUrl());
         assertEquals(fastenerDTO.getDiameter(), result.getDiameter());
-        assertEquals(fastenerDTO.getLength(), result.getLength());
+        assertEquals(fastenerDTO.getLength(), result.getLength().split(" ")[0]);
+        assertEquals(fastenerDTO.getLengthUnit(), LengthUnits.valueOf(result.getLength().split(" ")[1]));
         assertEquals(fastenerDTO.getStandard(), result.getStandard());
         assertEquals(fastenerDTO.getType(), result.getType());
         assertEquals(fastenerDTO.getClazz(), result.getClazz());
@@ -57,6 +59,7 @@ class FastenerMapperTest {
         assertEquals(fastenerEntity.getSpecificationFileUrl(), result.getSpecificationFileUrl());
         assertEquals(fastenerEntity.getDiameter(), result.getDiameter());
         assertEquals(fastenerEntity.getLength().split(" ")[0], result.getLength());
+        assertEquals(LengthUnits.valueOf(fastenerEntity.getLength().split(" ")[1]), result.getLengthUnit());
         assertEquals(fastenerEntity.getStandard(), result.getStandard());
         assertEquals(fastenerEntity.getType(), result.getType());
         assertEquals(fastenerEntity.getClazz(), result.getClazz());
@@ -75,6 +78,8 @@ class FastenerMapperTest {
         assertEquals(fastenerEntity.getLength(), result.getLength());
         assertEquals(fastenerEntity.getStandard(), result.getStandard());
         assertEquals(fastenerEntity.getType(), result.getType());
+        assertEquals(fastenerEntity.getAdminNote(), result.getAdminNote());
+        assertEquals(fastenerEntity.getMaterialStatus(), result.getMaterialStatus());
     }
 
 

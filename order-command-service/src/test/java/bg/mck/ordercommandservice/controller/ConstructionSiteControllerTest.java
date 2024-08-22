@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static bg.mck.ordercommandservice.testUtils.ConstructionSiteUtil.createConstructionSiteDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -49,10 +50,7 @@ class ConstructionSiteControllerTest {
 
     @BeforeEach
     void setUp() {
-        constructionSiteDTO = new ConstructionSiteDTO();
-        constructionSiteDTO.setConstructionNumber("12345");
-        constructionSiteDTO.setName("New Site");
-        constructionSiteDTO.setId(null);
+        constructionSiteDTO = createConstructionSiteDTO();
     }
 
     @AfterEach
@@ -66,16 +64,16 @@ class ConstructionSiteControllerTest {
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(constructionSiteDTO)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.constructionNumber").value("12345"))
-                .andExpect(jsonPath("$.name").value("New Site"));
+                .andExpect(jsonPath("$.constructionNumber").value("1234"))
+                .andExpect(jsonPath("$.name").value("Site Name"));
     }
 
     @Test
     void testCreateConstructionSite_AlreadyExistsNameAndNumber() throws Exception {
 
         ConstructionSiteEntity constructionSiteEntity = new ConstructionSiteEntity();
-        constructionSiteEntity.setConstructionNumber("12345");
-        constructionSiteEntity.setName("New Site");
+        constructionSiteEntity.setConstructionNumber("1234");
+        constructionSiteEntity.setName("Site Name");
         constructionSiteRepository.save(constructionSiteEntity);
 
         mockMvc.perform(post("/V1/admin/order/command/create-construction-site")
@@ -103,8 +101,8 @@ class ConstructionSiteControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(constructionSiteDTO)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.constructionNumber").value("12345"))
-                .andExpect(jsonPath("$.name").value("New Site"));
+                .andExpect(jsonPath("$.constructionNumber").value("1234"))
+                .andExpect(jsonPath("$.name").value("Site Name"));
 
         // Then
         ArgumentCaptor<EventData<ConstructionSiteEvent>> eventCaptor = ArgumentCaptor.forClass(EventData.class);
@@ -116,8 +114,8 @@ class ConstructionSiteControllerTest {
         // Optionally, you can add more assertions to check the content of the captured arguments
         assertThat(eventTypeCaptor.getValue()).isEqualTo("CONSTRUCTION_SITE_CREATED");
         assertThat(eventCaptor.getValue().getEvent().getId()).isNotNull();
-        assertThat(eventCaptor.getValue().getEvent().getName()).isEqualTo("New Site");
-        assertThat(eventCaptor.getValue().getEvent().getConstructionNumber()).isEqualTo("12345");
+        assertThat(eventCaptor.getValue().getEvent().getName()).isEqualTo("Site Name");
+        assertThat(eventCaptor.getValue().getEvent().getConstructionNumber()).isEqualTo("1234");
     }
 
     @Test
@@ -166,8 +164,8 @@ class ConstructionSiteControllerTest {
     void testUpdateConstructionSite_AlreadyExists() throws Exception {
 
         ConstructionSiteEntity constructionSiteEntity = new ConstructionSiteEntity();
-        constructionSiteEntity.setConstructionNumber("12345");
-        constructionSiteEntity.setName("New Site");
+        constructionSiteEntity.setConstructionNumber("1234");
+        constructionSiteEntity.setName("Site Name");
         constructionSiteRepository.save(constructionSiteEntity);
 
         mockMvc.perform(patch("/V1/admin/order/command/update-construction-site")

@@ -2,6 +2,7 @@ package bg.mck.ordercommandservice.dto;
 
 
 public class UnspecifiedDTO extends BaseDTO {
+
     private String quantity;
 
     public UnspecifiedDTO() {

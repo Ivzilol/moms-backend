@@ -4,19 +4,18 @@ import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "galvanised_sheets")
 public class GalvanisedSheetEntity extends BaseMaterialEntity {
 
+    @Column(nullable = false)
     private String type;
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
-    @Column(name = "max_length")
     private String maxLength;
-    @Pattern(regexp = "^[^-].*", message = "Area must be positive")
-    @Column(name = "number_of_sheets")
     private String numberOfSheets;
+    @Column(nullable = false)
     private String quantity;
-
 
     public GalvanisedSheetEntity() {
     }
@@ -46,20 +45,20 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Length must be positive") String getMaxLength() {
+    public String getMaxLength() {
         return maxLength;
     }
 
-    public GalvanisedSheetEntity setMaxLength(@Pattern(regexp = "^[^-].*", message = "Length must be positive") String maxLength) {
+    public GalvanisedSheetEntity setMaxLength(String maxLength) {
         this.maxLength = maxLength;
         return this;
     }
 
-    public @Pattern(regexp = "^[^-].*", message = "Area must be positive") String getNumberOfSheets() {
+    public String getNumberOfSheets() {
         return numberOfSheets;
     }
 
-    public GalvanisedSheetEntity setNumberOfSheets(@Pattern(regexp = "^[^-].*", message = "Area must be positive") String numberOfSheets) {
+    public GalvanisedSheetEntity setNumberOfSheets(String numberOfSheets) {
         this.numberOfSheets = numberOfSheets;
         return this;
     }
@@ -71,5 +70,28 @@ public class GalvanisedSheetEntity extends BaseMaterialEntity {
     public GalvanisedSheetEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GalvanisedSheetEntity that = (GalvanisedSheetEntity) o;
+        return Objects.equals(type, that.type) && Objects.equals(maxLength, that.maxLength) && Objects.equals(numberOfSheets, that.numberOfSheets) && Objects.equals(quantity, that.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, maxLength, numberOfSheets, quantity);
+    }
+
+    @Override
+    public String toString() {
+        return "GalvanisedSheetEntity{" +
+                "type='" + type + '\'' +
+                ", maxLength='" + maxLength + '\'' +
+                ", numberOfSheets='" + numberOfSheets + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

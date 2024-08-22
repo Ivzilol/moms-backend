@@ -3,6 +3,7 @@ package bg.mck.ordercommandservice.dto;
 import bg.mck.ordercommandservice.entity.enums.OrderStatus;
 
 public class OrderConfirmationDTO {
+
     private final OrderStatus orderStatus;
     private final Long orderId;
     private final Integer orderNumber;

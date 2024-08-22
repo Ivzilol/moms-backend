@@ -3,6 +3,7 @@ package bg.mck.ordercommandservice.controller;
 import bg.mck.ordercommandservice.dto.OrderConfirmationDTO;
 import bg.mck.ordercommandservice.dto.OrderDTO;
 import bg.mck.ordercommandservice.dto.UpdateOrderDTO;
+import bg.mck.ordercommandservice.exception.OrderNotFoundException;
 import bg.mck.ordercommandservice.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,13 +31,15 @@ public class AdminOrderController {
         this.restTemplate = restTemplate;
     }
 
-    @Operation(summary = "Update order status/add admin note from admin account")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Order update successfully"),
+    @Operation(summary = "Update order status/add admin note from admin account",
+            description = "This endpoint allows admin users to update the status of an order or add an admin note.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Order updated successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = OrderConfirmationDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Incorrect data",
-                    content = {@Content(mediaType = "multipart/form-data",
-                            schema = @Schema(implementation = UpdateOrderDTO.class))})
-    }
-    )
+                    content = {@Content(mediaType = "application/json")})
+    })
     @PatchMapping(value = "/update-order", consumes = {"multipart/form-data"})
     public ResponseEntity<OrderConfirmationDTO> updateOrderStatus(@RequestPart(value = "order") @Valid OrderDTO order,
                                                                   @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {

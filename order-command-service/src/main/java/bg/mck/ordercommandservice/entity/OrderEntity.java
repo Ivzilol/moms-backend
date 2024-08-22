@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -268,5 +269,43 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity setMaterialType(MaterialType materialType) {
         this.materialType = materialType;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderEntity that = (OrderEntity) o;
+        return Objects.equals(email, that.email) && Objects.equals(orderNumber, that.orderNumber) && Objects.equals(orderDescription, that.orderDescription) && Objects.equals(orderDate, that.orderDate) && Objects.equals(specificationFileUrl, that.specificationFileUrl) && Objects.equals(deliveryDate, that.deliveryDate) && materialType == that.materialType && orderStatus == that.orderStatus && Objects.equals(constructionSite, that.constructionSite) && Objects.equals(fasteners, that.fasteners) && Objects.equals(galvanisedSheets, that.galvanisedSheets) && Objects.equals(insulation, that.insulation) && Objects.equals(metals, that.metals) && Objects.equals(panels, that.panels) && Objects.equals(rebars, that.rebars) && Objects.equals(sets, that.sets) && Objects.equals(unspecified, that.unspecified) && Objects.equals(services, that.services) && Objects.equals(transports, that.transports);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, orderNumber, orderDescription, orderDate, specificationFileUrl, deliveryDate, materialType, orderStatus, constructionSite, fasteners, galvanisedSheets, insulation, metals, panels, rebars, sets, unspecified, services, transports);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "email='" + email + '\'' +
+                ", orderNumber=" + orderNumber +
+                ", orderDescription='" + orderDescription + '\'' +
+                ", orderDate=" + orderDate +
+                ", specificationFileUrl='" + specificationFileUrl + '\'' +
+                ", deliveryDate=" + deliveryDate +
+                ", materialType=" + materialType +
+                ", orderStatus=" + orderStatus +
+                ", constructionSite=" + constructionSite +
+                ", fasteners=" + fasteners +
+                ", galvanisedSheets=" + galvanisedSheets +
+                ", insulation=" + insulation +
+                ", metals=" + metals +
+                ", panels=" + panels +
+                ", rebars=" + rebars +
+                ", sets=" + sets +
+                ", unspecified=" + unspecified +
+                ", services=" + services +
+                ", transports=" + transports +
+                '}';
     }
 }
