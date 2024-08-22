@@ -11,10 +11,13 @@ public class TransportDTO extends BaseDTO {
     @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Length must be numeric and positive")
     private String maxLength;
     private LengthUnits maxLengthUnit;
+
     @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Weight must be numeric and positive")
     private String weight;
     private WeightUnits weightUnit;
+
     private String truck;
+
     @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Quantity must be numeric and positive")
     private String quantity;
 

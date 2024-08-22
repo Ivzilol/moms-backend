@@ -19,7 +19,7 @@ public class BaseMaterialEntity extends BaseEntity {
     private String adminNote;
 
     @Enumerated(EnumType.STRING)
-    private MaterialStatus materialStatus;
+    private MaterialStatus materialStatus = MaterialStatus.NOT_APPROVED;
 
     public BaseMaterialEntity() {
     }
