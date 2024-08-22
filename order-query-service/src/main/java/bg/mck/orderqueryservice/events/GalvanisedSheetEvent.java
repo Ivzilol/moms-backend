@@ -2,7 +2,7 @@ package bg.mck.orderqueryservice.events;
 
 import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 
-public class GalvanisedSheetEvent {
+public class GalvanisedSheetEvent extends BaseMaterialEvent {
 
     private Long id;
     private String quantity;
