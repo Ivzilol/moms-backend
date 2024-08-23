@@ -54,6 +54,7 @@ public class OrderController {
                                                             @RequestPart(value = "files", required = false) List<MultipartFile> files,
                                                             @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws IOException {
         String email = extractEmailFromToken(token);
+        String fullName = getFullNameFromEmail(email);
 
         List<FileDTO> fileUrls = new ArrayList<>();
 
@@ -80,7 +81,11 @@ public class OrderController {
                 fileUrls.add(response.getBody());
             }
         }
-        return ResponseEntity.ok(orderService.createOrder(order, email, fileUrls));
+        return ResponseEntity.ok(orderService.createOrder(order, email, fileUrls, fullName));
+    }
+
+    private String getFullNameFromEmail(String email) {
+        return restTemplate.getForObject("http://user-query-service/" + APPLICATION_VERSION + "/user/user/query/get-fullname/" + email, String.class);
     }
 
     private static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException, IOException {
