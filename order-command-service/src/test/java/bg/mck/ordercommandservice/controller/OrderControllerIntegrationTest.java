@@ -66,7 +66,7 @@ public class OrderControllerIntegrationTest {
             return request;
         });
 
-        Mockito.when(orderService.createOrder(Mockito.any(OrderDTO.class), Mockito.anyString(), Mockito.anyList()))
+        Mockito.when(orderService.createOrder(Mockito.any(OrderDTO.class), Mockito.anyString(), Mockito.anyList(), Mockito.anyString()))
                 .thenReturn(orderConfirmationDTO);
 
         mockMvc.perform(builder)

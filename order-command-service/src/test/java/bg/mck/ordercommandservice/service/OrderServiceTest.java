@@ -77,7 +77,7 @@ public class OrderServiceTest {
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
         when(orderEventService.createOrderEvent(any(OrderEntity.class))).thenReturn(orderConfirmationDTO);
 
-        OrderConfirmationDTO result = orderService.createOrder(orderDTO, "test@example.com", Collections.emptyList());
+        OrderConfirmationDTO result = orderService.createOrder(orderDTO, "test@example.com", Collections.emptyList(), "Full name");
 
         assertNotNull(result);
         verify(orderMapper).toOrderEntity(orderDTO);
@@ -94,7 +94,7 @@ public class OrderServiceTest {
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
         when(orderEventService.createOrderEvent(any(OrderEntity.class))).thenReturn(orderConfirmationDTO);
 
-        OrderConfirmationDTO result = orderService.createOrder(orderDTO, "test@example.com", Collections.emptyList());
+        OrderConfirmationDTO result = orderService.createOrder(orderDTO, "test@example.com", Collections.emptyList(), "Full name");
 
         assertNotNull(result);
         verify(orderMapper).toOrderEntity(orderDTO);
@@ -110,7 +110,7 @@ public class OrderServiceTest {
         when(orderRepository.save(any(OrderEntity.class))).thenThrow(new RuntimeException("Database error"));
 
         assertThrows(RuntimeException.class, () -> {
-            orderService.createOrder(orderDTO, "test@example.com", Collections.emptyList());
+            orderService.createOrder(orderDTO, "test@example.com", Collections.emptyList(), "Full name");
         });
 
         verify(orderMapper).toOrderEntity(orderDTO);
@@ -345,7 +345,7 @@ public class OrderServiceTest {
         when(orderRepository.save(eq(orderEntity))).thenReturn(orderEntity);
         when(orderEventService.createOrderEvent(eq(orderEntity))).thenReturn(orderConfirmationDTO);
 
-        OrderConfirmationDTO result = orderService.createOrder(orderDTO, "test@test.bg", Collections.emptyList());
+        OrderConfirmationDTO result = orderService.createOrder(orderDTO, "test@test.bg", Collections.emptyList(),"Full name");
 
         assertNotNull(orderEntity);
         assertEquals(orderEntity.getOrderNumber(), 101);
