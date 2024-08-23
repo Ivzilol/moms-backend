@@ -80,19 +80,6 @@ public class TransportEntity extends BaseMaterialEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TransportEntity that = (TransportEntity) o;
-        return Objects.equals(maxLength, that.maxLength) && Objects.equals(weight, that.weight) && Objects.equals(truck, that.truck) && Objects.equals(quantity, that.quantity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(maxLength, weight, truck, quantity);
-    }
-
-    @Override
     public String toString() {
         return "TransportEntity{" +
                 "maxLength='" + maxLength + '\'' +
