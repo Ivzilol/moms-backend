@@ -3,6 +3,7 @@ package bg.mck.ordercommandservice.service;
 import bg.mck.ordercommandservice.client.OrderQueryServiceClient;
 import bg.mck.ordercommandservice.dto.ConstructionSiteDTO;
 import bg.mck.ordercommandservice.entity.ConstructionSiteEntity;
+import bg.mck.ordercommandservice.entity.OrderEntity;
 import bg.mck.ordercommandservice.event.ConstructionSiteEvent;
 import bg.mck.ordercommandservice.event.EventType;
 import bg.mck.ordercommandservice.event.EventData;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,32 +33,6 @@ public class ConstructionSiteService {
         this.constructionSiteRepository = constructionSiteRepository;
         this.constructionSiteMapper = constructionSiteMapper;
         this.orderQueryServiceClient = orderQueryServiceClient;
-    }
-
-    public ConstructionSiteDTO getConstructionSite(Long id) {
-        Optional<ConstructionSiteEntity> constructionSiteById = constructionSiteRepository.findById(id);
-        if (constructionSiteById.isPresent()) {
-            return constructionSiteMapper.toDTO(constructionSiteById.get());
-        }
-        throw new ConstructionSiteNotFoundException("Construction site with id " + id + " not found");
-    }
-
-    public ConstructionSiteEntity getConstructionSiteById(Long id) {
-        Optional<ConstructionSiteEntity> constructionSiteById = constructionSiteRepository.findById(id);
-        if (constructionSiteById.isPresent()) {
-            return constructionSiteById.get();
-        }
-        throw new ConstructionSiteNotFoundException("Construction site with id " + id + " not found");
-    }
-
-    public ConstructionSiteEntity getConstructionSiteByNumberAndName(ConstructionSiteDTO constructionSite) {
-        String constructionNumber = constructionSite.getConstructionNumber();
-        String name = constructionSite.getName();
-        Optional<ConstructionSiteEntity> constructionSiteByName = constructionSiteRepository.findByName(name);
-        if (constructionSiteByName.isPresent()) {
-            return constructionSiteByName.get();
-        }
-        throw new ConstructionSiteNotFoundException("Construction site with number " + constructionNumber + " and name " + name + " not found");
     }
 
     @Transactional
@@ -76,41 +52,45 @@ public class ConstructionSiteService {
         return newConstrictionSite;
     }
 
-    private void checkIfExistsByNameAndNumber(ConstructionSiteEntity constructionSiteEntity) {
-        String name = constructionSiteEntity.getName();
-        Optional<ConstructionSiteEntity> constructionSiteByName = constructionSiteRepository.findByName(name);
-        if (constructionSiteByName.isPresent()) {
-            throw new ConstructionSiteAlreadyExists("Construction site with name " + name + " already exists");
-        }
-
-        String constructionNumber = constructionSiteEntity.getConstructionNumber();
-        Optional<ConstructionSiteEntity> constructionSiteByNumber = constructionSiteRepository.findByConstructionNumber(constructionNumber);
-        if (constructionSiteByNumber.isPresent()) {
-            throw new ConstructionSiteAlreadyExists("Construction site with number " + constructionNumber + " already exists");
-        }
-    }
-
-
-    public ConstructionSiteEntity getConstructionSiteByName(String name) {
-        return constructionSiteRepository.findByName(name)
-                .orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site with name " + name + " not found"));
-    }
-
-    private void sendConstructionSiteEvent(EventData<ConstructionSiteEvent> constructionSiteEvent) {
-        orderQueryServiceClient.sendConstructionSiteEvent(constructionSiteEvent, constructionSiteEvent.getEventType().toString());
-    }
-
     @Transactional
     public ConstructionSiteDTO updateConstructionSite(ConstructionSiteDTO constructionSiteDTO) {
-        checkIfExistsByNameAndNumber(constructionSiteDTO);
 
-        ConstructionSiteEntity constructionSiteEntity = constructionSiteRepository.findById(constructionSiteDTO.getId())
-                .orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site with id " + constructionSiteDTO.getId() + " not found"));
-        
-        constructionSiteEntity.setName(constructionSiteDTO.getName());
-        constructionSiteEntity.setConstructionNumber(constructionSiteDTO.getConstructionNumber());
+        ConstructionSiteEntity existingSite = constructionSiteRepository.findById(constructionSiteDTO.getId())
+                .orElseThrow(() ->
+                        new ConstructionSiteNotFoundException("Construction site with id " + constructionSiteDTO.getId() + " not found"));
 
-        ConstructionSiteEntity updatedConstructionSite = constructionSiteRepository.save(constructionSiteEntity);
+        if (hasOrders(existingSite.getId()) > 0) {
+            throw new ConstructionSiteAlreadyExists("Construction site with id " + constructionSiteDTO.getId() +
+                    " has orders and cannot be updated");
+        }
+        String newName = constructionSiteDTO.getName();
+        String newNumber = constructionSiteDTO.getConstructionNumber();
+
+        if (newName != null && !newName.equals(existingSite.getName())
+                && constructionSiteRepository.existsByName(newName)) {
+            throw new IllegalArgumentException("Construction site with the name '" + newName + "' already exists.");
+        }
+
+        if (newNumber != null && !newNumber.equals(existingSite.getConstructionNumber())
+                && constructionSiteRepository.existsByConstructionNumber(newNumber)) {
+            throw new IllegalArgumentException("Construction site with the number '" + newNumber + "' already exists.");
+        }
+
+        if (newName != null && newNumber != null && !newName.equals(existingSite.getName())
+                & !newNumber.equals(existingSite.getConstructionNumber())
+                && constructionSiteRepository.existsByNameAndConstructionNumber(newName, newNumber)) {
+            throw new IllegalArgumentException("Construction site with the name '" + newName + "' and number '" + newNumber + "' already exists.");
+        }
+
+        if (newName != null && !newName.equals(existingSite.getName())) {
+            existingSite.setName(newName);
+        }
+
+        if (newNumber != null && !newNumber.equals(existingSite.getConstructionNumber())) {
+            existingSite.setConstructionNumber(newNumber);
+        }
+
+        ConstructionSiteEntity updatedConstructionSite = constructionSiteRepository.save(existingSite);
         ConstructionSiteDTO updatedConstructionSiteDTO = constructionSiteMapper.toDTO(updatedConstructionSite);
         LOGGER.info("Construction site with id: {} updated successfully", updatedConstructionSiteDTO.getId());
 
@@ -118,6 +98,10 @@ public class ConstructionSiteService {
         EventData<ConstructionSiteEvent> constructionSiteEvent = createConstructionSiteEvent(updatedConstructionSite, isUpdate);
         sendConstructionSiteEvent(constructionSiteEvent);
         return updatedConstructionSiteDTO;
+    }
+
+    private int hasOrders(Long constructionSiteId) {
+        return constructionSiteRepository.existsByIdAndOrdersIsNotNull(constructionSiteId);
     }
 
     private void checkIfExistsByNameAndNumber(ConstructionSiteDTO constructionSiteDTO) {
@@ -164,6 +148,55 @@ public class ConstructionSiteService {
         }
 
         return eventData;
+    }
+
+    public ConstructionSiteEntity getConstructionSiteByName(String name) {
+        return constructionSiteRepository.findByName(name)
+                .orElseThrow(() -> new ConstructionSiteNotFoundException("Construction site with name " + name + " not found"));
+    }
+
+    private void sendConstructionSiteEvent(EventData<ConstructionSiteEvent> constructionSiteEvent) {
+        orderQueryServiceClient.sendConstructionSiteEvent(constructionSiteEvent, constructionSiteEvent.getEventType().toString());
+    }
+
+    private void checkIfExistsByNameAndNumber(ConstructionSiteEntity constructionSiteEntity) {
+        String name = constructionSiteEntity.getName();
+        Optional<ConstructionSiteEntity> constructionSiteByName = constructionSiteRepository.findByName(name);
+        if (constructionSiteByName.isPresent()) {
+            throw new ConstructionSiteAlreadyExists("Construction site with name " + name + " already exists");
+        }
+
+        String constructionNumber = constructionSiteEntity.getConstructionNumber();
+        Optional<ConstructionSiteEntity> constructionSiteByNumber = constructionSiteRepository.findByConstructionNumber(constructionNumber);
+        if (constructionSiteByNumber.isPresent()) {
+            throw new ConstructionSiteAlreadyExists("Construction site with number " + constructionNumber + " already exists");
+        }
+    }
+
+    public ConstructionSiteDTO getConstructionSite(Long id) {
+        Optional<ConstructionSiteEntity> constructionSiteById = constructionSiteRepository.findById(id);
+        if (constructionSiteById.isPresent()) {
+            return constructionSiteMapper.toDTO(constructionSiteById.get());
+        }
+        throw new ConstructionSiteNotFoundException("Construction site with id " + id + " not found");
+    }
+
+    public ConstructionSiteEntity getConstructionSiteById(Long id) {
+        Optional<ConstructionSiteEntity> constructionSiteById = constructionSiteRepository.findById(id);
+        if (constructionSiteById.isPresent()) {
+            return constructionSiteById.get();
+        }
+        throw new ConstructionSiteNotFoundException("Construction site with id " + id + " not found");
+    }
+
+    public ConstructionSiteEntity getConstructionSiteByNumberAndName(ConstructionSiteDTO constructionSite) {
+        String constructionNumber = constructionSite.getConstructionNumber();
+        String name = constructionSite.getName();
+        Optional<ConstructionSiteEntity> constructionSiteByName = constructionSiteRepository.findByName(name);
+        if (constructionSiteByName.isPresent()) {
+            return constructionSiteByName.get();
+        }
+        throw new ConstructionSiteNotFoundException("Construction site with number " + constructionNumber + " and name " + name + " not found");
     }
 }
 
