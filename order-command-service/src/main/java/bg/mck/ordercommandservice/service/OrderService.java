@@ -51,7 +51,7 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<FileDTO> fileUrls) {
+    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<FileDTO> fileUrls, String fullName) {
 
         matchFilesToMaterials(order, fileUrls);
 
@@ -61,6 +61,7 @@ public class OrderService {
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
 
         orderEntity.setEmail(email)
+                .setFullName(fullName)
                 .setOrderNumber(lastOrderNumber.orElse(0) + 1)
                 .setOrderStatus(OrderStatus.CREATED)
                 .setOrderDate(ZonedDateTime.now(ZoneId.of("Europe/Sofia")).plusHours(3))

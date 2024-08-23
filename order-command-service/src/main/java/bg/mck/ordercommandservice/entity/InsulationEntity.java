@@ -51,18 +51,6 @@ public class InsulationEntity extends BaseMaterialEntity {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InsulationEntity that = (InsulationEntity) o;
-        return Objects.equals(type, that.type) && Objects.equals(thickness, that.thickness) && Objects.equals(quantity, that.quantity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, thickness, quantity);
-    }
 
     @Override
     public String toString() {

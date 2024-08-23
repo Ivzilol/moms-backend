@@ -21,7 +21,6 @@ public class OrderDTO {
     private ZonedDateTime orderDate;
 
     @NotNull(message = "Delivery date must not be empty.")
-    @Future(message = "Delivery date must be in the future.")
     private ZonedDateTime deliveryDate;
 
     @NotNull(message = "Construction site must not be empty.")

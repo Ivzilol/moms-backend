@@ -53,20 +53,6 @@ public class RebarEntity extends BaseMaterialEntity {
         this.quantity = quantity;
         return this;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RebarEntity that = (RebarEntity) o;
-        return Objects.equals(maxLength, that.maxLength) && Objects.equals(quantity, that.quantity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(maxLength, quantity);
-    }
-
     @Override
     public String toString() {
         return "RebarEntity{" +

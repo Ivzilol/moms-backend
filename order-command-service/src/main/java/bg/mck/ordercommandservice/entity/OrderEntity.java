@@ -18,16 +18,21 @@ public class OrderEntity extends BaseEntity {
 
     @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
+
     @Column(name = "order_number", nullable = false, unique = true)
     private Integer orderNumber;
 
     @Column(columnDefinition = "TEXT")
     private String orderDescription;
+
     @Column(name = "order_date", nullable = false, updatable = false)
     private ZonedDateTime orderDate;
+
     private String specificationFileUrl;
 
-    @Future(message = "Delivery date must be in the future.")
     @Column(name = "delivery_date", nullable = false)
     private ZonedDateTime deliveryDate;
 
@@ -77,7 +82,7 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(Long id, String email, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, String specificationFileUrl, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
+    public OrderEntity(String fullName, Long id, String email, Integer orderNumber, String orderDescription, ZonedDateTime orderDate, String specificationFileUrl, ZonedDateTime deliveryDate, MaterialType materialType, OrderStatus orderStatus, ConstructionSiteEntity constructionSite, Set<FastenerEntity> fasteners, Set<GalvanisedSheetEntity> galvanisedSheets, Set<InsulationEntity> insulation, Set<MetalEntity> metals, Set<PanelEntity> panels, Set<RebarEntity> rebars, Set<SetEntity> sets, Set<UnspecifiedEntity> unspecified, Set<ServiceEntity> services, Set<TransportEntity> transports) {
         super(id);
         this.email = email;
         this.orderNumber = orderNumber;
@@ -98,6 +103,7 @@ public class OrderEntity extends BaseEntity {
         this.unspecified = unspecified;
         this.services = services;
         this.transports = transports;
+        this.fullName = fullName;
     }
 
     public String getSpecificationFileUrl() {
@@ -115,6 +121,15 @@ public class OrderEntity extends BaseEntity {
 
     public OrderEntity setEmail(String username) {
         this.email = username;
+        return this;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public OrderEntity setFullName(String fullName) {
+        this.fullName = fullName;
         return this;
     }
 
@@ -269,19 +284,6 @@ public class OrderEntity extends BaseEntity {
     public OrderEntity setMaterialType(MaterialType materialType) {
         this.materialType = materialType;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderEntity that = (OrderEntity) o;
-        return Objects.equals(email, that.email) && Objects.equals(orderNumber, that.orderNumber) && Objects.equals(orderDescription, that.orderDescription) && Objects.equals(orderDate, that.orderDate) && Objects.equals(specificationFileUrl, that.specificationFileUrl) && Objects.equals(deliveryDate, that.deliveryDate) && materialType == that.materialType && orderStatus == that.orderStatus && Objects.equals(constructionSite, that.constructionSite) && Objects.equals(fasteners, that.fasteners) && Objects.equals(galvanisedSheets, that.galvanisedSheets) && Objects.equals(insulation, that.insulation) && Objects.equals(metals, that.metals) && Objects.equals(panels, that.panels) && Objects.equals(rebars, that.rebars) && Objects.equals(sets, that.sets) && Objects.equals(unspecified, that.unspecified) && Objects.equals(services, that.services) && Objects.equals(transports, that.transports);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(email, orderNumber, orderDescription, orderDate, specificationFileUrl, deliveryDate, materialType, orderStatus, constructionSite, fasteners, galvanisedSheets, insulation, metals, panels, rebars, sets, unspecified, services, transports);
     }
 
     @Override

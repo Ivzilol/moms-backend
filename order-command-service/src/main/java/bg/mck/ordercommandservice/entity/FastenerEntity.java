@@ -96,19 +96,6 @@ public class FastenerEntity extends BaseMaterialEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FastenerEntity that = (FastenerEntity) o;
-        return Objects.equals(type, that.type) && Objects.equals(diameter, that.diameter) && Objects.equals(length, that.length) && Objects.equals(standard, that.standard) && Objects.equals(clazz, that.clazz) && Objects.equals(quantity, that.quantity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, diameter, length, standard, clazz, quantity);
-    }
-
-    @Override
     public String toString() {
         return "FastenerEntity{" +
                 "type='" + type + '\'' +
