@@ -59,4 +59,10 @@ public class OrderService {
                 .map(orderMapper::fromOrderEntityToDTO)
                 .orElseThrow(() -> new OrderNotFoundException("Order with number " + number + " not found"));
     }
+
+    public String clearBase() {
+        redisService.clearCacheInDatabase();
+        orderRepository.deleteAll();
+        return "Database is empty now";
+    }
 }

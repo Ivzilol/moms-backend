@@ -196,7 +196,7 @@ public class MailService {
                 .append("            <p>Благодарим ви!</p>")
                 .append("        </div>")
                 .append("        <div style=\"background-color: #f8f9fa; padding: 10px; text-align: center; font-size: 12px; color: #777;\">")
-                .append("            <p>&copy; ").append(LocalDateTime.now().getYear()).append(" MCK</p>")
+                .append("            <p>").append(LocalDateTime.now().getYear()).append("</p>")
                 .append("        </div>")
                 .append("    </div>")
                 .append("</body>")
@@ -240,7 +240,7 @@ public class MailService {
                 "            <p style=\"line-height: 1.6;\">С уважение,<br>Екипът на MCK</p>\n" +
                 "        </div>\n" +
                 "        <div style=\"background-color: #f4f4f4; text-align: center; padding: 10px; font-size: 14px;\">\n" +
-                "            <p style=\"margin: 0;\">&copy; " + LocalDateTime.now().getYear() + " MCK. Всички права запазени.</p>\n" +
+                "            <p style=\"margin: 0;\">" + LocalDateTime.now().getYear() + "</p>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</body>\n" +
