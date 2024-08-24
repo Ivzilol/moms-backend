@@ -12,37 +12,31 @@ public class FastenerDTO extends BaseDTO {
     private LengthUnits lengthUnit;
     private String standard;
     private String clazz;
+    private String quantity;
 
 
     public FastenerDTO() {
     }
 
-    public FastenerDTO(String id, String standard, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String diameter, String length, LengthUnits lengthUnit, String clazz) {
+    public FastenerDTO(String type, String diameter, String length, LengthUnits lengthUnit, String standard, String clazz, String quantity) {
+        this.type = type;
+        this.diameter = diameter;
+        this.length = length;
+        this.lengthUnit = lengthUnit;
+        this.standard = standard;
+        this.clazz = clazz;
+        this.quantity = quantity;
+    }
+
+    public FastenerDTO(String id, String description, String specificationFileUrl, String adminNote, String materialStatus, String type, String diameter, String length, LengthUnits lengthUnit, String standard, String clazz, String quantity) {
         super(id, description, specificationFileUrl, adminNote, materialStatus);
         this.type = type;
         this.diameter = diameter;
-        this.standard = standard;
         this.length = length;
         this.lengthUnit = lengthUnit;
-        this.clazz = clazz;
-    }
-
-    public FastenerDTO(String type, String diameter, String length, LengthUnits lengthUnit, String standard, String clazz) {
-        this.type = type;
-        this.diameter = diameter;
         this.standard = standard;
-        this.length = length;
-        this.lengthUnit = lengthUnit;
         this.clazz = clazz;
-    }
-
-    public String getStandard() {
-        return standard;
-    }
-
-    public FastenerDTO setStandard(String standard) {
-        this.standard = standard;
-        return this;
+        this.quantity = quantity;
     }
 
     public String getType() {
@@ -51,15 +45,6 @@ public class FastenerDTO extends BaseDTO {
 
     public FastenerDTO setType(String type) {
         this.type = type;
-        return this;
-    }
-
-    public LengthUnits getLengthUnit() {
-        return lengthUnit;
-    }
-
-    public FastenerDTO setLengthUnit(LengthUnits lengthUnit) {
-        this.lengthUnit = lengthUnit;
         return this;
     }
 
@@ -81,6 +66,24 @@ public class FastenerDTO extends BaseDTO {
         return this;
     }
 
+    public LengthUnits getLengthUnit() {
+        return lengthUnit;
+    }
+
+    public FastenerDTO setLengthUnit(LengthUnits lengthUnit) {
+        this.lengthUnit = lengthUnit;
+        return this;
+    }
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public FastenerDTO setStandard(String standard) {
+        this.standard = standard;
+        return this;
+    }
+
     public String getClazz() {
         return clazz;
     }
@@ -90,5 +93,12 @@ public class FastenerDTO extends BaseDTO {
         return this;
     }
 
+    public String getQuantity() {
+        return quantity;
+    }
 
+    public FastenerDTO setQuantity(String quantity) {
+        this.quantity = quantity;
+        return this;
+    }
 }
