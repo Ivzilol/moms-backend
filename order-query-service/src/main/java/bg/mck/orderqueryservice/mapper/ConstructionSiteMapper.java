@@ -4,6 +4,7 @@ import bg.mck.orderqueryservice.dto.ConstructionSiteDTO;
 import bg.mck.orderqueryservice.entity.ConstructionSiteEntity;
 import bg.mck.orderqueryservice.events.ConstructionSiteEvent;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ConstructionSiteMapper {

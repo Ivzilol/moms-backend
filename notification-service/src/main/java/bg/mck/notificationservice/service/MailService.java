@@ -48,13 +48,14 @@ public class MailService {
         String constructionSiteNumber = getNodeText(rootNode, "constructionSiteNumber");
         String specificationFileUrl = getNodeText(rootNode, "specificationFileUrl");
         boolean isNewOrder = rootNode.path("newOrder").asBoolean();
+        String fullName = getNodeText(rootNode, "fullName");
         JsonNode materialsNode = rootNode.path("materials");
 
         Set<String> columnNames = extractColumnNames(materialsNode);
         StringBuilder materialsHtml = buildMaterialsHtml(columnNames, materialsNode);
 
         String orderStatusText = isNewOrder ? "създадена" : "променена";
-        String message = buildOrderMessage(orderStatusText, orderDescription, orderNumber, orderDate, deliveryDate,
+        String message = buildOrderMessage(orderStatusText, fullName, orderDescription, orderNumber, orderDate, deliveryDate,
                 constructionSiteName, constructionSiteNumber, orderStatus, specificationFileUrl, materialsHtml);
         sendMail(email, "Вашата поръчка е " + orderStatusText, message);
     }
@@ -123,7 +124,7 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
-    private static String buildOrderMessage(String orderStatusText, String orderDescription, String orderNumber,
+    private static String buildOrderMessage(String orderStatusText, String fullName, String orderDescription, String orderNumber,
                                             String orderDate, String deliveryDate, String constructionSiteName,
                                             String constructionSiteNumber, String orderStatus, String specificationFileUrl,
                                             StringBuilder materialsHtml) {
@@ -148,6 +149,10 @@ public class MailService {
                 .append("                <tr>")
                 .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Номер на поръчката:</th>")
                 .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(orderNumber).append("</td>")
+                .append("                </tr>")
+                .append("                <tr>")
+                .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Създател на поръчката:</th>")
+                .append("                    <td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f9f9f9;\">").append(fullName).append("</td>")
                 .append("                </tr>")
                 .append("                <tr>")
                 .append("                    <th style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #007bff; color: white;\">Описание:</th>")

@@ -74,6 +74,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithFasterEvent() throws Exception {
         CreateOrderEvent<FasterEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.FASTENERS);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -109,6 +110,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithGalvanizedSheetEvent() throws Exception {
         CreateOrderEvent<GalvanisedSheetEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.GALVANIZED_SHEET);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -143,6 +145,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithInsulationEvent() throws Exception {
         CreateOrderEvent<InsulationEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.INSULATION);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -177,6 +180,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithMetalEvent() throws Exception {
         CreateOrderEvent<MetalEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.METAL);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -210,6 +214,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithPanelEvent() throws Exception {
         CreateOrderEvent<PanelEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.PANELS);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -244,6 +249,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithRebarEvent() throws Exception {
         CreateOrderEvent<RebarEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.REBAR);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -277,6 +283,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithSetEvent() throws Exception {
         CreateOrderEvent<SetEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.SET);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -310,6 +317,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithServiceEvent() throws Exception {
         CreateOrderEvent<ServiceEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.SERVICE);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -343,6 +351,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithTransportEvent() throws Exception {
         CreateOrderEvent<TransportEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.TRANSPORT);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -376,6 +385,7 @@ public class EventControllerCreateOrderIntegrationTest {
     void testOrderCreatedWithUnspecifiedEvent() throws Exception {
         CreateOrderEvent<UnspecifiedEvent> createOrderEvent = new CreateOrderEvent<>();
         createOrderEvent.setOrderId(id.longValue());
+        createOrderEvent.setFullName("Petyo Veselinov");
         createOrderEvent.setOrderStatus(OrderStatus.CREATED);
         createOrderEvent.setMaterialType(MaterialType.UNSPECIFIED);
         createOrderEvent.setEventType(OrderEventType.ORDER_CREATED);
@@ -408,6 +418,7 @@ public class EventControllerCreateOrderIntegrationTest {
     private OrderEntity getEntityToCheck(String orderStatus, String materialsType, Set materials) {
         OrderEntity entity = new OrderEntity();
         entity.setId(String.valueOf(id));
+        entity.setFullName("Petyo Veselinov");
         entity.setOrderStatus(OrderStatus.valueOf(orderStatus));
         entity.setEmail("test@test.bg");
         entity.setConstructionSite(constructionSiteEntity);
