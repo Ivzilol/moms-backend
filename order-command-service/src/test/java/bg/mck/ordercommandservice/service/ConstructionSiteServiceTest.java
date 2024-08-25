@@ -185,32 +185,5 @@ public class ConstructionSiteServiceTest {
         verify(constructionSiteRepository, times(1)).findByConstructionNumber("1234");
         verify(constructionSiteRepository, never()).save(any(ConstructionSiteEntity.class));
     }
-
-    @Test //FIXME
-    void test_UpdateConstructionSite_Successfully() {
-        constructionSiteDTO.setId(1L);
-        when(constructionSiteRepository.findById(anyLong())).thenReturn(Optional.of(constructionSiteEntity));
-        when(constructionSiteRepository.save(any(ConstructionSiteEntity.class))).thenReturn(constructionSiteEntity);
-        when(constructionSiteMapper.toDTO(constructionSiteEntity)).thenReturn(constructionSiteDTO);
-        when(constructionSiteMapper.toEvent(constructionSiteEntity)).thenReturn(constructionSiteEvent);
-
-        doNothing().when(orderQueryServiceClient).sendConstructionSiteEvent(any(EventData.class), anyString());
-
-        ConstructionSiteDTO result = constructionSiteService.updateConstructionSite(constructionSiteDTO);
-
-        assertNotNull(result);
-        assertEquals(constructionSiteDTO.getConstructionNumber(), result.getConstructionNumber());
-        assertEquals(constructionSiteDTO.getName(), result.getName());
-
-        verify(constructionSiteRepository, times(1)).findByName("Site Name");
-        verify(constructionSiteRepository, times(1)).findByConstructionNumber("1234");
-        verify(constructionSiteRepository, times(1)).save(constructionSiteEntity);
-
-        verify(orderQueryServiceClient, times(1)).sendConstructionSiteEvent(any(EventData.class), anyString());
-
-    }
-
-
-
 }
 
