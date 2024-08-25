@@ -213,6 +213,10 @@ public class OrderService {
                         return;
                     }
 
+                    if (materialDTO.getMaterialStatus() != null){
+                        material.setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
+                    }
+
                     if (!materialDTO.getAdminNote().contains("##")) {
                         return;
                     }
