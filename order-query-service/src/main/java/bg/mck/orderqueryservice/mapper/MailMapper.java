@@ -12,6 +12,7 @@ public class MailMapper {
         EmailDTO emailDTO = new EmailDTO();
         emailDTO.setEmail(orderEvent.getEmail());
         emailDTO.setOrderNumber(String.valueOf(orderEvent.getOrderNumber()));
+        emailDTO.setFullName(orderEvent.getFullName());
         emailDTO.setOrderDescription(orderEvent.getOrderDescription());
         emailDTO.setOrderDate(orderEvent.getOrderDate());
         emailDTO.setDeliveryDate(orderEvent.getDeliveryDate());
