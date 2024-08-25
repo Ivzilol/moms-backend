@@ -8,6 +8,8 @@ import bg.mck.ordercommandservice.event.ConstructionSiteEvent;
 import bg.mck.ordercommandservice.event.EventType;
 import bg.mck.ordercommandservice.event.EventData;
 import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
+import bg.mck.ordercommandservice.exception.ConstructionSiteHasNoNameException;
+import bg.mck.ordercommandservice.exception.ConstructionSiteHasNoNumberException;
 import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
 import bg.mck.ordercommandservice.mapper.ConstructionSiteMapper;
 import bg.mck.ordercommandservice.repository.ConstructionSiteRepository;
@@ -37,6 +39,12 @@ public class ConstructionSiteService {
 
     @Transactional
     public ConstructionSiteDTO createConstructionSite(ConstructionSiteDTO constructionSiteDTO) {
+        if (constructionSiteDTO.getConstructionNumber() == null || constructionSiteDTO.getConstructionNumber().trim().isEmpty()) {
+            throw new ConstructionSiteHasNoNumberException("Construction site number must not be empty.");
+        }
+        if (constructionSiteDTO.getName() == null || constructionSiteDTO.getName().trim().isEmpty()) {
+            throw new ConstructionSiteHasNoNameException("Construction site name must not be empty.");
+        }
         ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntity(constructionSiteDTO);
 
         checkIfExistsByNameAndNumber(constructionSiteEntity);
