@@ -96,7 +96,7 @@ public class MaterialDeleteService {
             default -> throw new InvalidCategoryException("Unhandled category type: " + materialType);
         }
 
-        MaterialDeletedEvent event = new MaterialDeletedEvent(materialId, EventType.ItemDeleted, name);
+        MaterialDeletedEvent event = new MaterialDeletedEvent(materialId, EventType.ItemDeleted, name, materialType.name());
 
         MaterialEvent<MaterialDeletedEvent> materialEvent = EventCreationHelper.toMaterialEvent(event);
 

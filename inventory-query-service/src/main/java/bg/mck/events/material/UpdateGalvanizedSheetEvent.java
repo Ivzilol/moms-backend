@@ -28,6 +28,17 @@ public class UpdateGalvanizedSheetEvent extends BaseMaterialEvent {
         super(materialId, eventType);
     }
 
+    public UpdateGalvanizedSheetEvent(Long materialId, EventType eventType, String category, String name, String type, String maxLength, LengthUnits maxLengthUnit, String numberOfSheets, String description, String specificationFileUrl) {
+        super(materialId, eventType);
+        this.category = category;
+        this.name = name;
+        this.type = type;
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.numberOfSheets = numberOfSheets;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
 
     public String getCategory() {
         return category;
