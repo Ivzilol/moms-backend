@@ -90,11 +90,6 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getMyOrders(email));
     }
 
-    @DeleteMapping("/user/order/query/clear-base")
-    public ResponseEntity<?> clearBase() {
-        return ResponseEntity.ok(orderService.clearBase());
-    }
-
     /**
      * Helper method to extract email from the JWT token.
      * @param token The JWT token provided in the Authorization header.
