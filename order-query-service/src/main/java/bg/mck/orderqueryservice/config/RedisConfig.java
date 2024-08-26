@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -20,12 +19,9 @@ public class RedisConfig {
         RedisTemplate<String, OrderDTO> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
 
-        // Use StringRedisSerializer for the key
         template.setKeySerializer(new StringRedisSerializer());
 
         objectMapper.registerModule(new JavaTimeModule());
-
-//        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
 
         Jackson2JsonRedisSerializer<OrderDTO> serializer = new Jackson2JsonRedisSerializer<>(objectMapper,OrderDTO.class);
 
