@@ -12,6 +12,8 @@ import bg.mck.repository.material.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
@@ -37,11 +39,12 @@ public class MaterialEventService {
     private final MaterialRedisService materialRedisService;
     private final MaterialRegisterService materialRegisterService;
     private final InventoryQueryUpdateMapper inventoryQueryUpdateMapper;
+    private final CacheManager cacheManager;
 
 
     public MaterialEventService(EventMaterialRepository eventMaterialRepository, FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository,
                                 PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, MetalRepository metalRepository,
-                                ObjectMapper objectMapper, MaterialDeleteService materialDeleteService, MaterialRedisService materialRedisService, MaterialRegisterService materialRegisterService, InventoryQueryUpdateMapper inventoryQueryUpdateMapper) {
+                                ObjectMapper objectMapper, MaterialDeleteService materialDeleteService, MaterialRedisService materialRedisService, MaterialRegisterService materialRegisterService, InventoryQueryUpdateMapper inventoryQueryUpdateMapper, CacheManager cacheManager) {
         this.eventMaterialRepository = eventMaterialRepository;
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
@@ -56,6 +59,7 @@ public class MaterialEventService {
         this.materialRedisService = materialRedisService;
         this.materialRegisterService = materialRegisterService;
         this.inventoryQueryUpdateMapper = inventoryQueryUpdateMapper;
+        this.cacheManager = cacheManager;
     }
 
     public void processMaterialEvent(String data, String eventType, String materialType) throws
@@ -330,6 +334,7 @@ public class MaterialEventService {
         }
     }
 
+
     private void updateEvent(String data, String materialType) throws JsonProcessingException {
         if (materialType.equals(MaterialType.FASTENERS.name())) {
             updateFastenerEntity(data, materialType);
@@ -435,6 +440,7 @@ public class MaterialEventService {
         reconstructMaterialEntity(materialId, materialType, GalvanisedSheetEntity.class);
     }
 
+
     private void updateFastenerEntity(String data, String materialType) throws JsonProcessingException {
         MaterialEvent<UpdateFastenerEvent> materialEvent =
                 objectMapper.readValue(data, new TypeReference<>() {
@@ -460,8 +466,14 @@ public class MaterialEventService {
         materialRedisService.clearCacheForObject(materialId, materialType);
     }
 
-    @CacheEvict(value = "materials", key = "#category + '_' + #materialName.substring(0,2)")
     public void evictCache(String category, String materialName) {
+        String cacheKey = category + "_" + materialName.substring(0, 2);
+
+        Cache cache = cacheManager.getCache("materials");
+
+        if (cache != null) {
+            cache.evict(cacheKey);
+        }
     }
 
 

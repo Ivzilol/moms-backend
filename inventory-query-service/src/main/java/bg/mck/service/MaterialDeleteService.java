@@ -40,7 +40,14 @@ public class MaterialDeleteService {
 
 
     public void deleteMaterialByIdAndCategory(String id, String categoryName) {
-       MaterialType type = MaterialType.valueOf(categoryName.toUpperCase());
+
+       MaterialType type;
+
+       try {
+           type = MaterialType.valueOf(categoryName.toUpperCase());
+       } catch (Exception e) {
+           throw new InvalidCategoryException("Unhandled category type: " + categoryName);
+       }
 
         switch (type) {
             case FASTENERS -> deleteMaterialById(fastenerRepository, id);

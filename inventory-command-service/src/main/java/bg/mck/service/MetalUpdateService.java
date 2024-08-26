@@ -3,11 +3,13 @@ package bg.mck.service;
 import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.dto.MetalUpdateDTO;
 import bg.mck.dto.UpdateMaterialDTO;
+import bg.mck.entity.materialEntity.FastenerEntity;
 import bg.mck.entity.materialEntity.MetalEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.MaterialEvent;
 import bg.mck.events.material.MetalUpdateEvent;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.MetalRepository;
@@ -59,7 +61,20 @@ public class MetalUpdateService {
     }
 
     private void updateMetalEntity(MetalUpdateDTO metalUpdateDTO, MetalEntity metalEntity) {
+        MetalEntity currentState = metalRepository.findById(metalEntity.getId()).get();
         materialMapper.updateMetalEntityFromDto(metalUpdateDTO,metalEntity);
+        if (!currentState.getDescription().equals(metalEntity.getDescription())) {
+            if (doesAlreadyExists(metalEntity)) {
+                throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
+            } else {
+                metalEntity.setName(metalEntity.getDescription());
+            }
+        }
         metalRepository.save(metalEntity);
+    }
+
+    private boolean doesAlreadyExists(MetalEntity metalEntity) {
+        MetalEntity byName = metalRepository.findByName(metalEntity.getDescription());
+        return byName != null;
     }
 }

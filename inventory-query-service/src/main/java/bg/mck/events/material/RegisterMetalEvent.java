@@ -18,12 +18,13 @@ public class RegisterMetalEvent extends BaseMaterialEvent {
 
     private String specificationFileUrl;
 
-    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, String totalWeight, WeightUnits totalWeightUnit, String description, String specificationFileUrl) {
+    public RegisterMetalEvent(Long materialId, EventType eventType, String category, String name, String totalWeight, WeightUnits totalWeightUnit, String kind, String description, String specificationFileUrl) {
         super(materialId, eventType);
         this.category = category;
         this.name = name;
         this.totalWeight = totalWeight;
         this.totalWeightUnit = totalWeightUnit;
+        this.kind = kind;
         this.description = description;
         this.specificationFileUrl = specificationFileUrl;
     }

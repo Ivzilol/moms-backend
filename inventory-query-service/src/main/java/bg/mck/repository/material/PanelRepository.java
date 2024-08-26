@@ -18,4 +18,6 @@ public interface PanelRepository extends MongoRepository<PanelEntity, String> {
                     "'totalThickness' : 1, 'totalThicknessUnit' : 1, 'frontSheetThickness' : 1, 'frontSheetThicknessUnit' : 1, 'backSheetThickness' : 1, 'backSheetThicknessUnit' : 1," +
                     "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<PanelsDTO> findByPartOfName(String regex, Sort sort);
+
+    PanelEntity findByName(String name);
 }

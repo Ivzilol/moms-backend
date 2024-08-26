@@ -3,11 +3,13 @@ package bg.mck.service;
 import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.dto.RebarUpdateDTO;
 import bg.mck.dto.UpdateMaterialDTO;
+import bg.mck.entity.materialEntity.MetalEntity;
 import bg.mck.entity.materialEntity.RebarEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.MaterialEvent;
 import bg.mck.events.material.RebarUpdateEvent;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.RebarRepository;
@@ -60,7 +62,20 @@ public class RebarUpdateService {
     }
 
     private void updateRebarEntity(RebarUpdateDTO rebarUpdateDTO, RebarEntity rebarEntity) {
+        RebarEntity currentState = rebarRepository.findById(rebarEntity.getId()).get();
         materialMapper.updateRebarEntityFromDto(rebarUpdateDTO,rebarEntity);
+        if (!currentState.getDescription().equals(rebarEntity.getDescription())) {
+            if (doesAlreadyExists(rebarEntity)) {
+                throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
+            } else {
+                rebarEntity.setName(rebarEntity.getDescription());
+            }
+        }
         rebarRepository.save(rebarEntity);
+    }
+
+    private boolean doesAlreadyExists(RebarEntity rebarEntity) {
+        RebarEntity byName = rebarRepository.findByName(rebarEntity.getDescription());
+        return byName != null;
     }
 }

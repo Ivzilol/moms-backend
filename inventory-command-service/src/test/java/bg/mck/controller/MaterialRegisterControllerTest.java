@@ -80,17 +80,6 @@ class MaterialRegisterControllerTest {
     @MockBean
     private InventoryQueryServiceClient inventoryQueryServiceClient;
 
-    @BeforeEach
-    void setUp() {
-        fastenerRepository.deleteAll();
-        galvanisedSheetRepository.deleteAll();
-        insulationRepository.deleteAll();
-        metalRepository.deleteAll();
-        panelRepository.deleteAll();
-        rebarRepository.deleteAll();
-        setRepository.deleteAll();
-        unspecifiedRepository.deleteAll();
-    }
 
     @AfterEach
     void tearDown() {

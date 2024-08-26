@@ -17,4 +17,6 @@ public interface UnspecifiedRepository extends MongoRepository<UnspecifiedEntity
             fields = "{ 'id' : 1, 'name' : 1, " +
                     "'quantity' : 1, 'description' : 1, 'specificationFileUrl' : 1 }")
     List<UnspecifiedDTO> findByPartOfName(String regex, Sort sort);
+
+    UnspecifiedEntity findByName(String name);
 }

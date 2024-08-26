@@ -11,6 +11,28 @@ public class UpdatePanelEvent extends BaseMaterialEvent {
     public UpdatePanelEvent(Long materialId, EventType eventType) {
         super(materialId, eventType);
     }
+
+    public UpdatePanelEvent(Long materialId, EventType eventType, String category, String name, String materialType, String type, String color, String length, LengthUnits lengthUnit, String width, LengthUnits widthUnit, String totalThickness, LengthUnits totalThicknessUnit, String frontSheetThickness, LengthUnits frontSheetThicknessUnit, String backSheetThickness, LengthUnits backSheetThicknessUnit, String description, String specificationFileUrl) {
+        super(materialId, eventType);
+        this.category = category;
+        this.name = name;
+        this.materialType = materialType;
+        this.type = type;
+        this.color = color;
+        this.length = length;
+        this.lengthUnit = lengthUnit;
+        this.width = width;
+        this.widthUnit = widthUnit;
+        this.totalThickness = totalThickness;
+        this.totalThicknessUnit = totalThicknessUnit;
+        this.frontSheetThickness = frontSheetThickness;
+        this.frontSheetThicknessUnit = frontSheetThicknessUnit;
+        this.backSheetThickness = backSheetThickness;
+        this.backSheetThicknessUnit = backSheetThicknessUnit;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
+
     private String category;
     private String name;
     private String materialType;
