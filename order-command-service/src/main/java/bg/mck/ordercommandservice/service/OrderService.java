@@ -166,7 +166,8 @@ public class OrderService {
                     if (!materialDTO.getAdminNote().contains("##")) {
                         return;
                     }
-                    if (material.getAdminNote().equals(materialDTO.getAdminNote())) {
+                    String materialNote = "##" + material.getAdminNote();
+                    if (materialNote.equals(materialDTO.getAdminNote())) {
                         return;
                     }
                     String noteUntilNow = materialDTO.getAdminNote().split("##")[1];
@@ -212,10 +213,15 @@ public class OrderService {
                         return;
                     }
 
+                    if (materialDTO.getMaterialStatus() != null){
+                        material.setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
+                    }
+
                     if (!materialDTO.getAdminNote().contains("##")) {
                         return;
                     }
-                    if (material.getAdminNote() != null && material.getAdminNote().equals(materialDTO.getAdminNote())) {
+                    String materialNote = "##" + material.getAdminNote();
+                    if (material.getAdminNote() != null && materialNote.equals(materialDTO.getAdminNote())) {
                         return;
                     }
 

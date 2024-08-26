@@ -1,9 +1,6 @@
 package bg.mck.ordercommandservice.exceptionHandling;
 
-import bg.mck.ordercommandservice.exception.ConstructionSiteAlreadyExists;
-import bg.mck.ordercommandservice.exception.ConstructionSiteNotFoundException;
-import bg.mck.ordercommandservice.exception.ErrorMapper;
-import bg.mck.ordercommandservice.exception.OrderNotFoundException;
+import bg.mck.ordercommandservice.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,6 +28,16 @@ public class OrderExceptionHandler {
     @ExceptionHandler(ConstructionSiteAlreadyExists.class)
     public ResponseEntity<String> handleConstructionSiteAlreadyExists(ConstructionSiteAlreadyExists e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ConstructionSiteHasNoNameException.class)
+    public ResponseEntity<String> handleConstructionSiteHasNoNameException(ConstructionSiteHasNoNameException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstructionSiteHasNoNumberException.class)
+    public ResponseEntity<String> handleConstructionSiteHasNoNumberException(ConstructionSiteHasNoNumberException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
