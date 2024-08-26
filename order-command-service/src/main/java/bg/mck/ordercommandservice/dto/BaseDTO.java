@@ -4,11 +4,8 @@ package bg.mck.ordercommandservice.dto;
 public class BaseDTO {
 
     private Long id;
-
     private String description;
-
     private String specificationFileUrl;
-
     private String adminNote;
     private String materialStatus;
 

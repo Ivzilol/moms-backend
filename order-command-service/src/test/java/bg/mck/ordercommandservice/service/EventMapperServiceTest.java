@@ -9,11 +9,13 @@ import bg.mck.ordercommandservice.event.EventData;
 import bg.mck.ordercommandservice.event.EventType;
 import bg.mck.ordercommandservice.event.TransportEvent;
 import bg.mck.ordercommandservice.mapper.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
@@ -53,6 +55,7 @@ class EventMapperServiceTest {
 
     @InjectMocks
     private EventMapperService eventMapperService;
+
 
     @Test
     void mapEvent_withTransportMaterials_sendsEvent_OrderCreated() {
@@ -119,6 +122,5 @@ class EventMapperServiceTest {
 
         verify(orderQueryServiceClient, never()).sendEvent(any(), anyString());
     }
-
 }
 

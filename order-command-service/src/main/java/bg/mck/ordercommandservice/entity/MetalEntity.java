@@ -1,14 +1,19 @@
 package bg.mck.ordercommandservice.entity;
 
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "metals")
 public class MetalEntity extends BaseMaterialEntity {
 
+    @Column(nullable = false)
     private String kind;
+    @Column(nullable = false)
     private String totalWeight;
 
     public MetalEntity() {
@@ -47,5 +52,13 @@ public class MetalEntity extends BaseMaterialEntity {
     public MetalEntity setTotalWeight(String totalWeight) {
         this.totalWeight = totalWeight;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "MetalEntity{" +
+                "kind='" + kind + '\'' +
+                ", totalWeight='" + totalWeight + '\'' +
+                '}';
     }
 }

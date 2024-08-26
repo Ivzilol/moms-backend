@@ -6,13 +6,15 @@ import bg.mck.ordercommandservice.entity.SetEntity;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.entity.enums.WeightUnits;
 import bg.mck.ordercommandservice.event.SetEvent;
+import bg.mck.ordercommandservice.mapper.util.Concatenator;
+import bg.mck.ordercommandservice.mapper.util.Splitter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
-public interface SetMapper {
+public interface SetMapper extends Splitter, Concatenator {
 
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(split(setEntity.getMaxLength())[0])"),
@@ -30,38 +32,4 @@ public interface SetMapper {
 
     SetEvent toEvent(SetEntity setEntity);
 
-    void toUpdateSetEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget SetEntity setEntity);
-
-    default String concatenate(String unit, LengthUnits unitType) {
-        if (unit == null && unitType == null) {
-            return null;
-        }
-        if (unit == null) {
-            return unitType.toString();
-        }
-        if (unitType == null) {
-            return unit;
-        }
-        return unit + " " + unitType;
-    }
-
-    default String concatenate(String unit, WeightUnits unitType) {
-        if (unit == null && unitType == null) {
-            return null;
-        }
-        if (unit == null) {
-            return unitType.toString();
-        }
-        if (unitType == null) {
-            return unit;
-        }
-        return unit + " " + unitType;
-    }
-
-    default String[] split(String length) {
-        if (length == null) {
-            return null;
-        }
-        return length.split(" ");
-    }
 }

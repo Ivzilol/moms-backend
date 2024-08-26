@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "construction_sites")
 public class ConstructionSiteEntity extends BaseEntity {
@@ -64,6 +66,15 @@ public class ConstructionSiteEntity extends BaseEntity {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+
+    @Override
+    public String toString() {
+        return "ConstructionSiteEntity{" +
+                "constructionNumber='" + constructionNumber + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
 

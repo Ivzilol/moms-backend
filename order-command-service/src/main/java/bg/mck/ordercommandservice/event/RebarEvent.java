@@ -9,7 +9,7 @@ public class RebarEvent {
     private String description;
     private String specificationFileUrl;
     private String maxLength;
-    private String weight;
+    private String weight; // TODO: remove this field
     private String adminNote;
     private MaterialStatus materialStatus;
 

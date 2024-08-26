@@ -8,6 +8,7 @@ public class EmailDTO {
 
     private String orderDescription;
     private String orderNumber;
+    private String fullName;
     private ZonedDateTime orderDate;
     private ZonedDateTime deliveryDate;
     private String constructionSiteName;
@@ -23,19 +24,29 @@ public class EmailDTO {
     public EmailDTO() {
     }
 
-    public EmailDTO(String orderNumber, String specificationFileUrl, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, String constructionSite, String constructionSiteNumber, String orderStatus, String materialType, Set<Object> materials, boolean isNewOrder, String email) {
-        this.orderNumber = orderNumber;
+    public EmailDTO(String orderDescription, String orderNumber, String fullName, ZonedDateTime orderDate, ZonedDateTime deliveryDate, String constructionSiteName, String constructionSiteNumber, String orderStatus, String materialType, String specificationFileUrl, boolean isNewOrder, String email, Set<Object> materials) {
         this.orderDescription = orderDescription;
+        this.orderNumber = orderNumber;
+        this.fullName = fullName;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
-        this.constructionSiteName = constructionSite;
-        this.specificationFileUrl = specificationFileUrl;
+        this.constructionSiteName = constructionSiteName;
         this.constructionSiteNumber = constructionSiteNumber;
         this.orderStatus = orderStatus;
         this.materialType = materialType;
-        this.materials = materials;
+        this.specificationFileUrl = specificationFileUrl;
         this.isNewOrder = isNewOrder;
         this.email = email;
+        this.materials = materials;
+    }
+
+    public String getOrderDescription() {
+        return orderDescription;
+    }
+
+    public EmailDTO setOrderDescription(String orderDescription) {
+        this.orderDescription = orderDescription;
+        return this;
     }
 
     public String getOrderNumber() {
@@ -47,12 +58,12 @@ public class EmailDTO {
         return this;
     }
 
-    public String getOrderDescription() {
-        return orderDescription;
+    public String getFullName() {
+        return fullName;
     }
 
-    public EmailDTO setOrderDescription(String orderDescription) {
-        this.orderDescription = orderDescription;
+    public EmailDTO setFullName(String fullName) {
+        this.fullName = fullName;
         return this;
     }
 
@@ -74,17 +85,13 @@ public class EmailDTO {
         return this;
     }
 
-    public String getSpecificationFileUrl() {
-        return specificationFileUrl;
-    }
-
-    public EmailDTO setSpecificationFileUrl(String specificationFileUrl) {
-        this.specificationFileUrl = specificationFileUrl;
-        return this;
-    }
-
     public String getConstructionSiteName() {
         return constructionSiteName;
+    }
+
+    public EmailDTO setConstructionSiteName(String constructionSiteName) {
+        this.constructionSiteName = constructionSiteName;
+        return this;
     }
 
     public String getConstructionSiteNumber() {
@@ -93,11 +100,6 @@ public class EmailDTO {
 
     public EmailDTO setConstructionSiteNumber(String constructionSiteNumber) {
         this.constructionSiteNumber = constructionSiteNumber;
-        return this;
-    }
-
-    public EmailDTO setConstructionSiteName(String constructionSiteName) {
-        this.constructionSiteName = constructionSiteName;
         return this;
     }
 
@@ -119,12 +121,12 @@ public class EmailDTO {
         return this;
     }
 
-    public Set<Object> getMaterials() {
-        return materials;
+    public String getSpecificationFileUrl() {
+        return specificationFileUrl;
     }
 
-    public EmailDTO setMaterials(Set<Object> materials) {
-        this.materials = materials;
+    public EmailDTO setSpecificationFileUrl(String specificationFileUrl) {
+        this.specificationFileUrl = specificationFileUrl;
         return this;
     }
 
@@ -143,6 +145,15 @@ public class EmailDTO {
 
     public EmailDTO setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public Set<Object> getMaterials() {
+        return materials;
+    }
+
+    public EmailDTO setMaterials(Set<Object> materials) {
+        this.materials = materials;
         return this;
     }
 }

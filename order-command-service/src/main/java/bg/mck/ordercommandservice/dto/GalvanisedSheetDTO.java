@@ -6,20 +6,22 @@ import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+import static bg.mck.ordercommandservice.dto.util.RegexPatterns.POSITIVE_NUMBER_REGEX;
+
 public class GalvanisedSheetDTO extends BaseDTO {
 
     @NotNull(message = "Type is required")
     private String type;
 
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
-    @NotNull
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Length must be numeric and positive")
     private String maxLength;
     private LengthUnits maxLengthUnit;
 
-    @Pattern(regexp = "^[^-].*", message = "Area must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Area must be numeric and positive")
     private String numberOfSheets;
 
     @NotNull(message = "Quantity is required")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Thickness must be numeric and positive")
     private String quantity;
     @NotNull(message = "Quantity unit is required")
     private AreaUnits quantityUnit;

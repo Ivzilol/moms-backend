@@ -167,6 +167,7 @@ public class EventService {
     private void processUpdateConstructionSite(String data) {
         OrderEvent<ConstructionSiteEvent> constructionEvent = parseConstructionSiteEvent(data);
         ConstructionSiteEntity constructionSiteEntity = constructionSiteMapper.toEntityFromEvent(constructionEvent.getEvent());
+        constructionSiteEntity.setId(String.valueOf(constructionEvent.getEvent().getId()));
         constructionSiteService.updateConstructionSite(constructionSiteEntity);
     }
 

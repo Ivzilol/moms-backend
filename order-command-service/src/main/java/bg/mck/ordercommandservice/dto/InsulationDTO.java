@@ -5,14 +5,19 @@ import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+import static bg.mck.ordercommandservice.dto.util.RegexPatterns.POSITIVE_NUMBER_REGEX;
+
 public class InsulationDTO extends BaseDTO {
 
+    @NotNull(message = "Type is required")
     private String type;
 
-    @Pattern(regexp = "^[^-].*", message = "Thickness must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Thickness must be numeric and positive")
     private String thickness;
     private LengthUnits thicknessUnit;
-    @NotNull
+
+    @NotNull(message = "Quantity is required")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Quantity must be numeric and positive")
     private String quantity;
     private AreaUnits quantityUnit;
 

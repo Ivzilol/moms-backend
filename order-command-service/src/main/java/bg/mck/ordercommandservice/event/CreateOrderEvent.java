@@ -11,6 +11,7 @@ public class CreateOrderEvent<T> extends BaseEvent {
 
     private Long orderId;
     private String email;
+    private String fullName;
     private Integer orderNumber;
     private String orderDescription;
     private ZonedDateTime orderDate;
@@ -31,6 +32,15 @@ public class CreateOrderEvent<T> extends BaseEvent {
 
     public CreateOrderEvent<T> setOrderId(Long orderId) {
         this.orderId = orderId;
+        return this;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public CreateOrderEvent<T> setFullName(String fullName) {
+        this.fullName = fullName;
         return this;
     }
 

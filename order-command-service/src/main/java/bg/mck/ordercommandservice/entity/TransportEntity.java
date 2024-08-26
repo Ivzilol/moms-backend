@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "transports")
 public class TransportEntity extends BaseMaterialEntity {
@@ -75,5 +77,15 @@ public class TransportEntity extends BaseMaterialEntity {
     public TransportEntity setTruck(String truck) {
         this.truck = truck;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "TransportEntity{" +
+                "maxLength='" + maxLength + '\'' +
+                ", weight='" + weight + '\'' +
+                ", truck='" + truck + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

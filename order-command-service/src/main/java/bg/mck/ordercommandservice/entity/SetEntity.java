@@ -6,10 +6,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "sets")
 public class SetEntity extends BaseMaterialEntity {
 
+    @Column(nullable = false)
     private String quantity;
     @Column(nullable = false)
     private String color;
@@ -64,5 +67,14 @@ public class SetEntity extends BaseMaterialEntity {
     public SetEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "SetEntity{" +
+                "quantity='" + quantity + '\'' +
+                ", color='" + color + '\'' +
+                ", maxLength='" + maxLength + '\'' +
+                '}';
     }
 }

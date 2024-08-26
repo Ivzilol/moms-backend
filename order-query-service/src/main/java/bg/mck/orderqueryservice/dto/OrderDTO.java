@@ -13,6 +13,8 @@ public class OrderDTO {
 
     private String orderDescription;
 
+    private String fullName;
+
     private ZonedDateTime orderDate;
 
     private ZonedDateTime deliveryDate;
@@ -41,14 +43,17 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(String id, String specificationFileUrl, String orderDescription, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, MaterialType materialType, Set<FastenerDTO> fasteners, Set<GalvanisedSheetDTO> galvanisedSheets, Set<InsulationDTO> insulation, Set<MetalDTO> metals, Set<PanelDTO> panels, Set<RebarDTO> rebars, Set<SetDTO> sets, Set<UnspecifiedDTO> unspecified, Set<ServiceDTO> services, Set<TransportDTO> transports) {
+    public OrderDTO(String id, String orderDescription, String fullName, ZonedDateTime orderDate, ZonedDateTime deliveryDate, ConstructionSiteDTO constructionSite, OrderStatus orderStatus, Integer orderNumber, MaterialType materialType, String specificationFileUrl, Set<FastenerDTO> fasteners, Set<GalvanisedSheetDTO> galvanisedSheets, Set<InsulationDTO> insulation, Set<MetalDTO> metals, Set<PanelDTO> panels, Set<RebarDTO> rebars, Set<SetDTO> sets, Set<UnspecifiedDTO> unspecified, Set<ServiceDTO> services, Set<TransportDTO> transports) {
         this.id = id;
         this.orderDescription = orderDescription;
+        this.fullName = fullName;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.constructionSite = constructionSite;
         this.orderStatus = orderStatus;
+        this.orderNumber = orderNumber;
         this.materialType = materialType;
+        this.specificationFileUrl = specificationFileUrl;
         this.fasteners = fasteners;
         this.galvanisedSheets = galvanisedSheets;
         this.insulation = insulation;
@@ -59,7 +64,6 @@ public class OrderDTO {
         this.unspecified = unspecified;
         this.services = services;
         this.transports = transports;
-        this.specificationFileUrl = specificationFileUrl;
     }
 
     public String getId() {
@@ -77,6 +81,15 @@ public class OrderDTO {
 
     public OrderDTO setOrderDescription(String orderDescription) {
         this.orderDescription = orderDescription;
+        return this;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public OrderDTO setFullName(String fullName) {
+        this.fullName = fullName;
         return this;
     }
 
@@ -116,111 +129,21 @@ public class OrderDTO {
         return this;
     }
 
-    public MaterialType getMaterialType() {
-        return materialType;
-    }
-
-    public OrderDTO setMaterialType(MaterialType materialType) {
-        this.materialType = materialType;
-        return this;
-    }
-
-    public Set<@Valid FastenerDTO> getFasteners() {
-        return fasteners;
-    }
-
-    public OrderDTO setFasteners(Set<@Valid FastenerDTO> fasteners) {
-        this.fasteners = fasteners;
-        return this;
-    }
-
-    public Set<@Valid GalvanisedSheetDTO> getGalvanisedSheets() {
-        return galvanisedSheets;
-    }
-
-    public OrderDTO setGalvanisedSheets(Set<@Valid GalvanisedSheetDTO> galvanisedSheets) {
-        this.galvanisedSheets = galvanisedSheets;
-        return this;
-    }
-
-    public Set<@Valid InsulationDTO> getInsulation() {
-        return insulation;
-    }
-
-    public OrderDTO setInsulation(Set<@Valid InsulationDTO> insulation) {
-        this.insulation = insulation;
-        return this;
-    }
-
-    public Set<@Valid MetalDTO> getMetals() {
-        return metals;
-    }
-
-    public OrderDTO setMetals(Set<@Valid MetalDTO> metals) {
-        this.metals = metals;
-        return this;
-    }
-
-    public Set<@Valid PanelDTO> getPanels() {
-        return panels;
-    }
-
-    public OrderDTO setPanels(Set<@Valid PanelDTO> panels) {
-        this.panels = panels;
-        return this;
-    }
-
-    public Set<@Valid RebarDTO> getRebars() {
-        return rebars;
-    }
-
-    public OrderDTO setRebars(Set<@Valid RebarDTO> rebars) {
-        this.rebars = rebars;
-        return this;
-    }
-
-    public Set<@Valid SetDTO> getSets() {
-        return sets;
-    }
-
-    public OrderDTO setSets(Set<@Valid SetDTO> sets) {
-        this.sets = sets;
-        return this;
-    }
-
-    public Set<@Valid UnspecifiedDTO> getUnspecified() {
-        return unspecified;
-    }
-
-    public OrderDTO setUnspecified(Set<@Valid UnspecifiedDTO> unspecified) {
-        this.unspecified = unspecified;
-        return this;
-    }
-
-    public Set<@Valid ServiceDTO> getServices() {
-        return services;
-    }
-
-    public OrderDTO setServices(Set<@Valid ServiceDTO> services) {
-        this.services = services;
-        return this;
-    }
-
-    public Set<@Valid TransportDTO> getTransports() {
-        return transports;
-    }
-
-    public OrderDTO setTransports(Set<@Valid TransportDTO> transports) {
-        this.transports = transports;
-        return this;
-    }
-
     public Integer getOrderNumber() {
         return orderNumber;
     }
 
     public OrderDTO setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
+        return this;
+    }
+
+    public MaterialType getMaterialType() {
+        return materialType;
+    }
+
+    public OrderDTO setMaterialType(MaterialType materialType) {
+        this.materialType = materialType;
         return this;
     }
 
@@ -233,15 +156,107 @@ public class OrderDTO {
         return this;
     }
 
+    public Set<FastenerDTO> getFasteners() {
+        return fasteners;
+    }
+
+    public OrderDTO setFasteners(Set<FastenerDTO> fasteners) {
+        this.fasteners = fasteners;
+        return this;
+    }
+
+    public Set<GalvanisedSheetDTO> getGalvanisedSheets() {
+        return galvanisedSheets;
+    }
+
+    public OrderDTO setGalvanisedSheets(Set<GalvanisedSheetDTO> galvanisedSheets) {
+        this.galvanisedSheets = galvanisedSheets;
+        return this;
+    }
+
+    public Set<InsulationDTO> getInsulation() {
+        return insulation;
+    }
+
+    public OrderDTO setInsulation(Set<InsulationDTO> insulation) {
+        this.insulation = insulation;
+        return this;
+    }
+
+    public Set<MetalDTO> getMetals() {
+        return metals;
+    }
+
+    public OrderDTO setMetals(Set<MetalDTO> metals) {
+        this.metals = metals;
+        return this;
+    }
+
+    public Set<PanelDTO> getPanels() {
+        return panels;
+    }
+
+    public OrderDTO setPanels(Set<PanelDTO> panels) {
+        this.panels = panels;
+        return this;
+    }
+
+    public Set<RebarDTO> getRebars() {
+        return rebars;
+    }
+
+    public OrderDTO setRebars(Set<RebarDTO> rebars) {
+        this.rebars = rebars;
+        return this;
+    }
+
+    public Set<SetDTO> getSets() {
+        return sets;
+    }
+
+    public OrderDTO setSets(Set<SetDTO> sets) {
+        this.sets = sets;
+        return this;
+    }
+
+    public Set<UnspecifiedDTO> getUnspecified() {
+        return unspecified;
+    }
+
+    public OrderDTO setUnspecified(Set<UnspecifiedDTO> unspecified) {
+        this.unspecified = unspecified;
+        return this;
+    }
+
+    public Set<ServiceDTO> getServices() {
+        return services;
+    }
+
+    public OrderDTO setServices(Set<ServiceDTO> services) {
+        this.services = services;
+        return this;
+    }
+
+    public Set<TransportDTO> getTransports() {
+        return transports;
+    }
+
+    public OrderDTO setTransports(Set<TransportDTO> transports) {
+        this.transports = transports;
+        return this;
+    }
+
     @Override
     public String toString() {
-        return "{" +
+        return "OrderDTO{" +
                 "id='" + id + '\'' +
                 ", orderDescription='" + orderDescription + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", orderDate=" + orderDate +
                 ", deliveryDate=" + deliveryDate +
                 ", constructionSite=" + constructionSite +
                 ", orderStatus=" + orderStatus +
+                ", orderNumber=" + orderNumber +
                 ", materialType=" + materialType +
                 ", specificationFileUrl='" + specificationFileUrl + '\'' +
                 ", fasteners=" + fasteners +

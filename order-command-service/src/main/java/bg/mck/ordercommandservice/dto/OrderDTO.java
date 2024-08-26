@@ -16,13 +16,11 @@ public class OrderDTO {
     private Long id;
     private Integer orderNumber;
 
-    @Size(min = 10, message = "Order description must be at least 10 characters long.")
     private String orderDescription;
 
     private ZonedDateTime orderDate;
 
     @NotNull(message = "Delivery date must not be empty.")
-    @Future(message = "Delivery date must be in the future.")
     private ZonedDateTime deliveryDate;
 
     @NotNull(message = "Construction site must not be empty.")
@@ -88,11 +86,11 @@ public class OrderDTO {
         return this;
     }
 
-    public @Size(min = 10, message = "Order description must be at least 10 characters long.") String getOrderDescription() {
+    public String getOrderDescription() {
         return orderDescription;
     }
 
-    public OrderDTO setOrderDescription(@Size(min = 10, message = "Order description must be at least 10 characters long.") String orderDescription) {
+    public OrderDTO setOrderDescription(String orderDescription) {
         this.orderDescription = orderDescription;
         return this;
     }
@@ -106,20 +104,20 @@ public class OrderDTO {
         return this;
     }
 
-    public @NotNull(message = "Delivery date must not be empty.") @Future(message = "Delivery date must be in the future.") ZonedDateTime getDeliveryDate() {
+    public ZonedDateTime getDeliveryDate() {
         return deliveryDate;
     }
 
-    public OrderDTO setDeliveryDate(@NotNull(message = "Delivery date must not be empty.") @Future(message = "Delivery date must be in the future.") ZonedDateTime deliveryDate) {
+    public OrderDTO setDeliveryDate(ZonedDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
         return this;
     }
 
-    public @NotNull(message = "Construction site must not be empty.") @Valid ConstructionSiteDTO getConstructionSite() {
+    public ConstructionSiteDTO getConstructionSite() {
         return constructionSite;
     }
 
-    public OrderDTO setConstructionSite(@NotNull(message = "Construction site must not be empty.") @Valid ConstructionSiteDTO constructionSite) {
+    public OrderDTO setConstructionSite(ConstructionSiteDTO constructionSite) {
         this.constructionSite = constructionSite;
         return this;
     }

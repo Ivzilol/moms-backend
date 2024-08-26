@@ -4,6 +4,10 @@ import bg.mck.ordercommandservice.dto.*;
 import bg.mck.ordercommandservice.entity.enums.MaterialType;
 import bg.mck.ordercommandservice.exception.ErrorMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.validation.Validator;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +41,14 @@ public class ValidationController {
         this.validator = validator;
     }
 
-
+    @Operation(summary = "Validate Order Fields",
+            description = "Validates fields of an order based on the specified category. " +
+                    "Returns validation errors if any fields are incorrect.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Validation successful, no errors"),
+            @ApiResponse(responseCode = "400", description = "Validation failed or invalid category provided",
+                    content = {@Content(mediaType = "application/json")})
+    })
     @GetMapping("/validate/{category}")
     public ResponseEntity<Map<String, String>> validateOrderFields(@Valid @RequestBody Map<String, Object> FieldsDataMap,
                                                                    @PathVariable String category,

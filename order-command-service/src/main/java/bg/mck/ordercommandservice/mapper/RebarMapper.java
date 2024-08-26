@@ -6,13 +6,15 @@ import bg.mck.ordercommandservice.entity.RebarEntity;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.entity.enums.WeightUnits;
 import bg.mck.ordercommandservice.event.RebarEvent;
+import bg.mck.ordercommandservice.mapper.util.Concatenator;
+import bg.mck.ordercommandservice.mapper.util.Splitter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
-public interface RebarMapper {
+public interface RebarMapper extends Splitter, Concatenator {
 
     @Mappings({
             @Mapping(target = "maxLength", expression = "java(split(rebarEntity.getMaxLength())[0])"),
@@ -23,45 +25,10 @@ public interface RebarMapper {
     RebarDTO toDTO(RebarEntity rebarEntity);
 
     @Mappings({
-            @Mapping(target = "maxLength", expression = "java(concatenateLength(rebarDTO.getMaxLength(), rebarDTO.getMaxLengthUnit()))"),
-            @Mapping(target = "quantity", expression = "java(concatenateWeight(rebarDTO.getQuantity(), rebarDTO.getQuantityUnit()))")
+            @Mapping(target = "maxLength", expression = "java(concatenate(rebarDTO.getMaxLength(), rebarDTO.getMaxLengthUnit()))"),
+            @Mapping(target = "quantity", expression = "java(concatenate(rebarDTO.getQuantity(), rebarDTO.getQuantityUnit()))")
     })
     RebarEntity toEntity(RebarDTO rebarDTO);
 
     RebarEvent toEvent(RebarEntity rebarEntity);
-
-    void toUpdateRebarEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget RebarEntity rebarEntity);
-
-    default String concatenateLength(String unit, LengthUnits unitType) {
-        if (unit == null && unitType == null) {
-            return null;
-        }
-        if (unit == null) {
-            return unitType.toString();
-        }
-        if (unitType == null) {
-            return unit;
-        }
-        return unit + " " + unitType;
-    }
-
-    default String concatenateWeight(String unit, WeightUnits unitType) {
-        if (unit == null && unitType == null) {
-            return null;
-        }
-        if (unit == null) {
-            return unitType.toString();
-        }
-        if (unitType == null) {
-            return unit;
-        }
-        return unit + " " + unitType;
-    }
-
-    default String[] split(String length) {
-        if (length == null) {
-            return null;
-        }
-        return length.split(" ");
-    }
 }

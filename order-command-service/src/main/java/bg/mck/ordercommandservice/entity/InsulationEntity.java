@@ -7,6 +7,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "insulation")
 public class InsulationEntity extends BaseMaterialEntity {
@@ -47,5 +49,15 @@ public class InsulationEntity extends BaseMaterialEntity {
     public InsulationEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+
+    @Override
+    public String toString() {
+        return "InsulationEntity{" +
+                "type='" + type + '\'' +
+                ", thickness='" + thickness + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

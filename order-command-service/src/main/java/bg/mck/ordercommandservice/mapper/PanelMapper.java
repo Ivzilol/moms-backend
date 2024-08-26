@@ -7,13 +7,15 @@ import bg.mck.ordercommandservice.entity.enums.AreaUnits;
 import bg.mck.ordercommandservice.entity.enums.LengthUnits;
 import bg.mck.ordercommandservice.entity.enums.WeightUnits;
 import bg.mck.ordercommandservice.event.PanelEvent;
+import bg.mck.ordercommandservice.mapper.util.Concatenator;
+import bg.mck.ordercommandservice.mapper.util.Splitter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
-public interface PanelMapper {
+public interface PanelMapper extends Splitter, Concatenator {
 
     @Mappings({
             @Mapping(target = "length", expression = "java(split(panelEntity.getLength())[0])"),
@@ -43,39 +45,4 @@ public interface PanelMapper {
     PanelEntity toEntity(PanelDTO panelDTO);
 
     PanelEvent toEvent(PanelEntity panelEntity);
-
-    void toUpdatePanelEntity(UpdateOrderDTO updateOrderDTO, @MappingTarget PanelEntity panelEntity);
-
-    default String concatenate(String unit, LengthUnits unitType) {
-        if (unit == null && unitType == null) {
-            return null;
-        }
-        if (unit == null) {
-            return unitType.toString();
-        }
-        if (unitType == null) {
-            return unit;
-        }
-        return unit + " " + unitType;
-    }
-
-    default String concatenate(String unit, AreaUnits unitType) {
-        if (unit == null && unitType == null) {
-            return null;
-        }
-        if (unit == null) {
-            return unitType.toString();
-        }
-        if (unitType == null) {
-            return unit;
-        }
-        return unit + " " + unitType;
-    }
-
-    default String[] split(String unit) {
-        if (unit == null) {
-            return null;
-        }
-        return unit.split(" ");
-    }
 }

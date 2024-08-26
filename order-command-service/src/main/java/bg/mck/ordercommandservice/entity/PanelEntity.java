@@ -1,16 +1,22 @@
 package bg.mck.ordercommandservice.entity;
 
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "panels")
 public class PanelEntity extends BaseMaterialEntity {
 
+    @Column(nullable = false)
     private String type;
+    @Column(nullable = false)
     private String color;
     private String length;
+    @Column(nullable = false)
     private String width;
     private String totalThickness;
     private String frontSheetThickness;
@@ -117,5 +123,19 @@ public class PanelEntity extends BaseMaterialEntity {
     public PanelEntity setBackSheetThickness(String backSheetThickness) {
         this.backSheetThickness = backSheetThickness;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "PanelEntity{" +
+                "type='" + type + '\'' +
+                ", color='" + color + '\'' +
+                ", length='" + length + '\'' +
+                ", width='" + width + '\'' +
+                ", totalThickness='" + totalThickness + '\'' +
+                ", frontSheetThickness='" + frontSheetThickness + '\'' +
+                ", backSheetThickness='" + backSheetThickness + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

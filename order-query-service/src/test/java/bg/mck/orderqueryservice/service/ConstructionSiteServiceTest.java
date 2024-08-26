@@ -106,20 +106,11 @@ class ConstructionSiteServiceTest {
 
     @Test
     void updateConstructionSite_Success() {
-        when(constructionSiteRepository.findById("1")).thenReturn(Optional.of(mockEntity));
+        when(constructionSiteRepository.save(mockEntity)).thenReturn(mockEntity);
 
         constructionSiteService.updateConstructionSite(mockEntity);
 
-        verify(constructionSiteRepository, times(1)).findById("1");
         verify(constructionSiteRepository, times(1)).save(mockEntity);
     }
 
-    @Test
-    void updateConstructionSite_NotFound() {
-        when(constructionSiteRepository.findById("1")).thenReturn(Optional.empty());
-
-        assertThrows(ConstructionSiteNotFoundException.class, () -> constructionSiteService.updateConstructionSite(mockEntity));
-        verify(constructionSiteRepository, times(1)).findById("1");
-        verify(constructionSiteRepository, never()).save(any());
-    }
 }

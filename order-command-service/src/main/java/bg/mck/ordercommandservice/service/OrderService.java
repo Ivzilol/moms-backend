@@ -51,15 +51,20 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<FileDTO> fileUrls) {
+    public OrderConfirmationDTO createOrder(OrderDTO order, String email, List<FileDTO> fileUrls, String fullName) {
 
         matchFilesToMaterials(order, fileUrls);
 
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
-        ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService.getConstructionSiteByNumberAndName(order.getConstructionSite());
+        ConstructionSiteEntity constructionSiteByNumberAndName = constructionSiteService
+                .getConstructionSiteByNumberAndName(order.getConstructionSite());
         Optional<Integer> lastOrderNumber = orderRepository.findLastOrderNumber();
 
-        orderEntity.setEmail(email).setOrderNumber(lastOrderNumber.orElse(0) + 1).setOrderStatus(OrderStatus.CREATED).setOrderDate(ZonedDateTime.now(ZoneId.of("Europe/Sofia")).plusHours(3)) //FIXME: find a better way to set the time and timezone
+        orderEntity.setEmail(email)
+                .setFullName(fullName)
+                .setOrderNumber(lastOrderNumber.orElse(0) + 1)
+                .setOrderStatus(OrderStatus.CREATED)
+                .setOrderDate(ZonedDateTime.now(ZoneId.of("Europe/Sofia")).plusHours(3))
                 .setConstructionSite(constructionSiteByNumberAndName);
 
         orderRepository.save(orderEntity);
@@ -77,7 +82,8 @@ public class OrderService {
         OrderEntity orderEntity = orderMapper.toOrderEntity(order);
         ConstructionSiteEntity constructionSiteByName = constructionSiteService.getConstructionSiteByName(order.getConstructionSite().getName());
 
-        orderEntity.setEmail(email).setConstructionSite(constructionSiteByName);
+        orderEntity.setEmail(email)
+                .setConstructionSite(constructionSiteByName);
 
         orderRepository.save(orderEntity);
         LOGGER.info("Order with id {} updated successfully", orderEntity.getId());
@@ -160,7 +166,8 @@ public class OrderService {
                     if (!materialDTO.getAdminNote().contains("##")) {
                         return;
                     }
-                    if (material.getAdminNote().equals(materialDTO.getAdminNote())) {
+                    String materialNote = "##" + material.getAdminNote();
+                    if (materialNote.equals(materialDTO.getAdminNote())) {
                         return;
                     }
                     String noteUntilNow = materialDTO.getAdminNote().split("##")[1];
@@ -206,10 +213,15 @@ public class OrderService {
                         return;
                     }
 
+                    if (materialDTO.getMaterialStatus() != null){
+                        material.setMaterialStatus(Enum.valueOf(MaterialStatus.class, materialDTO.getMaterialStatus()));
+                    }
+
                     if (!materialDTO.getAdminNote().contains("##")) {
                         return;
                     }
-                    if (material.getAdminNote() != null && material.getAdminNote().equals(materialDTO.getAdminNote())) {
+                    String materialNote = "##" + material.getAdminNote();
+                    if (material.getAdminNote() != null && materialNote.equals(materialDTO.getAdminNote())) {
                         return;
                     }
 

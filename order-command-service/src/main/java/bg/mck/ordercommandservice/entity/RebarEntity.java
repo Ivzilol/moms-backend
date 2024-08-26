@@ -1,14 +1,18 @@
 package bg.mck.ordercommandservice.entity;
 
 import bg.mck.ordercommandservice.entity.enums.MaterialStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "rebars")
 public class RebarEntity extends BaseMaterialEntity {
 
     private String maxLength;
+    @Column(nullable = false)
     private String quantity;
 
     public RebarEntity() {
@@ -48,5 +52,12 @@ public class RebarEntity extends BaseMaterialEntity {
     public RebarEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+    @Override
+    public String toString() {
+        return "RebarEntity{" +
+                "maxLength='" + maxLength + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }

@@ -5,18 +5,20 @@ import bg.mck.ordercommandservice.entity.enums.WeightUnits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+import static bg.mck.ordercommandservice.dto.util.RegexPatterns.POSITIVE_NUMBER_REGEX;
+
 public class SetDTO extends BaseDTO {
 
     @NotNull(message = "Color is required")
     private String color;
 
-    @Pattern(regexp = "^[^-].*", message = "Length must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Length must be numeric and positive")
     @NotNull(message = "Length is required")
     private String maxLength;
     @NotNull(message = "Length unit is required")
     private LengthUnits maxLengthUnit;
 
-    @Pattern(regexp = "^[^-].*", message = "Quantity must be positive")
+    @Pattern(regexp = POSITIVE_NUMBER_REGEX, message = "Quantity must be numeric and positive")
     @NotNull(message = "Quantity is required")
     private String quantity;
     @NotNull(message = "Quantity unit is required")

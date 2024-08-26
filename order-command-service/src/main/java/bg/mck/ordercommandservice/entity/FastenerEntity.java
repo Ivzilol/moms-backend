@@ -5,13 +5,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "fastener")
 public class FastenerEntity extends BaseMaterialEntity {
+
     private String type;
     private String diameter;
     private String length;
-    @Column(name = "standard")
     private String standard;
     private String clazz;
     private String quantity;
@@ -91,5 +93,17 @@ public class FastenerEntity extends BaseMaterialEntity {
     public FastenerEntity setQuantity(String quantity) {
         this.quantity = quantity;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "FastenerEntity{" +
+                "type='" + type + '\'' +
+                ", diameter='" + diameter + '\'' +
+                ", length='" + length + '\'' +
+                ", standard='" + standard + '\'' +
+                ", clazz='" + clazz + '\'' +
+                ", quantity='" + quantity + '\'' +
+                '}';
     }
 }
