@@ -12,6 +12,15 @@ public class UpdateUnspecifiedEvent extends BaseMaterialEvent {
     }
 
 
+    public UpdateUnspecifiedEvent(Long materialId, EventType eventType, String category, String name, String materialType, String description, String specificationFileUrl) {
+        super(materialId, eventType);
+        this.category = category;
+        this.name = name;
+        this.materialType = materialType;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
+
     private String category;
     private String name;
     private String materialType;

@@ -3,11 +3,13 @@ package bg.mck.service;
 import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.dto.UnspecifiedUpdateDTO;
 import bg.mck.dto.UpdateMaterialDTO;
+import bg.mck.entity.materialEntity.MetalEntity;
 import bg.mck.entity.materialEntity.UnspecifiedEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.MaterialEvent;
 import bg.mck.events.material.UnspecifiedUpdateEvent;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.UnspecifiedRepository;
@@ -63,7 +65,20 @@ public class UnspecifiedUpdateService {
     }
 
     private void updateUnspecifiedEntity(UnspecifiedUpdateDTO unspecifiedUpdateDTO, UnspecifiedEntity unspecifiedEntity) {
+        UnspecifiedEntity currentState = unspecifiedRepository.findById(unspecifiedEntity.getId()).get();
         materialMapper.updateUnspecifiedEntityFromDto(unspecifiedUpdateDTO,unspecifiedEntity);
+        if (!currentState.getDescription().equals(unspecifiedEntity.getDescription())) {
+            if (doesAlreadyExists(unspecifiedEntity)) {
+                throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
+            } else {
+                unspecifiedEntity.setName(unspecifiedEntity.getDescription());
+            }
+        }
         unspecifiedRepository.save(unspecifiedEntity);
+    }
+
+    private boolean doesAlreadyExists(UnspecifiedEntity unspecifiedEntity) {
+        UnspecifiedEntity byName = unspecifiedRepository.findByName(unspecifiedEntity.getDescription());
+        return byName != null;
     }
 }

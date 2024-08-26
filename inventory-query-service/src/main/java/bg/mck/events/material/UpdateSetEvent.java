@@ -11,6 +11,19 @@ public class UpdateSetEvent extends BaseMaterialEvent {
     public UpdateSetEvent(Long materialId, EventType eventType) {
         super(materialId, eventType);
     }
+
+    public UpdateSetEvent(Long materialId, EventType eventType, String category, String name, String materialType, String color, String maxLength, LengthUnits maxLengthUnit, String description, String specificationFileUrl) {
+        super(materialId, eventType);
+        this.category = category;
+        this.name = name;
+        this.materialType = materialType;
+        this.color = color;
+        this.maxLength = maxLength;
+        this.maxLengthUnit = maxLengthUnit;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
+
     private String category;
     private String name;
     private String materialType;

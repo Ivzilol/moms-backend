@@ -23,6 +23,18 @@ public class UpdateMetalEvent extends BaseMaterialEvent {
         super(materialId, eventType);
     }
 
+    public UpdateMetalEvent(Long materialId, EventType eventType, String category, String materialType, String name, String totalWeight, WeightUnits totalWeightUnit, String kind, String description, String specificationFileUrl) {
+        super(materialId, eventType);
+        this.category = category;
+        this.materialType = materialType;
+        this.name = name;
+        this.totalWeight = totalWeight;
+        this.totalWeightUnit = totalWeightUnit;
+        this.kind = kind;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
+
     public String getCategory() {
         return category;
     }

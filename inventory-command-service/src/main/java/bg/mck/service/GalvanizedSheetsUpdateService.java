@@ -3,11 +3,13 @@ package bg.mck.service;
 import bg.mck.client.InventoryQueryServiceClient;
 import bg.mck.dto.GalvanizedSheetUpdateDTO;
 import bg.mck.dto.UpdateMaterialDTO;
+import bg.mck.entity.materialEntity.FastenerEntity;
 import bg.mck.entity.materialEntity.GalvanisedSheetEntity;
 import bg.mck.enums.EventType;
 import bg.mck.enums.MaterialType;
 import bg.mck.events.material.GalvanizedSheetUpdateEvent;
 import bg.mck.events.material.MaterialEvent;
+import bg.mck.exceptions.DuplicatedInventoryItemException;
 import bg.mck.exceptions.InventoryItemNotFoundException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.GalvanisedSheetRepository;
@@ -59,7 +61,15 @@ public class GalvanizedSheetsUpdateService {
     }
 
     private void updateEntity(GalvanizedSheetUpdateDTO galvanizedSheetUpdateDTO, GalvanisedSheetEntity galvanisedSheetEntity) {
+        GalvanisedSheetEntity currentState = galvanisedSheetRepository.findById(galvanisedSheetEntity.getId()).get();
         materialMapper.updateGalvanizedSheetEntityFromDto(galvanizedSheetUpdateDTO,galvanisedSheetEntity);
+        if (!currentState.getType().equals(galvanisedSheetEntity.getType())) {
+            if (doesAlreadyExists(galvanisedSheetEntity)) {
+                throw new DuplicatedInventoryItemException(UPDATE_FAILED_MATERIAL_ALREADY_EXIST);
+            } else {
+                galvanisedSheetEntity.setName(galvanisedSheetEntity.getType());
+            }
+        }
         galvanisedSheetRepository.save(galvanisedSheetEntity);
     }
 
@@ -69,5 +79,10 @@ public class GalvanizedSheetsUpdateService {
         galvanizedSheetUpdateEvent.setMaterialType(galvanisedSheetEntity.getCategory().getMaterialType().name());
         galvanizedSheetUpdateEvent.setCategory(MaterialType.GALVANIZED_SHEET.name());
         return galvanizedSheetUpdateEvent;
+    }
+
+    private boolean doesAlreadyExists(GalvanisedSheetEntity galvanisedSheetEntity) {
+        GalvanisedSheetEntity byName = galvanisedSheetRepository.findByName(galvanisedSheetEntity.getType());
+        return byName != null;
     }
 }

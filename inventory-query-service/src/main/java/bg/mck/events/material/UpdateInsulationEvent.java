@@ -12,6 +12,18 @@ public class UpdateInsulationEvent extends BaseMaterialEvent {
         super(materialId, eventType);
     }
 
+    public UpdateInsulationEvent(Long materialId, EventType eventType, String category, String name, String materialType, String type, String thickness, LengthUnits thicknessUnit, String description, String specificationFileUrl) {
+        super(materialId, eventType);
+        this.category = category;
+        this.name = name;
+        this.materialType = materialType;
+        this.type = type;
+        this.thickness = thickness;
+        this.thicknessUnit = thicknessUnit;
+        this.description = description;
+        this.specificationFileUrl = specificationFileUrl;
+    }
+
     private String category;
     private String name;
     private String materialType;
