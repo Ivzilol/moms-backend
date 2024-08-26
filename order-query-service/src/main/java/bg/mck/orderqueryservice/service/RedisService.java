@@ -1,22 +1,18 @@
 package bg.mck.orderqueryservice.service;
 
 import bg.mck.orderqueryservice.dto.OrderDTO;
-import bg.mck.orderqueryservice.entity.ConstructionSiteEntity;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
 public class RedisService {
 
     private final String CACHE_KEY = "orderQueryService";
-    @Value("${spring.data.redis.database}")
-    private Integer dbIndex;
-
 
     private final RedisTemplate<String, OrderDTO> redisTemplate;
 
@@ -30,7 +26,7 @@ public class RedisService {
     }
 
     public List<OrderDTO> getCachedObjects() {
-        return redisTemplate.opsForValue().multiGet(redisTemplate.keys(CACHE_KEY + "*"));
+        return redisTemplate.opsForValue().multiGet(Objects.requireNonNull(redisTemplate.keys(CACHE_KEY + "*")));
     }
 
     public void cacheOrder(OrderDTO orderDTO) {
@@ -46,7 +42,6 @@ public class RedisService {
 
     public void clearCacheInDatabase() {
         redisTemplate.execute((RedisCallback<Void>) connection -> {
-            connection.select(dbIndex);
             connection.serverCommands().flushDb();
             return null;
         });

@@ -100,7 +100,7 @@ public class MailService {
                     String value = materialNode.path(columnName).asText("Няма");
                     materialsHtml.append("<td style=\"padding: 10px; text-align: left; border: 1px solid #ddd; background-color: #f2f2f2;\">");
                     if ("specificationFileUrl".equals(columnName)) {
-                        materialsHtml.append("<a href=\"").append(value).append("\">Изтегли</a>");
+                        materialsHtml.append("<a href=\"").append(value).append(value.isBlank() || value.equals("null") ?"\">Няма файл.</a>" : "\">Изтегли</a>");
                     } else if("materialStatus".equals(columnName)){
                         materialsHtml.append(value.equals("NOT_APPROVED") ? "Не одобрен" : "Одобрен");
                     } else {
