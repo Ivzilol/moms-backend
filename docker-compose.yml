@@ -39,6 +39,168 @@ services:
       - ./redis_data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
 
+  authentication-service:
+    image: your-authentication-service-image
+    container_name: authentication_service_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8081:8081"
+
+  authorization-service:
+    image: your-authorization-service-image
+    container_name: authorization_service_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8082:8082"
+
+  config-service:
+    image: your-config-service-image
+    container_name: config_service_container
+    restart: always
+    ports:
+      - "8083:8083"
+
+  discovery-service:
+    image: your-discovery-service-image
+    container_name: discovery_service_container
+    restart: always
+    ports:
+      - "8084:8084"
+
+  gateway-service:
+    image: your-gateway-service-image
+    container_name: gateway_service_container
+    restart: always
+    ports:
+      - "8085:8085"
+
+  inventory-command-service:
+    image: your-inventory-command-service-image
+    container_name: inventory_command_service_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8086:8086"
+
+  inventory-query-service:
+    image: your-inventory-query-service-image
+    container_name: inventory_query_service_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8087:8087"
+
+  notification-service:
+    image: your-notification-service-image
+    container_name: notification_service_container
+    restart: always
+    ports:
+      - "8088:8088"
+
+  order-command-service:
+    image: your-order-command-service-image
+    container_name: order_command_service_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8089:8089"
+
+  order-query-service:
+    image: your-order-query-service-image
+    container_name: order_query_service_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8090:8090"
+
+  user-command-service:
+    image: your-user-command-service-image
+    container_name: user_command_service_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8091:8091"
+
+  user-query-service:
+    image: your-user-query-service-image
+    container_name: user_query_service_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8092:8092"
+
+  user-management-microservice:
+    image: your-user-management-microservice-image
+    container_name: user_management_microservice_container
+    restart: always
+    environment:
+      - DATABASE_HOST=mysql_container
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=your_database
+      - DATABASE_USER=your_username
+      - DATABASE_PASSWORD=your_password
+    depends_on:
+      - mysql
+    ports:
+      - "8093:8093"
 
 volumes:
   mysql_data:
