@@ -11,6 +11,8 @@ services:
       MYSQL_DATABASE: your_database # ${MYSQL_DATABASE}
       MYSQL_USER: your_username # ${MYSQL_USER}
       MYSQL_PASSWORD: your_password # ${MYSQL_PASSWORD}
+    env_file:
+      - ./application-env.properties
     ports:
       - "3307:3306"
     volumes:
@@ -24,6 +26,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+    env_file:
+      - ./application-env.properties
     ports:
       - "27020:27017"
     volumes:
@@ -31,6 +35,8 @@ services:
 
   redis:
     image: redis:latest
+    env_file:
+      - ./application-env.properties
     container_name: redis_container
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     ports:
@@ -41,6 +47,8 @@ services:
 
   authentication-service:
     image: your-authentication-service-image
+    env_file:
+      - ./application-env.properties
     container_name: authentication_service_container
     restart: always
     environment:
@@ -56,6 +64,8 @@ services:
 
   authorization-service:
     image: your-authorization-service-image
+    env_file:
+      - ./application-env.properties
     container_name: authorization_service_container
     restart: always
     environment:
@@ -71,6 +81,8 @@ services:
 
   config-service:
     image: your-config-service-image
+    env_file:
+      - ./application-env.properties
     container_name: config_service_container
     restart: always
     ports:
@@ -78,6 +90,8 @@ services:
 
   discovery-service:
     image: your-discovery-service-image
+    env_file:
+      - ./application-env.properties
     container_name: discovery_service_container
     restart: always
     ports:
@@ -85,6 +99,8 @@ services:
 
   gateway-service:
     image: your-gateway-service-image
+    env_file:
+      - ./application-env.properties
     container_name: gateway_service_container
     restart: always
     ports:
@@ -92,6 +108,8 @@ services:
 
   inventory-command-service:
     image: your-inventory-command-service-image
+    env_file:
+      - ./application-env.properties
     container_name: inventory_command_service_container
     restart: always
     environment:
@@ -107,6 +125,8 @@ services:
 
   inventory-query-service:
     image: your-inventory-query-service-image
+    env_file:
+      - ./application-env.properties
     container_name: inventory_query_service_container
     restart: always
     environment:
@@ -122,6 +142,8 @@ services:
 
   notification-service:
     image: your-notification-service-image
+    env_file:
+      - ./application-env.properties
     container_name: notification_service_container
     restart: always
     ports:
@@ -129,6 +151,8 @@ services:
 
   order-command-service:
     image: your-order-command-service-image
+    env_file:
+      - ./application-env.properties
     container_name: order_command_service_container
     restart: always
     environment:
@@ -144,6 +168,8 @@ services:
 
   order-query-service:
     image: your-order-query-service-image
+    env_file:
+      - ./application-env.properties
     container_name: order_query_service_container
     restart: always
     environment:
@@ -159,6 +185,8 @@ services:
 
   user-command-service:
     image: your-user-command-service-image
+    env_file:
+      - ./application-env.properties
     container_name: user_command_service_container
     restart: always
     environment:
@@ -174,6 +202,8 @@ services:
 
   user-query-service:
     image: your-user-query-service-image
+    env_file:
+      - ./application-env.properties
     container_name: user_query_service_container
     restart: always
     environment:
@@ -189,6 +219,8 @@ services:
 
   user-management-microservice:
     image: your-user-management-microservice-image
+    env_file:
+      - ./application-env.properties
     container_name: user_management_microservice_container
     restart: always
     environment:
