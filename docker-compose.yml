@@ -7,10 +7,10 @@ services:
     container_name: mysql_container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root_password # ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: your_database # ${MYSQL_DATABASE}
-      MYSQL_USER: your_username # ${MYSQL_USER}
-      MYSQL_PASSWORD: your_password # ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     env_file:
       - ./application-env.properties
     ports:
@@ -38,7 +38,7 @@ services:
     env_file:
       - ./application-env.properties
     container_name: redis_container
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
     ports:
       - "6379:6379"
     volumes:
