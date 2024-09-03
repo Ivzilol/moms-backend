@@ -46,193 +46,122 @@ services:
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
 
   authentication-service:
-    image: your-authentication-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: authentication_service_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
-    depends_on:
-      - mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/authentication-service/target/authentication-service.jar"
     ports:
-      - "8081:8081"
+      - "8081:8080"
 
   authorization-service:
-    image: your-authorization-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: authorization_service_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
-    depends_on:
-      - mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/authorization-service/target/authorization-service.jar"
     ports:
-      - "8082:8082"
+      - "8082:8080"
 
   config-service:
-    image: your-config-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: config_service_container
-    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/config-service/target/config-service.jar"
     ports:
-      - "8083:8083"
+      - "8083:8080"
 
   discovery-service:
-    image: your-discovery-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: discovery_service_container
-    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/discovery-service/target/discovery-service.jar"
     ports:
-      - "8084:8084"
+      - "8084:8080"
+
+  file-storage-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/file-storage-service/target/file-storage-service.jar"
+    ports:
+      - "8085:8080"
+    depends_on:
+      - mongo
 
   gateway-service:
-    image: your-gateway-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: gateway_service_container
-    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/gateway-service/target/gateway-service.jar"
     ports:
-      - "8085:8085"
+      - "8086:8080"
 
   inventory-command-service:
-    image: your-inventory-command-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: inventory_command_service_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/inventory-command-service/target/inventory-command-service.jar"
+    ports:
+      - "8087:8080"
     depends_on:
       - mysql
-    ports:
-      - "8086:8086"
 
   inventory-query-service:
-    image: your-inventory-query-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: inventory_query_service_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
-    depends_on:
-      - mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/inventory-query-service/target/inventory-query-service.jar"
     ports:
-      - "8087:8087"
+      - "8088:8080"
+    depends_on:
+      - mongo
 
   notification-service:
-    image: your-notification-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: notification_service_container
-    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/inotification-service/target/notification-service.jar"
     ports:
-      - "8088:8088"
+      - "8089:8080"
 
   order-command-service:
-    image: your-order-command-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: order_command_service_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/order-command-service/target/order-command-service.jar"
+    ports:
+      - "8090:8080"
     depends_on:
       - mysql
-    ports:
-      - "8089:8089"
 
   order-query-service:
-    image: your-order-query-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: order_query_service_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
-    depends_on:
-      - mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/order-query-service/target/order-query-service.jar"
     ports:
-      - "8090:8090"
+      - "8091:8080"
+    depends_on:
+      - mongo
 
   user-command-service:
-    image: your-user-command-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: user_command_service_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/user-command-service/target/user-command-service.jar"
+    ports:
+      - "8092:8080"
     depends_on:
       - mysql
-    ports:
-      - "8091:8091"
 
   user-query-service:
-    image: your-user-query-service-image
-    env_file:
-      - ./application-env.properties
-    container_name: user_query_service_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
-    depends_on:
-      - mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/user-query-service/target/user-query-service.jar"
     ports:
-      - "8092:8092"
-
-  user-management-microservice:
-    image: your-user-management-microservice-image
-    env_file:
-      - ./application-env.properties
-    container_name: user_management_microservice_container
-    restart: always
-    environment:
-      - DATABASE_HOST=mysql_container
-      - DATABASE_PORT=3306
-      - DATABASE_NAME=your_database
-      - DATABASE_USER=your_username
-      - DATABASE_PASSWORD=your_password
+      - "8093:8080"
     depends_on:
-      - mysql
-    ports:
-      - "8093:8093"
+      - mongo
 
 volumes:
   mysql_data:
