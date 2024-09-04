@@ -84,8 +84,6 @@ services:
     command: "java -jar /app/file-storage-service/target/file-storage-service.jar"
     ports:
       - "8085:8080"
-    depends_on:
-      - mongo
 
   gateway-service:
     build:
@@ -102,8 +100,6 @@ services:
     command: "java -jar /app/inventory-command-service/target/inventory-command-service.jar"
     ports:
       - "8087:8080"
-    depends_on:
-      - mysql
 
   inventory-query-service:
     build:
@@ -112,8 +108,6 @@ services:
     command: "java -jar /app/inventory-query-service/target/inventory-query-service.jar"
     ports:
       - "8088:8080"
-    depends_on:
-      - mongo
 
   notification-service:
     build:
@@ -130,8 +124,6 @@ services:
     command: "java -jar /app/order-command-service/target/order-command-service.jar"
     ports:
       - "8090:8080"
-    depends_on:
-      - mysql
 
   order-query-service:
     build:
@@ -140,8 +132,6 @@ services:
     command: "java -jar /app/order-query-service/target/order-query-service.jar"
     ports:
       - "8091:8080"
-    depends_on:
-      - mongo
 
   user-command-service:
     build:
@@ -150,8 +140,6 @@ services:
     command: "java -jar /app/user-command-service/target/user-command-service.jar"
     ports:
       - "8092:8080"
-    depends_on:
-      - mysql
 
   user-query-service:
     build:
@@ -160,8 +148,6 @@ services:
     command: "java -jar /app/user-query-service/target/user-query-service.jar"
     ports:
       - "8093:8080"
-    depends_on:
-      - mongo
 
 volumes:
   mysql_data:
