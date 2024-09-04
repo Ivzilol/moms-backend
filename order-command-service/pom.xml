@@ -6,7 +6,7 @@
         <groupId>bg.mck</groupId>
         <artifactId>moms-backend</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
     </parent>
     <artifactId>order-command-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
