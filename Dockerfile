@@ -5,19 +5,19 @@ WORKDIR /app
 COPY mvnw* pom.xml ./
 COPY .mvn /app/.mvn
 
-COPY authentication-service/src /app/authentication-service/src
-COPY authorization-service/src /app/authorization-service/src
-COPY config-service/src /app/config-service/src
-COPY discovery-service/src /app/discovery-service/src
-COPY file-storage-service/src /app/file-storage-service/src
-COPY gateway-service/src /app/gateway-service/src
-COPY inventory-command-service/src /app/inventory-command-service/src
-COPY inventory-query-service/src /app/inventory-query-service/src
-COPY notification-service/src /app/notification-service/src
-COPY order-command-service/src /app/order-command-service/src
-COPY order-query-service/src /app/order-query-service/src
-COPY user-command-service/src /app/user-command-service/src
-COPY user-query-service/src /app/user-query-service/src
+COPY authentication-service /app/authentication-service
+COPY authorization-service /app/authorization-service
+COPY config-service /app/config-service
+COPY discovery-service /app/discovery-service
+COPY file-storage-service /app/file-storage-service
+COPY gateway-service /app/gateway-service
+COPY inventory-command-service /app/inventory-command-service
+COPY inventory-query-service /app/inventory-query-service
+COPY notification-service /app/notification-service
+COPY order-command-service /app/order-command-service
+COPY order-query-service /app/order-query-service
+COPY user-command-service /app/user-command-service
+COPY user-query-service /app/user-query-service
 
 RUN ./mvnw clean package -DskipTests
 
