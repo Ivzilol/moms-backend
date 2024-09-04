@@ -19,8 +19,6 @@ COPY config-service/src /app/order-query-service/src
 COPY config-service/src /app/user-command-service/src
 COPY config-service/src /app/user-query-service/src
 
-
 RUN ./mvnw clean package -DskipTests
-
 
 ENTRYPOINT ["java", "-jar"]
