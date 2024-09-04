@@ -45,6 +45,14 @@ services:
       - ./redis_data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
 
+  user-query-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java -jar /app/user-query-service/target/user-query-service.jar"
+    ports:
+      - "8093:8080"
+
   authentication-service:
     build:
       context: .
@@ -141,15 +149,9 @@ services:
     ports:
       - "8092:8080"
 
-  user-query-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: "java -jar /app/user-query-service/target/user-query-service.jar"
-    ports:
-      - "8093:8080"
 
 volumes:
   mysql_data:
   mongo_data:
   redis_data:
+
