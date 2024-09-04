@@ -2,9 +2,7 @@ FROM openjdk:22
 
 WORKDIR /app
 
-COPY .mvn/ .mvn/
-COPY mvnw .
-COPY pom.xml .
+COPY mvnw* pom.xml ./
 
 COPY authentication-service/src /app/authentication-service/src
 COPY authorization-service/src /app/authorization-service/src
