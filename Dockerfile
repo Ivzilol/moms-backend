@@ -2,8 +2,13 @@ FROM openjdk:22
 
 WORKDIR /app
 
-COPY mvnw* pom.xml ./
+#COPY mvnw* pom.xml ./
+#COPY .mvn /app/.mvn
+
+# Copy the Maven wrapper and pom.xml to the working directory
 COPY .mvn /app/.mvn
+COPY pom.xml /app/
+COPY mvnw /app/mvnw
 
 COPY authentication-service/src /app/authentication-service/src
 COPY authorization-service/src /app/authorization-service/src
