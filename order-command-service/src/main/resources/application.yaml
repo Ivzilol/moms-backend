@@ -12,8 +12,8 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: "jdbc:mysql://127.0.0.1:3307/mck_orders?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
-    username: root
-    password: root_password
+    username: your_username
+    password: your_password
   jpa:
     hibernate:
       ddl-auto: update
