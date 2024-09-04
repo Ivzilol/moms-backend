@@ -113,7 +113,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/inotification-service/target/notification-service.jar"
+    command: "java -jar /app/notification-service/target/notification-service.jar"
     ports:
       - "8089:8080"
 
