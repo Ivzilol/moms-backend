@@ -7,7 +7,9 @@
         <artifactId>moms-backend</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <artifactId>notification-service</artifactId>
+
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
