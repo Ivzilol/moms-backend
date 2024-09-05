@@ -19,7 +19,4 @@ COPY order-command-service /app/order-command-service
 COPY order-query-service /app/order-query-service
 COPY user-command-service /app/user-command-service
 
-
 RUN ./mvnw clean package -DskipTests
-
-ENTRYPOINT ["java", "-jar"]

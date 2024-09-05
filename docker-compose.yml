@@ -1,42 +1,35 @@
 version: '3.1'
 
 services:
-
   mysql:
     image: mysql:8.0
     container_name: mysql_container
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: your_database
       MYSQL_USER: your_username
       MYSQL_PASSWORD: your_password
-    env_file:
-      - ./application-env.properties
     ports:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    restart: always
 
   mongodb:
     image: mongo:latest
     container_name: mongodb_container
-    restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: your_username
       MONGO_INITDB_ROOT_PASSWORD: your_password
       MONGO_INITDB_DATABASE: your_database
-    env_file:
-      - ./application-env.properties
     ports:
       - "27020:27017"
     volumes:
       - mongo_data:/data/db
+    restart: always
 
   redis:
     image: redis:latest
-    env_file:
-      - ./application-env.properties
     container_name: redis_container
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
     ports:
@@ -44,12 +37,13 @@ services:
     volumes:
       - ./redis_data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+    restart: always
 
   user-query-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/user-query-service/target/user-query-service.jar"
+    command: ["java", "-jar", "/app/user-query-service/target/user-query-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8093:8080"
 
@@ -57,7 +51,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/authentication-service/target/authentication-service.jar"
+    command: ["java", "-jar", "/app/authentication-service/target/authentication-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8081:8080"
 
@@ -65,7 +59,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/authorization-service/target/authorization-service.jar"
+    command: ["java", "-jar", "/app/authorization-service/target/authorization-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8082:8080"
 
@@ -73,7 +67,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/config-service/target/config-service.jar"
+    command: ["java", "-jar", "/app/config-service/target/config-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8083:8080"
 
@@ -81,7 +75,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/discovery-service/target/discovery-service.jar"
+    command: ["java", "-jar", "/app/discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8084:8080"
 
@@ -89,7 +83,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/file-storage-service/target/file-storage-service.jar"
+    command: ["java", "-jar", "/app/file-storage-service/target/file-storage-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8085:8080"
 
@@ -97,7 +91,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/gateway-service/target/gateway-service.jar"
+    command: ["java", "-jar", "/app/gateway-service/target/gateway-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8086:8080"
 
@@ -105,7 +99,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/inventory-command-service/target/inventory-command-service.jar"
+    command: ["java", "-jar", "/app/inventory-command-service/target/inventory-command-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8087:8080"
 
@@ -113,7 +107,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/inventory-query-service/target/inventory-query-service.jar"
+    command: ["java", "-jar", "/app/inventory-query-service/target/inventory-query-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8088:8080"
 
@@ -121,7 +115,7 @@ services:
 #    build:
 #      context: .
 #      dockerfile: Dockerfile
-#    command: "java -jar /app/notification-service/target/notification-service.jar"
+#    command: ["java", "-jar", "/app/notification-service/target/notification-service.jar"]
 #    ports:
 #      - "8089:8080"
 
@@ -129,7 +123,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/order-command-service/target/order-command-service.jar"
+    command: ["java", "-jar", "/app/order-command-service/target/order-command-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8090:8080"
 
@@ -137,7 +131,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/order-query-service/target/order-query-service.jar"
+    command: ["java", "-jar", "/app/order-query-service/target/order-query-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8091:8080"
 
@@ -145,13 +139,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: "java -jar /app/user-command-service/target/user-command-service.jar"
+    command: ["java", "-jar", "/app/user-command-service/target/user-command-service-0.0.1-SNAPSHOT.jar"]
     ports:
       - "8092:8080"
-
 
 volumes:
   mysql_data:
   mongo_data:
   redis_data:
-
