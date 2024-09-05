@@ -111,13 +111,13 @@ services:
     ports:
       - "8088:8080"
 
-#  notification-service:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    command: ["java", "-jar", "/app/notification-service/target/notification-service.jar"]
-#    ports:
-#      - "8089:8080"
+  notification-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["java", "-jar", "/app/notification-service/target/notification-service.jar"]
+    ports:
+      - "8089:8080"
 
   order-command-service:
     build:

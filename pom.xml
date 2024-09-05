@@ -26,7 +26,7 @@
 		<module>order-command-service</module>
 		<module>order-query-service</module>
 		<module>user-command-service</module>
-<!--		<module>notification-service</module>-->
+		<module>notification-service</module>
 		<module>user-query-service</module>
 		<module>file-storage-service</module>
     </modules>

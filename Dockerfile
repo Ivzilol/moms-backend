@@ -14,7 +14,7 @@ COPY file-storage-service /app/file-storage-service
 COPY gateway-service /app/gateway-service
 COPY inventory-command-service /app/inventory-command-service
 COPY inventory-query-service /app/inventory-query-service
-#COPY notification-service /app/notification-service
+COPY notification-service /app/notification-service
 COPY order-command-service /app/order-command-service
 COPY order-query-service /app/order-query-service
 COPY user-command-service /app/user-command-service
