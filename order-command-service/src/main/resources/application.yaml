@@ -11,13 +11,12 @@ spring:
     import: optional:configserver:http://localhost:8888/,optional:file:./application-env.properties
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://127.0.0.1:3307/mck_orders?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
-    username: your_username
-    password: your_password
+    url: "jdbc:mysql://mysql_container:3306/mck_orders?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
+    username: root
+    password: root_password
   jpa:
     hibernate:
-      ddl-auto: create
-    open-in-view: false
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -53,5 +52,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
+
+
 
 

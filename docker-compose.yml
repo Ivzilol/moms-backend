@@ -4,6 +4,7 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql_container
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: your_database
@@ -13,7 +14,9 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-    restart: always
+    networks:
+      - springboot-mongo-network
+
 
   mongodb:
     image: mongo:latest
@@ -27,6 +30,8 @@ services:
     volumes:
       - mongo_data:/data/db
     restart: always
+    networks:
+      - springboot-mongo-network
 
   redis:
     image: redis:latest
@@ -38,110 +43,142 @@ services:
       - ./redis_data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
     restart: always
+    networks:
+      - springboot-mongo-network
 
   user-query-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/user-query-service/target/user-query-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/user-query-service/target/user-query-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8093:8080"
+    networks:
+      - springboot-mongo-network
 
   authentication-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/authentication-service/target/authentication-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/authentication-service/target/authentication-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8081:8080"
+    networks:
+      - springboot-mongo-network
 
   authorization-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/authorization-service/target/authorization-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/authorization-service/target/authorization-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8082:8080"
+    networks:
+      - springboot-mongo-network
 
   config-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/config-service/target/config-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/config-service/target/config-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8083:8080"
+    networks:
+      - springboot-mongo-network
 
   discovery-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar" ]
     ports:
-      - "8084:8080"
+      - "8761:8761"
+    networks:
+      - springboot-mongo-network
 
   file-storage-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/file-storage-service/target/file-storage-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/file-storage-service/target/file-storage-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8085:8080"
+    networks:
+      - springboot-mongo-network
 
   gateway-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/gateway-service/target/gateway-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/gateway-service/target/gateway-service-0.0.1-SNAPSHOT.jar" ]
     ports:
-      - "8086:8080"
+      - "8080:8080"
+    networks:
+      - springboot-mongo-network
 
   inventory-command-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/inventory-command-service/target/inventory-command-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/inventory-command-service/target/inventory-command-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8087:8080"
+    networks:
+      - springboot-mongo-network
 
   inventory-query-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/inventory-query-service/target/inventory-query-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/inventory-query-service/target/inventory-query-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8088:8080"
+    networks:
+      - springboot-mongo-network
 
   notification-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/notification-service/target/notification-service.jar"]
+    command: [ "java", "-jar", "/app/notification-service/target/notification-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8089:8080"
+    networks:
+      - springboot-mongo-network
 
   order-command-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/order-command-service/target/order-command-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/order-command-service/target/order-command-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8090:8080"
+    networks:
+      - springboot-mongo-network
 
   order-query-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/order-query-service/target/order-query-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/order-query-service/target/order-query-service-0.0.1-SNAPSHOT.jar" ]
     ports:
       - "8091:8080"
+    networks:
+      - springboot-mongo-network
 
   user-command-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["java", "-jar", "/app/user-command-service/target/user-command-service-0.0.1-SNAPSHOT.jar"]
+    command: [ "java", "-jar", "/app/user-command-service/target/user-command-service-0.0.1-SNAPSHOT.jar" ]
     ports:
-      - "8092:8080"
+      - "8095:8080"
+    networks:
+      - springboot-mongo-network
+
+networks:
+  springboot-mongo-network:
+    driver: bridge
 
 volumes:
   mysql_data:

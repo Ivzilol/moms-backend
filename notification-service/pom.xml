@@ -44,35 +44,35 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>run-java-app</id>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                            <mainClass>bg.mck.notificationservice.NotificationServiceApplication</mainClass>
-                            <includePluginDependencies>true</includePluginDependencies>
-                            <arguments>
-                                <argument>--add-opens</argument>
-                                <argument>java.base/java.util=ALL-UNNAMED</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>exec-maven-plugin</artifactId>-->
+<!--                <version>3.0.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>run-java-app</id>-->
+<!--                        <goals>-->
+<!--                            <goal>java</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>package</phase>-->
+<!--                        <configuration>-->
+<!--                            <mainClass>bg.mck.notificationservice.NotificationServiceApplication</mainClass>-->
+<!--                            <includePluginDependencies>true</includePluginDependencies>-->
+<!--                            <arguments>-->
+<!--                                <argument>&#45;&#45;add-opens</argument>-->
+<!--                                <argument>java.base/java.util=ALL-UNNAMED</argument>-->
+<!--                            </arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 </project>
