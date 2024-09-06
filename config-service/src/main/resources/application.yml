@@ -12,5 +12,6 @@ spring:
           clone-on-start: true
 
 eureka:
-  instance:
-    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
