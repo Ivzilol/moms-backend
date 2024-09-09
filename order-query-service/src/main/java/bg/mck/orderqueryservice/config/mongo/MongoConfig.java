@@ -22,6 +22,8 @@ public class MongoConfig {
     @Value("${MONGODB_ROOT_USERNAME}")
     private String mongoUser;
 
+    @Value("${spring.data.mongodb.uri}")
+    private String uri;
 
     @Value("${MONGODB_ROOT_PASSWORD}")
     private String mongoPassword;
@@ -57,7 +59,7 @@ public class MongoConfig {
 
         MongoClientSettings settings = MongoClientSettings.builder()
                 .codecRegistry(codecRegistry)
-                .applyConnectionString(new com.mongodb.ConnectionString("mongodb://"+ mongoUser +":"+ mongoPassword +"@localhost:27020/order-query-db?authSource=admin"))
+                .applyConnectionString(new com.mongodb.ConnectionString(uri))
                 .build();
 
         return MongoClients.create(settings);
