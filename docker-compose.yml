@@ -47,6 +47,7 @@ services:
       - springboot-mongo-network
 
   user-query-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -57,6 +58,7 @@ services:
       - springboot-mongo-network
 
   authentication-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -67,6 +69,7 @@ services:
       - springboot-mongo-network
 
   authorization-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -77,6 +80,7 @@ services:
       - springboot-mongo-network
 
   config-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -87,6 +91,7 @@ services:
       - springboot-mongo-network
 
   discovery-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -97,6 +102,7 @@ services:
       - springboot-mongo-network
 
   file-storage-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -107,6 +113,7 @@ services:
       - springboot-mongo-network
 
   gateway-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -117,6 +124,7 @@ services:
       - springboot-mongo-network
 
   inventory-command-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -127,6 +135,7 @@ services:
       - springboot-mongo-network
 
   inventory-query-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -137,6 +146,7 @@ services:
       - springboot-mongo-network
 
   notification-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -147,6 +157,7 @@ services:
       - springboot-mongo-network
 
   order-command-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -157,6 +168,7 @@ services:
       - springboot-mongo-network
 
   order-query-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -167,6 +179,7 @@ services:
       - springboot-mongo-network
 
   user-command-service:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
