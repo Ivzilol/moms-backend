@@ -71,6 +71,14 @@ spring:
           - name: AuthorizationFilter
           - name: AuthenticationFilter
 
+      - id: file-storage-service
+        uri: lb://file-storage-service
+        predicates:
+          - Path=/${APPLICATION_VERSION}/user/**
+        filters:
+          - name: AuthorizationFilter
+          - name: AuthenticationFilter
+
 eureka:
   client:
     serviceUrl:
