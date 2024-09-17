@@ -50,7 +50,7 @@ public class FileStorageService {
         ObjectId id = gridFsTemplate.store(file.getInputStream(), fileNameWithoutPattern, file.getContentType(), metaData);
 
         String fileDownloadUri = ServletUriComponentsBuilder
-                .fromHttpUrl("http://localhost:8080")
+                .fromHttpUrl("http://supplymanager.bg")
                 .path("/" + APPLICATION_VERSION)
                 .path("/user/files/")
                 .path(fileNameWithoutPattern + "/")
