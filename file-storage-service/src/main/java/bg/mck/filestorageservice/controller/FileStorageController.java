@@ -35,14 +35,12 @@ public class FileStorageController {
     public ResponseEntity<?> uploadFile(@RequestPart("files") MultipartFile file,
                                         @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
 
-//        String email;
-//        try {
-//            email = extractEmailFromToken(token); // FIXME: Add service to gateway
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("There was a problem getting the uploader`s email.");
-//        }
-
-        String email = "test@gmail.com";
+        String email;
+        try {
+            email = extractEmailFromToken(token);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("There was a problem getting the uploader`s email.");
+        }
 
 
         try {
