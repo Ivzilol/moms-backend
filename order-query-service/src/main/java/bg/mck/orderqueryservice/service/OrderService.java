@@ -49,8 +49,14 @@ public class OrderService {
     }
 
     public OrderDTO getOrderById(Long id) {
-        return Optional.ofNullable(redisService.getCachedObjectById(id))
-                .orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found"));
+        try {
+            return Optional.ofNullable(redisService.getCachedObjectById(id))
+                    .orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found in redis"));
+        } catch (OrderNotFoundException e) {
+            return orderRepository.findById(id.toString())
+                    .map(this.orderMapper::fromOrderEntityToDTO)
+                    .orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found in db"));
+        }
     }
 
     public OrderDTO getOrderByOrderNumber(Integer number) {
