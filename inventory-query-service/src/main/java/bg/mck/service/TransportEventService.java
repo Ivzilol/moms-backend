@@ -22,15 +22,13 @@ public class TransportEventService {
     private final ObjectMapper objectMapper;
     private final EventTransportRepository eventTransportRepository;
     private final TransportRepository transportRepository;
-    private final TransportRedisService redisService;
     private final TransportDeleteService transportDeleteService;
     private final TransportRegisterService transportRegisterService;
 
-    public TransportEventService(ObjectMapper objectMapper, EventTransportRepository eventTransportRepository, TransportRepository transportRepository, TransportRedisService redisService, TransportDeleteService transportDeleteService, TransportRegisterService transportRegisterService) {
+    public TransportEventService(ObjectMapper objectMapper, EventTransportRepository eventTransportRepository, TransportRepository transportRepository, TransportDeleteService transportDeleteService, TransportRegisterService transportRegisterService) {
         this.objectMapper = objectMapper;
         this.eventTransportRepository = eventTransportRepository;
         this.transportRepository = transportRepository;
-        this.redisService = redisService;
         this.transportDeleteService = transportDeleteService;
         this.transportRegisterService = transportRegisterService;
     }
@@ -48,7 +46,6 @@ public class TransportEventService {
         }
 
         transportRepository.save(transportEntity);
-        redisService.cacheObject(transportEntity);
 
         return transportEntity;
     }
@@ -70,7 +67,6 @@ public class TransportEventService {
             evictCache(event.getName());
 
             transportDeleteService.deleteTransportById(transportId);
-            redisService.clearCacheForObject(transportId);
         } else if (eventType.equals(EventType.ItemUpdated.name())) {
 
         } else {

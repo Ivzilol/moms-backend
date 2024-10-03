@@ -20,12 +20,6 @@ spring:
       mode: never
 
 
-  data:
-    redis:
-      repositories:
-        enabled: false
-
-
 logging:
   level:
     org:

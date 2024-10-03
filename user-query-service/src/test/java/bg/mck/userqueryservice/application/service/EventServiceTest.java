@@ -38,9 +38,6 @@ public class EventServiceTest {
     private EventRepository eventRepository;
 
     @Mock
-    private RedisService redisService;
-
-    @Mock
     private ObjectMapper objectMapper;
 
     @Mock
@@ -71,13 +68,10 @@ public class EventServiceTest {
         when(eventRepository.findByEventUserIdOrderByEventLocalDateTimeAsc(1L))
                 .thenReturn(userEvents);
 
-        doNothing().when(redisService).cacheObject(any(UserEntity.class));
-
         when(userRepository.findById("1")).thenReturn(Optional.of(user));
         UserEntity userEntity = eventService.reconstructUserEntity(1L);
 
         verify(userRepository).save(userEntity);
-        verify(redisService).cacheObject(userEntity);
 
         assertEquals("1", userEntity.getId());
         assertEquals("John", userEntity.getFirstName());

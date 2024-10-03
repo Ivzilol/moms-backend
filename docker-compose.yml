@@ -32,26 +32,17 @@ services:
       - springboot-mongo-network
     restart: unless-stopped
 
-  redis:
-    image: redis:latest
-    container_name: redis_container
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./redis_data:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
-    networks:
-      - springboot-mongo-network
-    restart: unless-stopped
-
   user-query-service:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/user-query-service/target/user-query-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -jar /app/user-query-service/target/user-query-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8093:8080"
+      - "5005:5005"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -60,9 +51,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/authentication-service/target/authentication-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -jar /app/authentication-service/target/authentication-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8081:8080"
+      - "5006:5006"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -71,9 +66,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/authorization-service/target/authorization-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -jar /app/authorization-service/target/authorization-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8082:8080"
+      - "5007:5007"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -82,9 +81,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/config-service/target/config-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 -jar /app/config-service/target/config-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8083:8080"
+      - "5008:5008"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -93,9 +96,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5009 -jar /app/discovery-service/target/discovery-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8761:8761"
+      - "5009:5009"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -104,9 +111,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/file-storage-service/target/file-storage-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5010 -jar /app/file-storage-service/target/file-storage-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8085:8080"
+      - "5010:5010"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -115,9 +126,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/gateway-service/target/gateway-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5011 -jar /app/gateway-service/target/gateway-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8080:8080"
+      - "5011:5011"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -126,9 +141,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/inventory-command-service/target/inventory-command-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5012 -jar /app/inventory-command-service/target/inventory-command-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8087:8080"
+      - "5012:5012"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -137,9 +156,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/inventory-query-service/target/inventory-query-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5013 -jar /app/inventory-query-service/target/inventory-query-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8088:8080"
+      - "5013:5013"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -148,9 +171,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/notification-service/target/notification-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5014 -jar /app/notification-service/target/notification-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8089:8080"
+      - "5014:5014"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -159,9 +186,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/order-command-service/target/order-command-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5015 -jar /app/order-command-service/target/order-command-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8090:8080"
+      - "5015:5015"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -170,9 +201,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/order-query-service/target/order-query-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5016 -jar /app/order-query-service/target/order-query-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8091:8080"
+      - "5016:5016"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -181,9 +216,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: [ "java", "-jar", "/app/user-command-service/target/user-command-service-0.0.1-SNAPSHOT.jar" ]
+    command: [
+      "sh", "-c",
+      "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5017 -jar /app/user-command-service/target/user-command-service-0.0.1-SNAPSHOT.jar"
+    ]
     ports:
       - "8095:8080"
+      - "5017:5017"  # Debug port for remote debugging
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -195,4 +234,3 @@ networks:
 volumes:
   mysql_data:
   mongo_data:
-  redis_data:

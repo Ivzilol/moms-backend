@@ -26,9 +26,6 @@ public class OrderServiceTest {
     @Mock
     private OrderMapper orderMapper;
 
-    @Mock
-    private RedisService redisService;
-
     @InjectMocks
     private OrderService orderService;
 
@@ -57,18 +54,14 @@ public class OrderServiceTest {
 
     @Test
     void testGetAllOrders_CacheHit() {
-        when(redisService.getCachedObjects()).thenReturn(List.of(orderDTO));
 
         List<OrderDTO> result = orderService.getAllOrders();
         assertEquals(1, result.size());
         assertEquals(orderDTO, result.get(0));
-
-        verify(redisService, times(1)).getCachedObjects();
     }
 
     @Test
     void testGetAllOrders_CacheMiss() {
-        when(redisService.getCachedObjects()).thenReturn(Collections.emptyList());
         when(orderRepository.findAll()).thenReturn(List.of(orderEntity));
         when(orderMapper.fromOrderEntityToDTO(orderEntity)).thenReturn(orderDTO);
 
@@ -76,18 +69,14 @@ public class OrderServiceTest {
         assertEquals(1, result.size());
         assertEquals(orderDTO, result.get(0));
 
-        verify(redisService, times(1)).getCachedObjects();
     }
 
     @Test
     void testGetAllOrders_CacheException() {
-        when(redisService.getCachedObjects()).thenThrow(new RuntimeException("Cache error"));
         when(orderRepository.findAll()).thenReturn(List.of(orderEntity));
         when(orderMapper.fromOrderEntityToDTO(orderEntity)).thenReturn(orderDTO);
 
         assertThrows(RuntimeException.class, () -> orderService.getAllOrders());
-
-        verify(redisService, times(1)).getCachedObjects();
     }
 
     @Test
@@ -104,34 +93,27 @@ public class OrderServiceTest {
 
     @Test
     void testGetOrderById_FoundInCache() {
-        when(redisService.getCachedObjectById(1L)).thenReturn(orderDTO);
 
         OrderDTO result = orderService.getOrderById(1L);
         assertEquals(orderDTO, result);
 
-        verify(redisService, times(1)).getCachedObjectById(1L);
         verify(orderRepository, times(0)).findById("1");
     }
 
     @Test
     void testGetOrderById_FoundInDatabase() {
-        when(redisService.getCachedObjectById(1L)).thenReturn(orderDTO);
         when(orderRepository.findById("1")).thenReturn(Optional.of(orderEntity));
         when(orderMapper.fromOrderEntityToDTO(orderEntity)).thenReturn(orderDTO);
 
         OrderDTO result = orderService.getOrderById(1L);
         assertEquals(orderDTO, result);
 
-        verify(redisService, times(1)).getCachedObjectById(1L);
     }
 
     @Test
     void testGetOrderById_NotFound() {
-        when(redisService.getCachedObjectById(1L)).thenReturn(null);
         when(orderRepository.findById("1")).thenReturn(Optional.empty());
 
         assertThrows(OrderNotFoundException.class, () -> orderService.getOrderById(1L));
-
-        verify(redisService, times(1)).getCachedObjectById(1L);
     }
 }

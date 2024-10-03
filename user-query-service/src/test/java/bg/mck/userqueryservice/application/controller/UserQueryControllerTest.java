@@ -8,7 +8,6 @@ import bg.mck.userqueryservice.application.events.UserEvent;
 import bg.mck.userqueryservice.application.exceptions.UserNotFoundException;
 import bg.mck.userqueryservice.application.repository.EventRepository;
 import bg.mck.userqueryservice.application.repository.UserRepository;
-import bg.mck.userqueryservice.application.service.RedisService;
 import bg.mck.userqueryservice.application.service.UserQueryService;
 
 import org.junit.jupiter.api.AfterEach;
@@ -46,9 +45,6 @@ class UserQueryControllerTest {
     @Autowired
     private EventRepository eventRepository;
 
-    @MockBean
-    private RedisService redisService;
-
     @Autowired
     private UserQueryService userQueryService;
 
@@ -59,9 +55,6 @@ class UserQueryControllerTest {
     @BeforeEach
     void setUp() {
 //        MockitoAnnotations.openMocks(this);
-
-        when(redisService.getCachedObject(anyLong())).thenReturn(null);
-        doNothing().when(redisService).cacheObject(ArgumentMatchers.any(UserEntity.class));
 
         user = userRegister();
         storeUserEvents(user);

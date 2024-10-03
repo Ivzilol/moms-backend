@@ -28,9 +28,6 @@ public class UserQueryServiceTest {
     private UserMapper mapper;
 
     @Mock
-    private RedisService redisService;
-
-    @Mock
     private EventService eventService;
 
     @InjectMocks
@@ -53,7 +50,6 @@ public class UserQueryServiceTest {
                 .setId(userId.toString());
 
         when(userRepository.findById(userId.toString())).thenReturn(Optional.of(userEntity));
-        when(redisService.getCachedObject(userId)).thenReturn(null);
         when(eventService.reconstructUserEntity(userId)).thenReturn(userEntity);
         when(mapper.toDTO(userEntity)).thenReturn(userDetailsDTO);
 
@@ -62,7 +58,6 @@ public class UserQueryServiceTest {
         assertNotNull(result);
         assertEquals(userDetailsDTO, result);
         verify(userRepository).findById(userId.toString());
-        verify(redisService).getCachedObject(userId);
         verify(eventService).reconstructUserEntity(userId);
         verify(mapper).toDTO(userEntity);
     }
@@ -74,7 +69,6 @@ public class UserQueryServiceTest {
                 .setHashedPassword(userEntity.getPassword());
 
         when(userRepository.findById(userId.toString())).thenReturn(Optional.of(userEntity));
-        when(redisService.getCachedObject(userId)).thenReturn(null);
         when(eventService.reconstructUserEntity(userId)).thenReturn(userEntity);
         when(mapper.toUserCredentialsDTO(userEntity)).thenReturn(userCredentialsDTO);
 
@@ -83,7 +77,6 @@ public class UserQueryServiceTest {
         assertNotNull(result);
         assertEquals(userCredentialsDTO, result);
         verify(userRepository).findById(userId.toString());
-        verify(redisService).getCachedObject(userId);
         verify(eventService).reconstructUserEntity(userId);
         verify(mapper).toUserCredentialsDTO(userEntity);
     }
@@ -103,13 +96,11 @@ public class UserQueryServiceTest {
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO()
                 .setId(userId.toString());
 
-        when(redisService.getCachedObject(userId)).thenReturn(userEntity);
         when(mapper.toDTO(userEntity)).thenReturn(userDetailsDTO);
 
         UserDetailsDTO result = userQueryService.getUserDetailsById(userId);
 
         assertNotNull(result);
-        verify(redisService).getCachedObject(userId);
         verify(mapper).toDTO(userEntity);
         verifyNoInteractions(eventService);
     }

@@ -3,7 +3,7 @@
 ## Overview
 
 The `Supply-Manager` project is a microservices-based architecture built with Spring Boot for the backend, and Docker for containerization.
-It consists of several services that handle various aspects of the application, including user management, inventory, order processing, notifications, and more. The microservices communicate via REST APIs and use a variety of databases and technologies like MySQL, MongoDB, and Redis.
+It consists of several services that handle various aspects of the application, including user management, inventory, order processing, notifications, and more. The microservices communicate via REST APIs and use a variety of databases and technologies like MySQL and MongoDB.
 
 ## Technologies Used
 
@@ -18,13 +18,11 @@ Spring Boot is used as the foundation of the backend services. Each service is a
 The project is containerized using Docker, with Docker Compose orchestrating the multi-container setup. Each microservice runs in its own container.
 - **MySQL** is used as the relational database for transactional data.
 - **MongoDB** is used for NoSQL storage where necessary.
-- **Redis** is used for caching and messaging between services.
-- **Docker Compose** file orchestrates the deployment of all services, databases, and Redis.
+- **Docker Compose** file orchestrates the deployment of all services and databases.
 
 ### 3. Databases
 - **MySQL**: Used by several services for structured, relational data storage. A default MySQL container is set up with persistent volumes and environment variables for root credentials.
 - **MongoDB**: Used for services that require flexible, document-oriented data storage.
-- **Redis**: Provides caching and possibly messaging support for fast data access.
 
 ### 4. Service Discovery and API Gateway
 The system uses **Spring Cloud Netflix Eureka** for service discovery. This ensures that all microservices can discover and communicate with each other.
@@ -42,9 +40,6 @@ The project follows a microservices architecture, with each microservice respons
 
 ### 6. CQRS (Command Query Responsibility Segregation)
 The system uses the **CQRS pattern** for services like **inventory**, **order**, and **user management**. By separating command and query operations, the application scales better, ensuring optimized reads and writes.
-
-### 7. Messaging and Caching with Redis
-Redis is used in this project to improve performance via caching and also supports message-based communication between microservices using Redis Pub/Sub patterns.
 
 ## Services Overview
 

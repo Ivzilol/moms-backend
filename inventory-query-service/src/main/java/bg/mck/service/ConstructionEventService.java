@@ -21,15 +21,13 @@ public class ConstructionEventService {
     private final ObjectMapper objectMapper;
     private final EventConstructionSiteRepository eventConstructionRepository;
     private final ConstructionSiteRepository constructionRepository;
-    private final ConstructionRedisService redisService;
     private final ConstructionDeleteService constructionDeleteService;
     private final ConstructionRegisterService constructionRegisterService;
 
-    public ConstructionEventService(ObjectMapper objectMapper, EventConstructionSiteRepository eventConstructionRepository, ConstructionSiteRepository constructionRepository, ConstructionRedisService redisService, ConstructionDeleteService constructionDeleteService, ConstructionRegisterService constructionRegisterService) {
+    public ConstructionEventService(ObjectMapper objectMapper, EventConstructionSiteRepository eventConstructionRepository, ConstructionSiteRepository constructionRepository, ConstructionDeleteService constructionDeleteService, ConstructionRegisterService constructionRegisterService) {
         this.objectMapper = objectMapper;
         this.eventConstructionRepository = eventConstructionRepository;
         this.constructionRepository = constructionRepository;
-        this.redisService = redisService;
         this.constructionDeleteService = constructionDeleteService;
         this.constructionRegisterService = constructionRegisterService;
     }
@@ -47,7 +45,6 @@ public class ConstructionEventService {
         }
 
         constructionRepository.save(constructionEntity);
-        redisService.cacheObject(constructionEntity);
 
         return constructionEntity;
     }
@@ -69,7 +66,6 @@ public class ConstructionEventService {
             evictCache(event.getName());
 
             constructionDeleteService.deleteConstructionSiteById(constructionId);
-            redisService.clearCacheForObject(constructionId);
         } else if (eventType.equals(EventType.ItemUpdated.name())) {
 
         } else {

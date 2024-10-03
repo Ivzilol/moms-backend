@@ -10,19 +10,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ConstructionQueryService {
 
    private final ConstructionSiteRepository constructionRepository;
    private final ConstructionEventService constructionEventService;
-   private final ConstructionRedisService redisService;
    private final ConstructionSiteMapper constructionMapper;
 
-    public ConstructionQueryService(ConstructionSiteRepository constructionRepository, ConstructionEventService constructionEventService, ConstructionRedisService redisService, ConstructionSiteMapper constructionMapper) {
+    public ConstructionQueryService(ConstructionSiteRepository constructionRepository, ConstructionEventService constructionEventService, ConstructionSiteMapper constructionMapper) {
         this.constructionRepository = constructionRepository;
         this.constructionEventService = constructionEventService;
-        this.redisService = redisService;
         this.constructionMapper = constructionMapper;
     }
 
@@ -57,13 +56,10 @@ public class ConstructionQueryService {
 
 
     private ConstructionSiteEntity findById(String id) {
-        ConstructionSiteEntity cachedObject = redisService.getCachedObject(id);
+        Optional<ConstructionSiteEntity> cachedObject = constructionRepository.findById(id);
 
-        if (cachedObject != null) {
-            return cachedObject;
-        }
+        return cachedObject.orElseGet(() -> constructionEventService.reconstructConstructionEntity(id));
 
-        return constructionEventService.reconstructConstructionEntity(id);
     }
 
 

@@ -9,7 +9,6 @@ import bg.mck.exceptions.InvalidCategoryException;
 import bg.mck.mapper.MaterialMapper;
 import bg.mck.repository.material.*;
 import bg.mck.service.MaterialEventService;
-import bg.mck.service.MaterialRedisService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +59,6 @@ public class MaterialQueryControllerTest {
     private UnspecifiedRepository unspecifiedRepository;
 
     @Autowired
-    private MaterialRedisService materialRedisService;
-
-    @Autowired
     private CacheManager cacheManager;
 
 
@@ -77,7 +73,6 @@ public class MaterialQueryControllerTest {
         panelRepository.deleteAll();
         setRepository.deleteAll();
         unspecifiedRepository.deleteAll();
-        materialRedisService.clearCache();
     }
 
 
@@ -895,7 +890,6 @@ public class MaterialQueryControllerTest {
         fastenerEntity.setDescription("A cached high-strength bolt");
         fastenerEntity.setSpecificationFileUrl("http://example.com/spec_cached.pdf");
 
-        materialRedisService.cacheObject(fastenerEntity, MaterialType.FASTENERS.name());
     }
 
     private void registerGalvanizedSheet() throws Exception {
@@ -936,7 +930,6 @@ public class MaterialQueryControllerTest {
         galvanizedSheetEntity.setDescription("A cached high-quality galvanized sheet");
         galvanizedSheetEntity.setSpecificationFileUrl("http://example.com/spec_cached.pdf");
 
-        materialRedisService.cacheObject(galvanizedSheetEntity, MaterialType.GALVANIZED_SHEET.name());
     }
 
 
@@ -976,7 +969,6 @@ public class MaterialQueryControllerTest {
         insulationEntity.setDescription("Cached insulation entity");
         insulationEntity.setSpecificationFileUrl("http://example.com/spec_cached.pdf");
 
-        materialRedisService.cacheObject(insulationEntity, MaterialType.INSULATION.name());
     }
 
 
@@ -1016,7 +1008,6 @@ public class MaterialQueryControllerTest {
         metalEntity.setDescription("Cached steel metal");
         metalEntity.setSpecificationFileUrl("http://example.com/spec_cached.pdf");
 
-        materialRedisService.cacheObject(metalEntity, MaterialType.METAL.name());
     }
 
 
@@ -1074,7 +1065,6 @@ public class MaterialQueryControllerTest {
         panelEntity.setDescription("Cached high-quality wall panel");
         panelEntity.setSpecificationFileUrl("http://example.com/spec_cached.pdf");
 
-        materialRedisService.cacheObject(panelEntity, MaterialType.PANELS.name());
     }
 
     private void registerRebar() throws Exception {
@@ -1111,7 +1101,6 @@ public class MaterialQueryControllerTest {
         rebarEntity.setDescription("Cached high-strength steel rebar");
         rebarEntity.setSpecificationFileUrl("http://example.com/spec_cached.pdf");
 
-        materialRedisService.cacheObject(rebarEntity, MaterialType.REBAR.name());
     }
 
     private void registerSet() throws Exception {
@@ -1150,7 +1139,6 @@ public class MaterialQueryControllerTest {
         setEntity.setDescription("Cached high-quality set");
         setEntity.setSpecificationFileUrl("http://example.com/spec_cached.pdf");
 
-        materialRedisService.cacheObject(setEntity, MaterialType.SET.name());
     }
 
     private void registerUnspecified() throws Exception {
@@ -1183,7 +1171,6 @@ public class MaterialQueryControllerTest {
         unspecifiedEntity.setDescription("Cached general unspecified material");
         unspecifiedEntity.setSpecificationFileUrl("http://example.com/spec_cached.pdf");
 
-        materialRedisService.cacheObject(unspecifiedEntity, MaterialType.UNSPECIFIED.name());
     }
 }
 

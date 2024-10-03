@@ -15,13 +15,11 @@ public class UserQueryService {
 
     private final UserRepository userRepository;
     private final UserMapper mapper;
-    private final RedisService redisService;
     private final EventService eventService;
 
-    public UserQueryService(UserRepository userRepository, UserMapper mapper, RedisService redisService, EventService eventService) {
+    public UserQueryService(UserRepository userRepository, UserMapper mapper, EventService eventService) {
         this.userRepository = userRepository;
         this.mapper = mapper;
-        this.redisService = redisService;
         this.eventService = eventService;
     }
 
@@ -36,13 +34,7 @@ public class UserQueryService {
     }
 
     private UserEntity getUserById(Long id) {
-
-        UserEntity cachedUser = redisService.getCachedObject(id);
-        if (cachedUser != null) {
-            return cachedUser;
-        }
         userRepository.findById(id.toString()).orElseThrow(() -> new UserNotFoundException("User with ID: " + id + " not found"));
-
 
         return eventService.reconstructUserEntity(id);
     }

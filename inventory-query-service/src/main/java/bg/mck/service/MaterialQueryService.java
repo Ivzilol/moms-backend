@@ -25,10 +25,9 @@ public class MaterialQueryService {
     private final UnspecifiedRepository unspecifiedRepository;
     private final MetalRepository metalRepository;
     private final MaterialMapper materialMapper;
-    private final MaterialRedisService redisService;
     private final MaterialEventService materialEventService;
 
-    public MaterialQueryService(FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, MetalRepository metalRepository, MaterialMapper materialMapper, MaterialRedisService redisService, MaterialEventService materialEventService) {
+    public MaterialQueryService(FastenerRepository fastenerRepository, GalvanisedSheetRepository galvanisedSheetRepository, InsulationRepository insulationRepository, PanelRepository panelRepository, RebarRepository rebarRepository, SetRepository setRepository, UnspecifiedRepository unspecifiedRepository, MetalRepository metalRepository, MaterialMapper materialMapper, MaterialEventService materialEventService) {
         this.fastenerRepository = fastenerRepository;
         this.galvanisedSheetRepository = galvanisedSheetRepository;
         this.insulationRepository = insulationRepository;
@@ -38,7 +37,6 @@ public class MaterialQueryService {
         this.unspecifiedRepository = unspecifiedRepository;
         this.metalRepository = metalRepository;
         this.materialMapper = materialMapper;
-        this.redisService = redisService;
         this.materialEventService = materialEventService;
     }
 
@@ -166,11 +164,6 @@ public class MaterialQueryService {
     }
 
     private <T extends BaseMaterialEntity> T findById(String id, MaterialType materialType, Class<T> clazz) {
-        T cachedEntity = redisService.getCachedObject(String.valueOf(id), materialType.name(), clazz);
-        if (cachedEntity != null) {
-            return cachedEntity;
-        }
-
         return materialEventService.reconstructMaterialEntity(id, materialType.name(), clazz);
     }
 

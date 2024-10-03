@@ -1,8 +1,6 @@
 package bg.mck.orderqueryservice.service;
 
 import bg.mck.orderqueryservice.client.NotificationServiceClient;
-import bg.mck.orderqueryservice.dto.EmailDTO;
-import bg.mck.orderqueryservice.dto.OrderDTO;
 import bg.mck.orderqueryservice.entity.OrderEntity;
 import bg.mck.orderqueryservice.entity.enums.MaterialStatus;
 import bg.mck.orderqueryservice.entity.enums.MaterialType;
@@ -40,9 +38,6 @@ class EventServiceTest {
     private EventRepository eventRepository;
 
     private OrderMapperImpl utilMapper = new OrderMapperImpl();
-
-    @Mock
-    private RedisService redisService;
 
     @Mock
     private OrderMapper orderMapper;

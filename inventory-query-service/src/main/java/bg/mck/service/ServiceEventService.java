@@ -22,16 +22,14 @@ public class ServiceEventService {
     private final ObjectMapper objectMapper;
     private final EventServiceRepository eventServiceRepository;
     private final ServiceRepository serviceRepository;
-    private final ServiceRedisService redisService;
     private final ServiceDeleteService serviceDeleteService;
     private final ServiceRegisterService serviceRegisterService;
 
 
-    public ServiceEventService(ObjectMapper objectMapper, EventServiceRepository eventServiceRepository, ServiceRepository serviceRepository, ServiceRedisService redisService, ServiceDeleteService serviceDeleteService, ServiceRegisterService serviceRegisterService) {
+    public ServiceEventService(ObjectMapper objectMapper, EventServiceRepository eventServiceRepository, ServiceRepository serviceRepository, ServiceDeleteService serviceDeleteService, ServiceRegisterService serviceRegisterService) {
         this.objectMapper = objectMapper;
         this.eventServiceRepository = eventServiceRepository;
         this.serviceRepository = serviceRepository;
-        this.redisService = redisService;
         this.serviceDeleteService = serviceDeleteService;
         this.serviceRegisterService = serviceRegisterService;
     }
@@ -49,7 +47,6 @@ public class ServiceEventService {
         }
 
         serviceRepository.save(serviceEntity);
-        redisService.cacheObject(serviceEntity);
 
         return serviceEntity;
     }
@@ -71,7 +68,6 @@ public class ServiceEventService {
             evictCache(event.getName());
 
             serviceDeleteService.deleteServiceById(serviceId);
-            redisService.clearCacheForObject(serviceId);
         } else if (eventType.equals(EventType.ItemUpdated.name())) {
 
         } else {
