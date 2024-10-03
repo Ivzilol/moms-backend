@@ -10,18 +10,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ServiceQueryService {
 
     private final ServiceRepository serviceRepository;
-    private final ServiceRedisService redisService;
     private final ServiceMapper serviceMapper;
     private final ServiceEventService serviceEventService;
 
-    public ServiceQueryService(ServiceRepository serviceRepository, ServiceRedisService redisService, ServiceMapper serviceMapper, ServiceEventService serviceEventService) {
+    public ServiceQueryService(ServiceRepository serviceRepository, ServiceMapper serviceMapper, ServiceEventService serviceEventService) {
         this.serviceRepository = serviceRepository;
-        this.redisService = redisService;
         this.serviceMapper = serviceMapper;
         this.serviceEventService = serviceEventService;
     }
@@ -56,13 +55,10 @@ public class ServiceQueryService {
 
 
     private ServiceEntity findById(String id) {
-        ServiceEntity cachedObject = redisService.getCachedObject(id);
+        Optional<ServiceEntity> cachedObject = serviceRepository.findById(id);
 
-        if (cachedObject != null) {
-            return cachedObject;
-        }
+        return cachedObject.orElseGet(() -> serviceEventService.reconstructServiceEntity(id));
 
-        return serviceEventService.reconstructServiceEntity(id);
     }
 
 

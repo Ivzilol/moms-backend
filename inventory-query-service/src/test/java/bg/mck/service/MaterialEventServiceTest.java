@@ -62,8 +62,6 @@ public class MaterialEventServiceTest {
     @Mock
     private MaterialDeleteService materialDeleteService;
     @Mock
-    private MaterialRedisService materialRedisService;
-    @Mock
     private MaterialRegisterService materialRegisterService;
     @Mock
     private CacheManager cacheManager;
@@ -90,7 +88,6 @@ public class MaterialEventServiceTest {
                 metalRepository,
                 objectMapper,
                 materialDeleteService,
-                materialRedisService,
                 materialRegisterService,
                 mapper,
                 cacheManager
@@ -1049,7 +1046,6 @@ public class MaterialEventServiceTest {
         assertEquals(deletedEvent.getName(), capturedEvent.getName());
 
         verify(materialDeleteService).deleteMaterialByIdAndCategory(deletedEvent.getMaterialId().toString(), materialType);
-        verify(materialRedisService).clearCacheForObject(deletedEvent.getMaterialId().toString(), materialType);
         verify(materialEventService).evictCache(materialType, deletedEvent.getName());
     }
 
@@ -1092,7 +1088,6 @@ public class MaterialEventServiceTest {
         assertEquals(deletedEvent.getName(), capturedEvent.getName());
 
         verify(materialDeleteService).deleteMaterialByIdAndCategory(deletedEvent.getMaterialId().toString(), materialType);
-        verify(materialRedisService).clearCacheForObject(deletedEvent.getMaterialId().toString(), materialType);
         verify(materialEventService).evictCache(materialType, deletedEvent.getName());
     }
 
@@ -1136,7 +1131,6 @@ public class MaterialEventServiceTest {
         assertEquals(deletedEvent.getName(), capturedEvent.getName());
 
         verify(materialDeleteService).deleteMaterialByIdAndCategory(deletedEvent.getMaterialId().toString(), materialType);
-        verify(materialRedisService).clearCacheForObject(deletedEvent.getMaterialId().toString(), materialType);
         verify(materialEventService).evictCache(materialType, deletedEvent.getName());
     }
 
@@ -1179,7 +1173,6 @@ public class MaterialEventServiceTest {
         assertEquals(deletedEvent.getName(), capturedEvent.getName());
 
         verify(materialDeleteService).deleteMaterialByIdAndCategory(deletedEvent.getMaterialId().toString(), materialType);
-        verify(materialRedisService).clearCacheForObject(deletedEvent.getMaterialId().toString(), materialType);
         verify(materialEventService).evictCache(materialType, deletedEvent.getName());
     }
 
@@ -1222,7 +1215,6 @@ public class MaterialEventServiceTest {
         assertEquals(deletedEvent.getName(), capturedEvent.getName());
 
         verify(materialDeleteService).deleteMaterialByIdAndCategory(deletedEvent.getMaterialId().toString(), materialType);
-        verify(materialRedisService).clearCacheForObject(deletedEvent.getMaterialId().toString(), materialType);
         verify(materialEventService).evictCache(materialType, deletedEvent.getName());
     }
 
@@ -1265,7 +1257,6 @@ public class MaterialEventServiceTest {
         assertEquals(deletedEvent.getName(), capturedEvent.getName());
 
         verify(materialDeleteService).deleteMaterialByIdAndCategory(deletedEvent.getMaterialId().toString(), materialType);
-        verify(materialRedisService).clearCacheForObject(deletedEvent.getMaterialId().toString(), materialType);
         verify(materialEventService).evictCache(materialType, deletedEvent.getName());
     }
 
@@ -1308,7 +1299,6 @@ public class MaterialEventServiceTest {
         assertEquals(deletedEvent.getName(), capturedEvent.getName());
 
         verify(materialDeleteService).deleteMaterialByIdAndCategory(deletedEvent.getMaterialId().toString(), materialType);
-        verify(materialRedisService).clearCacheForObject(deletedEvent.getMaterialId().toString(), materialType);
         verify(materialEventService).evictCache(materialType, deletedEvent.getName());
     }
 
@@ -1351,7 +1341,6 @@ public class MaterialEventServiceTest {
         assertEquals(deletedEvent.getName(), capturedEvent.getName());
 
         verify(materialDeleteService).deleteMaterialByIdAndCategory(deletedEvent.getMaterialId().toString(), materialType);
-        verify(materialRedisService).clearCacheForObject(deletedEvent.getMaterialId().toString(), materialType);
         verify(materialEventService).evictCache(materialType, deletedEvent.getName());
     }
 
@@ -1464,8 +1453,6 @@ public class MaterialEventServiceTest {
         assertEquals(updateEvent2.getType(), capturedFastener.getType());
         assertEquals(updateEvent2.getSpecificationFileUrl(), capturedFastener.getSpecificationFileUrl());
 
-        // Verify that the object is cached in Redis
-        verify(materialRedisService).cacheObject(capturedFastener, MaterialType.FASTENERS.name());
     }
 
     @Test
@@ -1532,7 +1519,6 @@ public class MaterialEventServiceTest {
         assertEquals(updateEvent2.getSpecificationFileUrl(), capturedGalvanizedSheet.getSpecificationFileUrl());
 
         // Verify that the object is cached in Redis
-        verify(materialRedisService).cacheObject(capturedGalvanizedSheet, MaterialType.GALVANIZED_SHEET.name());
     }
 
     @Test
@@ -1597,7 +1583,6 @@ public class MaterialEventServiceTest {
         assertEquals(updateEvent2.getSpecificationFileUrl(), capturedInsulation.getSpecificationFileUrl());
 
         // Verify that the object is cached in Redis
-        verify(materialRedisService).cacheObject(capturedInsulation, MaterialType.INSULATION.name());
     }
 
     @Test
@@ -1658,7 +1643,6 @@ public class MaterialEventServiceTest {
         assertEquals(updateEvent2.getSpecificationFileUrl(), capturedRebar.getSpecificationFileUrl());
 
         // Verify that the object is cached in Redis
-        verify(materialRedisService).cacheObject(capturedRebar, MaterialType.REBAR.name());
     }
 
     @Test
@@ -1723,7 +1707,6 @@ public class MaterialEventServiceTest {
         assertEquals(updateEvent2.getSpecificationFileUrl(), capturedMetal.getSpecificationFileUrl());
 
         // Verify that the object is cached in Redis
-        verify(materialRedisService).cacheObject(capturedMetal, MaterialType.METAL.name());
     }
 
 
@@ -1825,7 +1808,6 @@ public class MaterialEventServiceTest {
         assertEquals(updateEvent2.getSpecificationFileUrl(), capturedPanel.getSpecificationFileUrl());
 
         // Verify that the object is cached in Redis
-        verify(materialRedisService).cacheObject(capturedPanel, MaterialType.PANELS.name());
     }
 
     @Test
@@ -1890,7 +1872,6 @@ public class MaterialEventServiceTest {
         assertEquals(updateEvent2.getSpecificationFileUrl(), capturedSet.getSpecificationFileUrl());
 
         // Verify that the object is cached in Redis
-        verify(materialRedisService).cacheObject(capturedSet, MaterialType.SET.name());
     }
 
     @Test
@@ -1943,7 +1924,6 @@ public class MaterialEventServiceTest {
         assertEquals(updateEvent2.getSpecificationFileUrl(), capturedUnspecified.getSpecificationFileUrl());
 
         // Verify that the object is cached in Redis
-        verify(materialRedisService).cacheObject(capturedUnspecified, MaterialType.UNSPECIFIED.name());
     }
 
     @Test
@@ -1956,7 +1936,6 @@ public class MaterialEventServiceTest {
 
 
         verify(fastenerRepository, never()).save(any(FastenerEntity.class));
-        verify(materialRedisService, never()).cacheObject(any(), anyString());
     }
 
     @Test
@@ -1969,6 +1948,5 @@ public class MaterialEventServiceTest {
 
         // Ensure no save operation happens for invalid category
         verify(fastenerRepository, never()).save(any(FastenerEntity.class));
-        verify(materialRedisService, never()).cacheObject(any(), anyString());
     }
 }

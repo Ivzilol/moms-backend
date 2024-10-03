@@ -10,19 +10,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransportQueryService {
 
    private final TransportRepository transportRepository;
    private final TransportEventService transportEventService;
-   private final TransportRedisService redisService;
    private final TransportMapper transportMapper;
 
-    public TransportQueryService(TransportRepository transportRepository, TransportEventService transportEventService, TransportRedisService redisService, TransportMapper transportMapper) {
+    public TransportQueryService(TransportRepository transportRepository, TransportEventService transportEventService, TransportMapper transportMapper) {
         this.transportRepository = transportRepository;
         this.transportEventService = transportEventService;
-        this.redisService = redisService;
         this.transportMapper = transportMapper;
     }
 
@@ -56,13 +55,9 @@ public class TransportQueryService {
 
 
     private TransportEntity findById(String id) {
-        TransportEntity cachedObject = redisService.getCachedObject(id);
+        Optional<TransportEntity> cachedObject = transportRepository.findById(id);
 
-        if (cachedObject != null) {
-            return cachedObject;
-        }
-
-        return transportEventService.reconstructTransportEntity(id);
+        return cachedObject.orElseGet(() -> transportEventService.reconstructTransportEntity(id));
     }
 
 

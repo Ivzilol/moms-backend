@@ -16,12 +16,10 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
-    private final RedisService redisService;
 
-    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper, RedisService redisService) {
+    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
-        this.redisService = redisService;
     }
 
     public void saveOrder(OrderEntity order) {
@@ -29,11 +27,6 @@ public class OrderService {
     }
 
     public List<OrderDTO> getAllOrders() {
-        List<OrderDTO> cachedOrders = redisService.getCachedObjects();
-        if (!cachedOrders.isEmpty()) {
-            return cachedOrders;
-        }
-
         return orderRepository.findAll()
                 .stream()
                 .map(orderMapper::fromOrderEntityToDTO)
@@ -49,14 +42,9 @@ public class OrderService {
     }
 
     public OrderDTO getOrderById(Long id) {
-        try {
-            return Optional.ofNullable(redisService.getCachedObjectById(id))
-                    .orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found in redis"));
-        } catch (OrderNotFoundException e) {
-            return orderRepository.findById(id.toString())
-                    .map(this.orderMapper::fromOrderEntityToDTO)
-                    .orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found in db"));
-        }
+        return orderRepository.findById(id.toString())
+                .map(this.orderMapper::fromOrderEntityToDTO)
+                .orElseThrow(() -> new OrderNotFoundException("Order with id " + id + " not found in db"));
     }
 
     public OrderDTO getOrderByOrderNumber(Integer number) {

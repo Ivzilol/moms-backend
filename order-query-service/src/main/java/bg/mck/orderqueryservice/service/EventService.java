@@ -34,7 +34,6 @@ import java.util.concurrent.TimeUnit;
 public class EventService {
 
     private final EventRepository eventRepository;
-    private final RedisService redisService;
     private final OrderMapper orderMapper;
     private final EventTypeUtils eventTypeUtils;
     private final Gson gson;
@@ -46,9 +45,8 @@ public class EventService {
     private final MailMapper mailMapper;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public EventService(EventRepository eventRepository, RedisService redisService, OrderMapper orderMapper, EventTypeUtils eventTypeUtils, Gson gson, OrderService orderService, OrderRepository orderRepository, ConstructionSiteMapper constructionSiteMapper, ConstructionSiteService constructionSiteService, NotificationServiceClient notificationServiceClient, MailMapper mailMapper) throws NoSuchMethodException {
+    public EventService(EventRepository eventRepository, OrderMapper orderMapper, EventTypeUtils eventTypeUtils, Gson gson, OrderService orderService, OrderRepository orderRepository, ConstructionSiteMapper constructionSiteMapper, ConstructionSiteService constructionSiteService, NotificationServiceClient notificationServiceClient, MailMapper mailMapper) throws NoSuchMethodException {
         this.eventRepository = eventRepository;
-        this.redisService = redisService;
         this.orderMapper = orderMapper;
         this.eventTypeUtils = eventTypeUtils;
         this.gson = gson;
@@ -135,8 +133,6 @@ public class EventService {
 
     private void processEntity(OrderEntity orderEntity) {
         orderService.saveOrder(orderEntity);
-        OrderDTO orderDTO = orderMapper.fromOrderEntityToDTO(orderEntity);
-        redisService.cacheOrder(orderDTO);
     }
 
     private <T extends BaseEvent> void saveEvent(OrderEvent<T> orderEvent) {

@@ -20,14 +20,12 @@ public class EventService {
 
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
-    private final RedisService redisService;
     private final ObjectMapper objectMapper;
     private final UserRegistrationService userRegistrationService;
 
-    public EventService(UserRepository userRepository, EventRepository eventRepository, RedisService redisService, ObjectMapper objectMapper, UserRegistrationService userRegistrationService) {
+    public EventService(UserRepository userRepository, EventRepository eventRepository, ObjectMapper objectMapper, UserRegistrationService userRegistrationService) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
-        this.redisService = redisService;
         this.objectMapper = objectMapper;
         this.userRegistrationService = userRegistrationService;
     }
@@ -47,7 +45,6 @@ public class EventService {
         }
 
         userRepository.save(userEntity);
-        redisService.cacheObject(userEntity);
 
         return userEntity;
     }

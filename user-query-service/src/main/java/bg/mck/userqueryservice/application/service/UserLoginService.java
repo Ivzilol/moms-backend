@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 import static bg.mck.userqueryservice.application.constants.ApplicationConstants.APPLICATION_VERSION;
 
 
@@ -48,6 +50,7 @@ public class UserLoginService {
     }
 
     private boolean isUserExist(String email) {
+        List<UserEntity> all = userRepository.findAll();
         return userRepository.findByEmail(email) != null;
     }
 

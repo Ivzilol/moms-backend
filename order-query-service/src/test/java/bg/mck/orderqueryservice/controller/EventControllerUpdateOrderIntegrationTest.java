@@ -7,7 +7,6 @@ import bg.mck.orderqueryservice.entity.enums.OrderStatus;
 import bg.mck.orderqueryservice.events.*;
 import bg.mck.orderqueryservice.repository.ConstructionSiteRepository;
 import bg.mck.orderqueryservice.repository.OrderRepository;
-import bg.mck.orderqueryservice.service.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,9 +49,6 @@ public class EventControllerUpdateOrderIntegrationTest {
 
     private ConstructionSiteEntity constructionSiteEntity;
 
-    @MockBean
-    private RedisService redisService;
-
     @Autowired
     private ConstructionSiteRepository constructionSiteRepository;
 
@@ -66,7 +62,6 @@ public class EventControllerUpdateOrderIntegrationTest {
         constructionSiteRepository.save(constructionSiteEntity);
 
         when(notificationServiceClient.sendNotification(any())).thenReturn(null);
-        doNothing().when(redisService).cacheOrder(any());
     }
 
     private OrderEntity createInitialOrder() {
