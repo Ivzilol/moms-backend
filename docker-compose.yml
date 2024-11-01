@@ -42,7 +42,7 @@ services:
     ]
     ports:
       - "8093:8080"
-      - "5005:5005"  # Debug port for remote debugging
+      - "5005:5005"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -57,7 +57,7 @@ services:
     ]
     ports:
       - "8081:8080"
-      - "5006:5006"  # Debug port for remote debugging
+      - "5006:5006"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -72,7 +72,7 @@ services:
     ]
     ports:
       - "8082:8080"
-      - "5007:5007"  # Debug port for remote debugging
+      - "5007:5007"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -87,7 +87,7 @@ services:
     ]
     ports:
       - "8083:8080"
-      - "5008:5008"  # Debug port for remote debugging
+      - "5008:5008"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -102,7 +102,7 @@ services:
     ]
     ports:
       - "8761:8761"
-      - "5009:5009"  # Debug port for remote debugging
+      - "5009:5009"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -117,7 +117,7 @@ services:
     ]
     ports:
       - "8085:8080"
-      - "5010:5010"  # Debug port for remote debugging
+      - "5010:5010"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -132,7 +132,7 @@ services:
     ]
     ports:
       - "8080:8080"
-      - "5011:5011"  # Debug port for remote debugging
+      - "5011:5011"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -147,7 +147,7 @@ services:
     ]
     ports:
       - "8087:8080"
-      - "5012:5012"  # Debug port for remote debugging
+      - "5012:5012"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -162,7 +162,7 @@ services:
     ]
     ports:
       - "8088:8080"
-      - "5013:5013"  # Debug port for remote debugging
+      - "5013:5013"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -177,7 +177,7 @@ services:
     ]
     ports:
       - "8089:8080"
-      - "5014:5014"  # Debug port for remote debugging
+      - "5014:5014"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -192,7 +192,7 @@ services:
     ]
     ports:
       - "8090:8080"
-      - "5015:5015"  # Debug port for remote debugging
+      - "5015:5015"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -207,7 +207,7 @@ services:
     ]
     ports:
       - "8091:8080"
-      - "5016:5016"  # Debug port for remote debugging
+      - "5016:5016"
     networks:
       - springboot-mongo-network
     restart: unless-stopped
@@ -222,7 +222,7 @@ services:
     ]
     ports:
       - "8095:8080"
-      - "5017:5017"  # Debug port for remote debugging
+      - "5017:5017"
     networks:
       - springboot-mongo-network
     restart: unless-stopped

@@ -20,18 +20,6 @@ COPY order-query-service /app/order-query-service
 COPY user-command-service /app/user-command-service
 
 COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
-COPY application-env.properties /app/application-env.properties
 
 
 RUN ./mvnw clean package -DskipTests
