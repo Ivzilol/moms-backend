@@ -3,12 +3,12 @@ version: '3.1'
 services:
   mysql:
     image: mysql:8.0
-    container_name: mysql_container
+    container_name: ${mysql_container_name}
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: your_database
-      MYSQL_USER: your_username
-      MYSQL_PASSWORD: your_password
+      MYSQL_ROOT_PASSWORD: ${root_password}
+      MYSQL_DATABASE: ${mysql_database}
+      MYSQL_USER: ${mysql_username}
+      MYSQL_PASSWORD: ${mysql_password}
     ports:
       - "3307:3306"
     volumes:
@@ -19,11 +19,11 @@ services:
 
   mongodb:
     image: mongo:latest
-    container_name: mongodb_container
+    container_name: ${mongodb_container}
     environment:
-      MONGO_INITDB_ROOT_USERNAME: your_username
-      MONGO_INITDB_ROOT_PASSWORD: your_password
-      MONGO_INITDB_DATABASE: your_database
+      MONGO_INITDB_ROOT_USERNAME: ${mongo_username}
+      MONGO_INITDB_ROOT_PASSWORD: ${mongo_password}
+      MONGO_INITDB_DATABASE: ${mongo_database}
     ports:
       - "27020:27017"
     volumes:
