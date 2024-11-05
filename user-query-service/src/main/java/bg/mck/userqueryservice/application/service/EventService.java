@@ -29,7 +29,6 @@ public class EventService {
         this.userRegistrationService = userRegistrationService;
     }
 
-
     public UserEntity reconstructUserEntity(Long userId) {
         doesUserExist(userId);
         List<UserEvent<? extends BaseEvent>> events = eventRepository.
