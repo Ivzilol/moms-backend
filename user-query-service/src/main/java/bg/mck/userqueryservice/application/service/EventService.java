@@ -17,7 +17,6 @@ import java.util.List;
 @Service
 public class EventService {
 
-
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final ObjectMapper objectMapper;
