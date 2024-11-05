@@ -23,7 +23,6 @@ public abstract class BaseEvent {
         this.localDateTime = localDateTime;
     }
 
-
     public EventType getEventType() {
         return eventType;
     }
