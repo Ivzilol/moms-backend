@@ -84,7 +84,6 @@ public class EventService {
         return eventRepository.save(userEvent);
     }
 
-
     private void applyEvent(UserEvent<? extends BaseEvent> userEvent, UserEntity userEntity) {
         BaseEvent event = userEvent.getEvent();
 
