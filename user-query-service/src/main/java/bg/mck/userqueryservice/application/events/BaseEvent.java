@@ -24,7 +24,6 @@ public abstract class BaseEvent {
     }
 
 
-
     public EventType getEventType() {
         return eventType;
     }
