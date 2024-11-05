@@ -57,7 +57,6 @@ public class UserLoginService {
         return BCrypt.checkpw(password, user.getPassword());
     }
 
-
     public String generateToken(UserLoginResponseDTO loggedUser) {
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(
