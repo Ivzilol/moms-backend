@@ -32,7 +32,6 @@ public abstract class BaseEvent {
         return this;
     }
 
-
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
     }
