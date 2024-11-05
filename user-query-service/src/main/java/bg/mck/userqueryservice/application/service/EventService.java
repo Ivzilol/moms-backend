@@ -80,8 +80,6 @@ public class EventService {
         }
     }
 
-
-
     private <T extends BaseEvent> UserEvent<T> saveEvent(UserEvent<T> userEvent) {
         return eventRepository.save(userEvent);
     }
