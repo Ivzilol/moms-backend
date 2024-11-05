@@ -46,7 +46,6 @@ public class EventService {
         return userEntity;
     }
 
-
     public void processUserEvent(String data, String eventType) throws JsonProcessingException {
         if (eventType.equals(EventType.UserStatusUpdated.name())) {
             UserEvent<ProfileStatusUpdatedEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
