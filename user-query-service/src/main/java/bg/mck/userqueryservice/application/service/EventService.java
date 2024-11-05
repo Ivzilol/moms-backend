@@ -34,7 +34,6 @@ public class EventService {
         List<UserEvent<? extends BaseEvent>> events = eventRepository.
                 findByEventUserIdOrderByEventLocalDateTimeAsc(userId);
 
-
         UserEntity userEntity = new UserEntity();
         userEntity.setId(String.valueOf(userId));
 
