@@ -21,7 +21,6 @@ import static bg.mck.userqueryservice.application.constants.ApplicationConstants
 @Service
 public class UserLoginService {
 
-
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RestTemplate restTemplate;
