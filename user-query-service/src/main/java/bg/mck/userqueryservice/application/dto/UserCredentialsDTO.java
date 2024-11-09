@@ -3,11 +3,9 @@ package bg.mck.userqueryservice.application.dto;
 
 public class UserCredentialsDTO {
 
-    private String hashedPassword;
     private String email;
 
     public UserCredentialsDTO setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
         return this;
     }
 
