@@ -59,6 +59,5 @@ public class UserManagementControllerAdvice {
     public ResponseEntity<String> handleInvalidEventTypeException(InvalidEventTypeException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
 }
 
