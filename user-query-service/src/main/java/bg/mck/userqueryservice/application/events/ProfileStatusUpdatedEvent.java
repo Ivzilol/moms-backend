@@ -27,5 +27,4 @@ public class ProfileStatusUpdatedEvent extends BaseEvent {
         return this;
     }
 
-
 }
