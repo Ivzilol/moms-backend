@@ -71,5 +71,4 @@ public class ProfileUpdatedEvent extends BaseEvent {
         return this;
     }
 
-
 }
