@@ -21,7 +21,6 @@ import java.util.Map;
 @RestControllerAdvice
 public class UserManagementControllerAdvice {
 
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalException(Exception e, HttpServletResponse response) {
         return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
