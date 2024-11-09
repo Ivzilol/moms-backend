@@ -109,5 +109,4 @@ public class RegisteredUserEvent extends BaseEvent{
         return Objects.hash(email, password, firstName, lastName, phoneNumber, isActive, roles);
     }
 
-
 }
