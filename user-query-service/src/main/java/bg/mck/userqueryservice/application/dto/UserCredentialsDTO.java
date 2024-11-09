@@ -3,7 +3,6 @@ package bg.mck.userqueryservice.application.dto;
 
 public class UserCredentialsDTO {
 
-
     private String hashedPassword;
     private String email;
 
