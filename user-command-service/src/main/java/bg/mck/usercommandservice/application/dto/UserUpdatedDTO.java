@@ -25,7 +25,6 @@ public class UserUpdatedDTO {
     @Enumerated(EnumType.STRING)
     private AuthorityEnum role;
 
-
     public @NotEmpty(message = "First Name cannot be empty") String getFirstName() {
         return firstName;
     }
