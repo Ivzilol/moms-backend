@@ -14,7 +14,6 @@ public class UserCredentialsDTO {
     private String email;
 
 
-
     public @Email(message = "Invalid email format") @NotBlank(message = "Email must not be blank") String getEmail() {
         return email;
     }
