@@ -16,7 +16,6 @@ public class Authority {
     @Enumerated(EnumType.STRING)
     private AuthorityEnum authority;
 
-
     public Authority() {
     }
 
