@@ -17,7 +17,6 @@ public class UserProfileManagementController {
         this.userProfileManagementService = userProfileManagementService;
     }
 
-
     @PatchMapping("/status/{id}")
     public ResponseEntity<Void> updateUserStatus(@PathVariable Long id, @RequestBody UserStatusUpdatedDTO userStatusUpdatedDTO) {
         userProfileManagementService.updateUserStatus(id, userStatusUpdatedDTO);
