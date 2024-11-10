@@ -61,7 +61,6 @@ public class UserUpdatedDTO {
         return this;
     }
 
-
     public AuthorityEnum getRole() {
         return role;
     }
