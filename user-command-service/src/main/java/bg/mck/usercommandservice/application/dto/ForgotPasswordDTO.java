@@ -16,9 +16,6 @@ public class ForgotPasswordDTO {
         this.email = email;
     }
 
-    public ForgotPasswordDTO() {
-    }
-
     public String getEmail() {
         return email;
     }
