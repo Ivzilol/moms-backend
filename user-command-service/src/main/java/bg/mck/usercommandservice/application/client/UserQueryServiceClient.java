@@ -10,7 +10,6 @@ public interface UserQueryServiceClient {
     @GetMapping("/users/credentials/{id}")
      UserCredentialsDTO getUserCredentialsById(@PathVariable("id") Long id);
 
-
     @PostMapping("/users/event")
      void sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType);
 
