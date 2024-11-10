@@ -28,5 +28,4 @@ public class UserProfileManagementController {
         userProfileManagementService.updateUserProfile(id, userUpdatedDTO);
         return ResponseEntity.ok().build();
     }
-
 }
