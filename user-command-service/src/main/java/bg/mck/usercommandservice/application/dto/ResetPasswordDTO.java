@@ -27,9 +27,6 @@ public class ResetPasswordDTO {
         this.confirmPassword = confirmPassword;
     }
 
-    public ResetPasswordDTO() {
-    }
-
     public @NotEmpty String getToken() {
         return token;
     }
