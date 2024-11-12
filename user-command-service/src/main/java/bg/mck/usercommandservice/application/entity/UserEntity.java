@@ -73,7 +73,6 @@ public class UserEntity {
         return this;
     }
 
-
     public String getEmail() {
         return email;
     }
