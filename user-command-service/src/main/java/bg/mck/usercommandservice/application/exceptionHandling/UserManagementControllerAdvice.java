@@ -29,7 +29,6 @@ public class UserManagementControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         Map<String, String> errors = new HashMap<>();
-
         e.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName;
             try {
