@@ -26,7 +26,6 @@ public class UserManagementControllerAdvice {
         return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
     }
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         Map<String, String> errors = new HashMap<>();
