@@ -4,5 +4,4 @@ public enum AuthorityEnum {
     ADMIN,
     SUPERADMIN,
     USER
-
 }
