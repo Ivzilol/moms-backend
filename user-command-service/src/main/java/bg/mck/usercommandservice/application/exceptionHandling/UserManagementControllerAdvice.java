@@ -64,7 +64,6 @@ public class UserManagementControllerAdvice {
         return new ResponseEntity<>("Feign client error: " + errorMessage, status);
     }
 
-
     private String extractErrorMessage(String fullMessage) {
         int lastColonIndex = fullMessage.lastIndexOf(":");
         if (lastColonIndex != -1 && lastColonIndex < fullMessage.length() - 1) {
