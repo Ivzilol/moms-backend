@@ -21,5 +21,4 @@ public class ErrorUserRegistrationExceptions {
 
     public static final String PASSWORDS_NOT_MATCH = "Passwords must match";
 
-
 }
