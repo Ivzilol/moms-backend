@@ -6,7 +6,6 @@ public class ErrorUserRegistrationExceptions {
     public static final String EMPTY_CONFIRM_PASSWORD = "Confirm password cannot be empty";
     public static final String EMPTY_FIRST_NAME = "First Name cannot be empty";
     public static final String EMPTY_LAST_NAME = "Last Name password cannot be empty";
-
     public static final String EMPTY_PHONE_NUMBER = "Phone Number cannot be empty";
 
     public static final String INVALID_EMAIL = "Email should be valid";
