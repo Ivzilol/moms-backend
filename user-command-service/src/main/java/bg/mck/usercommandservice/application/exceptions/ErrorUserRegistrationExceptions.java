@@ -1,7 +1,6 @@
 package bg.mck.usercommandservice.application.exceptions;
 
 public class ErrorUserRegistrationExceptions {
-
     public static final String EMPTY_EMAIL = "Email cannot be empty";
 
     public static final String EMPTY_PASSWORD = "Password cannot be empty";
