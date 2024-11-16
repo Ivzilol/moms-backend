@@ -11,5 +11,4 @@ public class ErrorUserRegistrationExceptions {
     public static final String EXITING_EMAIL = "Email already exist";
     public static final String SHORT_PASSWORD = "The password must contain a minimum of 6 characters";
     public static final String PASSWORDS_NOT_MATCH = "Passwords must match";
-
 }
