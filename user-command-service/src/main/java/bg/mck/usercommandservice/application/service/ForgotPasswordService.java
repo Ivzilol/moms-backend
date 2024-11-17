@@ -94,7 +94,6 @@ public class ForgotPasswordService {
         if (entity == null) {
             throw new InvalidTokenException();
         }
-
         UserEntity user = userRepository.findByEmail(entity.getUserEmail());
         user.setPassword(BCrypt.hashpw(resetPasswordDTO.getPassword(), BCrypt.gensalt()));
         userRepository.save(user);
