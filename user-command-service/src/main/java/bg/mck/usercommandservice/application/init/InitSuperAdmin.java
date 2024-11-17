@@ -42,7 +42,6 @@ public class InitSuperAdmin implements CommandLineRunner {
         this.userQueryClient = userQueryClient;
     }
 
-
     @Override
     public void run(String... args) {
         if (userRepository.count() == 0) {
