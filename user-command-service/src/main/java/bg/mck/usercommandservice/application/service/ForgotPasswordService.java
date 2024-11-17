@@ -52,7 +52,6 @@ public class ForgotPasswordService {
         if (user == null) {
             throw new EmailNotFoundException();
         }
-
         ForgotPassword exist = forgotPasswordRepository.findByUserEmail(email);
         if (exist != null) {
             throw new ResetPasswordAlreadySendException();
