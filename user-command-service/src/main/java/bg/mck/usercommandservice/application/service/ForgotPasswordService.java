@@ -88,7 +88,6 @@ public class ForgotPasswordService {
         }
     }
 
-
     @Transactional
     public void resetPassword(ResetPasswordDTO resetPasswordDTO) throws JsonProcessingException {
         ForgotPassword entity = forgotPasswordRepository.findByUuid(resetPasswordDTO.getToken());
