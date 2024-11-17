@@ -57,7 +57,6 @@ public class ForgotPasswordService {
             throw new ResetPasswordAlreadySendException();
         }
         String uuid = UUID.randomUUID().toString();
-
         ForgotPassword forgotPassword = new ForgotPassword();
         forgotPassword.setUserEmail(user.getEmail());
         forgotPassword.setUuid(uuid);
