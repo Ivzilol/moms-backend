@@ -62,7 +62,6 @@ public class ForgotPasswordService {
         forgotPassword.setUuid(uuid);
         forgotPasswordRepository.save(forgotPassword);
         ForgotPasswordEmailDTO toSend = new ForgotPasswordEmailDTO(user.getEmail(), uuid);
-
         CompletableFuture.runAsync(() -> notificationServiceClient.sendResetPassword(toSend), executor)
                 .orTimeout(10, TimeUnit.SECONDS)
                 .exceptionally(ex -> {
