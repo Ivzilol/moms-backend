@@ -46,7 +46,6 @@ public class ForgotPasswordService {
         this.objectMapper = objectMapper;
     }
 
-
     @Transactional
     public void createResetPassword(String email) {
         UserEntity user = this.userRepository.findByEmail(email);
