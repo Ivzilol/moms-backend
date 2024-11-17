@@ -60,7 +60,6 @@ public class ForgotPasswordService {
         ForgotPassword forgotPassword = new ForgotPassword();
         forgotPassword.setUserEmail(user.getEmail());
         forgotPassword.setUuid(uuid);
-
         forgotPasswordRepository.save(forgotPassword);
         ForgotPasswordEmailDTO toSend = new ForgotPasswordEmailDTO(user.getEmail(), uuid);
 
