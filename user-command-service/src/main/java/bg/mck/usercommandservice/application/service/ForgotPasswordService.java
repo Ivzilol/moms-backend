@@ -93,7 +93,6 @@ public class ForgotPasswordService {
         user.setPassword(BCrypt.hashpw(resetPasswordDTO.getPassword(), BCrypt.gensalt()));
         userRepository.save(user);
         forgotPasswordRepository.delete(entity);
-
         PasswordUpdateEvent passwordUpdateEvent = new PasswordUpdateEvent();
         passwordUpdateEvent.setNewPassword(user.getPassword());
         passwordUpdateEvent.setEventType(EventType.UserPasswordUpdated);
