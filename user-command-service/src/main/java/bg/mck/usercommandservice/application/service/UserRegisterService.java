@@ -27,7 +27,6 @@ import static bg.mck.usercommandservice.application.utils.PasswordUtil.hashPassw
 @Service
 public class UserRegisterService {
 
-
     private final AuthorityRepository authorityRepository;
     private final UserRepository userRepository;
     private final UserQueryServiceClient userQueryClient;
