@@ -32,7 +32,6 @@ public class UserRegisterService {
     private final UserQueryServiceClient userQueryClient;
     private final ObjectMapper objectMapper;
 
-
     public UserRegisterService(AuthorityRepository authorityRepository, UserRepository userRepository, UserQueryServiceClient queryServiceClient, ObjectMapper objectMapper) {
         this.authorityRepository = authorityRepository;
         this.userRepository = userRepository;
