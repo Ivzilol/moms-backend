@@ -58,7 +58,6 @@ public class UserRegisterService {
                 savedUser.isActive(),
                 savedUser.getAuthorities().stream().map(r -> r.getAuthority().name()).collect(Collectors.toSet())
         );
-
         UserEvent<RegisteredUserEvent> userEvent = EventCreationHelper.toUserEvent(event);
         try {
             userQueryClient.sendEvent(objectMapper.writeValueAsString(userEvent), event.getEventType().name());
