@@ -4,21 +4,15 @@ import bg.mck.usercommandservice.application.client.UserQueryServiceClient;
 import bg.mck.usercommandservice.application.entity.Authority;
 import bg.mck.usercommandservice.application.entity.UserEntity;
 import bg.mck.usercommandservice.application.enums.AuthorityEnum;
-import bg.mck.usercommandservice.application.enums.EventType;
-import bg.mck.usercommandservice.application.events.RegisteredUserEvent;
-import bg.mck.usercommandservice.application.events.UserEvent;
 import bg.mck.usercommandservice.application.repository.AuthorityRepository;
 import bg.mck.usercommandservice.application.repository.UserRepository;
 import bg.mck.usercommandservice.application.service.UserRegisterService;
-import bg.mck.usercommandservice.application.utils.EventCreationHelper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 import static bg.mck.usercommandservice.application.utils.PasswordUtil.hashPassword;
 
