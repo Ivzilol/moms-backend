@@ -38,7 +38,6 @@ public class UserRegisterService {
         this.objectMapper = objectMapper;
     }
 
-
     public void registerUser(UserRegisterDTO userRegisterDTO) {
         UserEntity user = new UserEntity();
         mapUser(user, userRegisterDTO);
