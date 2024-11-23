@@ -9,6 +9,7 @@ import bg.mck.usercommandservice.application.events.RegisteredUserEvent;
 import bg.mck.usercommandservice.application.events.UserEvent;
 import bg.mck.usercommandservice.application.repository.AuthorityRepository;
 import bg.mck.usercommandservice.application.repository.UserRepository;
+import bg.mck.usercommandservice.application.service.UserRegisterService;
 import bg.mck.usercommandservice.application.utils.EventCreationHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,24 +72,7 @@ public class InitSuperAdmin implements CommandLineRunner {
 
             UserEntity savedUser = this.userRepository.findByEmail("super-admin@email.bg");
 
-            RegisteredUserEvent event = new RegisteredUserEvent(
-                    EventType.UserRegistered,
-                    savedUser.getId(),
-                    savedUser.getEmail(),
-                    savedUser.getPassword(),
-                    savedUser.getFirstName(),
-                    savedUser.getLastName(),
-                    savedUser.getPhoneNumber(),
-                    savedUser.isActive(),
-                    savedUser.getAuthorities().stream().map(r -> r.getAuthority().name()).collect(Collectors.toSet())
-            );
-
-            UserEvent<RegisteredUserEvent> userEvent = EventCreationHelper.toUserEvent(event);
-            try {
-                userQueryClient.sendEvent(objectMapper.writeValueAsString(userEvent), event.getEventType().name());
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
+            UserRegisterService.registerUser(savedUser, userQueryClient, objectMapper);
         }
     }
 }
