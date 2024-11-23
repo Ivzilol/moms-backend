@@ -43,7 +43,6 @@ public class UserRegisterService {
         mapUser(user, userRegisterDTO);
         this.userRepository.save(user);
         UserEntity savedUser = this.userRepository.findByEmail(userRegisterDTO.getEmail());
-
         registerUser(savedUser, userQueryClient, objectMapper);
     }
 
