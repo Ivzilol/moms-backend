@@ -44,6 +44,10 @@ public class UserRegisterService {
         this.userRepository.save(user);
         UserEntity savedUser = this.userRepository.findByEmail(userRegisterDTO.getEmail());
 
+        registerUser(savedUser, userQueryClient, objectMapper);
+    }
+
+    public static void registerUser(UserEntity savedUser, UserQueryServiceClient userQueryClient, ObjectMapper objectMapper) {
         RegisteredUserEvent event = new RegisteredUserEvent(
                 EventType.UserRegistered,
                 savedUser.getId(),
