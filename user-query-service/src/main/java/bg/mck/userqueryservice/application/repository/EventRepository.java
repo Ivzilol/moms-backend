@@ -11,5 +11,4 @@ import java.util.List;
 public interface EventRepository extends MongoRepository<UserEvent<? extends BaseEvent>, String> {
 
     List<UserEvent<? extends BaseEvent>> findByEventUserIdOrderByEventLocalDateTimeAsc(Long userId);
-
 }
