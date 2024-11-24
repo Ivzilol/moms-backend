@@ -56,7 +56,6 @@ public class EventService {
             saveEvent(userEvent);
             reconstructUserEntity(userEvent.getEvent().getUserId());
         } else if (eventType.equals(EventType.UserRegistered.name())) {
-
             UserEvent<RegisteredUserEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
             });
             UserEvent<RegisteredUserEvent> savedEvent = saveEvent(userEvent);
