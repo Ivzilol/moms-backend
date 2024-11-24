@@ -64,7 +64,6 @@ public class EventService {
         } else if (eventType.equals(EventType.UserPasswordUpdated.name())) {
             UserEvent<PasswordUpdateEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
             });
-
             doesUserExist(userEvent.getEvent().getUserId());
             saveEvent(userEvent);
             reconstructUserEntity(userEvent.getEvent().getUserId());
