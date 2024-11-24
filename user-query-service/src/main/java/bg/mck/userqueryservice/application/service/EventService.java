@@ -78,7 +78,6 @@ public class EventService {
 
     private void applyEvent(UserEvent<? extends BaseEvent> userEvent, UserEntity userEntity) {
         BaseEvent event = userEvent.getEvent();
-
         if (event instanceof ProfileStatusUpdatedEvent updateEvent) {
             userEntity.setActive(updateEvent.isActive());
         } else if (event instanceof ProfileUpdatedEvent updateEvent) {
