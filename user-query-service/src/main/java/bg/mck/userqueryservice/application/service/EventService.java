@@ -88,7 +88,6 @@ public class EventService {
             userEntity.setLastName(updateEvent.getLastName());
             userEntity.setRoles(updateEvent.getRoles());
             userEntity.setPhoneNumber(updateEvent.getPhoneNumber());
-
         } else if (event instanceof RegisteredUserEvent registerEvent) {
             registerUserEvent(userEntity, registerEvent);
         } else if (event instanceof PasswordUpdateEvent passwordEvent) {
