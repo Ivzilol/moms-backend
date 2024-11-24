@@ -35,7 +35,6 @@ public class EventService {
                 findByEventUserIdOrderByEventLocalDateTimeAsc(userId);
         UserEntity userEntity = new UserEntity();
         userEntity.setId(String.valueOf(userId));
-
         for (var event : events) {
             applyEvent(event, userEntity);
         }
