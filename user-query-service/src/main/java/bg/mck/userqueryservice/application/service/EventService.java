@@ -38,7 +38,6 @@ public class EventService {
         for (var event : events) {
             applyEvent(event, userEntity);
         }
-
         userRepository.save(userEntity);
 
         return userEntity;
