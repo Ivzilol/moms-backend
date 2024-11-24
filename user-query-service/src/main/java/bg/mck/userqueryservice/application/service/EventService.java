@@ -52,7 +52,6 @@ public class EventService {
         } else  if (eventType.equals(EventType.UserProfileUpdated.name())) {
             UserEvent<ProfileUpdatedEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
             });
-
             doesUserExist(userEvent.getEvent().getUserId());
             saveEvent(userEvent);
             reconstructUserEntity(userEvent.getEvent().getUserId());
