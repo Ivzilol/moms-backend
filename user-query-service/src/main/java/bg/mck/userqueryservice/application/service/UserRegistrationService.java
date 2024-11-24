@@ -18,14 +18,7 @@ public class UserRegistrationService {
 
     public void processUserRegister(RegisteredUserEvent userEvent) {
             UserEntity user = new UserEntity();
-            user.setId(String.valueOf(userEvent.getUserId()));
-            user.setEmail(userEvent.getEmail());
-            user.setPassword(userEvent.getPassword());
-            user.setFirstName(userEvent.getFirstName());
-            user.setLastName(userEvent.getLastName());
-            user.setPhoneNumber(userEvent.getPhoneNumber());
-            user.setActive(userEvent.isActive());
-            user.setRoles(userEvent.getRoles());
-            this.userRepository.save(user);
+        EventService.registerUserEvent(user, userEvent);
+        this.userRepository.save(user);
     }
 }

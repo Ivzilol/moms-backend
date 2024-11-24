@@ -90,17 +90,21 @@ public class EventService {
             userEntity.setPhoneNumber(updateEvent.getPhoneNumber());
 
         } else if (event instanceof RegisteredUserEvent registerEvent) {
-            userEntity.setId(String.valueOf(registerEvent.getUserId()));
-            userEntity.setEmail(registerEvent.getEmail());
-            userEntity.setPassword(registerEvent.getPassword());
-            userEntity.setFirstName(registerEvent.getFirstName());
-            userEntity.setLastName(registerEvent.getLastName());
-            userEntity.setPhoneNumber(registerEvent.getPhoneNumber());
-            userEntity.setActive(registerEvent.isActive());
-            userEntity.setRoles(registerEvent.getRoles());
+            registerUserEvent(userEntity, registerEvent);
         } else if (event instanceof PasswordUpdateEvent passwordEvent) {
             userEntity.setPassword(passwordEvent.getNewPassword());
         }
+    }
+
+    static void registerUserEvent(UserEntity userEntity, RegisteredUserEvent registerEvent) {
+        userEntity.setId(String.valueOf(registerEvent.getUserId()));
+        userEntity.setEmail(registerEvent.getEmail());
+        userEntity.setPassword(registerEvent.getPassword());
+        userEntity.setFirstName(registerEvent.getFirstName());
+        userEntity.setLastName(registerEvent.getLastName());
+        userEntity.setPhoneNumber(registerEvent.getPhoneNumber());
+        userEntity.setActive(registerEvent.isActive());
+        userEntity.setRoles(registerEvent.getRoles());
     }
 
     private void doesUserExist(Long userId) {
