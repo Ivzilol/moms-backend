@@ -81,7 +81,6 @@ public class EventService {
 
         if (event instanceof ProfileStatusUpdatedEvent updateEvent) {
             userEntity.setActive(updateEvent.isActive());
-
         } else if (event instanceof ProfileUpdatedEvent updateEvent) {
             userEntity.setEmail(updateEvent.getEmail());
             userEntity.setFirstName(updateEvent.getFirstName());
