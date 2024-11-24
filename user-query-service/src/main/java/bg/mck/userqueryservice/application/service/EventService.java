@@ -59,7 +59,6 @@ public class EventService {
 
             UserEvent<RegisteredUserEvent> userEvent = objectMapper.readValue(data, new TypeReference<>() {
             });
-
             UserEvent<RegisteredUserEvent> savedEvent = saveEvent(userEvent);
             userRegistrationService.processUserRegister(savedEvent.getEvent());
         } else if (eventType.equals(EventType.UserPasswordUpdated.name())) {
