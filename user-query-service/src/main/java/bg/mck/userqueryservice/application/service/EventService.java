@@ -39,7 +39,6 @@ public class EventService {
             applyEvent(event, userEntity);
         }
         userRepository.save(userEntity);
-
         return userEntity;
     }
 
