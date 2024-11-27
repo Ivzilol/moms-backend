@@ -105,6 +105,5 @@ public class UserProfileManagementService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
