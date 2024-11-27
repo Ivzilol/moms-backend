@@ -12,5 +12,4 @@ public interface UserQueryServiceClient {
 
     @PostMapping("/users/event")
      void sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType);
-
 }
