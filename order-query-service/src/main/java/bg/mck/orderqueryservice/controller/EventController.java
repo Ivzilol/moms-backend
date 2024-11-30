@@ -17,7 +17,7 @@ public class EventController {
     }
 
     @PostMapping("/orders/event")
-    public ResponseEntity<Void> sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType) throws JsonProcessingException, InvocationTargetException, IllegalAccessException {
+    public ResponseEntity<Void> sendEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType) throws InvocationTargetException, IllegalAccessException {
         eventService.processOrderEvent(data, eventType);
         return ResponseEntity.ok().build();
     }
