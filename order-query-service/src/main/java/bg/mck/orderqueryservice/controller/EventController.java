@@ -27,5 +27,4 @@ public class EventController {
     void sendConstructionSiteEvent(@RequestBody String data, @RequestHeader("Event-Type") String eventType) throws InvocationTargetException, IllegalAccessException {
         eventService.processConstructionSiteEvent(data, eventType);
     }
-
 }
