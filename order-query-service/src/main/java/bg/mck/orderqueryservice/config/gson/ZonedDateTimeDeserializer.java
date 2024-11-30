@@ -16,7 +16,6 @@ public class ZonedDateTimeDeserializer implements JsonDeserializer<ZonedDateTime
     @Override
     public ZonedDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         String dateTimeString = json.getAsString();
-
         try {
             long epochSecond = Long.parseLong(dateTimeString.split("\\.")[0]);
             int nanoAdjustment = Integer.parseInt(dateTimeString.split("\\.")[1]);
