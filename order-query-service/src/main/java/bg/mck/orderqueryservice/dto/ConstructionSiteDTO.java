@@ -30,9 +30,8 @@ public class ConstructionSiteDTO {
         return constructionNumber;
     }
 
-    public ConstructionSiteDTO setConstructionNumber(String constructionNumber) {
+    public void setConstructionNumber(String constructionNumber) {
         this.constructionNumber = constructionNumber;
-        return this;
     }
 
     public String getId() {
