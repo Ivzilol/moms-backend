@@ -22,7 +22,6 @@ public class ZonedDateTimeDeserializer implements JsonDeserializer<ZonedDateTime
             int nanoAdjustment = Integer.parseInt(dateTimeString.split("\\.")[1]);
             return ZonedDateTime.ofInstant(Instant.ofEpochSecond(epochSecond, nanoAdjustment), ZoneOffset.UTC);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            // If it fails, fall back to parsing as ISO date-time string
             try {
                 long timestamp = json.getAsLong();
                 return ZonedDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault());
