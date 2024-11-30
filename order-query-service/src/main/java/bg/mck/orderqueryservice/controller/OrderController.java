@@ -90,11 +90,6 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getMyOrders(email));
     }
 
-    /**
-     * Helper method to extract email from the JWT token.
-     * @param token The JWT token provided in the Authorization header.
-     * @return The email address associated with the token.
-     */
     private String getEmailFromToken(String token) {
         token = token.startsWith("Bearer ") ? token.substring(7) : token;
         return restTemplate.getForObject("http://authentication-service/" + applicationVersion + "/authentication/getemail/" + token, String.class);
