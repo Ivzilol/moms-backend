@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class OrderAdvice {
 
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalException(Exception e, HttpServletResponse response) {
         return new ResponseEntity<>(e.getMessage(), HttpStatusCode.valueOf(response.getStatus()));
