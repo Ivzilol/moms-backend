@@ -5,7 +5,6 @@ import java.util.Set;
 
 public class EmailDTO {
 
-
     private String orderDescription;
     private String orderNumber;
     private String fullName;
