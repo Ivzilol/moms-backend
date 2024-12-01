@@ -4,7 +4,6 @@ import bg.mck.orderqueryservice.entity.enums.LengthUnits;
 
 public class FastenerDTO extends BaseDTO {
 
-
     private String type;
     private String diameter;
 
