@@ -22,7 +22,6 @@ public class OrderDTO {
     private ConstructionSiteDTO constructionSite;
 
     private OrderStatus orderStatus;
-
     private Integer orderNumber;
     private MaterialType materialType;
     private String specificationFileUrl;
