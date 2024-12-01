@@ -28,7 +28,6 @@ public class OrderDTO {
     private MaterialType materialType;
 
     private String specificationFileUrl;
-
     private Set<FastenerDTO> fasteners;
     private Set<GalvanisedSheetDTO> galvanisedSheets;
     private Set<InsulationDTO> insulation;
