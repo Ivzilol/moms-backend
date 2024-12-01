@@ -12,7 +12,6 @@ public class FastenerDTO extends BaseDTO {
     private String clazz;
     private String quantity;
 
-
     public FastenerDTO() {
     }
 
