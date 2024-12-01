@@ -6,7 +6,6 @@ import bg.mck.orderqueryservice.entity.enums.LengthUnits;
 public class InsulationDTO extends BaseDTO{
 
     private String type;
-
     private String thickness;
     private LengthUnits thicknessUnit;
     private String quantity;
