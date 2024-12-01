@@ -20,7 +20,6 @@ public class OrderDTO {
     private ZonedDateTime deliveryDate;
 
     private ConstructionSiteDTO constructionSite;
-
     private OrderStatus orderStatus;
     private Integer orderNumber;
     private MaterialType materialType;
