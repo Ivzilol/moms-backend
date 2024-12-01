@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Pattern;
 public class GalvanisedSheetDTO extends BaseDTO {
 
     private String type;
-
     private String maxLength;
     private LengthUnits maxLengthUnit;
     private String numberOfSheets;
