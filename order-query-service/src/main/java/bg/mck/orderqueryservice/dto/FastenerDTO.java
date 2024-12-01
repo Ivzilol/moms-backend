@@ -6,7 +6,6 @@ public class FastenerDTO extends BaseDTO {
 
     private String type;
     private String diameter;
-
     private String length;
     private LengthUnits lengthUnit;
     private String standard;
