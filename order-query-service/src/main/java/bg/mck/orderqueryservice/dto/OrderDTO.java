@@ -24,7 +24,6 @@ public class OrderDTO {
     private OrderStatus orderStatus;
 
     private Integer orderNumber;
-
     private MaterialType materialType;
     private String specificationFileUrl;
     private Set<FastenerDTO> fasteners;
