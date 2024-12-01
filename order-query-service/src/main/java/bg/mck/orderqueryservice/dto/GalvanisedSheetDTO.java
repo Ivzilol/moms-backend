@@ -11,7 +11,6 @@ public class GalvanisedSheetDTO extends BaseDTO {
     private String maxLength;
     private LengthUnits maxLengthUnit;
     private String numberOfSheets;
-
     private String quantity;
     private AreaUnits quantityUnit;
 
