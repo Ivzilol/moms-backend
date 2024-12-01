@@ -10,7 +10,6 @@ import java.util.Set;
 public class OrderDTO {
 
     private String id;
-
     private String orderDescription;
     private String fullName;
     private ZonedDateTime orderDate;
