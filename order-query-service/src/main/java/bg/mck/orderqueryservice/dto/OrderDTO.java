@@ -16,7 +16,6 @@ public class OrderDTO {
     private String fullName;
 
     private ZonedDateTime orderDate;
-
     private ZonedDateTime deliveryDate;
     private ConstructionSiteDTO constructionSite;
     private OrderStatus orderStatus;
