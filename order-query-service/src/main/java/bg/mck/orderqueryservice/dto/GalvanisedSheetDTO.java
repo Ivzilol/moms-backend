@@ -14,7 +14,6 @@ public class GalvanisedSheetDTO extends BaseDTO {
     private String quantity;
     private AreaUnits quantityUnit;
 
-
     public GalvanisedSheetDTO() {
     }
 
