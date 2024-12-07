@@ -32,7 +32,6 @@ public class UpdateOrderDTO {
     private Double weight;
     private Double maxLength;
     private Double totalWeight;
-
     private Double galvanisedSheetThickness;
 
     private String truck;
