@@ -22,7 +22,6 @@ public class UpdateOrderDTO {
     private String color;
     private Double thickness;
     private Double frontSheetThickness;
-
     private Double backSheetThickness;
     private Double thermalPerformance;
     private Double density;
