@@ -6,7 +6,6 @@ import bg.mck.orderqueryservice.entity.enums.WeightUnits;
 public class SetDTO extends BaseDTO {
 
     private String color;
-
     private String maxLength;
     private LengthUnits maxLengthUnit;
     private String quantity;
