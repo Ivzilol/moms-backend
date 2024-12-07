@@ -7,7 +7,6 @@ public class TransportDTO extends BaseDTO {
 
     private String maxLength;
     private LengthUnits maxLengthUnit;
-
     private String weight;
     private WeightUnits weightUnit;
 
