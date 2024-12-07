@@ -31,7 +31,6 @@ public class UpdateOrderDTO {
     private String steel;
     private Double weight;
     private Double maxLength;
-
     private Double totalWeight;
 
     private Double galvanisedSheetThickness;
