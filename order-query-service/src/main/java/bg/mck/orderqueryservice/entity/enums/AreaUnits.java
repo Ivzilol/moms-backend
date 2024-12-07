@@ -1,6 +1,7 @@
 package bg.mck.orderqueryservice.entity.enums;
 
 public enum AreaUnits {
+
     CM2("cm2"),
     M2("m2");
 
