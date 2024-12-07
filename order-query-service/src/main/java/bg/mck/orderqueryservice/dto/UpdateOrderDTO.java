@@ -21,7 +21,6 @@ public class UpdateOrderDTO {
     private Double area;
     private String color;
     private Double thickness;
-
     private Double frontSheetThickness;
 
     private Double backSheetThickness;
