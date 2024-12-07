@@ -1,6 +1,7 @@
 package bg.mck.orderqueryservice.entity.enums;
 
 public enum WeightUnits {
+
     G("g"),
     KG("kg"),
     T("t");
