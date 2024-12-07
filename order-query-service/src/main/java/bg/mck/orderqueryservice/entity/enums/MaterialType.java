@@ -1,6 +1,7 @@
 package bg.mck.orderqueryservice.entity.enums;
 
 public enum MaterialType {
+
     FASTENERS("fastener"),
     GALVANIZED_SHEET("galvanisedSheet"),
     INSULATION("insulation"),
