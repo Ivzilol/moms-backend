@@ -60,7 +60,6 @@ public class User {
         return "User{" + "id=" + id + ", email=" + email + ", authorities=" + roles + '}';
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
