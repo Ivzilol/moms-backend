@@ -17,7 +17,6 @@ import java.util.Set;
 @Service
 public class JwtUtil {
 
-
     @Value("${jwt.secret}")
     private String SECRET;
 
