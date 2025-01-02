@@ -14,7 +14,6 @@ public class AuthService {
     @Value("${APPLICATION_VERSION}")
     private String APPLICATION_VERSION;
     private final Logger logger = LoggerFactory.getLogger(AuthService .class);
-
     private final RestTemplate restTemplate;
 
     @Autowired
