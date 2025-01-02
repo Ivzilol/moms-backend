@@ -22,7 +22,6 @@ public class AuthService {
         this.restTemplate = restTemplate;
     }
 
-
     public boolean isAuthorized(AuthorizationDTO authorizationDTO) {
         logger.info("Checking if the user is authorized to reach the path: " + authorizationDTO.getPathToReach());
         String roles = restTemplate.getForObject("http://authentication-service/"+ APPLICATION_VERSION +"/authentication/getroles/" + authorizationDTO.getToken()
