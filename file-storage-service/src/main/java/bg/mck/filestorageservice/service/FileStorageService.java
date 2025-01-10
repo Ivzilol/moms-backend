@@ -94,16 +94,6 @@ public class FileStorageService {
     }
 
     public static String removeFileMatchingPattern(String fileName) {
-//        String pattern = "^\\d{3}(?=__)";
-//
-//        Pattern r = Pattern.compile(pattern);
-//        Matcher m = r.matcher(fileName);
-//
-//        if (m.find()) {
-//            return fileName.replaceFirst(pattern, "");
-//        } else {
-//            return fileName;
-//        }
         return fileName.substring(5);
     }
 }
