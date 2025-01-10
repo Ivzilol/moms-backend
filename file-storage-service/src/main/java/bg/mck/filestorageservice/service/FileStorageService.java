@@ -84,8 +84,7 @@ public class FileStorageService {
         Matcher m = r.matcher(fileName);
 
         if (m.find()) {
-            String group = m.group(0);
-            return group;
+            return m.group(0);
         } else {
             LOGGER.info("The file " + fileName + " has no matching pattern");
             throw new FileMatcherNotFoundException("The file has no matching pattern");
