@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,7 +46,7 @@ public class FileStorageService {
         metaData.put("fileName", file.getOriginalFilename());
         metaData.put("contentType", file.getContentType());
         String fileMatchingPattern = getFileMatchingPattern(file.getOriginalFilename());
-        String fileNameWithoutPattern = removeFileMatchingPattern(file.getOriginalFilename());
+        String fileNameWithoutPattern = removeFileMatchingPattern(Objects.requireNonNull(file.getOriginalFilename()));
 
         ObjectId id = gridFsTemplate.store(file.getInputStream(), fileNameWithoutPattern, file.getContentType(), metaData);
 
