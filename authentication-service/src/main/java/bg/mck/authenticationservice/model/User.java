@@ -80,10 +80,8 @@ public class User {
         } else if (!email.equals(other.email))
             return false;
         if (id == null) {
-            if (other.id != null)
-                return false;
+            return other.id == null;
         } else return id.equals(other.id);
-        return true;
     }
 
     @Override
