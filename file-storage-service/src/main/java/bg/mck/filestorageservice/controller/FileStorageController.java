@@ -1,6 +1,5 @@
 package bg.mck.filestorageservice.controller;
 
-import bg.mck.filestorageservice.dto.FileDTO;
 import bg.mck.filestorageservice.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Optional;
